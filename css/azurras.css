@@ -1,0 +1,35 @@
+/* Jumbrotrons should be placed inside this component */
+.bs-component {
+    /*border: 5px black solid;*/
+    height: 270px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-top: 62px;
+    margin-right: auto;
+    width: 100%;
+}
+
+/* This handles any text inside a jumbotron */
+.headline-info-text {
+    /*border: 5px black solid;*/
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* This handles any title inside a jumbotron */
+.headline-info-title {
+    /*border: 5px black solid;*/
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* This handles the footer container with my personal information */
+#footer-my-info-container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align:center;
+}
