@@ -1384,6 +1384,7 @@ pre code {
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
+  margin-bottom: 63px;
 }
 @media (min-width: 768px) {
   .container {
@@ -4632,7 +4633,6 @@ a.list-group-item.active > .badge,
 }
 .jumbotron {
   padding: 30px 15px;
-  margin-bottom: 30px;
   color: inherit;
   background-color:#5EFFB8
 }

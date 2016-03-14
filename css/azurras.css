@@ -1,7 +1,7 @@
 /* Jumbrotrons should be placed inside this component */
 .bs-component {
     /*border: 5px black solid;*/
-    height: 270px;
+    height: auto;
     margin-bottom: 0px;
     margin-left: auto;
     margin-top: 62px;
@@ -23,6 +23,30 @@
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+}
+
+.jumbotron-improved {
+    background: no-repeat;
+    background-position: center;
+    height: 700px;
+}
+.jumbotron-improved p {
+  margin-bottom: 15px;
+  font-size: 21px;
+  font-weight: 200;
+}
+@media screen and (min-width: 768px) {
+  .jumbotron-improved {
+    padding: 48px 0;
+  }
+  .container .jumbotron-improved {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+  .jumbotron-improved h1,
+  .jumbotron-improved .h1 {
+    font-size: 63px;
+  }
 }
 
 /* This handles the footer container with my personal information */
