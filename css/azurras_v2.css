@@ -1,9 +1,23 @@
+body {
+    border: 5px solid red;
+    height: auto;
+    /*width: 100%;*/
+}
+
+footer {
+    border: 5px solid black;
+    height: auto;
+    margin: auto;
+    width: 20%;
+}
+
 h1 {
-    color: red;
+    color: #656F75;
+    text-align: center;
 }
 
 #content {
-
+    border: 5px solid green;
 }
 
 #nav {
@@ -11,13 +25,27 @@ h1 {
 }
 
 .article {
+    border: 5px solid black;
 
+    height: auto;
+    margin: auto;
+    width: 50%;
 }
+
 
 .article img {
 
 }
 
 .article-container {
+    border: 5px solid black;
+
+    height: auto;
+    margin: auto;
+    width: 50%;
+}
+
+.article-title {
 
 }
+
