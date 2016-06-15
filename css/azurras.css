@@ -30,6 +30,7 @@
     background-position: center;
     height: auto;
     max-height: 700px;
+    min-height: 420px; /* Blaze it */
 }
 
 .jumbotron-improved p {
