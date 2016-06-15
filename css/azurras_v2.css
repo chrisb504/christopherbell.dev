@@ -32,20 +32,20 @@ h1 {
     width: 50%;
 }
 
-
-.article img {
+.article-body {
 
 }
 
-.article-container {
-    border: 5px solid black;
+.article-img {
 
-    height: auto;
-    margin: auto;
-    width: 50%;
 }
 
 .article-title {
-
+    height: auto;
+    margin: auto;
+    text-align: center;
+    width: 50%;
 }
+
+
 
