@@ -1,5 +1,5 @@
 /* Jumbrotrons should be placed inside this component */
-.bs-component {
+.jumbrotron-container {
     /*border: 5px black solid;*/
     height: auto;
     margin-bottom: 0px;
