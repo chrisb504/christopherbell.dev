@@ -1,13 +1,4 @@
-/* Jumbrotrons should be placed inside this component */
-.jumbrotron-container {
-    /*border: 5px black solid;*/
-    height: auto;
-    margin-bottom: 0px;
-    margin-left: auto;
-    margin-top: 62px;
-    margin-right: auto;
-    width: 100%;
-}
+/* Classes */
 
 /* This handles any text inside a jumbotron */
 .headline-info-text {
@@ -25,11 +16,23 @@
     text-align: center;
 }
 
+/* Jumbrotrons should be placed inside this component */
+.jumbrotron-container {
+    /*border: 5px black solid;*/
+    height: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-top: 62px;
+    margin-right: auto;
+    width: 100%;
+}
+
 .jumbotron-improved {
     background: no-repeat;
     background-position: center;
     height: auto;
     max-height: 700px;
+    min-height: 500px;
 }
 
 .jumbotron-improved p {
@@ -39,18 +42,16 @@
 }
 
 
-@media screen and (min-width: 768px) {
-  .jumbotron-improved {
-    padding: 48px 0;
-  }
-  .container .jumbotron-improved {
-    padding-left: 60px;
-    padding-right: 60px;
-  }
-  .jumbotron-improved h1,
-  .jumbotron-improved .h1 {
-    font-size: 63px;
-  }
+
+/*  Ids  */
+#content-container {
+    height: auto;
+    width: 100%;
+}
+
+#content {
+    height: auto;
+    width: 960px;
 }
 
 /* This handles the footer container with my personal information */
