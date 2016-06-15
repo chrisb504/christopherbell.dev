@@ -1,0 +1,51 @@
+body {
+    border: 5px solid red;
+    height: auto;
+    /*width: 100%;*/
+}
+
+footer {
+    border: 5px solid black;
+    height: auto;
+    margin: auto;
+    width: 20%;
+}
+
+h1 {
+    color: #656F75;
+    text-align: center;
+}
+
+#content {
+    border: 5px solid green;
+}
+
+#nav {
+
+}
+
+.article {
+    border: 5px solid black;
+
+    height: auto;
+    margin: auto;
+    width: 50%;
+}
+
+.article-body {
+
+}
+
+.article-img {
+
+}
+
+.article-title {
+    height: auto;
+    margin: auto;
+    text-align: center;
+    width: 50%;
+}
+
+
+
