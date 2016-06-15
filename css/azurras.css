@@ -1,4 +1,4 @@
-
+/* Classes */
 
 /* This handles any text inside a jumbotron */
 .headline-info-text {
@@ -43,6 +43,16 @@
 
 
 
+/*  Ids  */
+#content-container {
+    height: auto;
+    width: 100%;
+}
+
+#content {
+    height: auto;
+    width: 960px;
+}
 
 /* This handles the footer container with my personal information */
 #footer-my-info-container {
