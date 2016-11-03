@@ -12,6 +12,12 @@
     width: 960px;
 }
 
+.container {
+    height: auto;
+    margin: auto;
+    width: 100%;
+}
+
 /* This handles any text inside a jumbotron */
 .headline-info-text {
     /*border: 5px black solid;*/
@@ -34,7 +40,6 @@
     height: auto;
     margin-bottom: 0px;
     margin-left: auto;
-    margin-top: 62px;
     margin-right: auto;
     width: 100%;
 }
