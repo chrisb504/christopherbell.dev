@@ -64,6 +64,26 @@
 
 
 /* This handles the footer container with my personal information */
+#container-azurras {
+    width: 100%;
+    height: auto;
+}
+
+#footer-azurras {
+    width: 100%;
+    height: auto;
+}
+
+#header-azurras {
+    width: 100%;
+    height: auto;
+}
+
+#main-azurras {
+    width: 100%;
+    height: auto;
+}
+
 #footer-my-info-container {
     margin-right: auto;
     margin-left: auto;
