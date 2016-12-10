@@ -4,9 +4,9 @@ function Main() {
 
 function SurivialGame() {
 
-	function Player(playerHealth, playerLevel playerName, playerStamina, playerStength) {
+	function Player(playerHealth, playerLevel, playerName, playerStamina, playerStength) {
 		this.playerHealth = playerHealth;
-		this.playerLevel = playerLevel
+		this.playerLevel = playerLevel;
 		this.playerName = playerName;
 
 		
