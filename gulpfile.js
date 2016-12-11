@@ -10,7 +10,8 @@ var concat = require('gulp-concat');
 gulp.task('scripts', function() {
     gulp.src([
         "js/Survive/Wrappers/Survive-Wrapper-Start.js",
-        "js/Survive/Player.js",
+        "js/Survive/Entities/Player.js",
+        "js/Survive/Entities/Enemies/Enemy.js",
         "js/Survive/Wrappers/Survive-Wrapper-End.js"])
         //.pipe(uglify())
         .pipe(concat("Survive.js"))

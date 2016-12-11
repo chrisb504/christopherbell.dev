@@ -12,12 +12,6 @@
     width: 960px;
 }
 
-.container {
-    height: auto;
-    margin: auto;
-    width: 100%;
-}
-
 /* This handles any text inside a jumbotron */
 .headline-info-text {
     /*border: 5px black solid;*/
@@ -65,6 +59,27 @@
 
 /* This handles the footer container with my personal information */
 #container-azurras {
+    width: 100%;
+    height: auto;
+}
+
+#container {
+    height: auto;
+    margin: auto;
+    width: 100%;
+}
+
+#header {
+    width: 100%;
+    height: auto;
+}
+
+#main {
+    width: 100%;
+    height: auto;
+}
+
+#footer {
     width: 100%;
     height: auto;
 }
