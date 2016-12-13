@@ -1,3 +1,8 @@
+body {
+    width: 100%;
+    margin-top:50px;
+}
+
 /* Classes */
 
 .content-well-container {
@@ -26,6 +31,10 @@
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+}
+
+.jumbotron {
+    background-color: #5EFFB8;
 }
 
 /* Jumbrotrons should be placed inside this component */
