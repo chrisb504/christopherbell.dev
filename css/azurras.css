@@ -3,6 +3,11 @@ body {
     margin-top:50px;
 }
 
+pre {
+    white-space: pre-line;
+    word-break: initial;
+}
+
 /* Classes */
 
 .content-well-container {
@@ -61,12 +66,25 @@ body {
   font-weight: 200;
 }
 
-.blogArticle {
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 170px;
-    width: auto;
+
+@media (min-width: 500px){
+    .blogArticle {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 170px;
+        width: 800px;
+    }
 }
+@media (max-width: 499px){
+    .blogArticle {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 170px;
+        padding: 15px;
+        width: auto;
+    }
+}
+
 
 
 
