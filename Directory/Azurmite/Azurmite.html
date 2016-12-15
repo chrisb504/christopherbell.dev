@@ -24,7 +24,12 @@
                     <div class="container-fluid">
                         <!-- Brand and toggle get grouped for better mobile display -->
                         <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                    data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
                             </button>
                             <a class="navbar-brand" href="/index.html">Azurras</a>
                         </div>
@@ -39,7 +44,7 @@
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                        aria-haspopup="true" aria-expanded="false">Directory <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#">Blog</a></li>
+                                        <li><a href="/Directory/Blog/Blog.html">Blog</a></li>
                                         <li><a href="#">People</a></li>
                                         <li><a href="#">YouTube</a></li>
                                     </ul>
@@ -49,7 +54,6 @@
                     </div><!-- /.container-fluid -->
                 </nav><!-- End Nav Bar -->
             </div>
-
         </div>
 
         <!-- Jumbotron begins here -->
@@ -66,4 +70,17 @@
         </div>
         <script src="vendor/jquery/jquery.min.js"></script>
     </body>
+
+    <!-- Angular.JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+
+    <script src="/apps/blog/js/blog.js"></script>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </html>
