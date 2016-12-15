@@ -1,15 +1,10 @@
 {
 	"Articles": [{
-		"title": "testTitle",
-		"date": "testDate",
-		"author": "TestAuthor",
-		"text": "test data",
+		"postNumber":"1",
+		"title": "First Post",
+		"date": "12/14/16",
+		"author": "Christopher Bell",
+		"text": "So, I'm working on this angular app to show all my blog post from this json file. If you see this then, it's working.",
 		"image": "imagepath"
-	}, {
-		"title": "testTitle2",
-		"date": "testDate2",
-		"author": "TestAuthor2",
-		"text": "test data2",
-		"image": "imagepath2"
 	}]
 }

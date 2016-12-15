@@ -61,6 +61,13 @@ body {
   font-weight: 200;
 }
 
+.blogArticle {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 170px;
+    width: auto;
+}
+
 
 
 /*  Ids  */

@@ -56,26 +56,28 @@
                             Blog
                         </h1>
                         <p class="text-center">
-                            Whats on my mind today?
+                            What's on my mind today?
                         </p>
                     </div>
                 </div>
                 
                 <div ng-app="blog" ng-controller="blogController as bctrl">
-                    <p>Name : <input type="text" ng-model="name" ></p>
-                    <h1>Hello {{name}}</h1>
-                    <div class="blogDirective">
-                        <p> directive here:</p>
-                    </div>
+                    <div class="blogArticle" ng-repeat="a in articles | orderBy : '-postNumber'">
+                        <h2 class="text-center">
+                            {{ a.title }}
+                        </h2>
+                        <h5 class="text-center">
+                            Author: {{ a.author }}
+                        </h5>
+                        <h5 class="text-center">
+                            {{ a.date }}
+                        </h5>
 
-                    <div class="blogArticle" ng-repeat="a in articles">
-                        <li>
-                            {{ a.author }}
-                        </li>
-                        {{lastname}}
-                    </div>
+                        <hr>
 
-                    <div ng-view>
+                        <p class="text-center">
+                            {{ a.text }}
+                        </p>
 
                     </div>
                 </div>
