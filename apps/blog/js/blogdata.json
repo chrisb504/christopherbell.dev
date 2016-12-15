@@ -1,0 +1,15 @@
+{
+	"Articles": [{
+		"title": "testTitle",
+		"date": "testDate",
+		"author": "TestAuthor",
+		"text": "test data",
+		"image": "imagepath"
+	}, {
+		"title": "testTitle2",
+		"date": "testDate2",
+		"author": "TestAuthor2",
+		"text": "test data2",
+		"image": "imagepath2"
+	}]
+}
