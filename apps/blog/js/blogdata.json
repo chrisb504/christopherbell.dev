@@ -1,0 +1,17 @@
+{
+	"Articles": [{
+		"postNumber":"1",
+		"title": "First Post",
+		"date": "12/14/16",
+		"author": "Christopher Bell",
+		"text": "So, I'm working on this angular app to show all my blog post from this json file. If you see this then, it's working.",
+		"image": "imagepath"
+	}, {
+		"postNumber":"2",
+		"title": "Site Updates",
+		"date": "12/15/16",
+		"author": "Christopher Bell",
+		"text": "So I consider the new blog as a major upgrade to the site. Anyone who has visited before knows the vastness of this barren wasteland in terms of content. \n I plan on making many more major upgrades to the site. It's mostly a matter of when the planning phases of these projects will be complete that will determine when I'll work on these updates; however, you all can expect to see something new before the end of the year.",
+		"image": "imagepath"
+	} ]
+}

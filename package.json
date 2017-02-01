@@ -1,0 +1,29 @@
+{
+  "name": "azurras",
+  "version": "1.0.0",
+  "description": "azurras website",
+  "main": "main.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Azurras/Azurras.git"
+  },
+  "keywords": [
+    "azurras"
+  ],
+  "author": "azurras",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Azurras/Azurras/issues"
+  },
+  "homepage": "https://github.com/Azurras/Azurras#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-jshint": "~1.5.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^0.2.1"
+  }
+}

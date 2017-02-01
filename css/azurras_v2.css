@@ -1,7 +1,6 @@
 body {
     border: 5px solid red;
     height: auto;
-    /*width: 100%;*/
 }
 
 footer {
@@ -20,8 +19,6 @@ h1 {
     border: 5px solid green;
 }
 
-#nav {
-
 }
 
 .article {
@@ -32,13 +29,7 @@ h1 {
     width: 50%;
 }
 
-.article-body {
 
-}
-
-.article-img {
-
-}
 
 .article-title {
     height: auto;
