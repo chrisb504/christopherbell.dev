@@ -21,7 +21,7 @@ app.controller('blogController', function($scope, $http, BlogFactory, $window) {
 app.factory('BlogFactory', function ($http) {
     return {
         get: function () {
-            return $http.get('/apps/blog/js/blogdata.json');
+            return $http.get('/apps/blog/data/blogdata.json');
         }
     };
 });
