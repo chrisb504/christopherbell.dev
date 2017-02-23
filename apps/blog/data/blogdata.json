@@ -1,0 +1,24 @@
+{
+	"Articles": [{
+		"postNumber":"1",
+		"title": "First Post",
+		"date": "12/14/16",
+		"author": "Christopher Bell",
+		"text": "So, I'm working on this angular app to show all my blog post from this json file. If you see this then, it's working.",
+		"image": "imagepath"
+	}, {
+		"postNumber":"2",
+		"title": "Site Updates",
+		"date": "12/15/16",
+		"author": "Christopher Bell",
+		"text": "So I consider the new blog as a major upgrade to the site. Anyone who has visited before knows the vastness of this barren wasteland in terms of content. \n I plan on making many more major upgrades to the site. It's mostly a matter of when the planning phases of these projects will be complete that will determine when I'll work on these updates; however, you all can expect to see something new before the end of the year.",
+		"image": "imagepath"
+	}, {
+		"postNumber": "3",
+		"title": "Advice Wanted!",
+		"date": "02/22/17",
+		"author": "Christopher Bell",
+		"text": "Hi All!\n Sorry for the lack of updates. I've been a bit busy. I do have something to announce and that is the acceptance of suggestions for the site! If you have any suggestions please open an issue on the github page! www.github.com/Azurras/Azurras/issues",
+		"image": "imagepath"
+	}]
+}
