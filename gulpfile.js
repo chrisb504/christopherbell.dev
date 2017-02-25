@@ -9,15 +9,18 @@ var concat = require('gulp-concat');
 
 gulp.task('scripts', function() {
     gulp.src([
-        "js/Survive/Wrappers/Survive-Wrapper-Start.js",
-        "js/Survive/Entities/Player.js",
-        "js/Survive/Entities/Enemies/Enemy.js",
-        "js/Survive/Wrappers/Survive-Wrapper-End.js"])
+        "apps/blog/js/blog.js",
+        "apps/header/js/header.js",
+        "apps/footer/js/footer.js",
+        "apps/Survive/Wrappers/Survive-Wrapper-Start.js",
+        "apps/Survive/Entities/Player/Player.js",
+        "apps/Survive/Entities/Enemies/Enemy.js",
+        "apps/Survive/Wrappers/Survive-Wrapper-End.js"])
         //.pipe(uglify())
-        .pipe(concat("Survive.js"))
+        .pipe(concat("main.js"))
         //.pipe(uglify())
         .pipe(rename({suffix:'.min'}))
-        .pipe(gulp.dest('js/Survive/build'));
+        .pipe(gulp.dest('js/'));
 });
 
 
