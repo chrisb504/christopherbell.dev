@@ -16,3 +16,5 @@ Azurras.iml
 */.DS_Store
 
 .DS_Store
+
+.vscode/*

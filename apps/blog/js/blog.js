@@ -1,13 +1,13 @@
 (function () {
-    var app = angular.module("blog", []);
-    app.directive("blogDirective", function() {
+    var blog = angular.module("blog", []);
+    blog.directive("blogDirective", function() {
         return {
             templateUrl : 'apps/blog/html/blog.html',
             scope: {}
         };
     });
     
-    app.controller('blogController', function($scope, $http, BlogFactory, $window) {
+    blog.controller('blogController', function($scope, $http, BlogFactory, $window) {
         vm = this;
         $scope.articles;
         
@@ -16,7 +16,7 @@
         });
     });
     
-    app.factory('BlogFactory', function ($http) {
+    blog.factory('BlogFactory', function ($http) {
         return {
             get: function () {
                 return $http.get('/apps/blog/data/blogdata.json');
