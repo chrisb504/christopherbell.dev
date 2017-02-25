@@ -48,7 +48,7 @@
 
 			$dbhost = 'localhost';
 			$dbuser = 'new_user';
-			$dbpass = 'amjad1813';
+			$dbpass = '';
 			$conn = mysql_connect($dbhost, $dbuser, $dbpass);
 			if(! $conn ) {
 				die('Could not connect: ' . mysql_error());
