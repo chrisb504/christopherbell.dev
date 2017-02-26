@@ -14,5 +14,3 @@
     
     angular.bootstrap(document.getElementById("footer"), ['footer']);
 })();
-
-

@@ -26,5 +26,3 @@
 
     angular.bootstrap(document.getElementById("blog"), ['blog']);
 })();
-
-
