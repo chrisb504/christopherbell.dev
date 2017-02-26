@@ -1,5 +1,5 @@
 (function () {
-    var blog = angular.module("blog", []);
+    var blog = angular.module('blog', []);
     blog.directive("blogDirective", function() {
         return {
             templateUrl : 'apps/blog/html/blog.html',
@@ -24,5 +24,5 @@
         };
     });
 
-    angular.bootstrap(document.getElementById("blog"), ['blog']);
+    angular.bootstrap(document.getElementById('blog'), ['blog']);
 })();
