@@ -128,8 +128,13 @@ img {
 }
 
 #footer {
+    background-color: #222;
+    height: 100px;
     width: 100%;
-    height: auto;
+}
+
+#footer p {
+    color: white;
 }
 
 #footer-azurras {

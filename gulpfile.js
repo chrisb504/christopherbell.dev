@@ -23,13 +23,23 @@ gulp.task('scripts', function() {
         .pipe(gulp.dest('js/'));
 });
 
+gulp.task('css', function() {
+    gulp.src([
+        "/css/azurras.css",])
+        //.pipe(uglify())
+        .pipe(concat("main.css"))
+        //.pipe(uglify())
+        .pipe(rename({suffix:'.min'}))
+        .pipe(gulp.dest('css/'));
+});
+
 
 //  Watch Tasks
 //gulp.task('watch', function() {
 //    gulp.watch('js/**/.js', ['scripts'] )
 //});
 
-gulp.task('default', ['scripts']);
+gulp.task('default', ['scripts', 'css']);
 	// place code for your default task here
 	//gulp.src("js/Survive/Wrappers/Survive-Wrapper-Start")
 	  //  .pipe(concat("main.all.js"));
