@@ -2,55 +2,47 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>Azurras | Azurmite</title>
-    <link href="css/src/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/azurras.css">
+    <link rel="stylesheet" type="text/css" href="/css/azurras/azurras.css">
     <link rel="shortcut icon" href="/assets/images/Headers/Azurras_Logo.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
 </head>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="bootstrap/js/bootstrap.min.js"></script>
 
 <body>
-    <div class="container">
-        <div ng-app="header" ng-controller="headerController">
-            <header id="header" ng-include="'/Directory/Global/header.html'"></header>
-        </div>
+    <div ng-app="header" ng-controller="headerController">
+        <header id="header" ng-include="'/apps/header/html/header.html'"></header>
+    </div>
 
-        <!-- Jumbotron begins here -->
-        <div class="jumbotron" style="background-image:url('http://i.imgur.com/8mQtOWB.jpg');">
-            <div class="container">
-                <h1>Azurmite</h1>
-                <p>
-                    . . . Join the adventure to defeat the almight Oil Master!
-                </p>
-                <p>
-                    <a class="btn btn-primary btn-lg" href="Azurmite_Game.html" role="button">Play</a>
-                </p>
-            </div>
+    <!-- Jumbotron begins here -->
+    <div class="jumbotron" style="background-image:url('http://i.imgur.com/8mQtOWB.jpg');">
+        <div class="container">
+            <h1>Azurmite</h1>
+            <p>
+                . . . Join the adventure to defeat the almight Oil Master!
+            </p>
+            <p>
+                <a class="btn btn-primary btn-lg" href="Azurmite_Game.html" role="button">Play</a>
+            </p>
         </div>
+    </div>
 
-        <hr>
-
-        <div ng-app="footer" ng-controller="footerController">
-            <footer id="footer" ng-include="'/Directory/Global/footer.html'"></footer>
-        </div>
+    <div ng-app="footer" ng-controller="footerController">
+        <footer id="footer" ng-include="'/apps/footer/html/footer.html'"></footer>
+    </div>
 </body>
 
 <script src="vendor/jquery/jquery.min.js"></script>
 
-<!-- Angular.JS -->
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-
 <script src="/js/main.min.js"></script>
-
-<!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"

@@ -29,7 +29,7 @@
 			"title": "Nav and Footer Upgrades",
 			"date": "03/07/17",
 			"author": "Christopher Bell",
-			"text": "I've updated the header and footer of the site to use angular templates to remove any instances of me having to change the anything in the nav or footer on multiple pages. You may notice a slow down in inital load times because of this. I have a few ideas for a fix and will probably have something out soon. If you want to take a crack at it you can find the issue at the link below.\n https://github.com/Azurras/Azurras/issues/11",
+			"text": "I've updated the header and footer of the site to use angular templates to remove any instances of me having to change anything in the nav or footer on multiple pages. You may notice a slow down in inital load times because of this. I have a few ideas for a fix and will probably have something out soon. If you want to take a crack at it you can find the issue at the link below.\n https://github.com/Azurras/Azurras/issues/11",
 			"image": "imagepath"
 		}
 	]
