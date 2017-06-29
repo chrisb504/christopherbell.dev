@@ -1,20 +1,13 @@
-
 .idea/compiler.xml
-
 .idea/copyright/profiles_settings.xml
-
 .idea/misc.xml
-
 .idea/modules.xml
-
 .idea/vcs.xml
-
 .idea/workspace.xml
-
 Azurras.iml
 
-*/.DS_Store
 
+*/.DS_Store
 .DS_Store
 
 .vscode/*
