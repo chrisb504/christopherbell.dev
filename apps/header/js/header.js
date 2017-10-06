@@ -3,7 +3,7 @@
     
     header.directive('headerDirective', function() {
         return {
-            template: '/Directory/Global/header.html',
+            template: '/directory/Global/header.html',
             scope: {}
         };
     });

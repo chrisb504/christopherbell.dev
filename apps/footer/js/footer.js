@@ -3,7 +3,7 @@
     
     footer.directive('footerDirective', function() {
         return {
-            templateUrl : '/Directory/Global/footer.html',
+            templateUrl : '/directory/Global/footer.html',
             scope: {}
         };
     });
