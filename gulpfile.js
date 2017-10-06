@@ -34,7 +34,7 @@ gulp.task('scripts', function() {
 
 gulp.task('styles', function() {
     return gulp.src(
-        "/css/azurras/azurras.css")
+        "assets/css/azurras/azurras.css")
         //.pipe(uglify())
         .pipe(concat("main.css"))
         //.pipe(uglify())
