@@ -1,8 +1,10 @@
-*/.DS_Store
-.vscode/*
-
-**/.idea
+# VS Code
 **/.vscode
+
+# Intellji
+**/.idea
 **/Azurras.iml
 
+# Misc
+**/.DS_Store
 **/node_modules
