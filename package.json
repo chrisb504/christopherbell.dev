@@ -20,10 +20,10 @@
   },
   "homepage": "https://github.com/Azurras/Azurras#readme",
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-concat": "^2.6.1",
-    "gulp-jshint": "~1.5.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^0.2.1"
+    "gulp": "latest",
+    "gulp-concat": "latest",
+    "gulp-jshint": "latest",
+    "gulp-rename": "latest",
+    "gulp-uglify": "latest"
   }
 }

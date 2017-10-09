@@ -1,1 +1,1 @@
-function Survive() {
+(function Survive() {

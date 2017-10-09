@@ -1,29 +1,28 @@
-var app = angular.module("blog", []);
-
-app.directive("blogDirective", function() {
-    return {
-        templateUrl : 'apps/blog/html/blog.html',
-        scope: {}
-    };
-});
-
-app.controller('blogController', function($scope, $http, BlogFactory, $window) {
-	vm = this;
-    $scope.articles;
-
-    BlogFactory.get().success(function (msg) {
-        $scope.articles = msg.Articles;
+(function () {
+    var blog = angular.module('blog', []);
+    blog.directive("blogDirective", function() {
+        return {
+            templateUrl : 'apps/blog/html/blog.html',
+            scope: {}
+        };
     });
     
-});
+    blog.controller('blogController', function($scope, $http, BlogFactory, $window) {
+        vm = this;
+        $scope.articles;
+        
+        BlogFactory.get().success(function (msg) {
+            $scope.articles = msg.Articles;
+        });
+    });
+    
+    blog.factory('BlogFactory', function ($http) {
+        return {
+            get: function () {
+                return $http.get('/apps/blog/data/blogdata.json');
+            }
+        };
+    });
 
-
-app.factory('BlogFactory', function ($http) {
-    return {
-        get: function () {
-            return $http.get('/apps/blog/js/blogdata.json');
-        }
-    };
-});
-
-
+    angular.bootstrap(document.getElementById('blog'), ['blog']);
+})();
