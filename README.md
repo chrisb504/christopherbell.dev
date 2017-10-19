@@ -24,4 +24,4 @@ Contains application to pick lunch for the day.
 
 #### Videos
 
-Contains links to all videos on the site. 
+Contains links to all videos on the site.
