@@ -7,3 +7,21 @@ Azurras is a website created by Christopher Bell with the purpose of holding any
 ## Sections
 
 ### Home
+
+Contains updates to any pages on the site
+
+### Resume
+
+Contains my resume
+
+### Apps
+
+Contains a page that directs to implemented and coming soon apps to the site.
+
+#### Lunch Generator
+
+Contains application to pick lunch for the day.
+
+#### Videos
+
+Contains links to all videos on the site. 
