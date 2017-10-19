@@ -2,7 +2,7 @@
     var restaurant = angular.module('restaurant', []);
     restaurant.directive("restaurantDirective", function() {
         return {
-            templateUrl : 'apps/lunch-gen/html/lunch-gen.html',
+            templateUrl : 'apps/lunch-gen/html/restaurant.html',
             scope: {}
         };
     });
