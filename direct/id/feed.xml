@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <!--
+         resources:
+            https://www.youtube.com/watch?v=PTXnmMlipmo
+    -->
+
+    <channel>
+        <title>Intellectually Dishonest</title>
+        <link>www.azurras.com/id</link>
+        <description>Intellectually Dishonest Podcast</description>
+        <language>en-us</language>
+        <image>
+            <title></title>
+            <link></link>
+            <url></url>
+            <width></width>
+            <height></height>
+        </image>
+        <item>
+            <title></title>
+            <pubDate></pubDate>
+            <link></link>
+            <description></description>
+            <category></category>
+        </item>
+    </channel>
+</rss>
