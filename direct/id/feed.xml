@@ -27,18 +27,24 @@
             <itunes:name>Christopher Bell</itunes:name>
             <itunes:email>christopherbell1813@gmail</itunes:email>
         </itunes:owner>
-        <itunes:category text="Politics" />
+        <itunes:category text="Politics">
+            <itunes:category text ="Politics"/>
+        </itunes:category>
         <itunes:keywords>azurras, politics, sour, trahan, bell</itunes:keywords>
         <itunes:explicit>no</itunes:explicit>
-        <itunes:image href="http://www.azurras.com/direct/id/assets/id-logo.png"/>
-        <itunes:summary>three dudues discuss the world</itunes:summary>
+        <itunes:image
+            href="http://www.azurras.com/direct/id/assets/id-logo.png"/>
+        <itunes:summary>three dudes discuss the world</itunes:summary>
         <item>
-            <title>Ep 1</title>
+            <title>Episode 0 - The Big Break</title>
             <pubDate>June 1, 2018</pubDate>
             <link></link>
             <description></description>
             <category>Politics</category>
-            <enclosure url="http://www.azurras.com/direct/id/assets/id-podcast-test.mp3" length="" type="mp3"/>
+            <enclosure
+                url="http://www.azurras.com/direct/id/assets/id-podcast-test.mp3"
+                length="1541350"
+                type="audio/mp3"/>
         </item>
     </channel>
 </rss>
