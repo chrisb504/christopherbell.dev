@@ -11,18 +11,18 @@
         <description>Intellectually Dishonest Podcast</description>
         <language>en-us</language>
         <image>
-            <title></title>
-            <link></link>
-            <url></url>
-            <width></width>
-            <height></height>
+            <title>id-logo</title>
+            <link>/direct/id/assets/id-log.ong</link>
+            <url>www.azurras.com/direct/id/assests/id-log.png</url>
+            <width>1400</width>
+            <height>1400</height>
         </image>
         <item>
-            <title></title>
-            <pubDate></pubDate>
+            <title>Ep 1</title>
+            <pubDate>June 1, 2018</pubDate>
             <link></link>
             <description></description>
-            <category></category>
+            <category>Poltics</category>
         </item>
     </channel>
 </rss>
