@@ -35,20 +35,20 @@
         <itunes:keywords>azurras, politics, sour, trahan, bell</itunes:keywords>
         <itunes:explicit>yes</itunes:explicit>
         <itunes:image
-            href="http://www.azurras.com/direct/id/assets/id-logo.png"/>
+            href="http://www.azurras.com/direct/id/assets/id-logo2.png"/>
         <itunes:summary>Three dudes from New Orleans discuss the world from their own perspectives.</itunes:summary>
         <item>
             <title>Episode 0 - The Big Break</title>
             <pubDate>Tue, 19 Jun 2018 09:12:49 CST</pubDate>
             <link>http://www.azurras.com/direct/id/id.html</link>
             <description></description>
-            <itunes:duration>1:04</itunes:duration>
+            <itunes:duration>6:33</itunes:duration>
             <category>News &amp; Politics</category>
             <enclosure
-                url="http://www.azurras.com/direct/id/assets/id-podcast-test.mp3"
-                length="1541350"
+                url="http://www.azurras.com/direct/id/assets/episode-0.mp3"
+                length="9454572 "
                 type="audio/mp3"/>
-            <guid>http://www.azurras.com/direct/id</guid>
+            <guid>http://www.azurras.com/direct/id/assets/episode-0.mp3</guid>
         </item>
     </channel>
 </rss>
