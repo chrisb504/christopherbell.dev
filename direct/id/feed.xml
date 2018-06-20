@@ -10,6 +10,9 @@
         <link>http://www.azurras.com/direct/id/id.html</link>
         <description>Intellectually Dishonest Podcast</description>
         <language>en-us</language>
+        <copyright>2018</copyright>
+        <webMaster>christopherbell1813@gmail.com</webMaster>
+        <managingEditor>christopherbell1813@gmail</managingEditor>
         <image>
             <title>id-logo</title>
             <link>http://www.azurras.com/direct/id/id.html</link>
@@ -17,13 +20,22 @@
             <width>1400</width>
             <height>1400</height>
         </image>
+        <itunes:owner>
+            <itunes:name>Christopher Bell</itunes:name>
+            <itunes:email>christopherbell1813@gmail</itunes:email>
+        </itunes:owner>
+        <itunes:category text="Politics" />
+        <itunes:keywords>azurras, politics, sour, trahan, bell</itunes:keywords>
+        <itunes:explicit>no</itunes:explicit>
+        <itunes:image href="http://www.azurras.com/direct/id/assets/id-logo.png"/>
+        <itunes:summary>three dudues discuss the world</itunes:summary>
         <item>
             <title>Ep 1</title>
             <pubDate>June 1, 2018</pubDate>
             <link></link>
             <description></description>
             <category>Politics</category>
-            <enclosure url="" length="" type=""/>
+            <enclosure url="http://www.azurras.com/direct/id/assets/id-podcast-test.mp3" length="" type="mp3"/>
         </item>
     </channel>
 </rss>
