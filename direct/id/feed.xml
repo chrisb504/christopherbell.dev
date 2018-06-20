@@ -27,8 +27,7 @@
             <itunes:name>Christopher Bell</itunes:name>
             <itunes:email>christopherbell1813@gmail</itunes:email>
         </itunes:owner>
-        <itunes:category text="Politics">
-            <itunes:category text ="Politics"/>
+        <itunes:category text="News &amp; Politics">
         </itunes:category>
         <itunes:keywords>azurras, politics, sour, trahan, bell</itunes:keywords>
         <itunes:explicit>no</itunes:explicit>
@@ -40,7 +39,7 @@
             <pubDate>June 1, 2018</pubDate>
             <link></link>
             <description></description>
-            <category>Politics</category>
+            <itunescategory>News &amp; Politics</category>
             <enclosure
                 url="http://www.azurras.com/direct/id/assets/id-podcast-test.mp3"
                 length="1541350"
