@@ -14,10 +14,10 @@
         <description>Intellectually Dishonest Podcast</description>
         <language>en-us</language>
         <copyright>2018</copyright>
-        <webMaster>christopherbell1813@gmail.com Christopher Bell</webMaster>
-        <managingEditor>christopherbell1813@gmail Christopher Bell</managingEditor>
+        <webMaster>christopherbell1813@gmail.com (Christopher Bell)</webMaster>
+        <managingEditor>christopherbell1813@gmail (Christopher Bell)</managingEditor>
         <image>
-            <title>id-logo</title>
+            <title>Intellectually Dishonest</title>
             <link>http://www.azurras.com/direct/id/id.html</link>
             <url>http://www.azurras.com/direct/id/assets/id-logo.png</url>
             <width>1400</width>
@@ -25,7 +25,7 @@
         </image>
         <itunes:owner>
             <itunes:name>Christopher Bell</itunes:name>
-            <itunes:email>christopherbell1813@gmail</itunes:email>
+            <itunes:email>christopherbell1813@gmail.com</itunes:email>
         </itunes:owner>
         <itunes:category text="News &amp; Politics">
         </itunes:category>
@@ -37,7 +37,7 @@
         <item>
             <title>Episode 0 - The Big Break</title>
             <pubDate>June 1, 2018</pubDate>
-            <link></link>
+            <link>http://www.azurras.com/direct/id/id.html</link>
             <description></description>
             <itunes:duration>1:04</itunes:duration>
             <category>News &amp; Politics</category>
