@@ -7,13 +7,13 @@
 
     <channel>
         <title>Intellectually Dishonest</title>
-        <link>www.azurras.com/id</link>
+        <link>http://www.azurras.com/direct/id/id.html</link>
         <description>Intellectually Dishonest Podcast</description>
         <language>en-us</language>
         <image>
             <title>id-logo</title>
-            <link>/direct/id/assets/id-log.ong</link>
-            <url>www.azurras.com/direct/id/assests/id-log.png</url>
+            <link>http://www.azurras.com/direct/id/id.html</link>
+            <url>http://www.azurras.com/direct/id/assests/id-log.png</url>
             <width>1400</width>
             <height>1400</height>
         </image>
@@ -22,7 +22,8 @@
             <pubDate>June 1, 2018</pubDate>
             <link></link>
             <description></description>
-            <category>Poltics</category>
+            <category>Politics</category>
+            <enclosure url="" length="" type=""/>
         </item>
     </channel>
 </rss>
