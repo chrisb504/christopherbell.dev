@@ -29,7 +29,7 @@
         <itunes:category text="News &amp; Politics">
         </itunes:category>
         <itunes:keywords>azurras, politics, sour, trahan, bell</itunes:keywords>
-        <itunes:explicit>no</itunes:explicit>
+        <itunes:explicit>yes</itunes:explicit>
         <itunes:image
             href="http://www.azurras.com/direct/id/assets/id-logo.png"/>
         <itunes:summary>Three dudes from New Orleans discuss the world from their own perspectives.</itunes:summary>
