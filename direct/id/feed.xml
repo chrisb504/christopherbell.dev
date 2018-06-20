@@ -9,6 +9,7 @@
     -->
 
     <channel>
+        <atom:link href="http://dallas.example.com/rss.xml" rel="self" type="application/rss+xml" />
         <title>Intellectually Dishonest</title>
         <link>http://www.azurras.com/direct/id/id.html</link>
         <description>Intellectually Dishonest Podcast</description>
@@ -36,7 +37,7 @@
         <itunes:summary>three dudes discuss the world</itunes:summary>
         <item>
             <title>Episode 0 - The Big Break</title>
-            <pubDate>Wed, 20 Jun 2018 02:12:49</pubDate>
+            <pubDate>Wed, 19 Jun 2018 09:12:49 CST</pubDate>
             <link>http://www.azurras.com/direct/id/id.html</link>
             <description></description>
             <itunes:duration>1:04</itunes:duration>
@@ -45,6 +46,7 @@
                 url="http://www.azurras.com/direct/id/assets/id-podcast-test.mp3"
                 length="1541350"
                 type="audio/mp3"/>
+            <guid>http://www.azurras.com/direct/id<guid>
         </item>
     </channel>
 </rss>
