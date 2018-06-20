@@ -3,8 +3,9 @@
     xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
     version="2.0">
     <!--
-         resources:
-            https://www.youtube.com/watch?v=PTXnmMlipmo
+    resources:
+        https://www.youtube.com/watch?v=PTXnmMlipmo
+        https://resourcecenter.odee.osu.edu/digital-media-production/how-write-podcast-rss-xml
     -->
 
     <channel>
