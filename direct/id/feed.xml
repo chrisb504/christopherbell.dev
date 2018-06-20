@@ -14,8 +14,8 @@
         <description>Intellectually Dishonest Podcast</description>
         <language>en-us</language>
         <copyright>2018</copyright>
-        <webMaster>christopherbell1813@gmail.com</webMaster>
-        <managingEditor>christopherbell1813@gmail</managingEditor>
+        <webMaster>christopherbell1813@gmail.com Christopher Bell</webMaster>
+        <managingEditor>christopherbell1813@gmail Christopher Bell</managingEditor>
         <image>
             <title>id-logo</title>
             <link>http://www.azurras.com/direct/id/id.html</link>
@@ -39,6 +39,7 @@
             <pubDate>June 1, 2018</pubDate>
             <link></link>
             <description></description>
+            <itunes:duration>1:04</itunes:duration>
             <category>News &amp; Politics</category>
             <enclosure
                 url="http://www.azurras.com/direct/id/assets/id-podcast-test.mp3"
