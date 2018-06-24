@@ -1,2 +1,0 @@
-    var powerDiamondsText = "";
-    var playerHealthText = "";

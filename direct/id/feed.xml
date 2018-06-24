@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+    <channel>
+        <title>Intellectually Dishonest</title>
+        <link>http://www.azurras.com/</link>
+        <language>en-us</language>
+        <copyright>&#xA9;2018</copyright>
+        <webMaster>christopherbell1813@gmail.com (Christopher Bell)</webMaster>
+        <managingEditor>christopherbell1813@gmail.com (Christopher Bell)</managingEditor>
+        <image>
+            <title>Intellectually Dishonest</title>
+            <link>http://www.azurras.com/</link>
+            <url>http://www.azurras.com/direct/id/assets/id-logo2.png</url>
+        </image>
+        <itunes:owner>
+            <itunes:name>Christopher Bell</itunes:name>
+            <itunes:email>christopherbell1813@gmail.com</itunes:email>
+        </itunes:owner>
+        <itunes:category text="News &amp; Politics">
+        </itunes:category>
+        <itunes:keywords>Intellectually Dishonest, Christopher Bell, politics, Caleb Sour, Jeremy Trahan</itunes:keywords>
+        <itunes:explicit>yes</itunes:explicit>
+        <itunes:image href="http://www.azurras.com/direct/id/assets/id-logo2.png"/>
+        <atom:link href="http://www.azurras.com/direct/id/feed.xml" rel="self" type="application/rss+xml" />
+        <pubDate>Tue, 19 Jun 2018 09:12:49 CST</pubDate>
+        <itunes:author>Christopher Bell, Caleb Sour, Jeremy Trahan</itunes:author>
+        <description>Three dudes from New Orleans discuss the world from their own perspectives.</description>
+        <itunes:summary>Three dudes from New Orleans discuss the world from their own perspectives.</itunes:summary>
+        <itunes:subtitle>Three dudes discuss the world!</itunes:subtitle>
+        <lastBuildDate>Tue, 19 Jun 2018 09:12:49 CST</lastBuildDate>
+        <item>
+            <title>Episode 0 - The Big Break</title>
+            <pubDate>Tue, 19 Jun 2018 09:12:49 CST</pubDate>
+            <link>http://www.azurras.com/direct/id/id.html</link>
+            <description>The first episode of the podcast with just Chris Bell at the head of the ship!</description>
+            <itunes:summary>The first episode of the podcast with just Chris Bell at the head of the ship!</itunes:summary>
+            <itunes:subtitle>Chris leads the ship for episode 0</itunes:subtitle>
+            <itunes:duration>6:33</itunes:duration>
+            <enclosure
+                url="http://www.azurras.com/direct/id/assets/episode-0.mp3"
+                length="9454572"
+                type="audio/mp3"/>
+            <guid>http://www.azurras.com/direct/id/assets/episode-0.mp3</guid>
+        </item>
+    </channel>
+</rss>

@@ -1,0 +1,47 @@
+h1 {
+    text-align: center;
+    margin: 2em;
+    margin-bottom: 1em;
+    text-shadow: 0px 2px #111;
+}
+
+.active {
+    color: red;
+}
+
+.form-control {
+    background-color: #2f2f2f;
+    border: 1px solid green;
+}
+
+.jumbotron {
+    height: 1000px;
+}
+
+.jumbotron .btn {
+    border-radius: 1em;
+    padding: 0.3em 2em;
+    font-size: 50pt;
+    margin-top: 2em;
+    margin-left: 50%;
+    box-shadow: 10px 10px #555;
+
+    transition-duration: 1s;
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+}
+
+.jumbotron .btn:hover {
+    transition-duration: 1s;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.navbar {
+    opacity: 0.85;
+}
+
+#azurmite {
+    margin: 0 auto;
+    margin: 2em;
+}
