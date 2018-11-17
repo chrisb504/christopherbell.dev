@@ -55,25 +55,25 @@
 
         "use strict";
 
-        game.load.image("sky", "assets/images/levels/demo/sky.jpg");
-        game.load.image("diamond", "assets/stock-images/diamond.png");
+        game.load.image("sky", "/apps/azurmite/assets/images/levels/demo/sky.jpg");
+        game.load.image("diamond", "/apps/azurmite/assets/stock-images/diamond.png");
 
         /* image key must be same as its name in json file */
-        game.load.image("phaser-tileset", "assets/images/tilesets/phaser-tileset.png");
-        game.load.image("phaser-tileset-small", "assets/images/tilesets/phaser-tileset-small.png");
-        game.load.image("funky-bullet", "assets/images/enemies/bullet.png");
-        game.load.image("player-bullet", "assets/images/enemies/bullet.png");
+        game.load.image("phaser-tileset", "/apps/azurmite/assets/images/tilesets/phaser-tileset.png");
+        game.load.image("phaser-tileset-small", "/apps/azurmite/assets/images/tilesets/phaser-tileset-small.png");
+        game.load.image("funky-bullet", "/apps/azurmite/assets/images/enemies/bullet.png");
+        game.load.image("player-bullet", "/apps/azurmite/assets/images/enemies/bullet.png");
 
         /* update audio load ["assets/testmusic1.mp3", "assets/testmusic1.oog"] firefox needs oog */
-        game.load.audio("music-pleasant-plain", "assets/music/various-tracks/chibi-ninja.mp3" );
+        game.load.audio("music-pleasant-plain", "/apps/azurmite/assets/music/various-tracks/chibi-ninja.mp3" );
 
-        game.load.spritesheet("dude", "assets/images/main-character/main-character.png", 32, 48);        
-        game.load.spritesheet("funky-flower", "assets/images/enemies/funky-flower.png", 28, 32);
-        game.load.spritesheet("black-flower", "assets/images/enemies/black-flower.png", 260, 430); 
+        game.load.spritesheet("dude", "/apps/azurmite/assets/images/main-character/main-character.png", 32, 48);        
+        game.load.spritesheet("funky-flower", "/apps/azurmite/assets/images/enemies/funky-flower.png", 28, 32);
+        game.load.spritesheet("black-flower", "/apps/azurmite/assets/images/enemies/black-flower.png", 260, 430); 
 
         /* 128px by 128px tiles in this set */
-        game.load.tilemap("demoLevel", "assets/images/levels/demo/DemoLevel.json", null, Phaser.Tilemap.TILED_JSON);
-        game.load.tilemap("pleasantPlain", "assets/images/levels/pleasant-plain/PleasantPlain.json", null, Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap("demoLevel", "/apps/azurmite/assets/images/levels/demo/DemoLevel.json", null, Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap("pleasantPlain", "/apps/azurmite/assets/images/levels/pleasant-plain/PleasantPlain.json", null, Phaser.Tilemap.TILED_JSON);
 
     } /*** end preload wrapper ***/
 
