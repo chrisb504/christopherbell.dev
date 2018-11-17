@@ -4,3 +4,6 @@
 [submodule "direct/intellectually-dishonest"]
 	path = direct/intellectually-dishonest
 	url = https://github.com/Azurras/intellectually-dishonest
+[submodule "apps/blog"]
+	path = apps/blog
+	url = https://github.com/Azurras/blog.git
