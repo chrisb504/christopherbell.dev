@@ -1,9 +1,9 @@
 [submodule "apps/whats-for-lunch"]
 	path = apps/whats-for-lunch
 	url = https://github.com/Azurras/whats-for-lunch.git
-[submodule "direct/intellectually-dishonest"]
-	path = direct/intellectually-dishonest
-	url = https://github.com/Azurras/intellectually-dishonest
+[submodule "apps/intellectually-dishonest"]
+	path = apps/intellectually-dishonest
+	url = https://github.com/Azurras/intellectually-dishonest.git
 [submodule "apps/blog"]
 	path = apps/blog
 	url = https://github.com/Azurras/blog.git
