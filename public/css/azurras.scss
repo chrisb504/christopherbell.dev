@@ -140,16 +140,8 @@ img {
 
 #footer {
     background-color: #222;
-    bottom: 0;
-    clear: both;
-    height: 190px;
-    left: 0;
-    padding: 1rem;
+    height: calc(100vh - 540px);
     padding-top: 10px;
-    position: relative;
-    right: 0;
-    text-align: center;  
-    width: 100%;
 }
 
 #footer p,
