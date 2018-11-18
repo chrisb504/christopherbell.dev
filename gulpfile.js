@@ -37,7 +37,8 @@ gulp.task('js', function() {
         "apps/header/js/header.js",
         "apps/footer/js/footer.js"])
         .pipe(concat("main.js"))
-        .pipe(uglify())
+        .pipe(gulp.dest('public/js'))
+        // .pipe(uglify())
         .pipe(rename({suffix:'.min'}))
         .pipe(gulp.dest('public/js/'));
 });
