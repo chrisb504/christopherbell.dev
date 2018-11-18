@@ -36,22 +36,12 @@ gulp.task('js', function() {
         "apps/blog/public/js/blog.js",
         "apps/header/js/header.js",
         "apps/footer/js/footer.js"])
-        //.pipe(uglify())
         .pipe(concat("main.js"))
         .pipe(uglify())
         .pipe(rename({suffix:'.min'}))
         .pipe(gulp.dest('public/js/'));
 });
 
-// gulp.task('styles', function() {
-//     return gulp.src(
-//         "assets/css/azurras/azurras.css")
-//         //.pipe(uglify())
-//         .pipe(concat("main.css"))
-//         //.pipe(uglify())
-//         .pipe(rename({suffix:'.min'}))
-//         .pipe(gulp.dest('css/main/'));
-// });
 
 // gulp.task('watch', function() {
 //     gulp.watch('css/**/*.css', ['styles']); 
@@ -64,23 +54,3 @@ gulp.task('js', function() {
 //});
 
 //gulp.task('default', ['sass', 'scripts']);
-
-
-
-	// place code for your default task here
-	//gulp.src("js/Survive/Wrappers/Survive-Wrapper-Start")
-	  //  .pipe(concat("main.all.js"));
-
-//	gulp.src('js/**.js')
-//		.pipe(concat("main.all.js"))
-//		.pipe(uglify())
-//		.pipe(gulp.dest('js'));
-//
-//
-//
-//
-//	gulp.src('css/**.css')
-//		.pipe(concat("main.all.css"))
-//		.pipe(uglify())
-//		.pipe(gulp.dest('css'));
-//});
