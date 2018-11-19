@@ -22,9 +22,9 @@
   },
   "homepage": "https://github.com/aedwardsxula/Azurmite",
   "devDependencies": {
-    "grunt": "^0.4.5",
+    "grunt": "^1.0.3",
     "grunt-contrib-concat": "^0.5.1",
-    "grunt-contrib-uglify": "^0.8.0",
+    "grunt-contrib-uglify": "^4.0.0",
     "grunt-mamp": "^0.1.131"
   },
   "dependencies": {
