@@ -11,43 +11,19 @@
 </head>
 
 <body>
-    <div id="container">
-        <div ng-app="header" ng-controller="headerController">
-            <header id="header" ng-include="'/apps/header/html/header.html'"></header>
-        </div>
-        <div id="main">
-            <div class="jumbotron">
-                <div class="container">
+    <div ng-app="header" ng-controller="headerController">
+        <header id="header" ng-include="'/apps/header/html/header.html'"></header>
+    </div>
+        <div class="jumbotron">
+            <div class="container">
 
-                    <h1 class="text-center">
-                        Azurras
-                    </h1>
-                    <p class="text-center">
-                        What are you doing new today?
-                    </p>
-                </div>
-            </div>
-            <div class="content-well-container">
-                <div class="content-well">
-                    <div class="row">
-                        <div class=​ "col-lg-6">​
-                            <div class="post">
-                                <h2> What's New</h2>
-                                <p>
-                                    New Blog Post
-                                </p>
-                                <p>
-                                    New Footer Design
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <h1 class="text-center">
+                    Welcome to Azurras
+                </h1>
             </div>
         </div>
-        <div ng-app="footer" ng-controller="footerController">
-            <footer id="footer" ng-include="'/apps/footer/html/footer.html'"></footer>
-        </div>
+    <div ng-app="footer" ng-controller="footerController">
+        <footer id="footer" ng-include="'/apps/footer/html/footer.html'"></footer>
     </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
