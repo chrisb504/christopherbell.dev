@@ -13,59 +13,59 @@ module.exports = function (grunt) {
         concat: {
             js: {
                src: [
-                   "js/src/wrappers/begin-main-wrapper.js",
+                   "public/js/src/wrappers/begin-main-wrapper.js",
 
-                        "js/src/define-game.js",
-                        "js/src/variables/strings.js",
-                        "js/src/variables/integers.js",
-                        "js/src/variables/level-components.js",
-                        "js/src/variables/characters.js",
-                        "js/src/variables/collectibles.js",
-                        "js/src/variables/music.js",
-                        "js/src/variables/controls.js",
+                        "public/js/src/define-game.js",
+                        "public/js/src/variables/strings.js",
+                        "public/js/src/variables/integers.js",
+                        "public/js/src/variables/level-components.js",
+                        "public/js/src/variables/characters.js",
+                        "public/js/src/variables/collectibles.js",
+                        "public/js/src/variables/music.js",
+                        "public/js/src/variables/controls.js",
 
-                        "js/src/wrappers/begin-preload-wrapper.js",
-                            "js/src/preload/preload-images.js",
-                            "js/src/preload/preload-music.js",
-                            "js/src/preload/preload-spritesheets.js",
-                            "js/src/preload/preload-tilemaps.js",
-                        "js/src/wrappers/end-preload-wrapper.js",
+                        "public/js/src/wrappers/begin-preload-wrapper.js",
+                            "public/js/src/preload/preload-images.js",
+                            "public/js/src/preload/preload-music.js",
+                            "public/js/src/preload/preload-spritesheets.js",
+                            "public/js/src/preload/preload-tilemaps.js",
+                        "public/js/src/wrappers/end-preload-wrapper.js",
 
-                        "js/src/wrappers/begin-create-wrapper.js",
-                            "js/src/create/init-level-object-components.js",
-                            "js/src/create/camera.js",
-                            "js/src/create/physics.js",
-                            "js/src/create/object-animations.js",
-                            "js/src/create/hud.js",
-                            "js/src/create/spawn-funky-flowers.js",
-                            "js/src/create/init-music.js",
-                            "js/src/create/init-controls.js",
-                        "js/src/wrappers/end-create-wrapper.js",
+                        "public/js/src/wrappers/begin-create-wrapper.js",
+                            "public/js/src/create/init-level-object-components.js",
+                            "public/js/src/create/camera.js",
+                            "public/js/src/create/physics.js",
+                            "public/js/src/create/object-animations.js",
+                            "public/js/src/create/hud.js",
+                            "public/js/src/create/spawn-funky-flowers.js",
+                            "public/js/src/create/init-music.js",
+                            "public/js/src/create/init-controls.js",
+                        "public/js/src/wrappers/end-create-wrapper.js",
 
-                        "js/src/wrappers/begin-update-wrapper.js",
-                             "js/src/update/collision-physics.js",
-                             "js/src/update/scroll-background.js",
-                             "js/src/update/update-player-controls.js",
-                             "js/src/update/collect-diamond.js", 
-                             "js/src/update/update-funky-flower-ai.js",
-                        "js/src/wrappers/end-update-wrapper.js",
+                        "public/js/src/wrappers/begin-update-wrapper.js",
+                             "public/js/src/update/collision-physics.js",
+                             "public/js/src/update/scroll-background.js",
+                             "public/js/src/update/update-player-controls.js",
+                             "public/js/src/update/collect-diamond.js", 
+                             "public/js/src/update/update-funky-flower-ai.js",
+                        "public/js/src/wrappers/end-update-wrapper.js",
 
-                        "js/src/controls/player-controls.js",
-                        "js/src/update/detect-bullet-hit.js",
-                        "js/src/update/is-player-dead.js",
-                        "js/src/update/subtract-player-health.js",
-                        "js/src/artificial-intelligence/funky-flower-ai.js",
-                   "js/src/wrappers/end-main-wrapper.js"
+                        "public/js/src/controls/player-controls.js",
+                        "public/js/src/update/detect-bullet-hit.js",
+                        "public/js/src/update/is-player-dead.js",
+                        "public/js/src/update/subtract-player-health.js",
+                        "public/js/src/artificial-intelligence/funky-flower-ai.js",
+                   "public/js/src/wrappers/end-main-wrapper.js"
                ],
 
-                dest: "js/development/main.js"
+                dest: "public/js/development/main.js"
             }
         },
         // grunt task to minify files
         uglify: {
             js: {
-                src: "js/development/main.js",
-                dest: "js/production/main.min.js"
+                src: "public/js/development/main.js",
+                dest: "public/js/production/main.min.js"
             }
         }
     });
