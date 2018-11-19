@@ -6313,6 +6313,7 @@ a.text-dark:hover, a.text-dark:focus {
     border-color: #dee2e6; } }
 
 body {
+  background-color: #222;
   margin-top: 50px;
   min-height: 100%;
   position: relative;
