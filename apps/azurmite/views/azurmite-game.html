@@ -15,16 +15,14 @@
 </head>
 
 <body>
+    <div ng-app="header" ng-controller="headerController">
+        <header id="header" ng-include="'/apps/header/html/header.html'"></header>
+    </div>
     <div class="container">
-        <div ng-app="header" ng-controller="headerController">
-            <header id="header" ng-include="'/apps/header/html/header.html'"></header>
-        </div>
-        <div id="main">
-            <div id="azurmite"></div>
-        </div>
-        <div ng-app="footer" ng-controller="footerController">
-            <footer id="footer" ng-include="'/apps/footer/html/footer.html'"></footer>
-        </div>
+        <div id="azurmite"></div>   
+    </div>
+    <div ng-app="footer" ng-controller="footerController">
+        <footer id="footer" ng-include="'/apps/footer/html/footer.html'"></footer>
     </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
