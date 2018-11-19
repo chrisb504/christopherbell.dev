@@ -37,11 +37,7 @@ h1 {
     transform: scale(1.1);
 }
 
-.navbar {
-    opacity: 0.85;
-}
-
 #azurmite {
-    margin: 0 auto;
-    margin: 2em;
+    width: 100%;
+    margin: 89px 35px 31px 35px;
 }
