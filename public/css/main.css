@@ -6402,6 +6402,10 @@ img {
   padding-left: 10px;
   padding-right: 10px; }
 
+.fa {
+  font-size: 25px;
+  padding: 10px 9px; }
+
 /*  Ids  */
 /* This handles the footer container with my personal information */
 #container-azurras {
