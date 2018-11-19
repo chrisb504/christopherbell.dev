@@ -25,7 +25,7 @@ gulp.task('sass', function() {
     return gulp.src('public/css/main.scss')
         .pipe(sass({style: 'expanded'}))
         .on('error', gutil.log)
-        .pipe(gulp.dest('public/css'))
+        // .pipe(gulp.dest('public/css'))
         .pipe(csso())
         .pipe(rename({suffix:'.min'}))
         .pipe(gulp.dest('public/css'));

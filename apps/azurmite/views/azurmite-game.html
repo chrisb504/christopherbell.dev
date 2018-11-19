@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Azurras | Azurmite</title>
-    <link href="/apps/azurmite/css/src/style.css" rel="stylesheet">
-    <script type="text/javascript" src="/apps/azurmite/vendor/phaser/build/phaser.min.js"></script>
-    <script type="text/javascript" src="/apps/azurmite/js/development/main.js"></script>
+    <link href="/apps/azurmite/public/css/style.css" rel="stylesheet">
+    <script type="text/javascript" src="/apps/azurmite/public/lib/phaser/build/phaser.min.js"></script>
+    <script type="text/javascript" src="/apps/azurmite/public/js/development/main.js"></script>
+    <!-- <script type="text/javascript" src="/apps/azurmite/public/js/production/main.min.js"></script> -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/public/css/main.min.css">
@@ -14,23 +15,15 @@
 </head>
 
 <body>
+    <div ng-app="header" ng-controller="headerController">
+        <header id="header" ng-include="'/apps/header/html/header.html'"></header>
+    </div>
     <div class="container">
-        <div ng-app="header" ng-controller="headerController">
-            <header id="header" ng-include="'/apps/header/html/header.html'"></header>
-        </div>
-
+        <div id="azurmite"></div>   
     </div>
-
-    <div id="main">
-        <header>
-            <h1 id="appName"></h1>
-        </header>
-        <div class="container"></div>
-        <div id="azurmite"></div>
-        <footer></footer>
+    <div ng-app="footer" ng-controller="footerController">
+        <footer id="footer" ng-include="'/apps/footer/html/footer.html'"></footer>
     </div>
-
-    <!--        <script type="text/javascript" src="js/production/main.min.js"></script>-->
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -40,4 +33,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
     crossorigin="anonymous"></script>
 <script src="/public/js/main.min.js"></script>
+
 </html>

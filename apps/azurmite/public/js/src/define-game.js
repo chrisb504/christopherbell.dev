@@ -1,5 +1,5 @@
     var game = new Phaser.Game(
-        1350, 
+        1000, 
         700, 
         Phaser.AUTO, 
         "azurmite", 

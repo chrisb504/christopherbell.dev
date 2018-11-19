@@ -1,4 +1,5 @@
 body {
+    background-color: #222;
     margin-top: 50px;
     min-height: 100%;
     position: relative; 
@@ -109,6 +110,11 @@ img {
     padding-right: 10px;
 }
 
+.fa {
+    font-size: 25px;
+    padding: 10px 9px;
+}
+
 
 
 
@@ -122,6 +128,7 @@ img {
 }
 
 #container {
+    background-color: white;
     height: auto;
     margin: auto;
     width: 100%;
