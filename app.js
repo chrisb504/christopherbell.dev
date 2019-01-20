@@ -12,6 +12,7 @@ var db = monk('localhost:27017/');
 // Routers
 var indexRouter = require('./routes/index');
 var blogRouter = require('./routes/blog/blog');
+var blogPostRouter = require('./routes/blog/post');
 var restaurantsRouter = require('./routes/whats-for-lunch/restaurants');
 var whatsForLunchRouter = require('./routes/whats-for-lunch/whats-for-lunch');
 
@@ -25,7 +26,7 @@ app.use(function (req, res, next) {
 });
 
 // View engine setup
-app.set('views', path.join(dirname, 'views'));
+app.set('views', path.join(__dirname, 'views/pug/whats-for-lunch'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
@@ -36,13 +37,15 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 
 app.use("/apps", express.static(path.join(__dirname, 'apps')));
+app.use("/views", express.static(path.join(__dirname, 'views')));
 app.use("/public", express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', indexRouter);
-app.use('/blog', indexRouter);
-app.use('/whats-for-lunch', indexRouter);
-app.use('/restaurants', restaurantsRouter);
+app.use('/blog', blogRouter);
+app.use('/blog/post', blogPostRouter);
+app.use('/whats-for-lunch', whatsForLunchRouter);
+app.use('/whats-for-lunch/restaurants', restaurantsRouter);
 
 /// Catch 404 and forwarding to error handler
 app.use(function (req, res, next) {
