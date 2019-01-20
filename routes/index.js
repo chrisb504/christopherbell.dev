@@ -1,22 +1,30 @@
-var express = require('express');
-var router = express.Router();
-var mainTitle = 'Azurras';
+const express = require('express');
+
+const router = express.Router();
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-    res.sendFile('/index.html', {root: './views/html/'});
+router.get('/', (req, res, next) => {
+    res.sendFile('/index.html', {
+        root: './views/html/'
+    });
 });
 
-router.get('/resume', function (req, res, next) {
-    res.sendFile('/resume.html', {root: './views/html/'});
+router.get('/resume', (req, res, next) => {
+    res.sendFile('/resume.html', {
+        root: './views/html/'
+    });
 });
 
-router.get('/azurmite', function (req, res, next) {
-    res.sendFile('/azurmite.html', {root: './apps/azurmite/views/'});
+router.get('/azurmite', (req, res, next) => {
+    res.sendFile('/azurmite.html', {
+        root: './apps/azurmite/views/'
+    });
 });
 
-router.get('/azurmite-game', function (req, res, next) {
-    res.sendFile('/azurmite-game.html', {root: './apps/azurmite/views/'});
+router.get('/azurmite-game', (req, res, next) => {
+    res.sendFile('/azurmite-game.html', {
+        root: './apps/azurmite/views/'
+    });
 });
 
 module.exports = router;
