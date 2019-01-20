@@ -4,8 +4,18 @@
 
 Azurras is a website created by Christopher Bell with the purpose of holding any general needs and content. The site has many sections including previous or ongoing projects, a blog on any events or new finds, and my resume.
 
-## Guides
+## Quick Start
 
-https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04
+```bash
+# Install dependencies
+npm install
 
-https://blog.scalyr.com/2018/04/getting-started-quickly-node-js-logging/
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
+```

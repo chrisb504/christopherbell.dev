@@ -1,0 +1,7 @@
+<div class="blogArticle" ng-repeat="a in articles | orderBy : '-postNumber'">
+    <h2 class="text-center">{{ a.title }}</h2>
+    <h5 class="text-center">Author: {{ a.author }}</h5>
+    <h5 class="text-center">{{ a.date }}</h5>
+    <hr>
+    <pre>{{ a.text }}</pre>
+</div>
