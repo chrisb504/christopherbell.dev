@@ -5,19 +5,19 @@ const mainTitle = 'What\'s For Lunch?';
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-    res.render('index', {
+    res.render('whats-for-lunch/index', {
         title: mainTitle
     });
 });
 
 router.get('/add', (req, res, next) => {
-    res.render('add', {
+    res.render('whats-for-lunch/add', {
         title: mainTitle
     });
 });
 
 router.get('/delete', (req, res, next) => {
-    res.render('delete', {
+    res.render('whats-for-lunch/delete', {
         title: mainTitle
     });
 });
