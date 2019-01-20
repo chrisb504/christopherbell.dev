@@ -10,13 +10,13 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/add', (req, res, next) => {
-    res.render('add', {
+    res.render('blog/add', {
         title: mainTitle
     });
 });
 
 router.get('/delete', (req, res, next) => {
-    res.render('delete', {
+    res.render('blog/delete', {
         title: mainTitle
     });
 });
