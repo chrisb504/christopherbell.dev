@@ -1,22 +1,21 @@
-var express = require('express');
-var router = express.Router();
-var mainTitle = 'Blog';
+const express = require('express');
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-    // res.render('index', {
-    //     title: mainTitle
-    // });
-    res.sendFile('/blog.html', {root: './views/html/'});
+const router = express.Router();
+const mainTitle = 'Blog';
+
+router.get('/', (req, res, next) => {
+    res.sendFile('/blog.html', {
+        root: './views/html/'
+    });
 });
 
-router.get('/add', function (req, res, next) {
+router.get('/add', (req, res, next) => {
     res.render('add', {
         title: mainTitle
     });
 });
 
-router.get('/delete', function (req, res, next) {
+router.get('/delete', (req, res, next) => {
     res.render('delete', {
         title: mainTitle
     });
