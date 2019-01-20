@@ -19,7 +19,7 @@
     blog.factory('BlogFactory', function ($http) {
         return {
             get: function () {
-                return $http.get('/blog/data/blogdata.json');
+                return $http.get('/public/data/blogdata.json');
             }
         };
     });
