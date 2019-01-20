@@ -26,7 +26,7 @@ app.use(function (req, res, next) {
 });
 
 // View engine setup
-app.set('views', path.join(__dirname, 'views/pug/whats-for-lunch'));
+app.set('views', path.join(__dirname, 'views/pug/'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
