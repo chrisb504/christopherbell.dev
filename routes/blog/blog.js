@@ -7,7 +7,7 @@ router.get('/', function (req, res, next) {
     // res.render('index', {
     //     title: mainTitle
     // });
-    res.sendFile('/index.html', {root: './views/'});
+    res.sendFile('/blog.html', {root: './views/html/'});
 });
 
 router.get('/add', function (req, res, next) {
