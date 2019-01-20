@@ -6,7 +6,7 @@ var router = express.Router();
  */
 router.get('/', function (req, res) {
     var db = req.db;
-    var collection = db.get('blog');
+    var collection = db.get('blogpost');
     collection.find({}, {}, function (e, docs) {
         res.json(docs);
     });
@@ -17,7 +17,7 @@ router.get('/', function (req, res) {
  */
 router.post('/add', function (req, res) {
     var db = req.db;
-    var collection = db.get('blog');
+    var collection = db.get('blogpost');
     collection.insert(req.body, function (err, result) {
         res.send(
             (err === null) ? {
@@ -34,7 +34,7 @@ router.post('/add', function (req, res) {
  */
 router.delete('/delete/:id', function (req, res) {
     var db = req.db;
-    var collection = db.get('blog');
+    var collection = db.get('blogpost');
     var restaurantToDelete = req.params.id;
     collection.remove({
         '_id': restaurantToDelete
