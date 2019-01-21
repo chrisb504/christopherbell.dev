@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  #container
+        #header
+            #header-menu
+            #header-text
+                h1=title
+        #body
+            #body-title
+                h1=message
+                h3=error.status
+            #content
+                pre #{error.stack}
