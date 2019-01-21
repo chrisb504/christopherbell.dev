@@ -3,9 +3,9 @@
 /**
  * Module dependencies.
  */
-const debug = require('debug')('whats-for-lunch:server');
+const debug = require('debug')('http');
 const http = require('http');
-const app = require('../app');
+const app = require('./app');
 
 /**
  * Normalize a port into a number, string, or false.

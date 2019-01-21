@@ -4,12 +4,12 @@
     "description": "The Azurras Website",
     "author": "Christopher Bell",
     "private": true,
-    "main": "/bin/www.js",
+    "main": "server.js",
     "scripts": {
         "build": "webpack --mode production",
-        "start": "npm run build && node ./bin/www.js",
+        "start": "npm run build && node ./server.js",
         "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
-        "server": "nodemon ./bin/www.js",
+        "server": "nodemon ./server.js",
         "dev": "concurrently \"npm run server\" \"npm run client\""
     },
     "dependencies": {
