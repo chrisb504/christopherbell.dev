@@ -4,7 +4,7 @@ import BlogPost from './blogpost.mjs';
 function setBlogPost() {
     let newBlogPost = new BlogPost($('input#input-title').val(),
         $('input#input-author').val(), $('input#input-date').val(),
-        $('input#input-post').val());
+        $('textarea#input-post').val());
 
     return newBlogPost;
 }
