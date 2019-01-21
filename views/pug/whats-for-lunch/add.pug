@@ -2,13 +2,12 @@ extends layout
 
 block content
     #container
-        #header
-            #header-menu
-            #header-text
-                h1=title
-        #body
-            #body-title
-                h3 Enter the Restaurant's Info
+        #nav
+        #main
+            div(class='jumbotron')
+                div(class='container')
+                    h1(class='text-center') Enter the Restaurant's Info
             #fields
                 input#input-name(type='text', placeholder='Name')
                 button#button-add Add Restaurant
+            footer(id='footer')

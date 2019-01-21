@@ -2,12 +2,14 @@ extends layout
 
 block content
     #container
-        #header
-            #header-menu
-            #header-text
-                h1=title
-        #body
-            #body-title
-                h3 Today's Pick:
-                #getRestaurantData
-            #fields
+        #nav
+        #main
+            div(class='jumbotron')
+                div(class='container')
+                    h1(class='text-center')=title
+            #body
+                #body-title
+                    h3 Today's Pick:
+                    #getRestaurantData
+                #fields
+            footer(id='footer')
