@@ -1,18 +1,16 @@
 extends layout
 
 block content
-    #nav
     #container
-        #header
-            #header-menu
-            #header-text
-                h1=title
-        #body
-            #body-title
-                h3 Enter the Blog Post
+        #nav
+        #main
+            div(class='jumbotron')
+                div(class='container')
+                    h1(class='text-center') Enter the Blog Post
             #fields
                 input#input-title(type='text', placeholder='Title')
                 input#input-author(type='text', placeholder='Author')
                 input#input-date(type='text', placeholder='Date')
                 input#input-post(type='text', placeholder='Post')
                 button#button-add Add Blog Post
+            footer(id='footer')
