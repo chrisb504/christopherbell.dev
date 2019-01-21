@@ -3,8 +3,8 @@ import BlogPost from './blogpost.mjs';
 
 function setBlogPost() {
     let newBlogPost = new BlogPost($('input#input-title').val(),
-        $('input#input-author').val(), $('input#input-author').val(),
-        $('#input#input-post').val());
+        $('input#input-author').val(), $('input#input-date').val(),
+        $('input#input-post').val());
 
     return newBlogPost;
 }
@@ -42,6 +42,7 @@ export function addBlogPost(event) {
     event.preventDefault();
     if (validateBlogPost() === 0) {
         let posting = setBlogPost();
+        console.log(posting);
         postBlogPost(posting);
     } else {
         // If errorCount is more than 0, error out

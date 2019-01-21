@@ -1,8 +1,8 @@
 import * as post from './postcontroller.mjs';
 
 $(document).ready(() => {
-    if ($('#button-add').length > 0) {
-        $('#button-add').on('click', post.addBlogPost);
+    if ($('#blog-button-add').length > 0) {
+        $('#blog-button-add').on('click', post.addBlogPost);
     }
 
     // if ($('#button-delete').length > 0) {
