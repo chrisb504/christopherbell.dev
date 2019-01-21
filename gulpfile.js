@@ -22,7 +22,7 @@ gulp.task('log', function() {
   });
 
 gulp.task('sass', function() {
-    return gulp.src('public/css/main.scss')
+    return gulp.src('./public/css/main.scss')
         .pipe(sass({style: 'expanded'}))
         .on('error', gutil.log)
         // .pipe(gulp.dest('public/css'))
