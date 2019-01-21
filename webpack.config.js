@@ -11,7 +11,7 @@ module.exports = {
         './apps/react/index.js',
         './apps/react/nav/index.js',
         './apps/react/footer/index.js',
-        './public/js/blog/blog.js',
+        './apps/react/blog/index.js'
     ],
     output: {
         path: path.join(__dirname, outputDirectory),
