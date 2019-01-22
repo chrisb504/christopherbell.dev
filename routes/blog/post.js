@@ -48,7 +48,9 @@ router.get('/tags', (req, res) => {
             if (posting.hasOwnProperty('tags')) {
                 const tagArray = posting.tags.split(',');
                 tagArray.map((tag) => {
-                    tagResponse.push(tag);
+                    if(!tagResponse.includes(tag)) {
+                        tagResponse.push(tag);
+                    }
                 });
             }
         });
