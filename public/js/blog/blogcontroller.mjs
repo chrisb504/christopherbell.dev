@@ -5,7 +5,7 @@ $(document).ready(() => {
         $('#blog-button-add').on('click', post.addBlogPost);
     }
 
-    // if ($('#button-delete').length > 0) {
-    //     $('#button-delete').on('click', post.deleteRestaurantWithID);
-    // }
+    if ($('#blog-button-delete').length > 0) {
+        $('#blog-button-delete').on('click', post.deletePostWithID);
+    }
 });

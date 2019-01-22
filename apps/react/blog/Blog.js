@@ -4,8 +4,8 @@ export default class Footer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            posts: [] 
-        }
+            posts: []
+        };
     }
 
     componentDidMount() {
