@@ -18,9 +18,9 @@ export default class Footer extends Component {
 
     render() {
         return (
-            <div class="blogArticle">
+            <div class="blog-container">
                 {this.state.posts.reverse().map(posts =>
-                    <div>
+                    <div class="blogArticle">
                         <h2 class="text-center">{posts.title}</h2>
                         <h5 class="text-center">Author: {posts.author}</h5>
                         <h5 class="text-center">{posts.date}</h5>
