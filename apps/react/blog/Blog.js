@@ -47,16 +47,27 @@ export default class Blog extends Component {
     setPostLocation(e) {
         const location = `/blog/post/tags/${e.target.value}`;
         console.log("Setting to this location", location);
-        this.setState({ location: `/blog/post/tags/${e.target.value}` }, function() {
-            console.log("PostLocation", this.state.location);
-            this.getData(this.state.location);
-        });
+        if(e.target.value) {
+            this.setState({ location: `/blog/post/tags/${e.target.value}` }, function() {
+                console.log("PostLocation", this.state.location);
+                this.getData(this.state.location);
+            });
+        } else {
+            this.setState({ location: `/blog/post/` }, function() {
+                console.log("PostLocation", this.state.location);
+                this.getData(this.state.location);
+            });
+        }
+        
     }
 
     render() {
         return (
             <div className="blog-container">
                 <div class="blogTags-container">
+                    <div class="blogTags">
+                        <button class='btn btn-dark' onClick={this.setPostLocation} value=''>all</button>
+                    </div>
                     {this.state.tags.map(tag => (
                         <div class="blogTags">
                             <button class='btn btn-dark' onClick={this.setPostLocation} value={tag}>{tag}</button>
