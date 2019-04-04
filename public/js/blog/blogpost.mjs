@@ -5,7 +5,7 @@ export default class BlogPost {
         this.date = date;
         this.post = post;
         this.postNumber = 0;
-        this.tags = [];
+        this.tags = '';
         this.imagePath = '';
         this.location = '/blog/post';
     }

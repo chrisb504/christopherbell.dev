@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 /*
- * GET userlist.
+ * GET all post.
  */
 router.get('/', (req, res) => {
     const db = req.db;
@@ -14,11 +14,57 @@ router.get('/', (req, res) => {
 });
 
 /*
- * POST to adduser.
+ * GET all post related to a given tag
+ */
+router.get('/tags/:tag', (req, res) => {
+    const db = req.db;
+    const collection = db.get('blogpost');
+    const selectedTag = req.params.tag;
+    const tagResponse = [];
+    collection.find({}, {}, (e, docs) => {
+        docs.map((posting) => {
+            if (posting.hasOwnProperty('tags')) {
+                const tagArray = posting.tags.split(',');
+                tagArray.map((tag) => {
+                    if (tag === selectedTag) {
+                        tagResponse.push(posting);
+                    }
+                });
+            }
+        });
+        res.send(tagResponse);
+    });
+});
+
+/*
+ * GET all tags
+ */
+router.get('/tags', (req, res) => {
+    const db = req.db;
+    const collection = db.get('blogpost');
+    const tagResponse = [];
+    collection.find({}, {}, (e, docs) => {
+        docs.map((posting) => {
+            if (posting.hasOwnProperty('tags')) {
+                const tagArray = posting.tags.split(',');
+                tagArray.map((tag) => {
+                    if(!tagResponse.includes(tag)) {
+                        tagResponse.push(tag);
+                    }
+                });
+            }
+        });
+        res.send(tagResponse);
+    });
+});
+
+/*
+ * POST to post db.
  */
 router.post('/add', (req, res) => {
     const db = req.db;
     const collection = db.get('blogpost');
+    console.log('body', req.body);
     collection.insert(req.body, (err, result) => {
         res.send(
             (err === null) ? {
@@ -31,14 +77,14 @@ router.post('/add', (req, res) => {
 });
 
 /*
- * DELETE to deleteuser.
+ * DELETE a post.
  */
 router.delete('/delete/:id', (req, res) => {
     const db = req.db;
     const collection = db.get('blogpost');
-    const restaurantToDelete = req.params.id;
+    const postToDelete = req.params.id;
     collection.remove({
-        _id: restaurantToDelete
+        _id: postToDelete
     }, (err) => {
         res.send((err === null) ? {
             msg: ''

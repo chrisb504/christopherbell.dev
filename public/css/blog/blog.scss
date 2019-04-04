@@ -35,3 +35,15 @@ textarea {
     padding: 0 0 0 15px;
     width: 85%;
 }
+
+.blogTags-container {
+    display: inline-flex;
+    margin: 0 auto;
+    padding: 25px 0px;
+    width: 100%;
+}
+
+.blogTags {
+    margin: 0 auto;
+    line-break: wrap;
+}

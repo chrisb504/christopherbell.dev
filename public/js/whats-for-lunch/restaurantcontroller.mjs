@@ -41,7 +41,7 @@ export function deleteRestaurant(event) {
     if (confirmation === true) {
         $.ajax({
             type: 'DELETE',
-            url: `${location  }/restaurants/delete/${  $(this).attr('rel')}`
+            url: `${location  }/restaurants/delete/${$(this).attr('rel')}`
         }).done((response) => {
             alert("Restaurant Deleted");
             $('input').val('');
