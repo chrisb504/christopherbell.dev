@@ -8,7 +8,6 @@ https://hackernoon.com/full-stack-web-application-using-react-node-js-express-an
 
 https://stackoverflow.com/questions/48902050/eslint-airbnb-with-4-spaces-for-indent
 
-
 ## React
 
 https://reactjsnews.com/NgRepeat-Equivalent-in-React

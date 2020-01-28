@@ -2,7 +2,7 @@ import BlogPost from './blogpost.mjs';
 
 
 function getTags() {
-    return $('input#input-tags').val().replace(/\s/g,'');
+    return $('input#input-tags').val().replace(/\s/g, '');
 }
 
 function setBlogPost() {

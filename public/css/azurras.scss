@@ -2,7 +2,7 @@ body {
     background-color: #222;
     margin-top: 50px;
     min-height: 100%;
-    position: relative; 
+    position: relative;
     width: 100%;
 }
 
@@ -26,8 +26,6 @@ img {
     width: 100%;
 }
 
-
-
 /* This handles any text inside a jumbotron */
 .headline-info-text {
     /*border: 5px black solid;*/
@@ -45,7 +43,7 @@ img {
 }
 
 .jumbotron {
-    background-color: #5EFFB8;
+    background-color: #5effb8;
 }
 
 /* Jumbrotrons should be placed inside this component */
@@ -67,27 +65,27 @@ img {
 }
 
 .jumbotron-improved p {
-  margin-bottom: 15px;
-  font-size: 21px;
-  font-weight: 200;
+    margin-bottom: 15px;
+    font-size: 21px;
+    font-weight: 200;
 }
 
-
-
-@media (min-width: 500px){
+@media (min-width: 500px) {
     .blogArticle {
         margin-left: auto;
         margin-right: auto;
         margin-bottom: 170px;
         width: 800px;
     }
+
     .content-well {
         height: auto;
         margin: auto;
         width: 960px;
     }
 }
-@media (max-width: 499px){
+
+@media (max-width: 499px) {
     .blogArticle {
         margin-left: auto;
         margin-right: auto;
@@ -115,11 +113,7 @@ img {
     padding: 10px 9px;
 }
 
-
-
-
 /*  Ids  */
-
 
 /* This handles the footer container with my personal information */
 #container-azurras {
@@ -176,5 +170,5 @@ img {
     margin-left: auto;
     padding-left: 15px;
     padding-right: 15px;
-    text-align:center;
+    text-align: center;
 }

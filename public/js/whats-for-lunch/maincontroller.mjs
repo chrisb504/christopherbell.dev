@@ -4,7 +4,7 @@ $(document).ready(() => {
     if ($('#button-add').length > 0) {
         $('#button-add').on('click', restaurant.addRestaurant);
     }
-    
+
     if ($('#button-delete').length > 0) {
         $('#button-delete').on('click', restaurant.deleteRestaurantWithID);
     }

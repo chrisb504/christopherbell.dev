@@ -9,6 +9,7 @@ $button-border-color: #fffdfd;
 #fields {
     padding: 10px 0px;
     text-align: center;
+
     input {
         border: 1px solid $soft-border-color;
         font-size: 17px;
@@ -17,6 +18,7 @@ $button-border-color: #fffdfd;
         padding: 0px 0px 0px 15px;
         width: 85%;
     }
+
     button {
         border: 1px solid $soft-border-color;
         background-color: $button-border-color;

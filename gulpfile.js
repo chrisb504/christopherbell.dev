@@ -17,29 +17,36 @@ var gutil = require('gulp-util');
 //   })
 // });
 
-gulp.task('log', function() {
+gulp.task('log', function () {
     gutil.log('== My Log Task ==')
-  });
+});
 
-gulp.task('sass', function() {
+gulp.task('sass', function () {
     return gulp.src('./public/css/main.scss')
-        .pipe(sass({style: 'expanded'}))
+        .pipe(sass({
+            style: 'expanded'
+        }))
         .on('error', gutil.log)
         // .pipe(gulp.dest('public/css'))
         .pipe(csso())
-        .pipe(rename({suffix:'.min'}))
+        .pipe(rename({
+            suffix: '.min'
+        }))
         .pipe(gulp.dest('public/css'));
 });
 
-gulp.task('js', function() {
+gulp.task('js', function () {
     return gulp.src([
-        "apps/blog/public/js/blog.js",
-        "apps/header/js/header.js",
-        "apps/footer/js/footer.js"])
+            "apps/blog/public/js/blog.js",
+            "apps/header/js/header.js",
+            "apps/footer/js/footer.js"
+        ])
         .pipe(concat("main.js"))
         .pipe(gulp.dest('public/js'))
         // .pipe(uglify())
-        .pipe(rename({suffix:'.min'}))
+        .pipe(rename({
+            suffix: '.min'
+        }))
         .pipe(gulp.dest('public/js/'));
 });
 
