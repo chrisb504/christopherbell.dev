@@ -22,7 +22,7 @@
         "gulp-concat": "^2.6.1",
         "gulp-connect": "^5.7.0",
         "gulp-csso": "^3.0.1",
-        "gulp-rename": "^1.4.0",
+        "gulp-rename": "^2.0.0",
         "gulp-sass": "^4.0.2",
         "gulp-uglify": "^3.0.2",
         "gulp-util": "^3.0.8",
