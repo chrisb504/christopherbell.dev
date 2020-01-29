@@ -1,10 +1,5 @@
-# VS Code
-**/.vscode
-
-# Intellji
-**/.idea
-**/Azurras.iml
-
-# Misc
+# Annoying items and folders
+public/dist/
+target/
 **/.DS_Store
 **/node_modules
