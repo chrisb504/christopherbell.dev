@@ -3,3 +3,6 @@ public/dist/
 target/
 **/.DS_Store
 **/node_modules
+.settings
+.classpath
+.project

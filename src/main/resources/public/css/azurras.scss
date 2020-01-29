@@ -1,0 +1,174 @@
+body {
+    background-color: #222;
+    margin-top: 50px;
+    min-height: 100%;
+    position: relative;
+    width: 100%;
+}
+
+pre {
+    white-space: pre-line;
+    word-break: initial;
+}
+
+img {
+    height: auto;
+    width: 100%;
+}
+
+/* Classes */
+
+.content-well-container {
+    height: auto;
+    margin-bottom: 100px;
+    padding-bottom: 50px;
+    position: relative;
+    width: 100%;
+}
+
+/* This handles any text inside a jumbotron */
+.headline-info-text {
+    /*border: 5px black solid;*/
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* This handles any title inside a jumbotron */
+.headline-info-title {
+    /*border: 5px black solid;*/
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.jumbotron {
+    background-color: #5effb8;
+}
+
+/* Jumbrotrons should be placed inside this component */
+.jumbrotron-container {
+    /*border: 5px black solid;*/
+    height: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.jumbotron-improved {
+    background: no-repeat;
+    background-position: center;
+    height: auto;
+    max-height: 700px;
+    min-height: 500px;
+}
+
+.jumbotron-improved p {
+    margin-bottom: 15px;
+    font-size: 21px;
+    font-weight: 200;
+}
+
+@media (min-width: 500px) {
+    .blogArticle {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 170px;
+        width: 800px;
+    }
+
+    .content-well {
+        height: auto;
+        margin: auto;
+        width: 960px;
+    }
+}
+
+@media (max-width: 499px) {
+    .blogArticle {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 170px;
+        padding: 15px;
+        width: auto;
+    }
+
+    .content-well {
+        height: auto;
+        margin: auto;
+        padding-left: 20px;
+        padding-right: 20px;
+        width: auto;
+    }
+}
+
+.post {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.fa {
+    font-size: 25px;
+    padding: 10px 9px;
+}
+
+/*  Ids  */
+
+/* This handles the footer container with my personal information */
+#container-azurras {
+    width: 100%;
+    height: auto;
+}
+
+#container {
+    background-color: white;
+    height: auto;
+    margin: auto;
+    width: 100%;
+}
+
+#header {
+    width: 100%;
+    height: auto;
+}
+
+#main {
+    width: 100%;
+    height: auto;
+    // padding-bottom: 20px;
+}
+
+#footer {
+    background-color: #222;
+    height: calc(100vh - 540px);
+    padding-top: 10px;
+}
+
+#footer p,
+#footer a {
+    color: white;
+}
+
+#footer-azurras {
+    width: 100%;
+    height: auto;
+}
+
+#header-azurras {
+    width: 100%;
+    height: auto;
+}
+
+#main-azurras {
+    width: 100%;
+    height: auto;
+}
+
+#footer-my-info-container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+}

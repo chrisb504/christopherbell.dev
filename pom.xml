@@ -17,25 +17,25 @@
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <webjars-bootstrap.version>3.3.6</webjars-bootstrap.version>
+        <!-- <webjars-bootstrap.version>3.3.6</webjars-bootstrap.version>
         <webjars-jquery-ui.version>1.11.4</webjars-jquery-ui.version>
         <webjars-jquery.version>2.2.4</webjars-jquery.version>
-        <jacoco.version>0.8.2</jacoco.version>
+        <jacoco.version>0.8.2</jacoco.version> -->
     </properties>
 
     <dependencies>
-        <dependency>
+        <!-- <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
+        </dependency> -->
+        <!-- <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
+        </dependency> -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -56,24 +56,24 @@
 			<artifactId>hsqldb</artifactId>
 			<scope>runtime</scope>
 		</dependency> -->
-        <dependency>
+        <!-- <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
-        </dependency>
+        </dependency> -->
 
         <!-- caching -->
-        <dependency>
+        <!-- <dependency>
             <groupId>javax.cache</groupId>
             <artifactId>cache-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>
-        </dependency>
+        </dependency> -->
 
         <!-- webjars -->
-        <dependency>
+        <!-- <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>webjars-locator-core</artifactId>
         </dependency>
@@ -91,7 +91,7 @@
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
             <version>${webjars-bootstrap.version}</version>
-        </dependency>
+        </dependency> -->
         <!-- end of webjars -->
 
         <dependency>
@@ -108,8 +108,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <!-- Spring Boot Actuator displays build-related information
-              if a META-INF/build-info.properties file is present -->
+                        <!-- Spring Boot Actuator displays build-related information if a META-INF/build-info.properties file is present -->
                         <goals>
                             <goal>build-info</goal>
                         </goals>
@@ -124,7 +123,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
+            <!-- <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.version}</version>
@@ -142,11 +141,11 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin> -->
 
             <!-- Spring Boot Actuator displays build-related information if a git.properties
         file is present at the classpath -->
-            <plugin>
+            <!-- <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
                 <executions>
@@ -164,7 +163,7 @@
                     </generateGitPropertiesFilename>
                     <failOnNoGitDirectory>false</failOnNoGitDirectory>
                 </configuration>
-            </plugin>
+            </plugin> -->
 
             <!-- Sass compiler -->
             <!-- <plugin>
