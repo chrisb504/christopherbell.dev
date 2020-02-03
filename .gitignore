@@ -1,5 +1,4 @@
 # Annoying items and folders
-public/dist/
 target/
 **/.DS_Store
 **/node_modules
