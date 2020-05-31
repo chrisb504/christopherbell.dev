@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class BlogController {
-    private final Logger LOG = LogManager.getLogger(BlogController.class);
+    //private final Logger LOG = LogManager.getLogger(BlogController.class);
     private BlogService blogService;
 
     @Autowired

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BlogService {
-    private final Logger LOG = LogManager.getLogger(BlogService.class);
+    //private final Logger LOG = LogManager.getLogger(BlogService.class);
     
     public BlogService() {
         

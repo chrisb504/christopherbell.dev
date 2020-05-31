@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AzurrasService {
-    private final Logger LOG = LogManager.getLogger(AzurrasService.class);
+    //private final Logger LOG = LogManager.getLogger(AzurrasService.class);
     private AzurmiteService azurmiteService;
     private BlogService blogService;
     private WhatsForLunchService whatsForLunchService;

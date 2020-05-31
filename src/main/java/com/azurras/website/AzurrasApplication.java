@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class AzurrasApplication {
-	private final Logger LOG = LogManager.getLogger(AzurrasApplication.class);
+	//private final Logger LOG = LogManager.getLogger(AzurrasApplication.class);
     public static void main(String[] args) {
 		SpringApplication.run(AzurrasApplication.class, args);
 	}
