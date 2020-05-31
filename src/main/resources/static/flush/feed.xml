@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" 
+    xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+    <channel>
+        <title>Flush</title>
+        <link>http://www.azurras.com/flush</link>
+        <language>en-us</language>
+        <copyright>&#xA9;2020</copyright>
+        <webMaster>cbell7@icloud.com (Christopher Bell)</webMaster>
+        <managingEditor>cbell7@icloud.com (Christopher Bell)</managingEditor>
+        <image>
+            <title>Flush</title>
+            <link>http://www.azurras.com/flush</link>
+            <url>http://www.azurras.com/flush/images/flush-logo.png</url>
+        </image>
+        <itunes:owner>
+            <itunes:name>Christopher Bell</itunes:name>
+            <itunes:email>cbell7@icloud.com</itunes:email>
+        </itunes:owner>
+        <itunes:category text="News &amp; Politics">
+        </itunes:category>
+        <itunes:keywords>Flush, Flush Media, Intellectually Dishonest, Christopher Bell, politics, Caleb Sour, azurras</itunes:keywords>
+        <itunes:explicit>yes</itunes:explicit>
+        <itunes:image href="http://www.azurras.com/flush/images/flush-logo.png"/>
+        <atom:link href="http://www.azurras.com/flush/feed.xml" rel="self" type="application/rss+xml" />
+        <pubDate>Tue, 1 Jun 2020 08:00:00 CST</pubDate>
+        <itunes:author>Christopher Bell, Caleb Sour</itunes:author>
+        <description>Two dudes from New Orleans discuss the world from their own perspectives.</description>
+        <itunes:summary>Two dudes from New Orleans discuss the world from their own perspectives.</itunes:summary>
+        <itunes:subtitle>Two dudes discuss the world</itunes:subtitle>
+        <lastBuildDate>Tue, 1 Jun 2020 08:00:00 CST</lastBuildDate>
+        <item>
+            <title>Episode 1 - And We Back And We Back</title>
+            <pubDate>Mon, 1 Jun 2020 08:00:00 CST</pubDate>
+            <link>http://www.azurras.com/flush</link>
+            <description>Our return to the internet!</description>
+            <itunes:summary>Our return to the internet!</itunes:summary>
+            <itunes:subtitle>We are back</itunes:subtitle>
+            <itunes:duration>01:08:32</itunes:duration>
+            <enclosure url="http://www.azurras.com/flush/audio/ep1.mp3" length="98691517" type="audio/mp3"/>
+            <guid>http://www.azurras.com/flush/audio/ep1.mp3</guid>
+        </item>
+    </channel>
+</rss>
