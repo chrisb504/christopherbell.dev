@@ -1,3 +1,5 @@
+package com.azurras.website.models.whatsforlunch;
+
 public class Restaurant {
     private String name;
 
