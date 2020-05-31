@@ -5,10 +5,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AzurmiteService {
-    private final Logger LOG = LogManager.getLogger(AzurmiteService.class);
-
-    public AzurmiteService() {
+public class BlogService {
+    private final Logger LOG = LogManager.getLogger(BlogService.class);
+    
+    public BlogService() {
         
     }
 }
