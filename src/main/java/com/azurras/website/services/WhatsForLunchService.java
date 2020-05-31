@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class WhatsForLunchService {
-    private final Logger LOG = LogManager.getLogger(WhatsForLunchService.class);
+    //private final Logger LOG = LogManager.getLogger(WhatsForLunchService.class);
 
     public WhatsForLunchService() {
         

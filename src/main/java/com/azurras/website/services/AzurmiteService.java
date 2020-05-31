@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AzurmiteService {
-    private final Logger LOG = LogManager.getLogger(AzurmiteService.class);
+    //private final Logger LOG = LogManager.getLogger(AzurmiteService.class);
 
     public AzurmiteService() {
         

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class WhatsForLunchController {
-    private final Logger LOG = LogManager.getLogger(WhatsForLunchController.class);
+    //private final Logger LOG = LogManager.getLogger(WhatsForLunchController.class);
     private WhatsForLunchService whatsForLunchService;
 
     @Autowired
