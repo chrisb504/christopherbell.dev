@@ -19,12 +19,12 @@
         </itunes:owner>
         <itunes:category text="News &amp; Politics">
         </itunes:category>
-        <itunes:keywords>Flush, Flush Media, Intellectually Dishonest, Christopher Bell, politics, Caleb Sour, azurras</itunes:keywords>
+        <itunes:keywords>Flush, Flush Media, Intellectually Dishonest, Chris, politics, Caleb, azurras</itunes:keywords>
         <itunes:explicit>yes</itunes:explicit>
         <itunes:image href="http://www.azurras.com/flush/images/flush-logo.png"/>
         <atom:link href="http://www.azurras.com/flush/feed.xml" rel="self" type="application/rss+xml" />
         <pubDate>Tue, 1 Jun 2020 08:00:00 CST</pubDate>
-        <itunes:author>Christopher Bell, Caleb Sour</itunes:author>
+        <itunes:author>Chris, Caleb</itunes:author>
         <description>Two dudes from New Orleans discuss the world from their own perspectives.</description>
         <itunes:summary>Two dudes from New Orleans discuss the world from their own perspectives.</itunes:summary>
         <itunes:subtitle>Two dudes discuss the world</itunes:subtitle>
