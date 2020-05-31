@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class AzurmiteController {
-    private final Logger LOG = LogManager.getLogger(AzurmiteController.class);
+    //private final Logger LOG = LogManager.getLogger(AzurmiteController.class);
     private AzurmiteService azurmiteService;
 
     @Autowired

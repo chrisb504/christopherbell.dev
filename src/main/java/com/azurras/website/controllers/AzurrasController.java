@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 public class AzurrasController {
-    private Logger LOG = LogManager.getLogger(AzurrasController.class);
+   // private Logger LOG = LogManager.getLogger(AzurrasController.class);
     private AzurrasService azurrasService;
 
     @Autowired
@@ -25,37 +25,37 @@ public class AzurrasController {
 
     @GetMapping("/")
     public String index() {
-        LOG.info("Returning index page");
+        //LOG.info("Returning index page");
         return "index";
     }
 
     @GetMapping("/azurmite")
     public String azurmite() {
-        LOG.info("Returning azurmite page");
+        //LOG.info("Returning azurmite page");
         return "azurmite";
     }
 
     @GetMapping("/blog")
     public String blog() {
-        LOG.info("Returning blog page");
+        //LOG.info("Returning blog page");
         return "blog";
     }
 
     @GetMapping("/flush")
     public String flush() {
-        LOG.info("Returning flush page");
+        //LOG.info("Returning flush page");
         return "flush";
     }
 
     @GetMapping("/resume")
     public String resume() {
-        LOG.info("Returning resume page");
+        //LOG.info("Returning resume page");
         return "resume";
     }
 
     @GetMapping("/whatsforlunch")
     public String whatsforlunch() {
-        LOG.info("Returning whatsforlunch page");
+        //LOG.info("Returning whatsforlunch page");
         return "whatsforlunch";
     }
 }
