@@ -19,3 +19,10 @@ npm run build
 # Start production server
 npm start
 ```
+
+
+## Building JS or Sass
+
+gulp js
+
+gulp sass
