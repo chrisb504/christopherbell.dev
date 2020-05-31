@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" 
+    xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+    <channel>
+        <title>Intellectually Dishonest</title>
+        <link>http://www.azurras.com/</link>
+        <language>en-us</language>
+        <copyright>&#xA9;2018</copyright>
+        <webMaster>christopherbell1813@gmail.com (Christopher Bell)</webMaster>
+        <managingEditor>christopherbell1813@gmail.com (Christopher Bell)</managingEditor>
+        <image>
+            <title>Intellectually Dishonest</title>
+            <link>http://www.azurras.com/</link>
+            <url>http://www.azurras.com/direct/intellectually-dishonest/assets/images/id-logo.png</url>
+        </image>
+        <itunes:owner>
+            <itunes:name>Christopher Bell</itunes:name>
+            <itunes:email>christopherbell1813@gmail.com</itunes:email>
+        </itunes:owner>
+        <itunes:category text="News &amp; Politics">
+        </itunes:category>
+        <itunes:keywords>Intellectually Dishonest, Christopher Bell, politics, Caleb Sour, Jeremy Trahan, azurras, Marc Jeffery</itunes:keywords>
+        <itunes:explicit>yes</itunes:explicit>
+        <itunes:image href="http://www.azurras.com/direct/intellectually-dishonest/assets/images/id-logo.png"/>
+        <atom:link href="http://www.azurras.com/direct/intellectually-dishonest/feed.xml" rel="self" type="application/rss+xml" />
+        <pubDate>Tue, 19 Jun 2018 09:12:49 CST</pubDate>
+        <itunes:author>Christopher Bell, Caleb Sour, Jeremy Trahan, Marc Jeffery</itunes:author>
+        <description>Four dudes from New Orleans discuss the world from their own perspectives.</description>
+        <itunes:summary>Four dudes from New Orleans discuss the world from their own perspectives.</itunes:summary>
+        <itunes:subtitle>Four dudes discuss the world</itunes:subtitle>
+        <lastBuildDate>Tue, 19 Jun 2018 09:12:49 CST</lastBuildDate>
+        <!-- <item>
+            <title>Episode 12 - Wahh, Fisherman</title>
+            <pubDate>Sun, 16 Sep 2018 09:12:49 CST</pubDate>
+            <link>http://www.azurras.com/direct/id/id.html</link>
+            <description>On this episode, we discuss our police experiences, hurricanes, and religion.</description>
+            <itunes:summary>On this episode, we discuss our police experiences, hurricanes, and religion.</itunes:summary>
+            <itunes:subtitle>BLOW AFTER BLOW</itunes:subtitle>
+            <itunes:duration>58:01</itunes:duration>
+            <enclosure url="http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep12.mp3" length="139246235" type="audio/mp3"/>
+            <guid>http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep12.mp3</guid>
+        </item> -->
+        <item>
+            <title>Episode 11 - Unpopular Opinions</title>
+            <pubDate>Sun, 9 Sep 2018 09:12:49 CST</pubDate>
+            <link>http://www.azurras.com/direct/id/id.html</link>
+            <description>On this episode, we discuss things we are hypocrites about, our extreme opinions, and more.</description>
+            <itunes:summary>On this episode, we discuss things we are hypocrites about, our extreme opinions, and more.</itunes:summary>
+            <itunes:subtitle>BLOW AFTER BLOW</itunes:subtitle>
+            <itunes:duration>01:03:48</itunes:duration>
+            <enclosure url="http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep11.mp3" length="153156035" type="audio/mp3"/>
+            <guid>http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep11.mp3</guid>
+        </item>
+        <item>
+            <title>Episode 10 - What is a Braincels?</title>
+            <pubDate>Sun, 2 Sep 2018 09:12:49 CST</pubDate>
+            <link>http://www.azurras.com/direct/id/id.html</link>
+            <description></description>
+            <itunes:summary>Braincels, Marxism and ???</itunes:summary>
+            <itunes:subtitle>BLOW AFTER BLOW</itunes:subtitle>
+            <itunes:duration>56:55</itunes:duration>
+            <enclosure url="http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep10.mp3" length="136618435" type="audio/mp3"/>
+            <guid>http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep10.mp3</guid>
+        </item>
+        <item>
+            <title>Episode 9 - What is Minimalist</title>
+            <pubDate>Sun, 19 Aug 2018 09:12:49 CST</pubDate>
+            <link>http://www.azurras.com/direct/id/id.html</link>
+            <description>We discuss minimalist</description>
+            <itunes:summary>We discuss minimalist</itunes:summary>
+            <itunes:subtitle>BLOW AFTER BLOW</itunes:subtitle>
+            <itunes:duration>52:46</itunes:duration>
+            <enclosure url="http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep9.mp3" length="126657423" type="audio/mp3"/>
+            <guid>http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep9.mp3</guid>
+        </item>
+        <item>
+            <title>Episode 8 - Big Social Media</title>
+            <pubDate>Tue, 14 Aug 2018 09:12:49 CST</pubDate>
+            <link>http://www.azurras.com/direct/id/id.html</link>
+            <description>We discuss the on going battle that social media takes against free speech</description>
+            <itunes:summary>We discuss the on going battle that social media takes against free speech</itunes:summary>
+            <itunes:subtitle>BLOW AFTER BLOW</itunes:subtitle>
+            <itunes:duration>1:00:32</itunes:duration>
+            <enclosure url="http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep8.mp3" length="145286909" type="audio/mp3"/>
+            <guid>http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep8.mp3</guid>
+        </item>
+        <item>
+            <title>Episode 7 - Caleb A Striaght Busta</title>
+            <pubDate>Sun, 5 Aug 2018 09:12:49 CST</pubDate>
+            <link>http://www.azurras.com/direct/id/id.html</link>
+            <description>The guys get distracted from the topics list and end up spending the session taking shots at each other, instead: Is Jeremy susceptible to bribery? Is Caleb more elitist than Chris? Does Chris blackmail his friends? Have Marc and Caleb come to blows in the past? Lastly, CHRIS FINALLY REVEALS THE G IN MASTER G 1813!</description>
+            <itunes:summary>The guys get distracted from the topics list and end up spending the session taking shots at each other, instead: Is Jeremy susceptible to bribery? Is Caleb more elitist than Chris? Does Chris blackmail his friends? Have Marc and Caleb come to blows in the past? Lastly, CHRIS FINALLY REVEALS THE G IN MASTER G 1813!</itunes:summary>
+            <itunes:subtitle>BLOW AFTER BLOW</itunes:subtitle>
+            <itunes:duration>1:45:34</itunes:duration>
+            <enclosure url="http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep7.mp3" length="253372198" type="audio/mp3"/>
+            <guid>http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep7.mp3</guid>
+        </item>
+        <item>
+            <title>Episode 6 - Playing Games in the kitchen</title>
+            <pubDate>Sun, 29 Jul 2018 09:12:49 CST</pubDate>
+            <link>http://www.azurras.com/direct/id/id.html</link>
+            <description>On this episode, we have on a special guest. We discuss the game mechanics inherent in life, the ideology of Fornight and Call of Duty, changing political opinions, and Chris's vacation over hot sauce. A heads up, sorry for the quality of this and last episode. Everything should be back to normal for the next episode.</description>
+            <itunes:summary>On this episode, we have on a special guest. We discuss the game mechanics inherent in life, the ideology of Fornight and Call of Duty, changing political opinions, and Chris's vacation over hot sauce. A heads up, sorry for the quality of this and last episode. Everything should be back to normal for the next episode.</itunes:summary>
+            <itunes:subtitle>We in the kitchen today, bro</itunes:subtitle>
+            <itunes:duration>1:42:12</itunes:duration>
+            <enclosure url="http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep6.mp3" length="140659292" type="audio/mp3"/>
+            <guid>http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep6.mp3</guid>
+        </item>
+        <item>
+            <title>Episode 5 - Where is episode 5?</title>
+            <pubDate>Wed, 25 Jul 2018 09:12:49 CST</pubDate>
+            <link>http://www.azurras.com/direct/id/id.html</link>
+            <description>On this episode, we get more into the botnet and finances. Sorry for the late update everyone. We promise episode 6 will be a treat!</description>
+            <itunes:summary>On this episode, we get more into the botnet and finances. Sorry for the late update everyone. We promise episode 6 will be a treat!</itunes:summary>
+            <itunes:subtitle>Episode 5 MIA</itunes:subtitle>
+            <itunes:duration>55:50</itunes:duration>
+            <enclosure url="http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep5.mp3" length="107203304" type="audio/mp3"/>
+            <guid>http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep5.mp3</guid>
+        </item>
+        <item>
+            <title>Episode 4 - We Are Botnet</title>
+            <pubDate>Sun, 15 Jul 2018 09:12:49 CST</pubDate>
+            <link>http://www.azurras.com/direct/id/id.html</link>
+            <description>On this episode, we get more into the future of the podcast, botnets, Elon Musk, aliens, and is life a simulation</description>
+            <itunes:summary>On this episode, we get more into the future of the podcast, botnets, Elon Musk, aliens, and is life a simulation</itunes:summary>
+            <itunes:subtitle>watch out 4 botnets</itunes:subtitle>
+            <itunes:duration>01:24:14</itunes:duration>
+            <enclosure url="http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep4.mp3" length="87280740" type="audio/mp3"/>
+            <guid>http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep4.mp3</guid>
+        </item>
+        <item>
+            <title>Episode 3 - Blast em</title>
+            <pubDate>Sun, 8 Jul 2018 09:12:49 CST</pubDate>
+            <link>http://www.azurras.com/direct/id/id.html</link>
+            <description>On this episode, we get more into principles, homeownership, and guns.</description>
+            <itunes:summary>On this episode, we get more into principles, homeownership, and guns.</itunes:summary>
+            <itunes:subtitle>The hardwood floors!</itunes:subtitle>
+            <itunes:duration>01:21:48</itunes:duration>
+            <enclosure url="http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep3.mp3" length="85246522" type="audio/mp3"/>
+            <guid>http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep3.mp3</guid>
+        </item>
+        <item>
+            <title>Episode 2 - Plans are Plans, Buddy</title>
+            <pubDate>Sat, 30 Jun 2018 09:12:49 CST</pubDate>
+            <link>http://www.azurras.com/direct/id/id.html</link>
+            <description>On this episode, Marc joins the party and we discuss the feedback of the last episode, the big 5 personality test, depression, suicide, and junk cars.</description>
+            <itunes:summary>On this episode, Marc joins the party and we discuss the feedback of the last episode, the big 5 personality test, depression, suicide, and junk cars.</itunes:summary>
+            <itunes:subtitle>Try not to be late</itunes:subtitle>
+            <itunes:duration>01:30:01</itunes:duration>
+            <enclosure url="http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep2.mp3" length="93135795" type="audio/mp3"/>
+            <guid>http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep2.mp3</guid>
+        </item>
+        <item>
+            <title>Episode 1 - Bourgeois Spectacles</title>
+            <pubDate>Sun, 24 Jun 2018 09:12:49 CST</pubDate>
+            <link>http://www.azurras.com/direct/id/id.html</link>
+            <description>The guys discuss Jeremy’s recent appearance to defend gamers on the news, XXXTentacion’s tragic death and the subsequent social media backlash, Austin’s Bourgeois spectacles, what makes mass murderers and more</description>
+            <itunes:summary>The guys discuss Jeremy’s recent appearance to defend gamers on the news, XXXTentacion’s tragic death and the subsequent social media backlash, Austin’s Bourgeois spectacles, what makes mass murderers and more</itunes:summary>
+            <itunes:subtitle>Bourgeios trash?</itunes:subtitle>
+            <itunes:duration>01:12:16</itunes:duration>
+            <enclosure url="http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep1.mp3" length="74765375" type="audio/mp3"/>
+            <guid>http://www.azurras.com/direct/intellectually-dishonest/assets/audio/ep1.mp3</guid>
+        </item>
+    </channel>
+</rss>
