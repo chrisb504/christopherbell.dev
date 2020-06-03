@@ -1,7 +1,14 @@
-# Annoying items and folders
+# Annoying items
+.DS_Store/
+
+# Java
 target/
-**/.DS_Store
-**/node_modules
+
+# NPM
+node_modules/
+
+# VSCode
+.vscode
 .settings
 .classpath
 .project
