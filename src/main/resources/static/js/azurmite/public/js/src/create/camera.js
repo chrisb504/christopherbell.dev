@@ -1,1 +1,0 @@
-        game.camera.follow(player);

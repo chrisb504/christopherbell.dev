@@ -1,3 +1,0 @@
-    function preload() {
-
-        "use strict";
