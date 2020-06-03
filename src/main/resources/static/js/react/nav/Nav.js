@@ -11,9 +11,6 @@ export default class Nav extends Component {
                 <div class="navbar-collapse collapse">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/azurmite">Azurmite</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="/blog">Blog</a>
                         </li>
                         <li class="nav-item">
