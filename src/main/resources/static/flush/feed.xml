@@ -30,6 +30,17 @@
         <itunes:subtitle>Two dudes discuss the world</itunes:subtitle>
         <lastBuildDate>Tue, 1 Jun 2020 08:00:00 CST</lastBuildDate>
         <item>
+            <title>Episode 2 - The One That Should Have Been First?</title>
+            <pubDate>Thurs, 4 Jun 2020 08:00:00 CST</pubDate>
+            <link>http://www.azurras.com/flush</link>
+            <description>Discussion on the national protests/riots</description>
+            <itunes:summary>Discussion on the national protests/riots</itunes:summary>
+            <itunes:subtitle>Flush Media</itunes:subtitle>
+            <itunes:duration>01:08:32</itunes:duration>
+            <enclosure url="http://www.azurras.com/flush/audio/ep2.mp3" length="77386257" type="audio/mp3"/>
+            <guid>http://www.azurras.com/flush/audio/ep2.mp3</guid>
+        </item>
+        <item>
             <title>Episode 1 - And We Back And We Back</title>
             <pubDate>Mon, 1 Jun 2020 08:00:00 CST</pubDate>
             <link>http://www.azurras.com/flush</link>
