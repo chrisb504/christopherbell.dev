@@ -8,14 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class AzurrasService {
     //private final Logger LOG = LogManager.getLogger(AzurrasService.class);
-    private AzurmiteService azurmiteService;
     private BlogService blogService;
     private WhatsForLunchService whatsForLunchService;
 
     @Autowired
-    public AzurrasService(AzurmiteService azurmiteService, BlogService blogService,
-            WhatsForLunchService whatsForLunchService) {
-        this.azurmiteService = azurmiteService;
+    public AzurrasService(BlogService blogService, WhatsForLunchService whatsForLunchService) {
         this.blogService = blogService;
         this.whatsForLunchService = whatsForLunchService;
     }
