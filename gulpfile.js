@@ -22,7 +22,7 @@ gulp.task('sass', () => {
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(gulp.dest('public/css'));
+        .pipe(gulp.dest('./src/main/resources/static/css/'));
 });
 
 gulp.task('js', () => {
