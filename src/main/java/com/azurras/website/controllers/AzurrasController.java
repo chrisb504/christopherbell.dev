@@ -24,38 +24,20 @@ public class AzurrasController {
     }
 
     @GetMapping("/")
-    public String index() {
+    public String getHomepage() {
         //LOG.info("Returning index page");
         return "index";
     }
 
-    @GetMapping("/azurmite")
-    public String azurmite() {
-        //LOG.info("Returning azurmite page");
-        return "azurmite";
-    }
-
-    @GetMapping("/blog")
-    public String blog() {
-        //LOG.info("Returning blog page");
-        return "blog";
-    }
-
     @GetMapping("/flush")
-    public String flush() {
+    public String getFlush() {
         //LOG.info("Returning flush page");
         return "flush";
     }
 
     @GetMapping("/resume")
-    public String resume() {
+    public String getResume() {
         //LOG.info("Returning resume page");
         return "resume";
-    }
-
-    @GetMapping("/whatsforlunch")
-    public String whatsforlunch() {
-        //LOG.info("Returning whatsforlunch page");
-        return "whatsforlunch";
     }
 }

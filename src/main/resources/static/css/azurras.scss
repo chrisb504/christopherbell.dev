@@ -103,15 +103,27 @@ img {
     }
 }
 
+.fa {
+    font-size: 25px;
+    padding: 10px 9px;
+}
+
 .post {
     padding-left: 10px;
     padding-right: 10px;
 }
 
-.fa {
-    font-size: 25px;
-    padding: 10px 9px;
+.podcast-links {
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+    .podcast-link {
+        padding: 10px;
+        margin: 10px;
+    }
 }
+
+
 
 /*  Ids  */
 

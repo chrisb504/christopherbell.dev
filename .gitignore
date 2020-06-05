@@ -1,11 +1,16 @@
 # Annoying items
 .DS_Store/
 
-# Java
+# Maven
 target/
+public/
 
 # NPM
 node_modules/
+node/
+npm-debug.log
+npm/
+
 
 # VSCode
 .vscode

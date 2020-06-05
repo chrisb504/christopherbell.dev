@@ -14,6 +14,9 @@ export default class Nav extends Component {
                             <a class="nav-link" href="/blog">Blog</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="/flush">Flush</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/resume">Resume</a>
                         </li>
                         <li class="nav-item">

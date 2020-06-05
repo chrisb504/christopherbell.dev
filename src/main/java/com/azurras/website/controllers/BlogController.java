@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class BlogController {
@@ -15,6 +16,12 @@ public class BlogController {
     @Autowired
     public BlogController(BlogService blogService) {
         this.blogService = blogService;
+    }
+
+    @GetMapping("/blog")
+    public String getBlog() {
+        //LOG.info("Returning index page");
+        return "blog";
     }
 
 }
