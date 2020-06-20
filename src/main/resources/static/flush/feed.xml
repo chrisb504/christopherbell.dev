@@ -30,11 +30,22 @@
         <itunes:subtitle>Two dudes discuss the world</itunes:subtitle>
         <lastBuildDate>Tue, 1 Jun 2020 08:00:00 CST</lastBuildDate>
         <item>
+            <title>Episode 4 - Ladies and Gentlemen, We Got Em</title>
+            <pubDate>Sat, 20 Jun 2020 08:00:00 CST</pubDate>
+            <link>http://www.azurras.com/flush</link>
+            <description>On this episode, we have a special guest! Jeremy joins the conversation.</description>
+            <itunes:summary>On this episode, we have a special guest! Jeremy joins the conversation.</itunes:summary>
+            <itunes:subtitle>Flush Media</itunes:subtitle>
+            <itunes:duration>01:08:45</itunes:duration>
+            <enclosure url="http://www.azurras.com/flush/audio/ep4.mp3" length="99012510" type="audio/mp3"/>
+            <guid>http://www.azurras.com/flush/audio/ep4.mp3</guid>
+        </item>
+        <item>
             <title>Episode 3 - Ladies and Gentlemen, We Got Em</title>
             <pubDate>Sat, 13 Jun 2020 08:00:00 CST</pubDate>
             <link>http://www.azurras.com/flush</link>
             <description>On this episode, we talk about that the future of the podcast, ways to make some extra money, purchasing a house, and continue our discussion on the blm protest.</description>
-            <itunes:summary>>On this episode, we talk about that the future of the podcast, ways to make some extra money, purchasing a house, and continue our discussion on the blm protest.</itunes:summary>
+            <itunes:summary>On this episode, we talk about that the future of the podcast, ways to make some extra money, purchasing a house, and continue our discussion on the blm protest.</itunes:summary>
             <itunes:subtitle>Flush Media</itunes:subtitle>
             <itunes:duration>00:50:33</itunes:duration>
             <enclosure url="http://www.azurras.com/flush/audio/ep3.mp3" length="72789542" type="audio/mp3"/>
