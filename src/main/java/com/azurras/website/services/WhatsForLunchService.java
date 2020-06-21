@@ -33,6 +33,10 @@ public class WhatsForLunchService {
         return new WhatsForLunchResponse();
     }
 
+    public WhatsForLunchResponse getRandomResturant() {
+        return new WhatsForLunchResponse();
+    }
+
     public WhatsForLunchResponse getRestaurant(String restaurantId) {
         if (restaurantId == null || restaurantId.isEmpty()) {
             LOG.error(Constants.NULL_REQUEST);
