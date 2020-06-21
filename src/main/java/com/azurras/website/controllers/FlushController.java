@@ -1,5 +1,7 @@
 package com.azurras.website.controllers;
 
+import com.azurras.website.services.FlushService;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class FlushController {
     private final Log LOG = LogFactory.getLog(FlushController.class);
-    
-    @Autowired
-    public FlushController() {
+    private FlushService flushService;
 
+    @Autowired
+    public FlushController(FlushService flushService) {
+        this.flushService = flushService;
     }
 
     @RequestMapping(value = "/flush", method = RequestMethod.GET)
