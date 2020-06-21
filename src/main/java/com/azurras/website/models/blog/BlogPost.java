@@ -5,16 +5,16 @@ import java.util.List;
 import java.util.Random;
 import java.util.ArrayList;
 
-public class Post {
+public class BlogPost {
     private String author;
     private String contentText;
     private Date creationDate;
     private String description;
     private int id;
-    private List<Tag> tags;
+    private List<BlogTag> tags;
     private String title;
 
-    public Post() {
+    public BlogPost() {
         this.author = "";
         this.contentText = "";
         this.creationDate = new Date();
@@ -68,11 +68,11 @@ public class Post {
         this.id = id;
     }
 
-    public List<Tag> getTags() {
+    public List<BlogTag> getTags() {
         return new ArrayList<>(this.tags);
     }
 
-    public void setTags(List<Tag> tag) {
+    public void setTags(List<BlogTag> tag) {
         this.tags = new ArrayList<>(tags);
     }
 

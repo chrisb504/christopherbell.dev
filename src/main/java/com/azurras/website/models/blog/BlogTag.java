@@ -2,11 +2,11 @@ package com.azurras.website.models.blog;
 
 import java.util.Date;
 
-public class Tag {
+public class BlogTag {
     private Date creationDate;
     private String name;
 
-    public Tag() {
+    public BlogTag() {
         this.creationDate = new Date();
         this.name = "";
     }
