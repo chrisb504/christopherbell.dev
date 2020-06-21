@@ -2,20 +2,16 @@ package com.azurras.website.controllers;
 
 import com.azurras.website.services.AzurrasService;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-/**
- * Purpose of this controller is to return top level secondary pages for the
- * website. This includes pages like blog. If the blog page had any childern
- * pages than the blog controller should handle outputing those pages.
- */
 @Controller
 public class AzurrasController {
-   // private Logger LOG = LogManager.getLogger(AzurrasController.class);
+    private final Log LOG = LogFactory.getLog(AzurrasController.class);
     private AzurrasService azurrasService;
 
     @Autowired
@@ -23,21 +19,23 @@ public class AzurrasController {
         this.azurrasService = azurrasService;
     }
 
-    @GetMapping("/")
+    /**
+     * Returns the home page.
+     * 
+     * @return index
+     */
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getHomepage() {
-        //LOG.info("Returning index page");
         return "index";
     }
 
-    @GetMapping("/flush")
-    public String getFlush() {
-        //LOG.info("Returning flush page");
-        return "flush";
-    }
-
-    @GetMapping("/resume")
+    /**
+     * Returns the resume page.
+     * 
+     * @return resume
+     */
+    @RequestMapping(value = "/resume", method = RequestMethod.GET)
     public String getResume() {
-        //LOG.info("Returning resume page");
         return "resume";
     }
 }

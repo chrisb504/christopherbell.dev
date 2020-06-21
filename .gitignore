@@ -11,6 +11,9 @@ node/
 npm-debug.log
 npm/
 
+# Output Files
+main.min.css
+main.js
 
 # VSCode
 .vscode

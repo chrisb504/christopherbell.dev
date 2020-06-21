@@ -1,19 +1,15 @@
 package com.azurras.website.services;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AzurrasService {
-    //private final Logger LOG = LogManager.getLogger(AzurrasService.class);
-    private BlogService blogService;
-    private WhatsForLunchService whatsForLunchService;
+    private final Log LOG = LogFactory.getLog(AzurrasService.class);
 
     @Autowired
-    public AzurrasService(BlogService blogService, WhatsForLunchService whatsForLunchService) {
-        this.blogService = blogService;
-        this.whatsForLunchService = whatsForLunchService;
+    public AzurrasService() {
     }
 }
