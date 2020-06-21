@@ -59,19 +59,19 @@ public class BlogController {
 
     /**
      * Returns the html for the blog add page.
-     * @return blog
+     * @return blogAdd
      */
     @RequestMapping(value = "/blog/add", method = RequestMethod.GET)
-    public String getBlogPageAdd() {
+    public String getBlogAddPage() {
         return "blogAdd";
     }
 
     /**
      * Returns the html for the blog delete page.
-     * @return blog
+     * @return blogDelete
      */
     @RequestMapping(value = "/blog/delete", method = RequestMethod.GET)
-    public String getBlogPageDelete() {
+    public String getBlogDeletePage() {
         return "blogDelete";
     }
 

@@ -30,19 +30,11 @@ public class WhatsForLunchResponse {
         this.status = status;
     }
 
-    public List<Restaurant> getBlogPostPayload() {
+    public List<Restaurant> getPayload() {
         return new ArrayList<>(this.payload);
     }
 
     public void setPayLoad(final List<Restaurant> payload) {
-        this.payload.addAll(payload);
-    }
-
-    public List<Restaurant> getBlogTagPayload() {
-        return new ArrayList<>(this.payload);
-    }
-
-    public void setBlogTagPayLoad(final List<Restaurant> payload) {
         this.payload.addAll(payload);
     }
 }

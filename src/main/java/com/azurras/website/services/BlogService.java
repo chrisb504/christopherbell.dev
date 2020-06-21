@@ -18,24 +18,24 @@ public class BlogService {
 
     public BlogResponse addBlogPost(BlogRequest blogRequest) {
         if (blogRequest == null) {
-            LOG.error(Constants.BLOG_NULL_REQUEST);
-            this.getErrorBlogResponse(Constants.BLOG_NULL_REQUEST, String.valueOf(HttpStatus.BAD_REQUEST));
+            LOG.error(Constants.NULL_REQUEST);
+            this.getErrorBlogResponse(Constants.NULL_REQUEST, String.valueOf(HttpStatus.BAD_REQUEST));
         }
         return new BlogResponse();
     }
 
     public BlogResponse deleteBlogPost(String blogPostId) {
         if (blogPostId == null || blogPostId.isEmpty()) {
-            LOG.error(Constants.BLOG_NULL_REQUEST);
-            this.getErrorBlogResponse(Constants.BLOG_NULL_REQUEST, String.valueOf(HttpStatus.BAD_REQUEST));
+            LOG.error(Constants.NULL_REQUEST);
+            this.getErrorBlogResponse(Constants.NULL_REQUEST, String.valueOf(HttpStatus.BAD_REQUEST));
         }
         return new BlogResponse();
     }
 
     public BlogResponse getBlogPost(String blogPostId) {
         if (blogPostId == null || blogPostId.isEmpty()) {
-            LOG.error(Constants.BLOG_NULL_REQUEST);
-            this.getErrorBlogResponse(Constants.BLOG_NULL_REQUEST, String.valueOf(HttpStatus.BAD_REQUEST));
+            LOG.error(Constants.NULL_REQUEST);
+            this.getErrorBlogResponse(Constants.NULL_REQUEST, String.valueOf(HttpStatus.BAD_REQUEST));
         }
         return new BlogResponse();
     }
