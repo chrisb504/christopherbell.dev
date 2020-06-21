@@ -44,7 +44,7 @@ public class BlogService {
         return new BlogResponse();
     }
 
-    public BlogResponse getBlogTag() {
+    public BlogResponse getBlogTag(String blogPostTag) {
         return new BlogResponse();
     }
 

@@ -85,7 +85,7 @@ public class BlogController {
      */
     @ResponseBody
     @RequestMapping(value = "/blog/tag/{blogTagId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public BlogResponse getBlogTag() {
+    public BlogResponse getBlogTag(String blogTagId) {
         return this.blogService.getBlogTag(blogTagId);
     }
 
