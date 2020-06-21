@@ -14,5 +14,4 @@ jobs:
       with:
         java-version: 11
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
-      run: mvn deploy -Dregistry=https://maven.pkg.github.com/Azurras -Dtoken=GH_TOKEN
+      run: mvn -B package --file pom.xml deploy -Dregistry=https://maven.pkg.github.com/Azurras -Dtoken=GH_TOKEN
