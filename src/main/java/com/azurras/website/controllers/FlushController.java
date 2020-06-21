@@ -20,6 +20,10 @@ public class FlushController {
         this.flushService = flushService;
     }
 
+    /**
+     * Returns the flush page.
+     * @return flush
+     */
     @RequestMapping(value = "/flush", method = RequestMethod.GET)
     public String getFlush() {
         return "flush";

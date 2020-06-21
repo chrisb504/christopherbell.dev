@@ -19,9 +19,12 @@ public class WhatsForLunchController {
         this.whatsForLunchService = whatsForLunchService;
     }
 
+    /**
+     * Returns the whatsforlunch page.
+     * @return whatsforlunch
+     */
     @RequestMapping(value = "/whatsforlunch", method = RequestMethod.GET)
     public String getWhatsForLunch() {
-        //LOG.info("Returning whatsforlunch page");
         return "whatsforlunch";
     }
 }
