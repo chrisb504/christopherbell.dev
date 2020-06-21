@@ -4,7 +4,9 @@
 
 Azurras is a website created by Christopher Bell with the purpose of holding any general needs and content. The site has many sections including previous or ongoing projects, a blog on any events or new finds, and my resume.
 
-## Building the SASS
+## Setup
+
+### Building the SASS
 
 1. Go to the home directory of the project.
 1. Run the below command.
@@ -15,7 +17,7 @@ gulp sass
 
 The output file is located at ./src/main/resources/static/css/main.min.css
 
-## Building the Javascript
+### Building the Javascript
 
 1. Go to the home directory of the project
 1. Run the below command.
@@ -25,7 +27,7 @@ npm run-script build
 ```
 The output file is located at ./src/main/resources/static/js/main.js
 
-## Building the Project
+### Building the Project
 
 1. Go to the home directory of the project
 1. Run the below command.
@@ -34,7 +36,7 @@ The output file is located at ./src/main/resources/static/js/main.js
 mvn clean package
 ```
 
-## Running the Project
+### Running the Project
 
 1. Go to the home directory of the project
 1. Run the below command.
