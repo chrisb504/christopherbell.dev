@@ -24,18 +24,3 @@ gulp.task('sass', () => {
         }))
         .pipe(gulp.dest('./src/main/resources/static/css/'));
 });
-
-gulp.task('js', () => {
-    return gulp.src([
-        'apps/blog/public/js/blog.js',
-        'apps/header/js/header.js',
-        'apps/footer/js/footer.js'
-    ])
-        .pipe(concat('main.js'))
-        .pipe(gulp.dest('public/js'))
-        // .pipe(uglify())
-        .pipe(rename({
-            suffix: '.min'
-        }))
-        .pipe(gulp.dest('public/js/'));
-});
