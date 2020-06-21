@@ -6,12 +6,14 @@ import java.util.List;
 public class BlogResponse {
     private String message;
     private String status;
-    private List<BlogPost> payload;
+    private List<BlogPost> blogPostPayLoad;
+    private List<BlogTag> blogTagPayload;
 
     public BlogResponse() {
         this.message = "";
         this.status = "";
-        this.payload = new ArrayList<BlogPost>();
+        this.blogPostPayLoad = new ArrayList<>();
+        this.blogTagPayload = new ArrayList<>();
     }
 
     public String getMessage() {
@@ -30,11 +32,19 @@ public class BlogResponse {
         this.status = status;
     }
 
-    public List<BlogPost> getPayload() {
-        return new ArrayList<>(payload);
+    public List<BlogPost> getBlogPostPayload() {
+        return new ArrayList<>(this.blogPostPayLoad);
     }
 
-    public void setPayLoad(final List<BlogPost> payload) {
-        this.payload.addAll(payload);
+    public void setBlogPostPayLoad(final List<BlogPost> blogPostPayLoad) {
+        this.blogPostPayLoad.addAll(blogPostPayLoad);
+    }
+
+    public List<BlogTag> getBlogTagPayload() {
+        return new ArrayList<>(this.blogTagPayload);
+    }
+
+    public void setBlogTagPayLoad(final List<BlogTag> blogTagPayload) {
+        this.blogTagPayload.addAll(blogTagPayload);
     }
 }
