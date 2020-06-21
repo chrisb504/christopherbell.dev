@@ -49,12 +49,30 @@ public class BlogController {
     }
 
     /**
-     * Returns the html for the blog page.
+     * Returns the html for the blog home page.
      * @return blog
      */
     @RequestMapping(value = "/blog", method = RequestMethod.GET)
     public String getBlogPage() {
         return "blog";
+    }
+
+    /**
+     * Returns the html for the blog add page.
+     * @return blog
+     */
+    @RequestMapping(value = "/blog/add", method = RequestMethod.GET)
+    public String getBlogPageAdd() {
+        return "blogAdd";
+    }
+
+    /**
+     * Returns the html for the blog delete page.
+     * @return blog
+     */
+    @RequestMapping(value = "/blog/delete", method = RequestMethod.GET)
+    public String getBlogPageDelete() {
+        return "blogDelete";
     }
 
     /**
