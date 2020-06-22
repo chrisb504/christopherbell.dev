@@ -39,7 +39,7 @@ The output file is located at ./src/main/resources/static/js/main.js
 1. Run the below commands.
 
 ```bash
-node install
+npm install
 mvn clean package
 ```
 
