@@ -6,6 +6,12 @@ Azurras is a website created by Christopher Bell with the purpose of holding any
 
 ## Setup
 
+### Requirements
+
+1. NPM
+1. Java 11
+1. Maven
+
 ### Building the SASS
 
 1. Go to the home directory of the project.
@@ -30,9 +36,10 @@ The output file is located at ./src/main/resources/static/js/main.js
 ### Building the Project
 
 1. Go to the home directory of the project
-1. Run the below command.
+1. Run the below commands.
 
 ```bash
+node install
 mvn clean package
 ```
 
