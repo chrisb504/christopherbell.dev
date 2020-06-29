@@ -30,6 +30,17 @@
         <itunes:subtitle>Two dudes discuss the world</itunes:subtitle>
         <lastBuildDate>Tue, 1 Jun 2020 08:00:00 CST</lastBuildDate>
         <item>
+            <title>Episode 5 - Tech Is Controlling You</title>
+            <pubDate>Sat, 28 Jun 2020 08:00:00 CST</pubDate>
+            <link>http://www.azurras.com/flush</link>
+            <description>On this episode, we talk about the badges on apps, the WWDC Apple Event, J Cole's new song, and how our first guest episode went! Website: http://www.flushmedia.org Discord: https://discord.gg/xR2FG3U</description>
+            <itunes:summary>On this episode, we talk about the badges on apps, the WWDC Apple Event, J Cole's new song, and how our first guest episode went! Website: http://www.flushmedia.org Discord: https://discord.gg/xR2FG3U</itunes:summary>
+            <itunes:subtitle>Flush Media</itunes:subtitle>
+            <itunes:duration>00:57:18</itunes:duration>
+            <enclosure url="http://www.azurras.com/flush/audio/ep5.mp3" length="82512109" type="audio/mp3"/>
+            <guid>http://www.azurras.com/flush/audio/ep5.mp3</guid>
+        </item>
+        <item>
             <title>Episode 4 - "Strange"</title>
             <pubDate>Sat, 20 Jun 2020 08:00:00 CST</pubDate>
             <link>http://www.azurras.com/flush</link>
