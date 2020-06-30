@@ -28,4 +28,13 @@ public class FlushController {
     public String getFlush() {
         return "flush";
     }
+
+    /**
+     * Returns the flush page.
+     * @return flush
+     */
+    @RequestMapping(value = "/flush/blog", method = RequestMethod.GET)
+    public String getFlushBlog() {
+        return "flush";
+    }
 }
