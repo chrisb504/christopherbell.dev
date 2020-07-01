@@ -4,6 +4,7 @@ export default class Footer extends Component {
     render() {
         return (
             <div class="container">
+                <hr/>
                 <div class="row mt-4 ml-1 mr-1">
                     <div class="col text-center">
                     <a class="podcast-link ml-3 mr-3" target="_blank" href="https://podcasts.apple.com/us/podcast/flush/id1516189054">Apple Podcast</a>
