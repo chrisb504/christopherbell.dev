@@ -162,15 +162,14 @@ body {
 // }
 
 #footer {
-    background-color: #222;
     height: calc(100vh - 540px);
     padding-top: 10px;
 }
 
-// #footer p,
-// #footer a {
-//     color: white;
-// }
+#footer p,
+#footer a {
+    color: white;
+}
 
 #footer-azurras {
     width: 100%;
