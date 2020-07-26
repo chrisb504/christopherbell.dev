@@ -4,6 +4,16 @@
 
 Azurras is a website created by Christopher Bell with the purpose of holding any general needs and content. The site has many sections including previous or ongoing projects, a blog on any events or new finds, and my resume.
 
+### Quickstart
+```bash
+npm install
+npm run-script build
+gulp sass
+mvn clean package
+java -jar /target/{jar-name-here}
+```
+
+
 ## Setup
 
 ### Requirements
