@@ -19,7 +19,7 @@ java -jar /target/{jar-name-here}
 ### Requirements
 
 1. NPM
-1. Java 11
+1. Java 14
 1. Maven
 
 ### Building the SASS
