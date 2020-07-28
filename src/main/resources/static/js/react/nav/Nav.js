@@ -17,7 +17,10 @@ export default class Nav extends Component {
                             <a class="nav-link" href="/resume">Resume</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/whatsforlunch">What's For Lunch?</a>
+                            <a class="nav-link" href="/smp">SMP</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/wfl">What's For Lunch</a>
                         </li>
                     </ul>
                 </div>

@@ -50,11 +50,21 @@ public class AzurrasController {
     }
 
     /**
+     * Returns the smp page.
+     * 
+     * @return smp
+     */
+    @RequestMapping(value = "/wfl", method = RequestMethod.GET)
+    public String getSMP() {
+        return "smp";
+    }
+
+    /**
      * Returns the whatsforlunch page.
      * 
      * @return whatsforlunch
      */
-    @RequestMapping(value = "/whatsforlunch", method = RequestMethod.GET)
+    @RequestMapping(value = "/wfl", method = RequestMethod.GET)
     public String getWhatsForLunch() {
         return "whatsforlunch";
     }
