@@ -1,9 +1,7 @@
+/* eslint-disable import/no-self-import */
 const gulp = require('gulp');
-const uglify = require('gulp-uglify');
 const csso = require('gulp-csso');
 const rename = require('gulp-rename');
-const concat = require('gulp-concat');
-const connect = require('gulp-connect');
 const sass = require('gulp-sass');
 const gutil = require('gulp-util');
 

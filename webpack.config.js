@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 const path = require('path');
 
 const outputDirectory = './src/main/resources/static/js';
@@ -19,16 +20,16 @@ module.exports = {
     },
     module: {
         rules: [{
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader'
-                }
-            },
-            {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: {
+                loader: 'babel-loader'
             }
+        },
+        {
+            test: /\.css$/,
+            use: ['style-loader', 'css-loader']
+        }
         ]
     },
     devServer: {
