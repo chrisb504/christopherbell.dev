@@ -54,7 +54,7 @@ public class AzurrasController {
      * 
      * @return smp
      */
-    @RequestMapping(value = "/wfl", method = RequestMethod.GET)
+    @RequestMapping(value = "/smp", method = RequestMethod.GET)
     public String getSMP() {
         return "smp";
     }
