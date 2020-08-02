@@ -19,7 +19,6 @@ export default class Footer extends Component {
                     <div class="col">
                         <a class="mr-3 ml-3" href="https://www.youtube.com/channel/UCQkEQzoAfWckA2L1wSvL0mw" target="_blank"><i class="fa fa-youtube fa-2" aria-hidden="true"></i></a>
                         <a class="mr-3 ml-3" href="https://github.com/Azurras" target="_blank"><i class="fa fa-github fa-2" aria-hidden="true"></i></a>
-                        <a class="mr-3 ml-3" href="https://www.linkedin.com/in/christopher-bell1813" target="_blank"><i class="fa fa-linkedin fa-2" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>
