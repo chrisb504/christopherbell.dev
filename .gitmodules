@@ -1,4 +1,4 @@
 
-[submodule "src/main/resources/static/podcasts/smp"]
-	path = src/main/resources/static/podcasts/smp
-	url = https://github.com/Azurras/small-movements-podcast.git
+[submodule "src/main/resources/static/podcasts"]
+	path = src/main/resources/static/podcasts
+	url = https://github.com/Azurras/podcasts.git
