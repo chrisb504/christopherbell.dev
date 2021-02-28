@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class AzurrasController {
-    private final Log LOG = LogFactory.getLog(AzurrasController.class);
+public class AzurrasServiceController {
+    private final Log LOG = LogFactory.getLog(AzurrasServiceController.class);
     private AzurrasService azurrasService;
 
     @Autowired
-    public AzurrasController(AzurrasService azurrasService) {
+    public AzurrasServiceController(AzurrasService azurrasService) {
         this.azurrasService = azurrasService;
     }
 
