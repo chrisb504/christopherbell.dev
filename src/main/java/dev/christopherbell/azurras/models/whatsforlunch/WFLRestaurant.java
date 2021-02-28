@@ -1,6 +1,6 @@
 package dev.christopherbell.azurras.models.whatsforlunch;
 
-public class Restaurant {
+public class WFLRestaurant {
     private String address;
     private int id;
     private String name;

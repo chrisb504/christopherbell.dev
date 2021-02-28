@@ -3,12 +3,12 @@ package dev.christopherbell.azurras.models.whatsforlunch;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WhatsForLunchResponse {
+public class WFLResponse {
     private String message;
     private String status;
-    private List<Restaurant> payload;
+    private List<WFLRestaurant> payload;
 
-    public WhatsForLunchResponse() {
+    public WFLResponse() {
         this.message = "";
         this.status = "";
         this.payload = new ArrayList<>();
@@ -30,11 +30,11 @@ public class WhatsForLunchResponse {
         this.status = status;
     }
 
-    public List<Restaurant> getPayload() {
+    public List<WFLRestaurant> getPayload() {
         return new ArrayList<>(this.payload);
     }
 
-    public void setPayLoad(final List<Restaurant> payload) {
+    public void setPayLoad(final List<WFLRestaurant> payload) {
         this.payload.addAll(payload);
     }
 }

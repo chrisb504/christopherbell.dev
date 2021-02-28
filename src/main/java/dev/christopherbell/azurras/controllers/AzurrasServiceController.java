@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class AzurrasServiceController {
     private final Log LOG = LogFactory.getLog(AzurrasServiceController.class);
-    private AzurrasService azurrasService;
+    private final AzurrasService azurrasService;
 
     @Autowired
     public AzurrasServiceController(AzurrasService azurrasService) {

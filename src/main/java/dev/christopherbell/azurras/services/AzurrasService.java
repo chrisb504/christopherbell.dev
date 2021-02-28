@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class AzurrasService {
     private final Log LOG = LogFactory.getLog(AzurrasService.class);
+    private WFLService wflService;
 
     @Autowired
-    public AzurrasService() {
+    public AzurrasService(WFLService wflService) {
+        this.wflService = wflService;
     }
 }
