@@ -1,4 +1,0 @@
-
-[submodule "src/main/resources/static/podcasts"]
-	path = src/main/resources/static/podcasts
-	url = https://github.com/Azurras/podcasts.git
