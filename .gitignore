@@ -1,6 +1,10 @@
 # Annoying items
 .DS_Store/
 
+# Intellj
+*.iml
+.idea
+
 # Maven
 target/
 public/
