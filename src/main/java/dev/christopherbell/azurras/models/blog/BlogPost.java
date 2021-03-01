@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import java.util.ArrayList;
 
 @Entity
-@Table(name = "cbBlog_table")
+@Table(name = "blog_table")
 public class BlogPost {
     private String author;
     private String contentText;

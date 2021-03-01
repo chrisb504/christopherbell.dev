@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "cbBlog_table")
+@Table(name = "blog_table")
 public class BlogTag {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
