@@ -29,7 +29,7 @@
         "gulp-util": "^3.0.8",
         "material-design-icons": "^3.0.1",
         "mongodb": "^3.6.4",
-        "monk": "^7.3.2",
+        "monk": "^7.3.3",
         "morgan": "~1.10.0",
         "pug": "3.0.0",
         "react": "^17.0.1",
