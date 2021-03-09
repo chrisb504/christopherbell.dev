@@ -1,8 +1,28 @@
-# Annoying items and folders
+# Annoying items
+.DS_Store/
+
+# Intellj
+*.iml
+.idea
+
+# Maven
 target/
-**/.DS_Store
-**/node_modules
+public/
+
+# NPM
+node_modules/
+node/
+npm-debug.log
+npm/
+
+# Output Files
+main.min.css
+main.js
+
+# VSCode
+.vscode
 .settings
 .classpath
 .project
 .factorypath
+.DS_Store

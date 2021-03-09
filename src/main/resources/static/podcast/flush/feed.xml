@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss 
+    xmlns:atom="http://www.w3.org/2005/Atom" 
+    xmlns:dcterms="https://purl.org/dc/terms" 
+    xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" 
+    xmlns:spotify="http://www.spotify.com/ns/rss" 
+    xmlns:psc="https://podlove.org/simple-chapters/" 
+    version="2.0">
+    <channel>
+        <atom:link href="http://www.flushmedia.org/podcasts/flush/feed.xml" rel="self" type="application/rss+xml"/>
+        <copyright>&#xA9;2020</copyright>
+        <description>Two dudes from New Orleans discuss the world from their own perspectives.</description>
+        <image>
+            <title>Flush</title>
+            <link>http://www.flushmedia.org/</link>
+            <url>http://www.flushmedia.org/images/flush-logo.png</url>
+        </image>
+        <language>en-us</language>
+        <lastBuildDate>Sat, 25 Jul 2020 12:00:00 CST</lastBuildDate>
+        <link>http://www.flushmedia.org/</link>
+        <managingEditor>cbell7@icloud.com</managingEditor>
+        <title>Flush</title>
+        <webMaster>cbell7@icloud.com</webMaster>
+        <itunes:author>Chris and Caleb</itunes:author>
+        <itunes:category text="News">
+            <itunes:category text="Entertainment News" />
+            <itunes:category text="News Commentary" />
+            <itunes:category text="Politics" />
+        </itunes:category>
+        <itunes:complete>no</itunes:complete>
+        <itunes:explicit>yes</itunes:explicit>
+        <itunes:image href="http://www.flushmedia.org/images/flush-logo.png"/>
+        <itunes:keywords>Flush, Flush Media, Intellectually Dishonest, Chris, politics, Caleb, Azurras</itunes:keywords>
+        <itunes:owner>
+            <itunes:name>Christopher Bell</itunes:name>
+            <itunes:email>cbell7@icloud.com</itunes:email>
+        </itunes:owner>
+        <itunes:subtitle>Two dudes discuss the world</itunes:subtitle>
+        <itunes:summary>Two dudes from New Orleans discuss the world from their own perspectives.</itunes:summary>
+        <itunes:type>episodic</itunes:type>
+        <spotify:countryOfOrigin>us</spotify:countryOfOrigin>
+
+
+        <item>
+            <title>10. Crew Til The End</title>
+            <enclosure url="http://www.flushmedia.org/podcasts/flush/audio/ep10.mp3" length="155431776" type="audio/mp3" />
+            <guid>http://www.flushmedia.org/podcasts/flush/audio/ep10.mp3</guid>
+            <link>http://www.flushmedia.org/</link>
+            <pubDate>Sat, 01 Aug 2020 12:00:00 CST</pubDate>
+            <itunes:author>Chris and Caleb</itunes:author>
+            <itunes:duration>01:04:46</itunes:duration>
+            <itunes:episode>10</itunes:episode>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:explicit>yes</itunes:explicit>
+            <itunes:keywords>Flush, Flush Media, Intellectually Dishonest, Chris, politics, Caleb, Azurras, Daisy</itunes:keywords>
+            <itunes:season>1</itunes:season>
+            <itunes:subtitle>Flush Media</itunes:subtitle>
+            <itunes:title>Crew Til The End</itunes:title>
+            <itunes:type>episodic</itunes:type>
+            <description>
+                On this episode of The Flush Podcast, John and Jeremy join us for this special final episode of the season.
+                <![CDATA[
+                <br>Flush Media Website: http://www.flushmedia.org 
+                <br>Flush Media Discord Server: https://discord.gg/xR2FG3U 
+                <br>Caleb's Twitter: https://twitter.com/gooddogthedog 
+                <br>Chris's Twitter: https://twitter.com/Azurras
+                ]]>
+            </description>
+            <itunes:summary>
+                On this episode of The Flush Podcast, John and Jeremy join us for this special final episode of the season.
+                <![CDATA[
+                <br>Flush Media Website: http://www.flushmedia.org 
+                <br>Flush Media Discord Server: https://discord.gg/xR2FG3U 
+                <br>Caleb's Twitter: https://twitter.com/gooddogthedog 
+                <br>Chris's Twitter: https://twitter.com/Azurras
+                ]]>
+            </itunes:summary> 
+        </item>
+
+        <item>
+            <title>9. Dazing With a New Guest</title>
+            <enclosure url="http://www.flushmedia.org/podcasts/flush/audio/ep9.mp3" length="146238763" type="audio/mp3" />
+            <guid>http://www.flushmedia.org/podcasts/flush/audio/ep9.mp3</guid>
+            <link>http://www.flushmedia.org/</link>
+            <pubDate>Sat, 25 Jul 2020 12:00:00 CST</pubDate>
+            <itunes:author>Chris and Caleb</itunes:author>
+            <itunes:duration>01:00:56</itunes:duration>
+            <itunes:episode>9</itunes:episode>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:explicit>yes</itunes:explicit>
+            <itunes:keywords>Flush, Flush Media, Intellectually Dishonest, Chris, politics, Caleb, Azurras, Daisy</itunes:keywords>
+            <itunes:season>1</itunes:season>
+            <itunes:subtitle>Flush Media</itunes:subtitle>
+            <itunes:title>Dazing With a New Guest</itunes:title>
+            <itunes:type>episodic</itunes:type>
+            <description>
+                On this episode of The Flush Podcast, we have a new guest Daisy from the Daze of My Life Podcast.
+                She joins us to talk about women in tech, WFH tips, dating in your 20's and much more. 
+                <![CDATA[
+                <br>Flush Media Website: http://www.flushmedia.org 
+                <br>Flush Media Discord Server: https://discord.gg/xR2FG3U 
+                <br>Caleb's Twitter: https://twitter.com/gooddogthedog 
+                <br>Chris's Twitter: https://twitter.com/Azurras
+                <br>Daisy's Twitter: https://twitter.com/iamdaisylucero1
+                <br>Daisy's Podcast: https://open.spotify.com/show/5K7hK95bSXqKSQlnGqGvHN?si=DSZDRQZPRV2h9MUEpAUalg
+                ]]>
+            </description>
+            <itunes:summary>
+                On this episode of The Flush Podcast, we have a new guest Daisy from the Daze of My Life Podcast.
+                She joins us to talk about women in tech, WFH tips, dating in your 20's and much more. 
+                <![CDATA[
+                <br>Flush Media Website: http://www.flushmedia.org 
+                <br>Flush Media Discord Server: https://discord.gg/xR2FG3U 
+                <br>Caleb's Twitter: https://twitter.com/gooddogthedog 
+                <br>Chris's Twitter: https://twitter.com/Azurras
+                <br>Daisy's Twitter: https://twitter.com/iamdaisylucero1
+                <br>Daisy's Podcast: https://open.spotify.com/show/5K7hK95bSXqKSQlnGqGvHN?si=DSZDRQZPRV2h9MUEpAUalg
+                ]]>
+            </itunes:summary> 
+        </item>
+
+        <item>
+            <title>8. Don’t Listen to This Pod Ironically</title>
+            <enclosure url="http://www.flushmedia.org/podcasts/flush/audio/ep8.mp3" length="141499106" type="audio/mp3" />
+            <guid>http://www.flushmedia.org/podcasts/flush/audio/ep8.mp3</guid>
+            <link>http://www.flushmedia.org/</link>
+            <pubDate>Sat, 18 Jul 2020 08:00:00 CST</pubDate>
+            <itunes:author>Chris and Caleb</itunes:author>
+            <itunes:duration>00:58:57</itunes:duration>
+            <itunes:episode>8</itunes:episode>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:explicit>yes</itunes:explicit>
+            <itunes:keywords>Flush, Flush Media, Intellectually Dishonest, Chris, politics, Caleb, Azurras</itunes:keywords>
+            <itunes:season>1</itunes:season>
+            <itunes:subtitle>Flush Media</itunes:subtitle>
+            <itunes:title>Don’t Listen to This Pod Ironically</itunes:title>
+            <itunes:type>episodic</itunes:type>
+            <description>
+                On this episode of The Flush Podcast we talk about... what exactly is a credit report? 
+                Kanye For President? The oldguards of the GOP are moving forward with Trump. Why did Pusha T diss Drake again? 
+                and new updates with the website and blogs!
+                <![CDATA[
+                <br><br>Check Out Our Website! http://www.flushmedia.org 
+                <br>Join Our Discord! https://discord.gg/xR2FG3U 
+                <br>Caleb's Twitter: https://twitter.com/gooddogthedog 
+                <br>Chris's Twitter: https://twitter.com/Azurras
+                ]]>
+            </description>
+            <itunes:summary>
+                On this episode of The Flush Podcast we talk about... what exactly is a credit report? 
+                Kanye For President? The oldguards of the GOP are moving forward with Trump. Why did Pusha T diss Drake again? 
+                and new updates with the website and blogs!
+                <![CDATA[
+                <br><br>Check Out Our Website! http://www.flushmedia.org 
+                <br>Join Our Discord! https://discord.gg/xR2FG3U 
+                <br>Caleb's Twitter: https://twitter.com/gooddogthedog 
+                <br>Chris's Twitter: https://twitter.com/Azurras
+                ]]>
+            </itunes:summary> 
+        </item>
+
+        <item>
+            <title>7. Jon John Johnny</title>
+            <enclosure url="http://www.flushmedia.org/podcasts/flush/audio/ep7.mp3" length="176852184" type="audio/mp3" />
+            <guid>http://www.flushmedia.org/podcasts/flush/audio/ep7.mp3</guid>
+            <link>http://www.flushmedia.org/</link>
+            <pubDate>Sat, 11 Jul 2020 08:00:00 CST</pubDate>
+            <itunes:author>Chris and Caleb</itunes:author>
+            <itunes:duration>01:13:41</itunes:duration>
+            <itunes:episode>7</itunes:episode>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:explicit>yes</itunes:explicit>
+            <itunes:keywords>Flush, Flush Media, Intellectually Dishonest, Chris, politics, Caleb, Azurras</itunes:keywords>
+            <itunes:season>1</itunes:season>
+            <itunes:subtitle>Flush Media</itunes:subtitle>
+            <itunes:title>Jon John Johnny</itunes:title>
+            <itunes:type>episodic</itunes:type>
+            <description>
+                On this episode of The Flush Podcast! We talk with our long time friend, John! 
+                He shares some of his details of his work life with us. After, we talk about CHAZ, Kanye's new music, 
+                and the latest news about the Flush website. 
+                <![CDATA[
+                <br><br>Check Out Our Website! http://www.flushmedia.org 
+                <br>Join Our Discord! https://discord.gg/xR2FG3U 
+                <br>Caleb's Twitter: https://twitter.com/gooddogthedog 
+                <br>Chris's Twitter: https://twitter.com/Azurras
+                ]]>
+            </description>
+            <itunes:summary>
+                On this episode of The Flush Podcast! We talk with our long time friend, John! 
+                He shares some of his details of his work life with us. After, we talk about CHAZ, Kanye's new music, 
+                and the latest news about the Flush website. 
+                <![CDATA[
+                <br><br>Check Out Our Website! http://www.flushmedia.org 
+                <br>Join Our Discord! https://discord.gg/xR2FG3U 
+                <br>Caleb's Twitter: https://twitter.com/gooddogthedog 
+                <br>Chris's Twitter: https://twitter.com/Azurras
+                ]]>
+            </itunes:summary>     
+        </item>
+        
+        <item>
+            <title>6. Corona Sucks Man</title>
+            <enclosure url="http://www.flushmedia.org/podcasts/flush/audio/ep6.mp3" length="137986070" type="audio/mp3" />
+            <guid>http://www.flushmedia.org/podcasts/flush/audio/ep6.mp3</guid>
+            <link>http://www.flushmedia.org/</link>
+            <pubDate>Sun, 5 Jul 2020 08:00:00 CST</pubDate>
+            <itunes:author>Chris and Caleb</itunes:author>
+            <itunes:duration>00:57:29</itunes:duration> 
+            <itunes:episode>6</itunes:episode>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:explicit>yes</itunes:explicit>
+            <itunes:keywords>Flush, Flush Media, Intellectually Dishonest, Chris, politics, Caleb, Azurras</itunes:keywords>
+            <itunes:season>1</itunes:season>
+            <itunes:subtitle>Flush Media</itunes:subtitle>
+            <itunes:title>Corona Sucks Man</itunes:title>
+            <itunes:type>episodic</itunes:type>
+            <description>
+                On this episode of The Flush Podcast!!!! We talk about the second wave of the coronavirus, 
+                Krystal Ball and her show the Rising, Trump's latest poll numbers, and the lack of media during covid.
+                <![CDATA[
+                <br>Check Out Our Website! http://www.flushmedia.org 
+                <br>Join Our Discord! https://discord.gg/xR2FG3U 
+                <br>Caleb's Twitter: https://twitter.com/gooddogthedog 
+                <br>Chris's Twitter: https://twitter.com/Azurras
+                ]]>
+            </description>
+            <itunes:summary>
+                On this episode of The Flush Podcast!!!! We talk about the second wave of the coronavirus, 
+                Krystal Ball and her show the Rising, Trump's latest poll numbers, and the lack of media during covid.
+                <![CDATA[
+                <br>Check Out Our Website! http://www.flushmedia.org 
+                <br>Join Our Discord! https://discord.gg/xR2FG3U 
+                <br>Caleb's Twitter: https://twitter.com/gooddogthedog 
+                <br>Chris's Twitter: https://twitter.com/Azurras
+                ]]>
+            </itunes:summary>
+        </item>
+
+        <item>
+            <title>5. Tech Is Controlling You</title>
+            <enclosure url="http://www.flushmedia.org/podcasts/flush/audio/ep5.mp3" length="82512109" type="audio/mp3" />
+            <guid>http://www.flushmedia.org/podcasts/flush/audio/ep5.mp3</guid>
+            <link>http://www.flushmedia.org/</link>
+            <pubDate>Sat, 28 Jun 2020 08:00:00 CST</pubDate>
+            <itunes:author>Chris and Caleb</itunes:author>
+            <itunes:duration>00:57:18</itunes:duration> 
+            <itunes:episode>5</itunes:episode>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:explicit>yes</itunes:explicit>
+            <itunes:keywords>Flush, Flush Media, Intellectually Dishonest, Chris, politics, Caleb, Azurras</itunes:keywords>
+            <itunes:season>1</itunes:season>
+            <itunes:subtitle>Flush Media</itunes:subtitle>
+            <itunes:title>Tech Is Controlling You</itunes:title>
+            <itunes:type>episodic</itunes:type>
+            <description>
+                On this episode, we talk about the badges on apps, the WWDC Apple Event, 
+                J Cole's new song, and how our first guest episode went! 
+                <![CDATA[
+                <br>Check Out Our Website! http://www.flushmedia.org 
+                <br>Join Our Discord! https://discord.gg/xR2FG3U 
+                <br>Caleb's Twitter: https://twitter.com/gooddogthedog 
+                <br>Chris's Twitter: https://twitter.com/Azurras
+                ]]>
+            </description>
+            <itunes:summary>
+                On this episode, we talk about the badges on apps, the WWDC Apple Event, 
+                J Cole's new song, and how our first guest episode went! 
+                <![CDATA[
+                <br>Check Out Our Website! http://www.flushmedia.org 
+                <br>Join Our Discord! https://discord.gg/xR2FG3U 
+                <br>Caleb's Twitter: https://twitter.com/gooddogthedog 
+                <br>Chris's Twitter: https://twitter.com/Azurras
+                ]]>
+            </itunes:summary>
+        </item>
+
+        <item>
+            <title>4. "Strange"</title>
+            <enclosure url="http://www.flushmedia.org/podcasts/flush/audio/ep4.mp3" length="99012510" type="audio/mp3" />
+            <guid>http://www.flushmedia.org/podcasts/flush/audio/ep4.mp3</guid>
+            <link>http://www.flushmedia.org/</link>
+            <pubDate>Sat, 20 Jun 2020 08:00:00 CST</pubDate>
+            <itunes:author>Chris and Caleb</itunes:author>
+            <itunes:duration>01:08:45</itunes:duration>
+            <itunes:episode>4</itunes:episode>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:explicit>yes</itunes:explicit>
+            <itunes:keywords>Flush, Flush Media, Intellectually Dishonest, Chris, politics, Caleb, Azurras</itunes:keywords>
+            <itunes:season>1</itunes:season>
+            <itunes:subtitle>Flush Media</itunes:subtitle>
+            <itunes:title>"Strange"</itunes:title>
+            <itunes:type>episodic</itunes:type>
+            <description>
+                On this episode, we have a special guest! Jeremy joins the conversation. 
+                <![CDATA[
+                <br>Check Out Our Website! http://www.flushmedia.org 
+                <br>Join Our Discord! https://discord.gg/xR2FG3U 
+                <br>Caleb's Twitter: https://twitter.com/gooddogthedog 
+                <br>Chris's Twitter: https://twitter.com/Azurras
+                ]]>
+            </description>
+            <itunes:summary>
+                On this episode, we have a special guest! Jeremy joins the conversation. 
+                <![CDATA[
+                <br>Check Out Our Website! http://www.flushmedia.org 
+                <br>Join Our Discord! https://discord.gg/xR2FG3U 
+                <br>Caleb's Twitter: https://twitter.com/gooddogthedog 
+                <br>Chris's Twitter: https://twitter.com/Azurras
+                ]]>
+            </itunes:summary>
+        </item>
+
+        <item>
+            <title>3. Ladies and Gentlemen, We Got Em</title>
+            <enclosure url="http://www.flushmedia.org/podcasts/flush/audio/ep3.mp3" length="72789542" type="audio/mp3" />
+            <guid>http://www.flushmedia.org/podcasts/flush/audio/ep3.mp3</guid>
+            <link>http://www.flushmedia.org/</link>
+            <pubDate>Sat, 13 Jun 2020 08:00:00 CST</pubDate>
+            <itunes:author>Chris and Caleb</itunes:author>
+            <itunes:duration>00:50:33</itunes:duration>
+            <itunes:episode>3</itunes:episode>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:explicit>yes</itunes:explicit>
+            <itunes:keywords>Flush, Flush Media, Intellectually Dishonest, Chris, politics, Caleb, Azurras</itunes:keywords>
+            <itunes:season>1</itunes:season>
+            <itunes:subtitle>Flush Media</itunes:subtitle>
+            <itunes:title>Ladies and Gentlemen, We Got Em</itunes:title>
+            <itunes:type>episodic</itunes:type>
+            <description>
+                On this episode, we talk about that the future of the podcast, ways to make some extra money, 
+                purchasing a house, and continue our discussion on the blm protest. 
+                <![CDATA[
+                <br>Check Out Our Website! http://www.flushmedia.org 
+                <br>Join Our Discord! https://discord.gg/xR2FG3U 
+                <br>Caleb's Twitter: https://twitter.com/gooddogthedog 
+                <br>Chris's Twitter: https://twitter.com/Azurras
+                ]]>
+            </description>
+            <itunes:summary>
+                On this episode, we talk about that the future of the podcast, ways to make some extra money, 
+                purchasing a house, and continue our discussion on the blm protest. 
+                <![CDATA[
+                <br>Check Out Our Website! http://www.flushmedia.org 
+                <br>Join Our Discord! https://discord.gg/xR2FG3U 
+                <br>Caleb's Twitter: https://twitter.com/gooddogthedog 
+                <br>Chris's Twitter: https://twitter.com/Azurras
+                ]]>
+            </itunes:summary>
+        </item>
+
+        <item>
+            <title>2. The One That Should Have Been First?</title>
+            <enclosure url="http://www.flushmedia.org/podcasts/flush/audio/ep2.mp3" length="77386257" type="audio/mp3" />
+            <guid>http://www.flushmedia.org/podcasts/flush/audio/ep2.mp3</guid>
+            <link>http://www.flushmedia.org/</link>
+            <pubDate>Thu, 4 Jun 2020 08:00:00 CST</pubDate>
+            <itunes:author>Chris and Caleb</itunes:author>
+            <itunes:duration>00:53:44</itunes:duration>
+            <itunes:episode>2</itunes:episode>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:explicit>yes</itunes:explicit>
+            <itunes:keywords>Flush, Flush Media, Intellectually Dishonest, Chris, politics, Caleb, Azurras</itunes:keywords>
+            <itunes:season>1</itunes:season>
+            <itunes:subtitle>Flush Media</itunes:subtitle>
+            <itunes:title>The One That Should Have Been First?</itunes:title>
+            <itunes:type>episodic</itunes:type>
+            <description>
+                On this episode, we talk on the national protests/riots. 
+                <![CDATA[
+                <br>Check Out Our Website! http://www.flushmedia.org 
+                <br>Join Our Discord! https://discord.gg/xR2FG3U 
+                <br>Caleb's Twitter: https://twitter.com/gooddogthedog 
+                <br>Chris's Twitter: https://twitter.com/Azurras
+                ]]>
+            </description>
+            <itunes:summary>
+                On this episode, we talk on the national protests/riots. 
+                <![CDATA[
+                <br>Check Out Our Website! http://www.flushmedia.org 
+                <br>Join Our Discord! https://discord.gg/xR2FG3U 
+                <br>Caleb's Twitter: https://twitter.com/gooddogthedog 
+                <br>Chris's Twitter: https://twitter.com/Azurras
+                ]]>
+            </itunes:summary>
+        </item>
+
+        <item>
+            <title>1. And We Back And We Back</title>
+            <enclosure url="http://www.flushmedia.org/podcasts/flush/audio/ep1.mp3" length="98691517" type="audio/mp3" />
+            <guid>http://www.flushmedia.org/podcasts/flush/audio/ep1.mp3</guid>
+            <link>http://www.flushmedia.org/</link>
+            <pubDate>Mon, 1 Jun 2020 08:00:00 CST</pubDate>
+            <itunes:author>Chris and Caleb</itunes:author>
+            <itunes:duration>01:08:32</itunes:duration> 
+            <itunes:episode>1</itunes:episode>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:explicit>yes</itunes:explicit>
+            <itunes:keywords>Flush, Flush Media, Intellectually Dishonest, Chris, politics, Caleb, Azurras</itunes:keywords>
+            <itunes:season>1</itunes:season>
+            <itunes:subtitle>Flush Media</itunes:subtitle>
+            <itunes:title>And We Back And We Back</itunes:title>
+            <itunes:type>episodic</itunes:type>
+            <description>
+                Our return to the internet! 
+                <![CDATA[
+                <br>Check Out Our Website! http://www.flushmedia.org 
+                <br>Join Our Discord! https://discord.gg/xR2FG3U 
+                <br>Caleb's Twitter: https://twitter.com/gooddogthedog 
+                <br>Chris's Twitter: https://twitter.com/Azurras
+                ]]>
+            </description>
+            <itunes:summary>
+                Our return to the internet! 
+                <![CDATA[
+                <br>Check Out Our Website! http://www.flushmedia.org 
+                <br>Join Our Discord! https://discord.gg/xR2FG3U 
+                <br>Caleb's Twitter: https://twitter.com/gooddogthedog 
+                <br>Chris's Twitter: https://twitter.com/Azurras
+                ]]>
+            </itunes:summary>
+        </item>
+    </channel>
+</rss>

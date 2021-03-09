@@ -1,17 +1,18 @@
+/* eslint-disable import/no-unresolved */
 const path = require('path');
 
-const outputDirectory = '/public/dist';
+const outputDirectory = './src/main/resources/static/js';
 
 module.exports = {
     mode: 'development',
     entry: [
         'babel-polyfill',
-        './public/js/whats-for-lunch/maincontroller.mjs',
-        './public/js/whats-for-lunch/restaurantcontroller.mjs',
-        './apps/react/index.js',
-        './apps/react/nav/index.js',
-        './apps/react/footer/index.js',
-        './apps/react/blog/index.js'
+        './src/main/resources/static/js/whats-for-lunch/maincontroller.mjs',
+        './src/main/resources/static/js/whats-for-lunch/restaurantcontroller.mjs',
+        './src/main/resources/static/js/react/index.js',
+        './src/main/resources/static/js/react/nav/index.js',
+        './src/main/resources/static/js/react/footer/index.js',
+        './src/main/resources/static/js/react/blog/index.js'
     ],
     output: {
         path: path.join(__dirname, outputDirectory),
@@ -19,16 +20,16 @@ module.exports = {
     },
     module: {
         rules: [{
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader'
-                }
-            },
-            {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: {
+                loader: 'babel-loader'
             }
+        },
+        {
+            test: /\.css$/,
+            use: ['style-loader', 'css-loader']
+        }
         ]
     },
     devServer: {
