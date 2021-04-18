@@ -33,7 +33,7 @@ public class WFLService {
         return new WFLResponse();
     }
 
-    public WFLResponse getRandomResturant() {
+    public WFLResponse getRandomRestaurant() {
         return new WFLResponse();
     }
 
