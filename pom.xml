@@ -103,7 +103,7 @@
                             <webappTargetDir>${project.build.outputDirectory}/static</webappTargetDir>
                             <cssSourceDir>css</cssSourceDir>
                             <cssSourceFiles>
-                                <cssSourceFile>azurras.css</cssSourceFile>
+                                <cssSourceFile>main.css</cssSourceFile>
                                 <cssSourceFile>blog.css</cssSourceFile>
 <!--                                <cssSourceFile>wfl.css</cssSourceFile>-->
                             </cssSourceFiles>
