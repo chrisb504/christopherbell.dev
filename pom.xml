@@ -23,10 +23,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        <!-- <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-cache</artifactId>
-        </dependency> -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -54,38 +50,6 @@
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>1.2.32</version>
         </dependency>
-
-        <!-- caching -->
-        <!-- <dependency>
-            <groupId>javax.cache</groupId>
-            <artifactId>cache-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.ehcache</groupId>
-            <artifactId>ehcache</artifactId>
-        </dependency> -->
-
-        <!-- webjars -->
-        <!-- <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>webjars-locator-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery</artifactId>
-            <version>${webjars-jquery.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery-ui</artifactId>
-            <version>${webjars-jquery-ui.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>${webjars-bootstrap.version}</version>
-        </dependency> -->
-        <!-- end of webjars -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -141,21 +105,9 @@
                             <cssSourceFiles>
                                 <cssSourceFile>azurras.css</cssSourceFile>
                                 <cssSourceFile>blog.css</cssSourceFile>
-<!--                                <cssSourceFile>reset.css</cssSourceFile>-->
-<!--                                <cssSourceFile>toc.css</cssSourceFile>-->
+<!--                                <cssSourceFile>wfl.css</cssSourceFile>-->
                             </cssSourceFiles>
                             <cssFinalFile>main.css</cssFinalFile>
-
-                            <!-- Javascript configuration -->
-<!--                            <jsSourceDir>scripts</jsSourceDir>-->
-<!--                            <jsSourceFiles>-->
-<!--                                <jsSourceFile>script-1.js</jsSourceFile>-->
-<!--                                <jsSourceFile>script-2.js</jsSourceFile>-->
-<!--                                <jsSourceFile>script-3.js</jsSourceFile>-->
-<!--                                <jsSourceFile>script-4.js</jsSourceFile>-->
-<!--                                &lt;!&ndash;  ... &ndash;&gt;-->
-<!--                                <jsSourceFile>script-n.js</jsSourceFile>-->
-<!--                            </jsSourceFiles>-->
                        </configuration>
                         <goals>
                             <goal>minify</goal>
@@ -163,29 +115,8 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin> -->
-
-            <!-- Spring Boot Actuator displays build-related information if a git.properties
-        file is present at the classpath -->
-            <!-- <plugin>
+            <!-- Spring Boot Actuator displays build-related information if a git.properties file is present at the classpath -->
+            <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
                 <executions>
@@ -203,7 +134,7 @@
                     </generateGitPropertiesFilename>
                     <failOnNoGitDirectory>false</failOnNoGitDirectory>
                 </configuration>
-            </plugin> -->
+            </plugin>
 
             <!-- Sass compiler -->
             <!-- <plugin>

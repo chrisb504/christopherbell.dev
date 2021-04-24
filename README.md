@@ -8,7 +8,6 @@ Azurras is a website created by Christopher Bell with the purpose of holding any
 ```bash
 npm install
 npm run-script build
-gulp sass
 mvn clean package
 java -jar /target/{jar-name-here}
 ```
@@ -22,14 +21,9 @@ java -jar /target/{jar-name-here}
 1. Java 14
 1. Maven
 
-### Building the SASS
+### Building the CSS
 
-1. Go to the home directory of the project.
-1. Run the below command.
-
-```bash
-gulp sass
-```
+The CSS is built using maven. When running the package command, the css should be compiled and minified.
 
 The output file is located at ./src/main/resources/static/css/main.min.css
 
