@@ -97,8 +97,12 @@
             <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.samaxes.maven</groupId>
+            <artifactId>minify-maven-plugin</artifactId>
+            <version>1.7.6</version>
+        </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -118,6 +122,44 @@
                                 <java.target>${maven.compiler.target}</java.target>
                             </additionalProperties>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.samaxes.maven</groupId>
+                <artifactId>minify-maven-plugin</artifactId>
+                <version>1.7.6</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <id>default-minify</id>
+                        <configuration>
+                            <charset>UTF-8</charset>
+                            <webappSourceDir>src/main/resources/static</webappSourceDir>
+                            <webappTargetDir>${project.build.outputDirectory}/static</webappTargetDir>
+                            <cssSourceDir>css</cssSourceDir>
+                            <cssSourceFiles>
+                                <cssSourceFile>azurras.css</cssSourceFile>
+                                <cssSourceFile>blog.css</cssSourceFile>
+<!--                                <cssSourceFile>reset.css</cssSourceFile>-->
+<!--                                <cssSourceFile>toc.css</cssSourceFile>-->
+                            </cssSourceFiles>
+                            <cssFinalFile>main.css</cssFinalFile>
+
+                            <!-- Javascript configuration -->
+<!--                            <jsSourceDir>scripts</jsSourceDir>-->
+<!--                            <jsSourceFiles>-->
+<!--                                <jsSourceFile>script-1.js</jsSourceFile>-->
+<!--                                <jsSourceFile>script-2.js</jsSourceFile>-->
+<!--                                <jsSourceFile>script-3.js</jsSourceFile>-->
+<!--                                <jsSourceFile>script-4.js</jsSourceFile>-->
+<!--                                &lt;!&ndash;  ... &ndash;&gt;-->
+<!--                                <jsSourceFile>script-n.js</jsSourceFile>-->
+<!--                            </jsSourceFiles>-->
+                       </configuration>
+                        <goals>
+                            <goal>minify</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
