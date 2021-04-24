@@ -1,0 +1,73 @@
+@import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
+
+
+body {
+    padding-top: 3.5rem;
+}
+
+.fa-2 {
+    font-size: 2em;
+}
+
+.fa-3 {
+    font-size: 3em;
+}
+
+.flush-green {
+    background-color: #C3D898 !important;
+    border-color: #C3D898 !important;
+}
+
+.flush-light-blue {
+    background-color: #69A2B0 !important;
+    border-color: #69A2B0 !important;
+}
+
+.flush-dark-blue {
+    background-color: #1C3144 !important;
+    border-color: #1C3144 !important;
+}
+
+.flush-pink {
+    background-color: #D4ADCF !important;
+    border-color: #D4ADCF !important;
+}
+
+.flush-brown {
+    background-color: #96705B !important;
+    border-color: #96705B !important;
+}
+
+.jumbotron {
+    background-color: #5effb8;
+}
+
+.podcast-links {
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+}
+
+.podcast-link {
+    padding: 10px;
+    margin: 10px;
+}
+
+#footer {
+    height: calc(100vh - 540px);
+    padding-top: 10px;
+}
+
+#footer-azurras {
+    width: 100%;
+    height: auto;
+}
+
+#footer-my-info-container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+}
