@@ -1,6 +1,6 @@
 {
     "name": "Azurras",
-    "version": "2.2.0",
+    "version": "2.3.0",
     "description": "The Azurras Website",
     "author": "Christopher Bell",
     "private": true,
@@ -19,11 +19,8 @@
         "cookie-parser": "^1.4.5",
         "debug": "~4.3.1",
         "material-design-icons": "^3.0.1",
-        "monk": "^7.3.4",
-        "morgan": "~1.10.0",
         "react": "^17.0.2",
-        "react-dom": "^17.0.2",
-        "serve-favicon": "~2.5.0"
+        "react-dom": "^17.0.2"
     },
     "devDependencies": {
         "@babel/core": "^7.13.16",
