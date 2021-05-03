@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 public class WFLService {
     private final Log LOG = LogFactory.getLog(WFLService.class);
 
-    public WFLService() {
-
-    }
+    public WFLService() {}
 
     public WFLResponse addRestaurant(WFLRequest wflRequest) {
         if (wflRequest == null) {
