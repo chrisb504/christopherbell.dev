@@ -6,8 +6,8 @@ export default class Blog extends Component {
         this.state = {
             posts: [],
             tags: [],
-            location: '/blog/post',
-            tagLocation: '/blog/post/tags'
+            location: '/cbBlog/post',
+            tagLocation: '/cbBlog/tag'
         };
         this.setPostLocation = this.setPostLocation.bind(this);
     }
@@ -45,15 +45,15 @@ export default class Blog extends Component {
     }
 
     setPostLocation(e) {
-        const location = `/blog/post/tags/${e.target.value}`;
+        const location = `/cbBlog/tag/${e.target.value}`;
         console.log("Setting to this location", location);
         if(e.target.value) {
-            this.setState({ location: `/blog/post/tags/${e.target.value}` }, function() {
+            this.setState({ location: `/cbBlog/tag/${e.target.value}` }, function() {
                 console.log("PostLocation", this.state.location);
                 this.getData(this.state.location);
             });
         } else {
-            this.setState({ location: `/blog/post/` }, function() {
+            this.setState({ location: `/cbBlog/post/` }, function() {
                 console.log("PostLocation", this.state.location);
                 this.getData(this.state.location);
             });
