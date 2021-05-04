@@ -9,7 +9,7 @@ export default class BlogTags extends Component {
     }
 
     componentDidMount() {
-        fetch('/cbBlog/post')
+        fetch('/blog/post')
             // passes the response and returns json from response
             .then(res => res.json())
             // posts gets that return from the last then and puts in it state

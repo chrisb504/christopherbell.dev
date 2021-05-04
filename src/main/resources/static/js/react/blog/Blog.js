@@ -6,8 +6,8 @@ export default class Blog extends Component {
         this.state = {
             posts: [],
             tags: [],
-            location: '/cbBlog/post',
-            tagLocation: '/cbBlog/tag'
+            location: '/blog/post',
+            tagLocation: '/blog/tag'
         };
         this.setPostLocation = this.setPostLocation.bind(this);
     }
@@ -25,13 +25,14 @@ export default class Blog extends Component {
     }
 
     getData(fetchLocation) {
-        console.log("Getting date at ", fetchLocation);
+        console.log("Getting data at ", fetchLocation);
         fetch(fetchLocation)
             // passes the response and returns json from response
             .then(res => res.json())
             // posts gets that return from the last then and puts in it state
-            .then((posts) => {
-                posts = posts.reverse();
+            .then((blogPostResponse) => {
+                let blogPosts = blogPostResponse.blogPostPayload;
+                let posts = blogPosts.reverse();
                 this.setState({ posts });
             });
     }
@@ -41,19 +42,22 @@ export default class Blog extends Component {
             // passes the response and returns json from response
             .then(res => res.json())
             // posts gets that return from the last then and puts in it state
-            .then(tags => this.setState({ tags }));
+            .then(tagsResponse => {
+                let tags = tagsResponse.blogTagPayload;
+                this.setState({ tags });
+            })
     }
 
     setPostLocation(e) {
-        const location = `/cbBlog/tag/${e.target.value}`;
+        const location = `/blog/tag/${e.target.value}`;
         console.log("Setting to this location", location);
         if(e.target.value) {
-            this.setState({ location: `/cbBlog/tag/${e.target.value}` }, function() {
+            this.setState({ location: `/blog/tag/${e.target.value}` }, function() {
                 console.log("PostLocation", this.state.location);
                 this.getData(this.state.location);
             });
         } else {
-            this.setState({ location: `/cbBlog/post/` }, function() {
+            this.setState({ location: `/blog/post/` }, function() {
                 console.log("PostLocation", this.state.location);
                 this.getData(this.state.location);
             });

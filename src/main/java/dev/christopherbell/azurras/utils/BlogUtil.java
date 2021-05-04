@@ -3,10 +3,13 @@ package dev.christopherbell.azurras.utils;
 import dev.christopherbell.azurras.models.blog.BlogPost;
 import dev.christopherbell.azurras.models.blog.BlogRequest;
 import dev.christopherbell.azurras.models.blog.BlogResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
 public class BlogUtil {
+    private final Logger LOG = LoggerFactory.getLogger(BlogUtil.class);
     private BlogUtil() {
     }
 
@@ -26,7 +29,8 @@ public class BlogUtil {
             blogPost.setAuthor(blogRequest.getAuthor());
             blogPost.setContentText(blogRequest.getContentText());
             blogPost.setDescription(blogRequest.getDescription());
-            blogPost.setImagePage(blogRequest.getImagePath());
+            blogPost.setImagePath(blogRequest.getImagePath());
+            blogPost.setTags(blogRequest.getTags());
             blogPost.setTitle(blogRequest.getTitle());
         }
         if (Objects.nonNull(blogRequest.getTags())) {
