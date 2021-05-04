@@ -6,8 +6,8 @@ import dev.christopherbell.azurras.models.blog.BlogResponse;
 import dev.christopherbell.azurras.repositories.BlogRepository;
 import dev.christopherbell.azurras.utils.BlogUtil;
 import dev.christopherbell.azurras.utils.Constants;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.Objects;
 
 @Service
 public class BlogService {
-    private final Log LOG = LogFactory.getLog(BlogService.class);
+    private final Logger LOG = LoggerFactory.getLogger(BlogService.class);
     private final BlogRepository blogRepository;
 
     @Autowired
@@ -78,6 +78,15 @@ public class BlogService {
     }
 
     public BlogResponse getBlogTags() {
-        return new BlogResponse();
+        final var rawBlogPosts = this.blogRepository.findAll();
+        final var blogTags = new ArrayList<String>();
+
+        for (final BlogPost blogPost : rawBlogPosts) {
+            blogTags.add(blogPost.getTags());
+        }
+        final var blogResponse = BlogUtil.getBaseBlogResponse(Constants.STATUS_SUCCESS,
+                String.valueOf(HttpStatus.OK));
+        blogResponse.setBlogTagPayLoad(blogTags);
+        return blogResponse;
     }
 }

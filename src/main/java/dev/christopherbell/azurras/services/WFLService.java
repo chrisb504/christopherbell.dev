@@ -3,15 +3,14 @@ package dev.christopherbell.azurras.services;
 import dev.christopherbell.azurras.models.whatsforlunch.WFLRequest;
 import dev.christopherbell.azurras.models.whatsforlunch.WFLResponse;
 import dev.christopherbell.azurras.utils.Constants;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
 public class WFLService {
-    private final Log LOG = LogFactory.getLog(WFLService.class);
+    private final Logger LOG = LoggerFactory.getLogger(WFLService.class);
 
     public WFLService() {}
 

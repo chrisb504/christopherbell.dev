@@ -9,11 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 
-@Entity
-@Table(name = "blog_table")
+//@Entity
+//@Table(name = "blog_table_tags")
 public class BlogTag {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+  //  @Id
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private Date creationDate;
     private String name;

@@ -3,9 +3,8 @@ package dev.christopherbell.azurras.controllers;
 import dev.christopherbell.azurras.models.whatsforlunch.WFLRequest;
 import dev.christopherbell.azurras.models.whatsforlunch.WFLResponse;
 import dev.christopherbell.azurras.services.WFLService;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class WFLController {
-    private final Log LOG = LogFactory.getLog(WFLController.class);
+    private final Logger LOG = LoggerFactory.getLogger(WFLController.class);
     private final WFLService wflService;
 
     @Autowired

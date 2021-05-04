@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface WFLRepository extends CrudRepository<WFLRestaurant, Integer> {
-    public WFLRestaurant findByName(String name);
+    WFLRestaurant findByName(String name);
 }

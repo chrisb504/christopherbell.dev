@@ -7,7 +7,7 @@ public class BlogResponse {
     private String message;
     private String status;
     private List<BlogPost> blogPostPayLoad;
-    private List<BlogTag> blogTagPayload;
+    private List<String> blogTagPayload;
 
     public BlogResponse() {
         this.message = "";
@@ -40,11 +40,11 @@ public class BlogResponse {
         this.blogPostPayLoad.addAll(blogPostPayLoad);
     }
 
-    public List<BlogTag> getBlogTagPayload() {
+    public List<String> getBlogTagPayload() {
         return new ArrayList<>(this.blogTagPayload);
     }
 
-    public void setBlogTagPayLoad(final List<BlogTag> blogTagPayload) {
+    public void setBlogTagPayLoad(final List<String> blogTagPayload) {
         this.blogTagPayload.addAll(blogTagPayload);
     }
 }

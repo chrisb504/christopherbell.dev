@@ -8,7 +8,7 @@ public class BlogRequest {
     private String contentText;
     private String description;
     private String imagePath;
-    private List<String> tags;
+    private String tags;
     private String title;
 
     public BlogRequest() {
@@ -16,7 +16,7 @@ public class BlogRequest {
         this.contentText = "";
         this.description = "";
         this.imagePath = "";
-        this.tags = new ArrayList<String>();
+        this.tags = "";
         this.title = "";
     }
 
@@ -52,12 +52,12 @@ public class BlogRequest {
         this.imagePath = imagePath;
     }
 
-    public ArrayList<String> getTags() {
-        return new ArrayList<String>(this.tags);
+    public String getTags() {
+        return tags;
     }
 
-    public void setTags(ArrayList<String> tags) {
-        this.tags.addAll(tags);
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
     public String getTitle() {

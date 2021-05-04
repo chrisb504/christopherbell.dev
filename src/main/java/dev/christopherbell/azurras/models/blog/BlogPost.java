@@ -1,30 +1,24 @@
 package dev.christopherbell.azurras.models.blog;
 
 import java.util.Date;
-import java.util.List;
-
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.ArrayList;
 
 @Entity
 @Table(name = "blog_table")
 public class BlogPost {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
     private String author;
     private String contentText;
     private Date creationDate;
     private String description;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
     private String imagePath;
-    @OneToMany(targetEntity = BlogTag.class, fetch = FetchType.EAGER)
-    private List<BlogTag> tags;
+    private String tags;
     private String title;
 
     public BlogPost() {
@@ -33,7 +27,7 @@ public class BlogPost {
         this.creationDate = new Date();
         this.description = "";
         this.imagePath = "";
-        this.tags = new ArrayList<>();
+        this.tags = "";
         this.title = "";
     }
 
@@ -81,16 +75,16 @@ public class BlogPost {
         return this.imagePath;
     }
 
-    public void setImagePage(String imagePath) {
+    public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
 
-    public List<BlogTag> getTags() {
-        return new ArrayList<>(this.tags);
+    public String getTags() {
+        return tags;
     }
 
-    public void setTags(List<BlogTag> tag) {
-        this.tags = new ArrayList<>(tags);
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
     public String getTitle() {
