@@ -31,7 +31,7 @@ public class BlogService {
             return BlogUtil.getBaseBlogResponse(Constants.ERROR_NULL_REQUEST, String.valueOf(HttpStatus.BAD_REQUEST));
         }
         final var blogPost = BlogUtil.getBlogPost(blogRequest);
-        this.blogRepository.save(blogPost);
+        //this.blogRepository.save(blogPost);
 
         return BlogUtil.getBaseBlogResponse(Constants.POST_ADDED_SUCCESS, String.valueOf(HttpStatus.OK));
     }
@@ -41,7 +41,7 @@ public class BlogService {
             LOG.error(Constants.ERROR_NULL_REQUEST);
             return BlogUtil.getBaseBlogResponse(Constants.ERROR_NULL_REQUEST, String.valueOf(HttpStatus.BAD_REQUEST));
         }
-        this.blogRepository.deleteById((Integer.parseInt(blogPostId)));
+        //this.blogRepository.deleteById((Integer.parseInt(blogPostId)));
 
         return BlogUtil.getBaseBlogResponse(Constants.POST_DELETED_SUCCESS, String.valueOf(HttpStatus.OK));
     }
@@ -54,23 +54,23 @@ public class BlogService {
         final var blogPost = this.blogRepository.findById(Integer.valueOf(blogPostId));
         final var blogResponse = BlogUtil.getBaseBlogResponse(Constants.STATUS_SUCCESS,
                 String.valueOf(HttpStatus.OK));
-        blogResponse.getBlogPostPayload().add(blogPost.get());
+        //blogResponse.getBlogPostPayload().add(blogPost.get());
 
-        return blogResponse;
+        return new BlogResponse();
     }
 
     public BlogResponse getBlogPosts() {
-        final var rawBlogPosts = this.blogRepository.findAll();
-        final var blogPosts = new ArrayList<BlogPost>();
+//        final var rawBlogPosts = this.blogRepository.findAll();
+//        final var blogPosts = new ArrayList<BlogPost>();
+//
+//        for (final BlogPost blogPost : rawBlogPosts) {
+//            blogPosts.add(blogPost);
+//        }
+//        final var blogResponse = BlogUtil.getBaseBlogResponse(Constants.STATUS_SUCCESS,
+//                String.valueOf(HttpStatus.OK));
+//        blogResponse.setBlogPostPayLoad(blogPosts);
 
-        for (final BlogPost blogPost : rawBlogPosts) {
-            blogPosts.add(blogPost);
-        }
-        final var blogResponse = BlogUtil.getBaseBlogResponse(Constants.STATUS_SUCCESS,
-                String.valueOf(HttpStatus.OK));
-        blogResponse.setBlogPostPayLoad(blogPosts);
-
-        return blogResponse;
+        return new BlogResponse();//blogResponse;
     }
 
     public BlogResponse getBlogTag(final String blogPostTag) {
@@ -78,15 +78,17 @@ public class BlogService {
     }
 
     public BlogResponse getBlogTags() {
-        final var rawBlogPosts = this.blogRepository.findAll();
-        final var blogTags = new ArrayList<String>();
+//        final var rawBlogPosts = this.blogRepository.findAll();
+//        final var blogTags = new ArrayList<String>();
+//
+//        for (final BlogPost blogPost : rawBlogPosts) {
+//            blogTags.add(blogPost.getTags());
+//        }
+//        final var blogResponse = BlogUtil.getBaseBlogResponse(Constants.STATUS_SUCCESS,
+//                String.valueOf(HttpStatus.OK));
+//        blogResponse.setBlogTagPayLoad(blogTags);
+//        return blogResponse;
 
-        for (final BlogPost blogPost : rawBlogPosts) {
-            blogTags.add(blogPost.getTags());
-        }
-        final var blogResponse = BlogUtil.getBaseBlogResponse(Constants.STATUS_SUCCESS,
-                String.valueOf(HttpStatus.OK));
-        blogResponse.setBlogTagPayLoad(blogTags);
-        return blogResponse;
+        return new BlogResponse();
     }
 }

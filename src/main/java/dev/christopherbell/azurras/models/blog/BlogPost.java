@@ -1,17 +1,12 @@
 package dev.christopherbell.azurras.models.blog;
 
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "blog_table")
+//@Entity
+//@Table(name = "blog_table")
 public class BlogPost {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String author;
     private String contentText;
