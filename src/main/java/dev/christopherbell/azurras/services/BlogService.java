@@ -18,11 +18,11 @@ import java.util.Objects;
 @Service
 public class BlogService {
     private final Logger LOG = LoggerFactory.getLogger(BlogService.class);
-    private final BlogRepository blogRepository;
+    //private final BlogRepository blogRepository;
 
     @Autowired
-    public BlogService(final BlogRepository blogRepository) {
-        this.blogRepository = blogRepository;
+    public BlogService(){//final BlogRepository blogRepository) {
+        //this.blogRepository = blogRepository;
     }
 
     public BlogResponse addBlogPost(final BlogRequest blogRequest) {
@@ -51,7 +51,7 @@ public class BlogService {
             LOG.error(Constants.ERROR_NULL_REQUEST);
             return BlogUtil.getBaseBlogResponse(Constants.ERROR_NULL_REQUEST, String.valueOf(HttpStatus.BAD_REQUEST));
         }
-        final var blogPost = this.blogRepository.findById(Integer.valueOf(blogPostId));
+        //final var blogPost = this.blogRepository.findById(Integer.valueOf(blogPostId));
         final var blogResponse = BlogUtil.getBaseBlogResponse(Constants.STATUS_SUCCESS,
                 String.valueOf(HttpStatus.OK));
         //blogResponse.getBlogPostPayload().add(blogPost.get());
