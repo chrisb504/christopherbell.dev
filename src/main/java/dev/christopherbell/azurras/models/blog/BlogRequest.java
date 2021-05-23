@@ -1,7 +1,5 @@
 package dev.christopherbell.azurras.models.blog;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class BlogRequest {
     private String author;

@@ -1,9 +1,7 @@
 package dev.christopherbell.azurras.services;
 
-import dev.christopherbell.azurras.models.blog.BlogPost;
 import dev.christopherbell.azurras.models.blog.BlogRequest;
 import dev.christopherbell.azurras.models.blog.BlogResponse;
-import dev.christopherbell.azurras.repositories.BlogRepository;
 import dev.christopherbell.azurras.utils.BlogUtil;
 import dev.christopherbell.azurras.utils.Constants;
 import org.slf4j.Logger;
@@ -12,17 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 @Service
 public class BlogService {
     private final Logger LOG = LoggerFactory.getLogger(BlogService.class);
-    //private final BlogRepository blogRepository;
 
     @Autowired
-    public BlogService(){//final BlogRepository blogRepository) {
-        //this.blogRepository = blogRepository;
+    public BlogService() {
     }
 
     public BlogResponse addBlogPost(final BlogRequest blogRequest) {
@@ -31,7 +26,6 @@ public class BlogService {
             return BlogUtil.getBaseBlogResponse(Constants.ERROR_NULL_REQUEST, String.valueOf(HttpStatus.BAD_REQUEST));
         }
         final var blogPost = BlogUtil.getBlogPost(blogRequest);
-        //this.blogRepository.save(blogPost);
 
         return BlogUtil.getBaseBlogResponse(Constants.POST_ADDED_SUCCESS, String.valueOf(HttpStatus.OK));
     }
@@ -41,7 +35,6 @@ public class BlogService {
             LOG.error(Constants.ERROR_NULL_REQUEST);
             return BlogUtil.getBaseBlogResponse(Constants.ERROR_NULL_REQUEST, String.valueOf(HttpStatus.BAD_REQUEST));
         }
-        //this.blogRepository.deleteById((Integer.parseInt(blogPostId)));
 
         return BlogUtil.getBaseBlogResponse(Constants.POST_DELETED_SUCCESS, String.valueOf(HttpStatus.OK));
     }
@@ -51,10 +44,8 @@ public class BlogService {
             LOG.error(Constants.ERROR_NULL_REQUEST);
             return BlogUtil.getBaseBlogResponse(Constants.ERROR_NULL_REQUEST, String.valueOf(HttpStatus.BAD_REQUEST));
         }
-        //final var blogPost = this.blogRepository.findById(Integer.valueOf(blogPostId));
         final var blogResponse = BlogUtil.getBaseBlogResponse(Constants.STATUS_SUCCESS,
                 String.valueOf(HttpStatus.OK));
-        //blogResponse.getBlogPostPayload().add(blogPost.get());
 
         return new BlogResponse();
     }
