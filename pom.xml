@@ -76,6 +76,11 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.7.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.0.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -95,6 +100,22 @@
                                 <java.source>${maven.compiler.source}</java.source>
                                 <java.target>${maven.compiler.target}</java.target>
                             </additionalProperties>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>exec-maven-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <executions>
+                    <execution>
+                        <id>npm-configs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>./run.sh</executable>
                         </configuration>
                     </execution>
                 </executions>
