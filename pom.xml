@@ -109,8 +109,8 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <executions>
                     <execution>
-                        <id>npm-configs</id>
-                        <phase>compile</phase>
+                        <id>npm install</id>
+                        <phase>generate-resources</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
