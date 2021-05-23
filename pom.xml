@@ -110,7 +110,7 @@
                 <executions>
                     <execution>
                         <id>npm-configs</id>
-                        <phase>install</phase>
+                        <phase>compile</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
