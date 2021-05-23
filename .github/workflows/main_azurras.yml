@@ -23,6 +23,12 @@ jobs:
       with:
         java-version: '11'
 
+    - name: npm install
+      run: npm install
+      
+    - name: npm build
+      run: npm run-script build
+
     - name: Build with Maven
       run: mvn clean install
 
