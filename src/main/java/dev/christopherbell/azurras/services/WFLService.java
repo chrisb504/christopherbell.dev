@@ -1,5 +1,7 @@
 package dev.christopherbell.azurras.services;
 
+import dev.christopherbell.azurras.models.Message;
+import dev.christopherbell.azurras.models.blog.BlogResponse;
 import dev.christopherbell.azurras.models.whatsforlunch.WFLRequest;
 import dev.christopherbell.azurras.models.whatsforlunch.WFLResponse;
 import dev.christopherbell.azurras.utils.Constants;
@@ -39,8 +41,6 @@ public class WFLService {
         if (restaurantId == null || restaurantId.isEmpty()) {
             LOG.error(Constants.NULL_REQUEST);
              wflResponse = this.getErrorWhatsForLunchResponse(Constants.NULL_REQUEST, String.valueOf(HttpStatus.BAD_REQUEST));
-        } else {
-
         }
         return wflResponse;
     }
@@ -49,10 +49,8 @@ public class WFLService {
         return new WFLResponse();
     }
 
-    private WFLResponse getErrorWhatsForLunchResponse(String message, String status) {
-        WFLResponse blogResponse = new WFLResponse();
-        blogResponse.setMessage(message);
-        blogResponse.setStatus(status);
-        return blogResponse;
+    private WFLResponse getErrorWhatsForLunchResponse(String messageDescription, String status) {
+        var message = new Message(messageDescription, "");
+        return new WFLResponse(message, null, status);
     }
 }

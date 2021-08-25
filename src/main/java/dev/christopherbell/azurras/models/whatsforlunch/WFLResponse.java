@@ -1,40 +1,17 @@
 package dev.christopherbell.azurras.models.whatsforlunch;
 
-import java.util.ArrayList;
+import dev.christopherbell.azurras.models.Message;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class WFLResponse {
-    private String message;
-    private String status;
+    private Message message;
     private List<WFLRestaurant> payload;
-
-    public WFLResponse() {
-        this.message = "";
-        this.status = "";
-        this.payload = new ArrayList<>();
-    }
-
-    public String getMessage() {
-        return this.message;
-    }
-
-    public void setMessage(final String message) {
-        this.message = message;
-    }
-
-    public String getStatus() {
-        return this.status;
-    }
-
-    public void setStatus(final String status) {
-        this.status = status;
-    }
-
-    public List<WFLRestaurant> getPayload() {
-        return new ArrayList<>(this.payload);
-    }
-
-    public void setPayLoad(final List<WFLRestaurant> payload) {
-        this.payload.addAll(payload);
-    }
+    private String status;
 }
