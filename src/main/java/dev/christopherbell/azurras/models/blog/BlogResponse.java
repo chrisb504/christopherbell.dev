@@ -1,50 +1,25 @@
 package dev.christopherbell.azurras.models.blog;
 
-import java.util.ArrayList;
+import dev.christopherbell.azurras.models.Message;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Component
 public class BlogResponse {
-    private String message;
-    private String status;
+    @Autowired
     private List<BlogPost> blogPostPayLoad;
+    @Autowired
     private List<String> blogTagPayload;
-
-    public BlogResponse() {
-        this.message = "";
-        this.status = "";
-        this.blogPostPayLoad = new ArrayList<>();
-        this.blogTagPayload = new ArrayList<>();
-    }
-
-    public String getMessage() {
-        return this.message;
-    }
-
-    public void setMessage(final String message) {
-        this.message = message;
-    }
-
-    public String getStatus() {
-        return this.status;
-    }
-
-    public void setStatus(final String status) {
-        this.status = status;
-    }
-
-    public List<BlogPost> getBlogPostPayload() {
-        return new ArrayList<>(this.blogPostPayLoad);
-    }
-
-    public void setBlogPostPayLoad(final List<BlogPost> blogPostPayLoad) {
-        this.blogPostPayLoad.addAll(blogPostPayLoad);
-    }
-
-    public List<String> getBlogTagPayload() {
-        return new ArrayList<>(this.blogTagPayload);
-    }
-
-    public void setBlogTagPayLoad(final List<String> blogTagPayload) {
-        this.blogTagPayload.addAll(blogTagPayload);
-    }
+    @Autowired
+    private Message message;
+    @Autowired
+    private String status;
 }

@@ -18,6 +18,11 @@ public class AzurrasServiceController {
         this.azurrasService = azurrasService;
     }
 
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String getTestPage() {
+        return "test/test.html";
+    }
+
     /**
      * Returns the home page.
      * 
