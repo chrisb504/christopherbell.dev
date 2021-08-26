@@ -18,6 +18,7 @@ npm/
 # Output Files
 main.min.css
 main.js
+main.js.LICENSE.txt
 
 # VSCode
 .vscode
