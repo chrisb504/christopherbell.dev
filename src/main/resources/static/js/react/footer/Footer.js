@@ -7,7 +7,7 @@ export default class Footer extends Component {
                 <hr/>
                 <div class="row">
                     <div class="col">
-                        <p class="mb-n1 font-weight-bold">Christopher Bell</p>
+                        <p class="mb-n1 fw-bold">Christopher Bell</p>
                     </div>
                 </div>
                 <div class="row">
