@@ -32,7 +32,7 @@ export default class Image extends Component {
     render() {
         return (
             <div className="container-fluid">
-                <div class="row row-cols-sm-1 row-cols-md-2 g-2">
+                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-2">
                 {this.state.images.map(image => (
                     <div class="col">
                         <img src={image.path} class="img-fluid rounded" alt=""></img>
