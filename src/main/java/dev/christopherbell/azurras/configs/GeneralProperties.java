@@ -5,6 +5,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan("dev.christopherbell.azurras")
-public class GeneralConfig {
+public class GeneralProperties {
     
 }
