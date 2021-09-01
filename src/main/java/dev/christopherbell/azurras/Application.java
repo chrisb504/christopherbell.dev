@@ -6,10 +6,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AzurrasApplication {
-	private final Logger LOG = LoggerFactory.getLogger(AzurrasApplication.class);
+public class Application {
+	private final Logger LOG = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) {
-		SpringApplication.run(AzurrasApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 }
