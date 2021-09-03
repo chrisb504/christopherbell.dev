@@ -42,8 +42,12 @@ body {
 .jumbotron {
     background-color: #5effb8;
     padding: 2rem 1rem;
-    margin-bottom: 2rem;
-    border-radius: .3rem;
+    /*margin-bottom: 2rem;*/
+    /*border-radius: .3rem;*/
+}
+
+.main-color {
+    background-color: #5effb8;
 }
 
 .podcast-links {

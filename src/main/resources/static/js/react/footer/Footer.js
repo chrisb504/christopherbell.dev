@@ -4,10 +4,9 @@ export default class Footer extends Component {
     render() {
         return (
             <div class="container text-center">
-                <hr/>
                 <div class="row">
                     <div class="col">
-                        <p class="mb-n1 fw-bold">Christopher Bell</p>
+                        <div class="fw-bold">Christopher Bell</div>
                     </div>
                 </div>
                 <div class="row">
@@ -16,9 +15,9 @@ export default class Footer extends Component {
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col">
-                        <a class="mr-3 ml-3" href="https://www.youtube.com/channel/UCQkEQzoAfWckA2L1wSvL0mw" target="_blank"><i class="fa fa-youtube fa-2" aria-hidden="true"></i></a>
-                        <a class="mr-3 ml-3" href="https://github.com/Azurras" target="_blank"><i class="fa fa-github fa-2" aria-hidden="true"></i></a>
+                    <div class="col py-2">
+                        <a class="mr-3 ml-3" href="https://www.youtube.com/channel/UCQkEQzoAfWckA2L1wSvL0mw" target="_blank"><i class="px-2 fa fa-youtube fa-2" aria-hidden="true"></i></a>
+                        <a class="mr-3 ml-3" href="https://github.com/Azurras" target="_blank"><i class="px-2 fa fa-github fa-2" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>
