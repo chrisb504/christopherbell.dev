@@ -59,3 +59,11 @@ image-properties:
       path: /images/photos/IMG_1350.jpeg
       desc: n/a
       date-added: 8-31-2021
+    - name: Denver Botanic Gardens - Outside Tropical Plants Enclosure
+      path: /images/photos/IMG_1854.jpeg
+      desc: The outside view of the building that contains the Tropical Plants from the Denver Botanic Gardens.
+      date-added: 10-24-2021
+    - name: Denver Botanic Gardens
+      path: /images/photos/IMG_1836.jpeg
+      desc: n/a
+      date-added: 10-24-2021
