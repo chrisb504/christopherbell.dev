@@ -21,7 +21,6 @@ public class AzurrasService {
     }
 
     public AzurrasResponse getImages() {
-        var status = String.valueOf(HttpStatus.OK);
-        return new AzurrasResponse(imageProperties.getImages(), null, status);
+        return new AzurrasResponse(imageProperties.getImages(), null, String.valueOf(HttpStatus.OK));
     }
 }
