@@ -21,6 +21,7 @@ public class AzurrasService {
     }
 
     public AzurrasResponse getImages() {
+        LOG.info("INFO: AzurrasService: Getting all image links");
         return new AzurrasResponse(imageProperties.getImages(), null, String.valueOf(HttpStatus.OK));
     }
 }
