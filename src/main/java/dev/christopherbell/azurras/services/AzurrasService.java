@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AzurrasService {
     private final Logger LOG = LoggerFactory.getLogger(AzurrasService.class);
-    private ImageProperties imageProperties;
-    private WFLService wflService;
+    private final ImageProperties imageProperties;
+    private final WFLService wflService;
 
     @Autowired
     public AzurrasService(ImageProperties imageProperties, WFLService wflService) {
