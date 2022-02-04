@@ -7,12 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class WFLController {
     private final Logger LOG = LoggerFactory.getLogger(WFLController.class);
     private final WFLService wflService;
@@ -26,8 +25,7 @@ public class WFLController {
      * Adds a new restaurant to the database.
      * @return WFLResponse
      */
-    @ResponseBody
-    @RequestMapping(value = "/wfl/restaurants/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/wfl/restaurants/add", consumes = MediaType.APPLICATION_JSON_VALUE)
     public WFLResponse addRestaurant(WFLRequest wflRequest) {
         return this.wflService.addRestaurant(wflRequest);
     }
@@ -38,8 +36,7 @@ public class WFLController {
      * @param restaurantId
      * @return WFLResponse
      */
-    @ResponseBody
-    @RequestMapping(value = "/wfl/restaurants/delete/{restaurantId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/wfl/restaurants/delete/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public WFLResponse deleteRestaurant(String restaurantId) {
         return this.wflService.deleteRestaurant(restaurantId);
     }
@@ -50,8 +47,7 @@ public class WFLController {
      * 
      * @return WFLResponse
      */
-    @ResponseBody
-    @RequestMapping(value = "/whatsforlunch/restaurant/{restaurantId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/wfl/restaurant/{restaurantId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public WFLResponse getRestaurant(String restaurantId) {
         return this.wflService.getRestaurant(restaurantId);
     }
@@ -61,8 +57,7 @@ public class WFLController {
      * 
      * @return WFLResponse
      */
-    @ResponseBody
-    @RequestMapping(value = "/whatsforlunch/restaurants", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/wfl/restaurants", produces = MediaType.APPLICATION_JSON_VALUE)
     public WFLResponse getRestaurants() {
         return this.wflService.getRestaurants();
     }
@@ -72,7 +67,7 @@ public class WFLController {
      * 
      * @return html page
      */
-    @RequestMapping(value = "/whatsforlunch/add", method = RequestMethod.GET)
+    @GetMapping(value = "/wfl/add")
     public String getWhatsForLunchAddPage() {
         return "whatsforlunchAdd";
     }
@@ -82,7 +77,7 @@ public class WFLController {
      * 
      * @return html page
      */
-    @RequestMapping(value = "/whatsforlunch/delete", method = RequestMethod.GET)
+    @GetMapping(value = "/wfl/delete")
     public String getWhatsForLunchDeletePage() {
         return "whatsforlunchDelete";
     }
@@ -92,7 +87,7 @@ public class WFLController {
      * 
      * @return html page
      */
-    @RequestMapping(value = "/whatsforlunch", method = RequestMethod.GET)
+    @GetMapping(value = "/wfl")
     public String getWhatsForLunchPage() {
         return "whatsforlunch";
     }

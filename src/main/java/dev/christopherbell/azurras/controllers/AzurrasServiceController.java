@@ -8,12 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class AzurrasServiceController {
     private final Logger LOG = LoggerFactory.getLogger(AzurrasServiceController.class);
     private final AzurrasService azurrasService;
@@ -23,9 +21,9 @@ public class AzurrasServiceController {
         this.azurrasService = azurrasService;
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/service/images", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/service/images", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AzurrasResponse> getImages() {
+        LOG.info("New request for images");
         return new ResponseEntity<>(azurrasService.getImages(), HttpStatus.OK);
     }
 }

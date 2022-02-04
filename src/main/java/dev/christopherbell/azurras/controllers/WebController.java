@@ -1,10 +1,9 @@
 package dev.christopherbell.azurras.controllers;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class WebController {
 
     /**
@@ -12,7 +11,7 @@ public class WebController {
      *
      * @return test
      */
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    @GetMapping(value = "/test")
     public String getTestPage() {
         return "test/test.html";
     }
@@ -22,7 +21,7 @@ public class WebController {
      *
      * @return index/home
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping(value = "/")
     public String getHomePage() {
         return "index";
     }
@@ -32,7 +31,7 @@ public class WebController {
      *
      * @return blog home
      */
-    @RequestMapping(value = "/blog", method = RequestMethod.GET)
+    @GetMapping(value = "/blog")
     public String getBlogPage() {
         return "blog/blog.html";
     }
@@ -42,7 +41,7 @@ public class WebController {
      *
      * @return html for photography.html home
      */
-    @RequestMapping(value = "/photography", method = RequestMethod.GET)
+    @GetMapping(value = "/photography")
     public String getPhotographyPage() {
         return "photography/photography.html";
     }
@@ -52,7 +51,7 @@ public class WebController {
      *
      * @return html for photography.html usage page
      */
-    @RequestMapping(value = "/photography/usage", method = RequestMethod.GET)
+    @GetMapping(value = "/photography/usage")
     public String getPhotographyUsagePage() {
         return "photography/usage.html";
     }
@@ -62,7 +61,7 @@ public class WebController {
      *
      * @return resume
      */
-    @RequestMapping(value = "/resume", method = RequestMethod.GET)
+    @GetMapping(value = "/resume")
     public String getResume() {
         return "resume";
     }
@@ -72,7 +71,7 @@ public class WebController {
      *
      * @return smp home
      */
-    @RequestMapping(value = "/smp", method = RequestMethod.GET)
+    @GetMapping(value = "/smp")
     public String getSMP() {
         return "smp/smp.html";
     }
@@ -82,7 +81,7 @@ public class WebController {
      *
      * @return whatsforlunch home
      */
-    @RequestMapping(value = "/wfl", method = RequestMethod.GET)
+    @GetMapping(value = "/wfl")
     public String getWhatsForLunch() {
         return "wfl/whatsforlunch.html";
     }

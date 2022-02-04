@@ -7,14 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class BlogServiceController {
     private final Logger LOG = LoggerFactory.getLogger(BlogServiceController.class);
     private final BlogService blogService;
@@ -31,8 +30,7 @@ public class BlogServiceController {
      * @param blogRequest
      * @return BlogResponse
      */
-    @ResponseBody
-    @RequestMapping(value = "/blog/post/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/blog/post/add", consumes = MediaType.APPLICATION_JSON_VALUE)
     public BlogResponse addBlogPost(@RequestBody final BlogRequest blogRequest) {
         if (LOG.isDebugEnabled()) {
             LOG.info("CBBlog: addBlogPost method called with these values: " + blogRequest.toString());
@@ -46,8 +44,7 @@ public class BlogServiceController {
      * @param blogPostId
      * @return BlogResponse
      */
-    @ResponseBody
-    @RequestMapping(value = "/blog/post/delete/{blogPostId}", method = RequestMethod.POST)
+    @PostMapping(value = "/blog/post/delete/{blogPostId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public BlogResponse deleteBlogPost(@RequestParam final String blogPostId) {
         if (LOG.isDebugEnabled()) {
             LOG.info("CBBlog: deleteBlogPost method called with this value: " + blogPostId);
@@ -61,8 +58,7 @@ public class BlogServiceController {
      * @param blogPostId
      * @return BlogResponse
      */
-    @ResponseBody
-    @RequestMapping(value = "/blog/post/{blogPostId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/blog/post/{blogPostId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public BlogResponse getBlogPost(@RequestParam final String blogPostId) {
         if (LOG.isDebugEnabled()) {
             LOG.info("CBBlog: getBlogPost method called with this value: " + blogPostId);
@@ -75,8 +71,7 @@ public class BlogServiceController {
      *
      * @return BlogResponse
      */
-    @ResponseBody
-    @RequestMapping(value = "/blog/post", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/blog/post", produces = MediaType.APPLICATION_JSON_VALUE)
     public BlogResponse getBlogPosts() {
         if (LOG.isDebugEnabled()) {
             LOG.info("CBBlog: getBlogPosts method called");
@@ -89,8 +84,7 @@ public class BlogServiceController {
      *
      * @return BlogResponse
      */
-    @ResponseBody
-    @RequestMapping(value = "/blog/tag/{blogTagId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/blog/tag/{blogTagId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public BlogResponse getBlogTag(@RequestParam final String blogTagId) {
         if(LOG.isDebugEnabled()) {
             LOG.info("CBBlog: getBlogTag method called with this value: " + blogTagId);
@@ -102,8 +96,7 @@ public class BlogServiceController {
      * Returns all tags in the database.
      * @return BlogResponse
      */
-    @ResponseBody
-    @RequestMapping(value = "/blog/tag", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/blog/tag", produces = MediaType.APPLICATION_JSON_VALUE)
     public BlogResponse getBlogTags() {
         if(LOG.isDebugEnabled()) {
             LOG.info("CBBlog: getBlogTags method called");
