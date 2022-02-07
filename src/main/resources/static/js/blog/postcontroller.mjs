@@ -33,7 +33,7 @@ function postBlogPost(posting) {
 
 export function deletePostWithID(event) {
     event.preventDefault();
-    const confirmation = confirm('Are you sure you want to delete this user?');
+    const confirmation = confirm('Are you sure you want to delete this post?');
 
     if (confirmation === true) {
         $.ajax({
