@@ -1,7 +1,8 @@
-import Entity from './entity.mjs'
+import Player from './models/Entity/Player.mjs'
+import Constants from './util/Constants.mjs'
 
 (function() {
-    let player = new Entity("Player");
+    let player = new Player("Player");
     console.log(player);
     
 })();
