@@ -82,14 +82,4 @@ public class WFLController {
         return "whatsforlunchDelete";
     }
 
-    /**
-     * Returns the WFL home page.
-     * 
-     * @return html page
-     */
-    @GetMapping(value = "/wfl")
-    public String getWhatsForLunchPage() {
-        return "whatsforlunch";
-    }
-
 }
