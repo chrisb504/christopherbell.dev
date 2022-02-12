@@ -23,7 +23,7 @@ public class WebController {
      */
     @GetMapping(value = "/")
     public String getHomePage() {
-        return "index";
+        return "index.html";
     }
 
     /**
