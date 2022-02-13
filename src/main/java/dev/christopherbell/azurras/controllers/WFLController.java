@@ -23,6 +23,7 @@ public class WFLController {
 
     /**
      * Adds a new restaurant to the database.
+     *
      * @return WFLResponse
      */
     @PostMapping(value = "/wfl/restaurants/add", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -31,8 +32,9 @@ public class WFLController {
     }
 
     /**
-     * Takes a restaurantId and uses it to delete a 
+     * Takes a restaurantId and uses it to delete a
      * restaurant from the database.
+     *
      * @param restaurantId
      * @return WFLResponse
      */
@@ -44,7 +46,7 @@ public class WFLController {
     /**
      * Takes a restaurantId and uses it to
      * get a matching restaurant.
-     * 
+     *
      * @return WFLResponse
      */
     @GetMapping(value = "/wfl/restaurant/{restaurantId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -54,32 +56,11 @@ public class WFLController {
 
     /**
      * Returns all restaurants in the database.
-     * 
+     *
      * @return WFLResponse
      */
     @GetMapping(value = "/wfl/restaurants", produces = MediaType.APPLICATION_JSON_VALUE)
     public WFLResponse getRestaurants() {
         return this.wflService.getRestaurants();
     }
-
-    /**
-     * Returns the html for the WFL add page.
-     * 
-     * @return html page
-     */
-    @GetMapping(value = "/wfl/add")
-    public String getWhatsForLunchAddPage() {
-        return "whatsforlunchAdd";
-    }
-
-    /**
-     * Returns the html for the WFL delete page.
-     * 
-     * @return html page
-     */
-    @GetMapping(value = "/wfl/delete")
-    public String getWhatsForLunchDeletePage() {
-        return "whatsforlunchDelete";
-    }
-
 }

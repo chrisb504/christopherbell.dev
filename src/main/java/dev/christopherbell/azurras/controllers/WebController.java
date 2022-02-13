@@ -1,9 +1,9 @@
 package dev.christopherbell.azurras.controllers;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class WebController {
 
     /**
@@ -84,5 +84,25 @@ public class WebController {
     @GetMapping(value = "/wfl")
     public String getWhatsForLunch() {
         return "wfl/whatsforlunch.html";
+    }
+
+    /**
+     * Returns the html for the WFL add page.
+     *
+     * @return html page
+     */
+    @GetMapping(value = "/wfl/add")
+    public String getWhatsForLunchAddPage() {
+        return "whatsforlunchAdd";
+    }
+
+    /**
+     * Returns the html for the WFL delete page.
+     *
+     * @return html page
+     */
+    @GetMapping(value = "/wfl/delete")
+    public String getWhatsForLunchDeletePage() {
+        return "whatsforlunchDelete";
     }
 }
