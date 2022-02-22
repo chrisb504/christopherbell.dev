@@ -76,6 +76,11 @@ public class WebController {
         return "smp/smp.html";
     }
 
+    @GetMapping(value = "/survive")
+    public String getSurviveHome() {
+        return "survive/survive.html";
+    }
+
     /**
      * Returns the whatsforlunch page.
      *

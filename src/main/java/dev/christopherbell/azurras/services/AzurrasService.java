@@ -20,7 +20,8 @@ public class AzurrasService {
         this.wflService = wflService;
     }
 
-    public AzurrasResponse getImages() {
+
+    public AzurrasResponse getPhotographyImageDetails() {
         LOG.info("INFO: AzurrasService: Getting all image links");
         return new AzurrasResponse(imageProperties.getImages(), null, String.valueOf(HttpStatus.OK));
     }

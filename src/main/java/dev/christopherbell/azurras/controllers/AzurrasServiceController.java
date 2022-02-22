@@ -24,6 +24,6 @@ public class AzurrasServiceController {
     @GetMapping(value = "/service/images", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AzurrasResponse> getImages() {
         LOG.info("New request for images");
-        return new ResponseEntity<>(azurrasService.getImages(), HttpStatus.OK);
+        return new ResponseEntity<>(azurrasService.getPhotographyImageDetails(), HttpStatus.OK);
     }
 }
