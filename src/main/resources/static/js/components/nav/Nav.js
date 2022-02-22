@@ -26,6 +26,9 @@ export default class Nav extends Component {
                             <li class="nav-item">
                                 <a class="nav-link" href="/smp">SMP</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/survive">Survive</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
