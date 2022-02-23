@@ -17,7 +17,7 @@ module.exports = {
          * alphabetical order.
          */
         './src/main/resources/static/js/components/blog/index.js',
-        './src/main/resources/static/js/components/footer/index.js',
+        './src/main/resources/static/js/components/footer/footer.js',
         './src/main/resources/static/js/components/gallery/gallery.js',
         './src/main/resources/static/js/components/nav/nav.js',
         './src/main/resources/static/js/components/nav/navitems/navdropdown/navdropdown.js',
