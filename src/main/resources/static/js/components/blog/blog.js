@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+/**
+ * This component represents the list of blogs that will appear on the Blog page.
+ */
 export default class Blog extends Component {
     constructor(props) {
         super(props);
@@ -13,6 +16,9 @@ export default class Blog extends Component {
         this.setPostLocation = this.setPostLocation.bind(this);
     }
 
+    /**
+     * Pulls from the blog service every 10 seconds for new data.
+     */
     componentDidMount() {
         this.getData(this.state.location);
         this.getTags();
@@ -22,9 +28,10 @@ export default class Blog extends Component {
         }, 10000);
     }
 
-    componentDidUpdate() {
-    }
-
+    /**
+     * Makes a GET call to the blog service for the list of blog 
+     * data.
+     */
     getData(fetchLocation) {
         console.log("Getting data at ", fetchLocation);
         fetch(fetchLocation)
@@ -38,6 +45,10 @@ export default class Blog extends Component {
             });
     }
 
+    /**
+     * Makes a GET call to the blog service to get a list of all tags for 
+     * all Blog entries.
+     */
     getTags() {
         fetch(this.state.tagLocation)
             // passes the response and returns json from response
@@ -95,8 +106,18 @@ export default class Blog extends Component {
     }
 }
 
+/* 
+    This seems to be important from my findings. If the page doesn't include that component,
+    then it will still try to render without the EventListener. This will cause React to throw
+    an error about not finding the DOM item. This method prevents the render function from
+    loading if the component isn't on the page.
+
+    I think there might be a better solution to this. I think that solution might include
+    not including the js for smaller components in Main.js
+*/
 window.addEventListener('load', () => {
     if (document.body.contains(document.getElementById('blog'))) {
+        // Used to render the component on the page. The default refresh is when state is changed.
         ReactDOM.render(<Blog />, document.getElementById('blog'));
     }
 });
