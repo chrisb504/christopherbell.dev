@@ -11,13 +11,18 @@ module.exports = {
         'babel-polyfill',
         './src/main/resources/static/js/whats-for-lunch/maincontroller.mjs',
         './src/main/resources/static/js/whats-for-lunch/restaurantcontroller.mjs',
+        
+        /**
+         * The list for React components starts here. Please keep these in 
+         * alphabetical order.
+         */
+        './src/main/resources/static/js/components/blog/index.js',
+        './src/main/resources/static/js/components/footer/index.js',
+        './src/main/resources/static/js/components/gallery/gallery.js',
         './src/main/resources/static/js/components/nav/nav.js',
         './src/main/resources/static/js/components/nav/navitems/navdropdown/navdropdown.js',
         './src/main/resources/static/js/components/nav/navitems/navdropdown/navdropdownitem/navdropdownitem.js',
         './src/main/resources/static/js/components/nav/navitems/navstditem/navstditem.js',
-        './src/main/resources/static/js/components/footer/index.js',
-        './src/main/resources/static/js/components/blog/index.js',
-        './src/main/resources/static/js/components/gallery/index.js'
     ],
     output: {
         path: path.join(__dirname, outputDirectory),
