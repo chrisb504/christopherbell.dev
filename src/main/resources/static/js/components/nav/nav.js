@@ -10,9 +10,7 @@ import NavStdItem from "./navitems/navstditem/navstditem.js";
     represents a navigation item that can include a sub navigation.
 */
 export default class Nav extends Component {
-    /*
-        Below is a set of JSX that we be rendered into html.
-    */
+    // Below is a set of JSX that will be rendered into html.
     render() {
         return (
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
