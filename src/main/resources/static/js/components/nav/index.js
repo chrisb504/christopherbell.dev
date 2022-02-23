@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Nav from './Nav';
+import Nav from './nav.js';
 
 window.addEventListener('load', () => {
     if (document.body.contains(document.getElementById('nav'))) {
