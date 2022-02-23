@@ -15,6 +15,11 @@ export default class Gallery extends Component {
         this.getData = this.getData.bind(this);
     }
 
+    /**
+     * When the components loads, this method will call getData(), which
+     * will fetch the image data from the service. It will then update the
+     * state and reload the component.
+     */
     componentDidMount() {
         this.getData(this.state.location);
     }
