@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
 export default class BlogTags extends Component {
     constructor(props) {
@@ -32,3 +33,9 @@ export default class BlogTags extends Component {
         );
     } 
 }
+
+window.addEventListener('load', () => {
+    if (document.body.contains(document.getElementById('blogtags'))) {
+        ReactDOM.render(<BlogTags />, document.getElementById('blogtags'));
+    }
+});
