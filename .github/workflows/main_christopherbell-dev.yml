@@ -20,6 +20,12 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: '17'
+          
+      - name: npm install
+        run: npm install
+      
+      - name: npm build
+        run: npm run-script build
 
       - name: Build with Maven
         run: mvn clean install
