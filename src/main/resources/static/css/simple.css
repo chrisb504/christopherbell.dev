@@ -1,0 +1,18 @@
+html {
+    color: wheat;
+    background: black;
+}
+body {
+    font-family: Verdana, sans-serif;
+}
+.h1, h1 {
+    font-size: 2.5rem;
+}
+
+header {
+    position: fixed;
+}
+
+main {
+    margin-left: 20rem;
+}

@@ -110,4 +110,9 @@ public class WebController {
     public String getWhatsForLunchDeletePage() {
         return "whatsforlunchDelete";
     }
+
+    @GetMapping(value = "/dev")
+    public String getTestHomePage() {
+        return "dev";
+    }
 }
