@@ -1,9 +1,10 @@
 package dev.christopherbell.azurras.services;
 
+import dev.christopherbell.azurras.configs.Constants;
 import dev.christopherbell.azurras.models.blog.BlogRequest;
 import dev.christopherbell.azurras.models.blog.BlogResponse;
 import dev.christopherbell.azurras.utils.BlogUtil;
-import dev.christopherbell.azurras.utils.Constants;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,39 +48,41 @@ public class BlogService {
         final var blogResponse = BlogUtil.getBaseBlogResponse(Constants.STATUS_SUCCESS,
                 String.valueOf(HttpStatus.OK));
 
-        return new BlogResponse();
+        return new BlogResponse(null, null, null, null);
     }
 
     public BlogResponse getBlogPosts() {
-//        final var rawBlogPosts = this.blogRepository.findAll();
-//        final var blogPosts = new ArrayList<BlogPost>();
-//
-//        for (final BlogPost blogPost : rawBlogPosts) {
-//            blogPosts.add(blogPost);
-//        }
-//        final var blogResponse = BlogUtil.getBaseBlogResponse(Constants.STATUS_SUCCESS,
-//                String.valueOf(HttpStatus.OK));
-//        blogResponse.setBlogPostPayLoad(blogPosts);
+        // final var rawBlogPosts = this.blogRepository.findAll();
+        // final var blogPosts = new ArrayList<BlogPost>();
+        //
+        // for (final BlogPost blogPost : rawBlogPosts) {
+        // blogPosts.add(blogPost);
+        // }
+        // final var blogResponse =
+        // BlogUtil.getBaseBlogResponse(Constants.STATUS_SUCCESS,
+        // String.valueOf(HttpStatus.OK));
+        // blogResponse.setBlogPostPayLoad(blogPosts);
 
-        return new BlogResponse();//blogResponse;
+        return new BlogResponse(null, null, null, null);// blogResponse;
     }
 
     public BlogResponse getBlogTag(final String blogPostTag) {
-        return new BlogResponse();
+        return new BlogResponse(null, null, null, null);
     }
 
     public BlogResponse getBlogTags() {
-//        final var rawBlogPosts = this.blogRepository.findAll();
-//        final var blogTags = new ArrayList<String>();
-//
-//        for (final BlogPost blogPost : rawBlogPosts) {
-//            blogTags.add(blogPost.getTags());
-//        }
-//        final var blogResponse = BlogUtil.getBaseBlogResponse(Constants.STATUS_SUCCESS,
-//                String.valueOf(HttpStatus.OK));
-//        blogResponse.setBlogTagPayLoad(blogTags);
-//        return blogResponse;
+        // final var rawBlogPosts = this.blogRepository.findAll();
+        // final var blogTags = new ArrayList<String>();
+        //
+        // for (final BlogPost blogPost : rawBlogPosts) {
+        // blogTags.add(blogPost.getTags());
+        // }
+        // final var blogResponse =
+        // BlogUtil.getBaseBlogResponse(Constants.STATUS_SUCCESS,
+        // String.valueOf(HttpStatus.OK));
+        // blogResponse.setBlogTagPayLoad(blogTags);
+        // return blogResponse;
 
-        return new BlogResponse();
+        return new BlogResponse(null, null, null, null);
     }
 }

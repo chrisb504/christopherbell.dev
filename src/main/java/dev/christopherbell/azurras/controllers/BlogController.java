@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class BlogServiceController {
-    private final Logger LOG = LoggerFactory.getLogger(BlogServiceController.class);
+public class BlogController {
+    private final Logger LOG = LoggerFactory.getLogger(BlogController.class);
     private final BlogService blogService;
 
     @Autowired
-    public BlogServiceController(final BlogService blogService) {
+    public BlogController(final BlogService blogService) {
         this.blogService = blogService;
     }
 
@@ -86,7 +86,7 @@ public class BlogServiceController {
      */
     @GetMapping(value = "/blog/tag/{blogTagId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public BlogResponse getBlogTag(@RequestParam final String blogTagId) {
-        if(LOG.isDebugEnabled()) {
+        if (LOG.isDebugEnabled()) {
             LOG.info("CBBlog: getBlogTag method called with this value: " + blogTagId);
         }
         return this.blogService.getBlogTag(blogTagId);
@@ -94,11 +94,12 @@ public class BlogServiceController {
 
     /**
      * Returns all tags in the database.
+     * 
      * @return BlogResponse
      */
     @GetMapping(value = "/blog/tag", produces = MediaType.APPLICATION_JSON_VALUE)
     public BlogResponse getBlogTags() {
-        if(LOG.isDebugEnabled()) {
+        if (LOG.isDebugEnabled()) {
             LOG.info("CBBlog: getBlogTags method called");
         }
         return this.blogService.getBlogTags();

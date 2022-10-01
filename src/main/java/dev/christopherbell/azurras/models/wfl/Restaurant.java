@@ -1,12 +1,14 @@
-package dev.christopherbell.azurras.models.whatsforlunch;
+package dev.christopherbell.azurras.models.wfl;
 
+
+import java.io.Serializable;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class WFLRestaurant {
+public class Restaurant implements Serializable {
     private String address;
     private Integer id;
     private String name;

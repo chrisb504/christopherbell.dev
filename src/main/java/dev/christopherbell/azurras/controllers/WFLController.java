@@ -1,7 +1,7 @@
 package dev.christopherbell.azurras.controllers;
 
-import dev.christopherbell.azurras.models.whatsforlunch.WFLRequest;
-import dev.christopherbell.azurras.models.whatsforlunch.WFLResponse;
+import dev.christopherbell.azurras.models.wfl.WFLRequest;
+import dev.christopherbell.azurras.models.wfl.WFLResponse;
 import dev.christopherbell.azurras.services.WFLService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

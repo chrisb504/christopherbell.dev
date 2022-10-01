@@ -1,4 +1,4 @@
-package dev.christopherbell.azurras.utils;
+package dev.christopherbell.azurras.configs;
 
 
 public final class Constants {

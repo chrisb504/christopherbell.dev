@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 @EnableAutoConfiguration
-@ComponentScan(basePackages = "com.azurras.website")
-public class AzurrasApplicationTest {
+@ComponentScan(basePackages = "dev.christopherbell.azurras")
+public class ApplicationTest {
     public static void main(String[] args) {
-        SpringApplication.run(AzurrasApplicationTest.class, args);
+        SpringApplication.run(ApplicationTest.class, args);
     }
 }

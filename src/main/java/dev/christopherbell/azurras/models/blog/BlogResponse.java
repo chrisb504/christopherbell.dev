@@ -1,18 +1,22 @@
 package dev.christopherbell.azurras.models.blog;
 
-import dev.christopherbell.azurras.models.Message;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 import java.util.List;
 
+import dev.christopherbell.azurras.models.global.Message;
+import dev.christopherbell.azurras.models.global.Response;
+
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
-public class BlogResponse {
-    private List<BlogPost> blogPostPayLoad;
-    private List<String> blogTagPayload;
-    private Message message;
-    private String status;
+public class BlogResponse extends Response {
+    private List<BlogPost> blogPosts;
+    private List<String> blogTags;
+
+    public BlogResponse(List<BlogPost> blogPosts,
+            List<String> blogTags,
+            List<Message> messages,
+            String status) {
+        super(messages, status);
+        this.blogPosts = blogPosts;
+        this.blogTags = blogTags;
+    }
 }

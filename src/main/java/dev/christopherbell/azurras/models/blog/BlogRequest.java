@@ -1,13 +1,13 @@
 package dev.christopherbell.azurras.models.blog;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
-public class BlogRequest {
+public class BlogRequest implements Serializable {
     private String author;
     private String contentText;
     private String description;
