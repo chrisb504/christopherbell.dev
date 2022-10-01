@@ -5,9 +5,12 @@ import dev.christopherbell.azurras.models.blog.BlogPost;
 //import org.springframework.stereotype.Repository;
 
 //@Repository
-public interface BlogRepository {//extends CrudRepository<BlogPost, Integer> {
+public interface BlogRepository {// extends CrudRepository<BlogPost, Integer> {
     BlogPost findByAuthor(String author);
+
     BlogPost findById(int id);
+
     BlogPost findByTags(String tag);
+
     BlogPost findByTitle(String title);
 }
