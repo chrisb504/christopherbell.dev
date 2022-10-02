@@ -32,7 +32,7 @@ public class BlogController {
      * @return BlogResponse
      */
     @GetMapping(value = "/api/blog/posts/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response> getBlogPost(HttpServletRequest request, @PathVariable final String id) {
+    public ResponseEntity<Response> getBlogPost(HttpServletRequest request, @PathVariable String id) {
         if (LOG.isDebugEnabled()) {
             LOG.info("Request received to get blog post with the following id: {}", id);
         }

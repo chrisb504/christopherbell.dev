@@ -31,7 +31,7 @@ public class BlogService {
             final var messages = Arrays.asList(message);
             return new BlogResponse(null, messages, Constants.STATUS_FAILURE);
         }
-        var posts = this.blogProperties.getPosts();
+        final var posts = this.blogProperties.getPosts();
         if (Objects.isNull(posts)) {
             final var message = new Message("BlogService.getPosts.NoResults", "No posts found in the config file.");
             LOG.error(message.getDescription());
@@ -48,7 +48,7 @@ public class BlogService {
     }
 
     public BlogResponse getPosts() {
-        var posts = this.blogProperties.getPosts();
+        final var posts = this.blogProperties.getPosts();
         if (Objects.isNull(posts)) {
             final var message = new Message("BlogService.getPosts.NoResults", "No posts found in the config file.");
             LOG.error(message.getDescription());
@@ -58,7 +58,7 @@ public class BlogService {
         return new BlogResponse(posts, null, null, null);
     }
 
-    public BlogResponse getTagById(final String id) {
+    public BlogResponse getTagById(String id) {
         return new BlogResponse(null, null, null, null);
     }
 

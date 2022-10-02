@@ -26,7 +26,7 @@ public class PhotoGalleryService {
     }
 
     public PhotoGalleryResponse getAllImages(HttpServletRequest request) {
-        var images = imageProperties.getImages();
+        final var images = imageProperties.getImages();
         LOG.info("Request's address: {}", request.getRemoteAddr());
         if (Objects.isNull(images)) {
             LOG.error("No references to images found in config file");

@@ -36,7 +36,7 @@ public class WFLService {
             final var messages = Arrays.asList(message);
             return new WFLResponse(new Restaurant(), messages, Constants.STATUS_FAILURE);
         }
-        var restaurants = this.wflProperties.getRestaurants();
+        final var restaurants = this.wflProperties.getRestaurants();
         if(Objects.isNull(restaurants)) {
             final var message = new Message("WFLService.getRestaurants.NoResults", "No Restaurants found in the config file.");
             LOG.error(message.getDescription());
