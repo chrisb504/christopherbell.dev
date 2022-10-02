@@ -85,3 +85,14 @@ image-properties:
             path: /images/photos/IMG_1836.jpeg
             desc: n/a
             date-added: 10-24-2021
+
+wfl-properties:
+    restaurants:
+        -   address:
+                city: test city
+                state: test state
+                streetName: test street
+                postalCode: test postal code
+            id: 0
+            name: test
+            phoneNumber: "123456789"

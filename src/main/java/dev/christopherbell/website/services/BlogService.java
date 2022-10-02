@@ -3,15 +3,15 @@ package dev.christopherbell.website.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import dev.christopherbell.website.configs.Constants;
 import dev.christopherbell.website.configs.properties.BlogProperties;
-import dev.christopherbell.website.models.blog.BlogRequest;
 import dev.christopherbell.website.models.blog.BlogResponse;
-import dev.christopherbell.website.utils.BlogUtil;
+import dev.christopherbell.website.models.blog.Post;
+import dev.christopherbell.website.models.global.Message;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 @Service
@@ -24,40 +24,45 @@ public class BlogService {
         this.blogProperties = blogProperties;
     }
 
-
-    public BlogResponse getPostById(final String blogPostId) {
-        if (Objects.isNull(blogPostId) || blogPostId.isEmpty()) {
-            LOG.error(Constants.ERROR_NULL_REQUEST);
-            return BlogUtil.getBaseBlogResponse(Constants.ERROR_NULL_REQUEST, String.valueOf(HttpStatus.BAD_REQUEST));
+    public BlogResponse getPostById(String id) {
+        if (Objects.isNull(id) || id.isBlank()) {
+            final var message = new Message("BlogService.getPostById.InvalidId", "Given id is blank, empty or null");
+            LOG.error(message.getDescription());
+            final var messages = Arrays.asList(message);
+            return new BlogResponse(null, messages, Constants.STATUS_FAILURE);
         }
-        final var blogResponse = BlogUtil.getBaseBlogResponse(Constants.STATUS_SUCCESS,
-                String.valueOf(HttpStatus.OK));
-
-        return new BlogResponse(null, null, null, null);
+        var posts = this.blogProperties.getPosts();
+        if (Objects.isNull(posts)) {
+            final var message = new Message("BlogService.getPosts.NoResults", "No posts found in the config file.");
+            LOG.error(message.getDescription());
+            final var messages = Arrays.asList(message);
+            return new BlogResponse(null, messages, Constants.STATUS_FAILURE);
+        }
+        Post post = null;
+        for (Post blogPost : posts) {
+            if (blogPost.getId().equals(Integer.parseInt(id))) {
+                post = blogPost;
+            }
+        }
+        return new BlogResponse(post, null, null);
     }
 
     public BlogResponse getPosts() {
         var posts = this.blogProperties.getPosts();
+        if (Objects.isNull(posts)) {
+            final var message = new Message("BlogService.getPosts.NoResults", "No posts found in the config file.");
+            LOG.error(message.getDescription());
+            final var messages = Arrays.asList(message);
+            return new BlogResponse(null, null, messages, Constants.STATUS_FAILURE);
+        }
         return new BlogResponse(posts, null, null, null);
     }
 
-    public BlogResponse getTagById(final String blogPostTag) {
+    public BlogResponse getTagById(final String id) {
         return new BlogResponse(null, null, null, null);
     }
 
     public BlogResponse getTags() {
-        // final var rawBlogPosts = this.blogRepository.findAll();
-        // final var blogTags = new ArrayList<String>();
-        //
-        // for (final BlogPost blogPost : rawBlogPosts) {
-        // blogTags.add(blogPost.getTags());
-        // }
-        // final var blogResponse =
-        // BlogUtil.getBaseBlogResponse(Constants.STATUS_SUCCESS,
-        // String.valueOf(HttpStatus.OK));
-        // blogResponse.setBlogTagPayLoad(blogTags);
-        // return blogResponse;
-
         return new BlogResponse(null, null, null, null);
     }
 }

@@ -17,7 +17,7 @@ public class Post implements Serializable {
     private String contentText;
     private String date;
     private String description;
-    private int id;
+    private Integer id;
     private String imagePath;
     private List<String> tags;
     private String title;

@@ -8,6 +8,7 @@ import dev.christopherbell.website.models.global.Response;
 
 @Getter
 public class BlogResponse extends Response {
+    private Post post;
     private List<Post> posts;
     private List<String> tags;
 
@@ -18,5 +19,12 @@ public class BlogResponse extends Response {
         super(messages, status);
         this.posts = posts;
         this.tags = tags;
+    }
+
+    public BlogResponse(Post post,
+            List<Message> messages,
+            String status) {
+        super(messages, status);
+        this.post = post;
     }
 }

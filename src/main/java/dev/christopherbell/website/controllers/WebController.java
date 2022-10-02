@@ -1,28 +1,19 @@
 package dev.christopherbell.website.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class WebController {
-
-    /**
-     * returns the test page
-     *
-     * @return test
-     */
-    @GetMapping(value = "/test")
-    public String getTestPage() {
-        return "test/test.html";
-    }
-
     /**
      * Returns the home page.
      *
      * @return index/home
      */
     @GetMapping(value = "/")
-    public String getHomePage() {
+    public String getHomePage(HttpServletRequest request) {
         return "index.html";
     }
 
@@ -32,7 +23,7 @@ public class WebController {
      * @return blog home
      */
     @GetMapping(value = "/blog")
-    public String getBlogPage() {
+    public String getBlogPage(HttpServletRequest request) {
         return "blog/blog.html";
     }
 
@@ -42,7 +33,7 @@ public class WebController {
      * @return html for photography.html home
      */
     @GetMapping(value = "/photography")
-    public String getPhotographyPage() {
+    public String getPhotographyPage(HttpServletRequest request) {
         return "photography/photography.html";
     }
 
@@ -52,7 +43,7 @@ public class WebController {
      * @return html for photography.html usage page
      */
     @GetMapping(value = "/photography/usage")
-    public String getPhotographyUsagePage() {
+    public String getPhotographyUsagePage(HttpServletRequest request) {
         return "photography/usage.html";
     }
 
@@ -62,7 +53,7 @@ public class WebController {
      * @return resume
      */
     @GetMapping(value = "/resume")
-    public String getResume() {
+    public String getResume(HttpServletRequest request) {
         return "resume";
     }
 
@@ -72,12 +63,17 @@ public class WebController {
      * @return smp home
      */
     @GetMapping(value = "/smp")
-    public String getSMP() {
+    public String getSMP(HttpServletRequest request) {
         return "smp/smp.html";
     }
 
+    /**
+     * Returns the survive page.
+     *
+     * @return survive home
+     */
     @GetMapping(value = "/survive")
-    public String getSurviveHome() {
+    public String getSurviveHome(HttpServletRequest request) {
         return "survive/survive.html";
     }
 
@@ -87,32 +83,17 @@ public class WebController {
      * @return whatsforlunch home
      */
     @GetMapping(value = "/wfl")
-    public String getWhatsForLunch() {
+    public String getWhatsForLunch(HttpServletRequest request) {
         return "wfl/whatsforlunch.html";
     }
 
     /**
-     * Returns the html for the WFL add page.
+     * Returns the dev page.
      *
-     * @return html page
+     * @return dev
      */
-    @GetMapping(value = "/wfl/add")
-    public String getWhatsForLunchAddPage() {
-        return "whatsforlunchAdd";
-    }
-
-    /**
-     * Returns the html for the WFL delete page.
-     *
-     * @return html page
-     */
-    @GetMapping(value = "/wfl/delete")
-    public String getWhatsForLunchDeletePage() {
-        return "whatsforlunchDelete";
-    }
-
     @GetMapping(value = "/dev")
-    public String getTestHomePage() {
+    public String getTestHomePage(HttpServletRequest request) {
         return "dev";
     }
 }

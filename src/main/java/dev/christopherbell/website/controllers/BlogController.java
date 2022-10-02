@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.christopherbell.website.models.global.Response;
@@ -32,7 +32,7 @@ public class BlogController {
      * @return BlogResponse
      */
     @GetMapping(value = "/api/blog/posts/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response> getBlogPost(HttpServletRequest request, @RequestParam final String id) {
+    public ResponseEntity<Response> getBlogPost(HttpServletRequest request, @PathVariable final String id) {
         if (LOG.isDebugEnabled()) {
             LOG.info("Request received to get blog post with the following id: {}", id);
         }
@@ -61,7 +61,7 @@ public class BlogController {
      * @return BlogResponse
      */
     @GetMapping(value = "/api/blog/posts/tags/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response> getBlogTag(HttpServletRequest request, @RequestParam String id) {
+    public ResponseEntity<Response> getBlogTag(HttpServletRequest request, @PathVariable String id) {
         if (LOG.isDebugEnabled()) {
             LOG.info("Request received to get blog post tag with the following id: {}", id);
         }

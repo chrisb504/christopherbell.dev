@@ -26,8 +26,10 @@ public class PhotoGalleryController {
 
     @GetMapping(value = "/api/photogallery/images", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> getImages(HttpServletRequest request) {
-        LOG.info("New request for photo gallery images");
-        var response = photoGalleryService.getAllImages(request);
+        if (LOG.isDebugEnabled()) {
+            LOG.info("Request received to return all photo gallery images");
+        }
+        var response = this.photoGalleryService.getAllImages(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

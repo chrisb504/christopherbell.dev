@@ -1,5 +1,9 @@
 package dev.christopherbell.website.services;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -8,6 +12,7 @@ import org.springframework.stereotype.Service;
 import dev.christopherbell.website.configs.Constants;
 import dev.christopherbell.website.configs.properties.WFLProperties;
 import dev.christopherbell.website.models.global.Message;
+import dev.christopherbell.website.models.wfl.Restaurant;
 import dev.christopherbell.website.models.wfl.WFLRequest;
 import dev.christopherbell.website.models.wfl.WFLResponse;
 
@@ -20,43 +25,42 @@ public class WFLService {
         this.wflProperties = wflProperties;
     }
 
-    public WFLResponse addRestaurant(WFLRequest wflRequest) {
-        if (wflRequest == null) {
-            LOG.error(Constants.NULL_REQUEST);
-            this.getErrorWhatsForLunchResponse(Constants.NULL_REQUEST, String.valueOf(HttpStatus.BAD_REQUEST));
-        }
-        return new WFLResponse(null, null, null);
+    public WFLResponse getRestaurantOfTheDay() {
+        return new WFLResponse(new Restaurant(), null, null);
     }
 
-    public WFLResponse deleteRestaurant(String restaurantId) {
-        if (restaurantId == null || restaurantId.isEmpty()) {
-            LOG.error(Constants.NULL_REQUEST);
-            this.getErrorWhatsForLunchResponse(Constants.NULL_REQUEST, String.valueOf(HttpStatus.BAD_REQUEST));
+    public WFLResponse getRestaurantById(String id) {
+        if(Objects.isNull(id) || id.isBlank()) {
+            final var message = new Message("WFLService.getRestaurants.InvalidId", "Given id is blank, empty or null");
+            LOG.error(message.getDescription());
+            final var messages = Arrays.asList(message);
+            return new WFLResponse(new Restaurant(), messages, Constants.STATUS_FAILURE);
         }
-        return new WFLResponse(null, null, null);
-    }
-
-    public WFLResponse getRandomRestaurant() {
-        return new WFLResponse(null, null, null);
-    }
-
-    public WFLResponse getRestaurant(String restaurantId) {
-        WFLResponse wflResponse = null;
-        if (restaurantId == null || restaurantId.isEmpty()) {
-            LOG.error(Constants.NULL_REQUEST);
-            wflResponse = this.getErrorWhatsForLunchResponse(Constants.NULL_REQUEST,
-                    String.valueOf(HttpStatus.BAD_REQUEST));
+        var restaurants = this.wflProperties.getRestaurants();
+        if(Objects.isNull(restaurants)) {
+            final var message = new Message("WFLService.getRestaurants.NoResults", "No Restaurants found in the config file.");
+            LOG.error(message.getDescription());
+            final var messages = Arrays.asList(message);
+            return new WFLResponse(new Restaurant(), messages, Constants.STATUS_FAILURE);
         }
-        return wflResponse;
+        Restaurant restaurant = null;
+        for(Restaurant rest: restaurants) {
+            if(rest.getId().equals(Integer.parseInt(id))) {
+                restaurant = rest;
+            }
+        }
+
+        return new WFLResponse(restaurant, null, Constants.STATUS_SUCCESS);
     }
 
     public WFLResponse getRestaurants() {
-        return new WFLResponse(null, null, null);
-    }
-
-    private WFLResponse getErrorWhatsForLunchResponse(String messageDescription, String status) {
-        var message = new Message(messageDescription, "");
-        // return new WFLResponse(message, null, status);
-        return new WFLResponse(null, null, null);
+        final var restaurants = this.wflProperties.getRestaurants();
+        if(Objects.isNull(restaurants)) {
+            final var message = new Message("WFLService.getRestaurants.NoResults", "No Restaurants found in the config file.");
+            LOG.error(message.getDescription());
+            final var messages = Arrays.asList(message);
+            return new WFLResponse(new ArrayList<>(), messages, Constants.STATUS_FAILURE);
+        }
+        return new WFLResponse(restaurants, null, null);
     }
 }
