@@ -1,0 +1,19 @@
+html {
+    color: wheat;
+    background: black;
+}
+body {
+    font-family: Verdana, sans-serif;
+    display: flex;
+}
+.h1, h1 {
+    font-size: 1.5rem;
+}
+header {
+    position: fixed;
+    top: 0;
+    width: 16%;
+}
+main {
+    margin-left: 20rem;
+}
