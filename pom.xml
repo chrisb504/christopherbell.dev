@@ -11,7 +11,7 @@
     <artifactId>website</artifactId>
     <version>3.0.0-SNAPSHOT</version>
     <name>Website</name>
-    <description>The source code for my website</description>
+    <description>www.christopherbell.dev site</description>
 
     <properties>
         <java.version>17</java.version>
