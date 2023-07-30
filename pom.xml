@@ -7,14 +7,16 @@
         <version>2.7.5</version>
     </parent>
 
-    <groupId>dev.christopherbell</groupId>
-    <artifactId>website</artifactId>
+    <groupId>dev.christopherbell.www</groupId>
+    <artifactId>personalsite</artifactId>
     <version>3.0.0-SNAPSHOT</version>
-    <name>Website</name>
-    <description>www.christopherbell.dev site</description>
+    <name>personalsite</name>
+    <description>Personal Site</description>
 
     <properties>
         <java.version>17</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -93,6 +95,15 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <executions>
@@ -140,5 +151,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
