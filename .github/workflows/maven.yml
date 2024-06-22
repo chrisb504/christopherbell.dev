@@ -8,13 +8,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        
-      - name: Set up JDK 14
+      - uses: actions/checkout@v4
+
+      - name: Set up Java version
         uses: actions/setup-java@v1
         with:
-          java-version: 14
+          java-version: '21'
           
       - name: Build with Maven
-        run: mvn -e -B -V package --file pom.xml
+        run: mvn -s $GITHUB_WORKSPACE/.github/workflows/maven-settings.xml -B clean package --file pom.xml
+        env:
+          USERNAME: ${{ secrets.USERNAME }}
+          TOKEN: ${{ secrets.TOKEN }}
