@@ -21,7 +21,7 @@ export default class Footer extends Component {
                 <div class="row">
                     <div class="col py-2">
                         <a class="mr-3 ml-3" href="https://www.youtube.com/channel/UCQkEQzoAfWckA2L1wSvL0mw" target="_blank"><i class="px-2 fa fa-youtube fa-2" aria-hidden="true"></i></a>
-                        <a class="mr-3 ml-3" href="https://github.com/Azurras" target="_blank"><i class="px-2 fa fa-github fa-2" aria-hidden="true"></i></a>
+                        <a class="mr-3 ml-3" href="https://github.com/cbell504" target="_blank"><i class="px-2 fa fa-github fa-2" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>
