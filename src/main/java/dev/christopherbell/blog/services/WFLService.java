@@ -5,59 +5,77 @@ import dev.christopherbell.blog.configs.properties.WFLProperties;
 import dev.christopherbell.blog.models.global.Message;
 import dev.christopherbell.blog.models.wfl.Restaurant;
 import dev.christopherbell.blog.models.wfl.WFLResponse;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class WFLService {
-    private final Logger LOG = LoggerFactory.getLogger(WFLService.class);
-    private final WFLProperties wflProperties;
 
-    public WFLService(WFLProperties wflProperties) {
-        this.wflProperties = wflProperties;
+  private final WFLProperties wflProperties;
+
+  public WFLService(WFLProperties wflProperties) {
+    this.wflProperties = wflProperties;
+  }
+
+  public WFLResponse getRestaurantOfTheDay() {
+    return WFLResponse.builder()
+        .restaurant(Restaurant.builder().build())
+        .build();
+  }
+
+  public WFLResponse getRestaurantById(String id) {
+    if (Objects.isNull(id) || id.isBlank()) {
+      final var message = new Message("WFLService.getRestaurants.InvalidId", "Given id is blank, empty or null");
+      log.error(message.getDescription());
+      final var messages = List.of(message);
+      return WFLResponse.builder()
+          .messages(messages)
+          .status(Constants.STATUS_FAILURE)
+          .build();
     }
-
-    public WFLResponse getRestaurantOfTheDay() {
-        return new WFLResponse(new Restaurant(), null, null);
+    final var restaurants = this.wflProperties.getRestaurants();
+    if (Objects.isNull(restaurants)) {
+      final var message = new Message("WFLService.getRestaurants.NoResults",
+          "No Restaurants found in the config file.");
+      log.error(message.getDescription());
+      final var messages = Arrays.asList(message);
+      return WFLResponse.builder()
+          .messages(messages)
+          .status(Constants.STATUS_FAILURE)
+          .build();
     }
-
-    public WFLResponse getRestaurantById(String id) {
-        if(Objects.isNull(id) || id.isBlank()) {
-            final var message = new Message("WFLService.getRestaurants.InvalidId", "Given id is blank, empty or null");
-            LOG.error(message.getDescription());
-            final var messages = Arrays.asList(message);
-            return new WFLResponse(new Restaurant(), messages, Constants.STATUS_FAILURE);
-        }
-        final var restaurants = this.wflProperties.getRestaurants();
-        if(Objects.isNull(restaurants)) {
-            final var message = new Message("WFLService.getRestaurants.NoResults", "No Restaurants found in the config file.");
-            LOG.error(message.getDescription());
-            final var messages = Arrays.asList(message);
-            return new WFLResponse(new Restaurant(), messages, Constants.STATUS_FAILURE);
-        }
-        Restaurant restaurant = null;
-        for(Restaurant rest: restaurants) {
-            if(rest.getId().equals(Integer.parseInt(id))) {
-                restaurant = rest;
-            }
-        }
-
-        return new WFLResponse(restaurant, null, Constants.STATUS_SUCCESS);
+    Restaurant restaurant = null;
+    for (Restaurant rest : restaurants) {
+      if (rest.getId().equals(Integer.parseInt(id))) {
+        restaurant = rest;
+      }
     }
+    return WFLResponse.builder()
+        .restaurant(restaurant)
+        .status(Constants.STATUS_SUCCESS)
+        .build();
+  }
 
-    public WFLResponse getRestaurants() {
-        final var restaurants = this.wflProperties.getRestaurants();
-        if(Objects.isNull(restaurants)) {
-            final var message = new Message("WFLService.getRestaurants.NoResults", "No Restaurants found in the config file.");
-            LOG.error(message.getDescription());
-            final var messages = Arrays.asList(message);
-            return new WFLResponse(new ArrayList<>(), messages, Constants.STATUS_FAILURE);
-        }
-        return new WFLResponse(restaurants, null, null);
+  public WFLResponse getRestaurants() {
+    final var restaurants = this.wflProperties.getRestaurants();
+    if (Objects.isNull(restaurants)) {
+      final var message = new Message("WFLService.getRestaurants.NoResults",
+          "No Restaurants found in the config file.");
+      log.error(message.getDescription());
+      final var messages = List.of(message);
+      return WFLResponse.builder()
+          .messages(messages)
+          .status(Constants.STATUS_FAILURE)
+          .build();
     }
+    return WFLResponse.builder()
+        .restaurants(restaurants)
+        .status(Constants.STATUS_SUCCESS)
+        .build();
+  }
 }

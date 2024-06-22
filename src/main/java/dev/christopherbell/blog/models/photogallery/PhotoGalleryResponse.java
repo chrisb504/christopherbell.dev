@@ -4,14 +4,17 @@ import dev.christopherbell.blog.models.global.Message;
 import dev.christopherbell.blog.models.global.Response;
 import java.util.List;
 
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 
-@Getter
+@Builder
+@Data
 public class PhotoGalleryResponse extends Response {
-    private List<Image> images;
 
-    public PhotoGalleryResponse(List<Image> images, List<Message> messages, String status) {
-        super(messages, status);
-        this.images = images;
-    }
+  private List<Image> images;
+
+  public PhotoGalleryResponse(List<Image> images, List<Message> messages, String status) {
+    super(messages, status);
+    this.images = images;
+  }
 }

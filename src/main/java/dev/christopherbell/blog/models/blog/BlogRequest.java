@@ -1,17 +1,14 @@
 package dev.christopherbell.blog.models.blog;
 
-import java.io.Serializable;
+import lombok.Data;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+@Data
+public class BlogRequest {
 
-@Getter
-@AllArgsConstructor
-public class BlogRequest implements Serializable {
-    private String author;
-    private String contentText;
-    private String description;
-    private String imagePath;
-    private String tags;
-    private String title;
+  private String author;
+  private String contentText;
+  private String description;
+  private String imagePath;
+  private String tags;
+  private String title;
 }
