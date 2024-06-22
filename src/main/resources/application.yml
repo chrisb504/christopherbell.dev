@@ -7,7 +7,7 @@ logging:
   level:
     root: INFO
     org.springframework: INFO
-    dev.christopherbell.www: DEBUG
+    dev.christopherbell.blog: DEBUG
 ---
 spring:
   profiles:
