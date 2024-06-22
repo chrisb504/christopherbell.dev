@@ -1,19 +1,14 @@
 package dev.christopherbell.blog.models.wfl;
 
-import java.io.Serializable;
+import lombok.Builder;
+import lombok.Data;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+@Builder
+@Data
+public class Address {
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class Address implements Serializable {
-    private String city;
-    private String state;
-    private String streetName;
-    private String postalCode;
+  private String city;
+  private String state;
+  private String streetName;
+  private String postalCode;
 }

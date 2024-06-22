@@ -2,19 +2,16 @@ package dev.christopherbell.blog.models.photogallery;
 
 import java.io.Serializable;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Builder;
+import lombok.Data;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class Image implements Serializable {
-    private String dateAdded;
-    private String desc;
-    private int id;
-    private String name;
-    private String path;
+@Builder
+@Data
+public class Image {
+
+  private String dateAdded;
+  private String desc;
+  private int id;
+  private String name;
+  private String path;
 }
