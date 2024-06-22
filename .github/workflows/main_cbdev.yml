@@ -28,7 +28,10 @@ jobs:
         run: npm run-script build
 
       - name: Build with Maven
-        run: mvn clean install
+        run: mvn -s $GITHUB_WORKSPACE/.github/workflows/maven-settings.xml -B clean package --file pom.xml
+        env:
+          USERNAME: ${{ secrets.USERNAME }}
+          TOKEN: ${{ secrets.TOKEN }}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
