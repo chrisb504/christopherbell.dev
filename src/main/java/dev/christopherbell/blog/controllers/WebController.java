@@ -47,36 +47,6 @@ public class WebController {
   }
 
   /**
-   * Returns the resume page.
-   *
-   * @return resume
-   */
-  @GetMapping(value = "/resume")
-  public String getResume() {
-    return "resume";
-  }
-
-  /**
-   * Returns the smp page.
-   *
-   * @return smp home
-   */
-  @GetMapping(value = "/smp")
-  public String getSMP() {
-    return "smp/smp.html";
-  }
-
-  /**
-   * Returns the survive page.
-   *
-   * @return survive home
-   */
-  @GetMapping(value = "/survive")
-  public String getSurviveHome() {
-    return "survive/survive.html";
-  }
-
-  /**
    * Returns the whatsforlunch page.
    *
    * @return whatsforlunch home
@@ -86,13 +56,4 @@ public class WebController {
     return "wfl/whatsforlunch.html";
   }
 
-  /**
-   * Returns the dev page.
-   *
-   * @return dev
-   */
-  @GetMapping(value = "/dev")
-  public String getTestHomePage() {
-    return "dev";
-  }
 }
