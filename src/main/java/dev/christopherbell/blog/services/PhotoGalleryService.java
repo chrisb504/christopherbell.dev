@@ -7,20 +7,16 @@ import dev.christopherbell.blog.models.photogallery.PhotoGalleryResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Objects;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@AllArgsConstructor
 @Service
 @Slf4j
 public class PhotoGalleryService {
 
   private final ImageProperties imageProperties;
-
-  @Autowired
-  public PhotoGalleryService(ImageProperties imageProperties) {
-    this.imageProperties = imageProperties;
-  }
 
   public PhotoGalleryResponse getAllImages(HttpServletRequest request) {
     final var images = imageProperties.getImages();
@@ -28,8 +24,14 @@ public class PhotoGalleryService {
     if (Objects.isNull(images)) {
       log.error("No references to images found in config file");
       var messages = List.of(new Message("PhotoGalleryService.Response.NoImages", "No Images Found"));
-      return new PhotoGalleryResponse(null, messages, Constants.STATUS_FAILURE);
+      return PhotoGalleryResponse.builder()
+          .messages(messages)
+          .status(Constants.STATUS_FAILURE)
+          .build();
     }
-    return new PhotoGalleryResponse(images, null, Constants.STATUS_SUCCESS);
+    return PhotoGalleryResponse.builder()
+        .images(images)
+        .status(Constants.STATUS_SUCCESS)
+        .build();
   }
 }

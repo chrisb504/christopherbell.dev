@@ -5,22 +5,19 @@ import dev.christopherbell.blog.configs.properties.WFLProperties;
 import dev.christopherbell.blog.models.global.Message;
 import dev.christopherbell.blog.models.wfl.Restaurant;
 import dev.christopherbell.blog.models.wfl.WFLResponse;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@AllArgsConstructor
 @Service
 @Slf4j
 public class WFLService {
 
   private final WFLProperties wflProperties;
-
-  public WFLService(WFLProperties wflProperties) {
-    this.wflProperties = wflProperties;
-  }
 
   public WFLResponse getRestaurantOfTheDay() {
     return WFLResponse.builder()
@@ -43,7 +40,7 @@ public class WFLService {
       final var message = new Message("WFLService.getRestaurants.NoResults",
           "No Restaurants found in the config file.");
       log.error(message.getDescription());
-      final var messages = Arrays.asList(message);
+      final var messages = List.of(message);
       return WFLResponse.builder()
           .messages(messages)
           .status(Constants.STATUS_FAILURE)
