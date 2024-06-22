@@ -23,7 +23,7 @@ public class WebController {
    */
   @GetMapping(value = "/blog")
   public String getBlogPage() {
-    return "blog/blog.html";
+    return "blog.html";
   }
 
   /**
@@ -53,7 +53,7 @@ public class WebController {
    */
   @GetMapping(value = "/wfl")
   public String getWhatsForLunch() {
-    return "wfl/whatsforlunch.html";
+    return "whatsforlunch.html";
   }
 
 }
