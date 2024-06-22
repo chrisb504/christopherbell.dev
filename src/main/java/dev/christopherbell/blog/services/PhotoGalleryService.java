@@ -1,16 +1,14 @@
 package dev.christopherbell.blog.services;
 
-import dev.christopherbell.blog.configs.Constants;
 import dev.christopherbell.blog.configs.properties.ImageProperties;
-import dev.christopherbell.blog.models.global.Message;
 import dev.christopherbell.blog.models.photogallery.PhotoGalleryResponse;
-import jakarta.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+/**
+ * Represents the service layer for handling photo related requests.
+ */
 @AllArgsConstructor
 @Service
 @Slf4j
@@ -18,20 +16,14 @@ public class PhotoGalleryService {
 
   private final ImageProperties imageProperties;
 
-  public PhotoGalleryResponse getAllImages(HttpServletRequest request) {
-    final var images = imageProperties.getImages();
-    log.info("Request's address: {}", request.getRemoteAddr());
-    if (Objects.isNull(images)) {
-      log.error("No references to images found in config file");
-      var messages = List.of(new Message("PhotoGalleryService.Response.NoImages", "No Images Found"));
-      return PhotoGalleryResponse.builder()
-          .messages(messages)
-          .status(Constants.STATUS_FAILURE)
-          .build();
-    }
+  /**
+   * Get all existing photos.
+   *
+   * @return a PhotoGalleryResponse containing all existing photos.
+   */
+  public PhotoGalleryResponse getAllImages() {
     return PhotoGalleryResponse.builder()
-        .images(images)
-        .status(Constants.STATUS_SUCCESS)
+        .images(imageProperties.getImages())
         .build();
   }
 }

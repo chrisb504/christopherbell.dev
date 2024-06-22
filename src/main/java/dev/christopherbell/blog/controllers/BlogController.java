@@ -1,7 +1,9 @@
 package dev.christopherbell.blog.controllers;
 
-import dev.christopherbell.blog.models.global.Response;
+import dev.christopherbell.blog.models.blog.BlogResponse;
 import dev.christopherbell.blog.services.BlogService;
+import dev.christopherbell.libs.common.api.contracts.Response;
+import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,56 +13,42 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Represents the controller for dealing with Blog related requests.
+ */
 @AllArgsConstructor
 @RestController
 public class BlogController {
 
   private final BlogService blogService;
 
-
   /**
-   * Takes an id to retrieve a blog post from the database.
+   * Takes in an id for a blog post and returns that blog post with the given id.
    *
-   * @param id
-   * @return BlogResponse
+   * @param id of the blog post
+   * @return BlogResponse containing the requested blog post.
    */
   @GetMapping(value = "/api/blog/posts/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Response> getBlogPost(HttpServletRequest request, @PathVariable String id) {
-    var response = this.blogService.getPostById(id);
-    return new ResponseEntity<>(response, HttpStatus.OK);
+  public ResponseEntity<Response<BlogResponse>> getBlogPost(HttpServletRequest request, @PathVariable String id)
+      throws InvalidRequestException {
+    return new ResponseEntity<>(
+        Response.<BlogResponse>builder()
+            .payload(blogService.getPostById(id))
+            .success(true)
+            .build(), HttpStatus.OK);
   }
 
   /**
-   * Returns all blog posts in the database.
+   * Returns all existing blog posts.
    *
-   * @return BlogResponse
+   * @return a BlogResponse containing all existing blog posts.
    */
   @GetMapping(value = "/api/blog/posts", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Response> getBlogPosts(HttpServletRequest request) {
-    var response = this.blogService.getPosts();
-    return new ResponseEntity<>(response, HttpStatus.OK);
-  }
-
-  /**
-   * Takes in a id to return all blog post with that tag from the database.
-   *
-   * @param id
-   * @return BlogResponse
-   */
-  @GetMapping(value = "/api/blog/posts/tags/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Response> getBlogTag(HttpServletRequest request, @PathVariable String id) {
-    var response = this.blogService.getTagById(id);
-    return new ResponseEntity<>(response, HttpStatus.OK);
-  }
-
-  /**
-   * Returns all tags in the database.
-   *
-   * @return BlogResponse
-   */
-  @GetMapping(value = "/api/blog/posts/tags", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Response> getBlogTags(HttpServletRequest request) {
-    var response = this.blogService.getTags();
-    return new ResponseEntity<>(response, HttpStatus.OK);
+  public ResponseEntity<Response<BlogResponse>> getBlogPosts(HttpServletRequest request) {
+    return new ResponseEntity<>(
+        Response.<BlogResponse>builder()
+            .payload(blogService.getPosts())
+            .success(true)
+            .build(), HttpStatus.OK);
   }
 }

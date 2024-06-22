@@ -1,7 +1,5 @@
 package dev.christopherbell.blog.models.photogallery;
 
-import java.io.Serializable;
-
 import lombok.Builder;
 import lombok.Data;
 
