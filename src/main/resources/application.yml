@@ -1,6 +1,3 @@
-spring:
-  main:
-    banner-mode: off
 server:
   port: 8080
 logging:
@@ -12,17 +9,6 @@ logging:
 spring:
   profiles:
     default: local
-    #datasource:
-    #url: jdbc:mariadb://localhost:3306/cbBlog
-    #username:
-    #password:
-    #driver-class-name: org.mariadb.jdbc.Driver
-    #jpa:
-    # Use the below line for Test/Dev Environments.
-  # hibernate.ddl-auto: create-drop
-  # Use the below line for Prod Environment.
-  # hibernate.ddl-auto: none
-
 blog-properties:
   posts:
     - author: Test

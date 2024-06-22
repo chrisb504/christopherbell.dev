@@ -1,4 +1,4 @@
-package dev.christopherbell.azurras.controllers;
+package dev.christopherbell.blog.controllers;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
