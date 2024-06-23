@@ -26,8 +26,7 @@ export default class Nav extends Component {
                             <NavStdItem name="Blog" url="/blog" />
                             {/* Usage of a NavDropDown */}
                             <NavDropDown name="Photography" />
-                            <NavStdItem name="SMP" url="/smp" />
-                            <NavStdItem name="Survive" url="/survive" />
+                            <NavStdItem name="What's For Lunch" url="/wfl" />
                         </ul>
                     </div>
                 </div>
