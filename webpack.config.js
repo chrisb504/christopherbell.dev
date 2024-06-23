@@ -8,7 +8,7 @@ const outputDirectory = './src/main/resources/static/js';
 module.exports = {
     mode: 'development',
     entry: [
-        'babel-polyfill'
+        'babel-polyfill',
         
         /**
          * The list for React components starts here. Please keep these in 
