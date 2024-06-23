@@ -10,7 +10,7 @@ export default class Gallery extends Component {
         super(props);
         this.state = {
             images: [],
-            location: '/api/photogallery/images',
+            location: '/api/photos',
         };
         this.getData = this.getData.bind(this);
     }
