@@ -1,6 +1,6 @@
 package dev.christopherbell.blog.services;
 
-import dev.christopherbell.blog.configs.properties.ImageProperties;
+import dev.christopherbell.blog.configs.ImageProperties;
 import dev.christopherbell.blog.models.photogallery.PhotoGalleryResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package dev.christopherbell.blog.configs.properties;
+package dev.christopherbell.blog.configs;
 
 import dev.christopherbell.blog.models.photogallery.Image;
 import java.util.List;

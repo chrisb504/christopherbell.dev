@@ -8,9 +8,7 @@ const outputDirectory = './src/main/resources/static/js';
 module.exports = {
     mode: 'development',
     entry: [
-        'babel-polyfill',
-        './src/main/resources/static/js/whats-for-lunch/maincontroller.mjs',
-        './src/main/resources/static/js/whats-for-lunch/restaurantcontroller.mjs',
+        'babel-polyfill'
         
         /**
          * The list for React components starts here. Please keep these in 

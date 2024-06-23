@@ -1,6 +1,6 @@
 package dev.christopherbell.blog.services;
 
-import dev.christopherbell.blog.configs.properties.WhatsForLunchProperties;
+import dev.christopherbell.blog.configs.WhatsForLunchProperties;
 import dev.christopherbell.blog.models.whatsforlunch.Restaurant;
 import dev.christopherbell.blog.models.whatsforlunch.WhatsForLunchResponse;
 import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
