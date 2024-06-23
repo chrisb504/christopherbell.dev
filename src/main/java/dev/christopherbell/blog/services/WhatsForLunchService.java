@@ -7,8 +7,10 @@ import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import java.util.List;
 import java.util.Objects;
 
+import java.util.Random;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -17,7 +19,8 @@ import org.springframework.stereotype.Service;
 public class WhatsForLunchService {
 
   private final WhatsForLunchProperties whatsForLunchProperties;
-  private static Restaurant restaurantOfTheDay;
+  public static Restaurant restaurantOfTheDay;
+  public static int randomNumberForRestaurant;
 
   /**
    * Gets the restaurant of the day.
@@ -25,9 +28,40 @@ public class WhatsForLunchService {
    * @return a WhatsForLunchResponse containing the restaurant of the day.
    */
   public WhatsForLunchResponse getRestaurantOfTheDay() {
+    if(Objects.isNull(restaurantOfTheDay)
+        || restaurantOfTheDay.getName().isBlank()) {
+      setRestaurantOfTheDay();
+    }
+
     return WhatsForLunchResponse.builder()
         .restaurants(List.of(restaurantOfTheDay))
         .build();
+  }
+
+  /**
+   * This is a nightly job that will select a random restaurant per day.
+   */
+  @Scheduled(cron = "@midnight")
+  public void setRestaurantOfTheDay() {
+    var restaurants = whatsForLunchProperties.getRestaurants();
+    var randomNumber = 0;
+    do {
+      randomNumber = getRandomInt(restaurants);
+    } while (randomNumberForRestaurant == randomNumber);
+
+    randomNumberForRestaurant = randomNumber;
+    restaurantOfTheDay = restaurants.get(randomNumberForRestaurant);
+  }
+
+  /**
+   * Generates a random number based on the size of the total number of restaurants passed in.
+   *
+   * @param restaurants that we store in our application.yml file
+   * @return a random number between 0 and total number of restaurants in our list.
+   */
+  private int getRandomInt(List<Restaurant> restaurants) {
+    var random = new Random();
+    return random.nextInt(restaurants.size());
   }
 
   /**
