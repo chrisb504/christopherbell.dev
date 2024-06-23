@@ -1,4 +1,4 @@
-package dev.christopherbell.blog.configs.properties;
+package dev.christopherbell.blog.configs;
 
 import dev.christopherbell.blog.models.blog.Post;
 import java.util.List;
@@ -11,5 +11,5 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "blog-properties")
 public class BlogProperties {
 
-  private List<Post> posts;
+  private final List<Post> posts;
 }

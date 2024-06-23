@@ -1,7 +1,7 @@
 package dev.christopherbell.blog.services;
 
 import dev.christopherbell.blog.models.blog.BlogResponse;
-import dev.christopherbell.blog.configs.properties.BlogProperties;
+import dev.christopherbell.blog.configs.BlogProperties;
 import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import java.util.List;
 import java.util.Objects;

@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @EnableConfigurationProperties
 public class PhotoGalleryControllerTest {
 
+
     @Test
     public void testtest() {
 
