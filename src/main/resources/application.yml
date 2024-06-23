@@ -73,11 +73,21 @@ image-properties:
       date-added: 10-24-2021
 wfl-properties:
   restaurants:
-    - address:
-        city: test city
-        state: test state
-        streetName: test street
-        postalCode: test postal code
-      id: 0
-      name: test
-      phoneNumber: "123456789"
+    - id: 0
+      name: McDonalds
+    - id: 1
+      name: Pflugervile Taco House
+    - id: 2
+      name: Burger King
+    - id: 3
+      name: Tacos La Catarina
+    - id: 4
+      name: Asashi Imports
+    - id: 5
+      name: Kura Sushi
+    - id: 6
+      name: Ramen Tatsuya
+    - id: 7
+      name: Stile Switch
+    - id: 8
+      name: Bird Bird Biscuit
