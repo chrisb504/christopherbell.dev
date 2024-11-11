@@ -1,14 +1,14 @@
 package dev.christopherbell.thevoid.testutils;
 
-import dev.christopherbell.thevoid.models.db.CryEntity;
-import dev.christopherbell.thevoid.models.db.VoidRoleEntity;
-import dev.christopherbell.thevoid.models.db.account.AccountDetailsEntity;
-import dev.christopherbell.thevoid.models.db.account.AccountEntity;
-import dev.christopherbell.thevoid.models.db.account.AccountSecurityEntity;
-import dev.christopherbell.thevoid.models.domain.Address;
-import dev.christopherbell.thevoid.models.domain.account.Account;
-import dev.christopherbell.thevoid.models.domain.account.AccountDetails;
-import dev.christopherbell.thevoid.models.domain.account.AccountSecurity;
+import dev.christopherbell.thevoid.cry.CryEntity;
+import dev.christopherbell.thevoid.account.VoidRoleEntity;
+import dev.christopherbell.thevoid.account.model.entity.AccountDetailsEntity;
+import dev.christopherbell.thevoid.account.model.entity.AccountEntity;
+import dev.christopherbell.thevoid.account.model.entity.AccountSecurityEntity;
+import dev.christopherbell.thevoid.account.Address;
+import dev.christopherbell.thevoid.account.model.dto.Account;
+import dev.christopherbell.thevoid.account.model.dto.AccountDetails;
+import dev.christopherbell.thevoid.account.model.dto.AccountSecurity;
 import java.util.List;
 
 public class AccountStub {
