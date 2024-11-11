@@ -18,7 +18,4 @@ jobs:
           cache: maven
           
       - name: Build with Maven
-        run: mvn -s $GITHUB_WORKSPACE/.github/workflows/maven-settings.xml -B clean package --file pom.xml
-        env:
-          USERNAME: ${{ secrets.USERNAME }}
-          TOKEN: ${{ secrets.TOKEN }}
+        run: mvn -B clean package --file pom.xml
