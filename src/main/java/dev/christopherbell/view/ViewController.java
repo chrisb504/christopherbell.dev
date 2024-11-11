@@ -1,10 +1,11 @@
 package dev.christopherbell.view;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class WebController {
+public class ViewController {
 
   /**
    * Returns the home page.
@@ -33,7 +34,7 @@ public class WebController {
    */
   @GetMapping(value = "/photography")
   public String getPhotographyPage() {
-    return "photography/photography.html";
+    return "photo/photography.html";
   }
 
   /**
@@ -43,7 +44,7 @@ public class WebController {
    */
   @GetMapping(value = "/photography/usage")
   public String getPhotographyUsagePage() {
-    return "photography/usage.html";
+    return "photo/usage.html";
   }
 
   /**
@@ -54,6 +55,36 @@ public class WebController {
   @GetMapping(value = "/wfl")
   public String getWhatsForLunch() {
     return "whatsforlunch.html";
+  }
+
+  /**
+   * Returns the home page.
+   *
+   * @return index/html
+   */
+  @GetMapping(value = "/void")
+  public String getHome(HttpServletRequest request) {
+    return "void/index.html";
+  }
+
+  /**
+   * Returns the login page.
+   *
+   * @return login/html
+   */
+  @GetMapping(value = "/void/login")
+  public String getLoginPage(HttpServletRequest request) {
+    return "void/login.html";
+  }
+
+  /**
+   * Returns the create account page.
+   *
+   * @return login/html
+   */
+  @GetMapping(value = "/void/signup")
+  public String getCreateAccountPage(HttpServletRequest request) {
+    return "void/sign_up.html";
   }
 
 }

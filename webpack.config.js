@@ -14,6 +14,7 @@ module.exports = {
          * The list for React components starts here. Please keep these in 
          * alphabetical order.
          */
+        './src/main/resources/static/js/pages/main.js',
         './src/main/resources/static/js/components/blog/blog.js',
         './src/main/resources/static/js/components/blogtags/blogtags.js',
         './src/main/resources/static/js/components/footer/footer.js',
