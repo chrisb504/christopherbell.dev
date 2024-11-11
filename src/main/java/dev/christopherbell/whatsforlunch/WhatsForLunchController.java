@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @AllArgsConstructor
 @RestController
+@RequestMapping("/api/whatsforlunch")
 public class WhatsForLunchController {
 
   private final WhatsForLunchService whatsForLunchService;
@@ -27,8 +29,9 @@ public class WhatsForLunchController {
    *
    * @return a WhatsForLunchResponse containing the matching restaurant with the requested id.
    */
-  @GetMapping(value = "/api/wfl/restaurants/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Response<WhatsForLunchResponse>> getRestaurantById(HttpServletRequest request, @PathVariable String id)
+  @GetMapping(value = "/v1/restaurants/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Response<WhatsForLunchResponse>> getRestaurantById(
+      HttpServletRequest request, @PathVariable String id)
       throws InvalidRequestException {
     return new ResponseEntity<>(
         Response.<WhatsForLunchResponse>builder()
@@ -42,7 +45,7 @@ public class WhatsForLunchController {
    *
    * @return a WhatsForLunchResponse containing all existing restaurants.
    */
-  @GetMapping(value = "/api/wfl/restaurants", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/v1/restaurants", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Response<WhatsForLunchResponse>> getRestaurants(HttpServletRequest request) {
     return new ResponseEntity<>(
         Response.<WhatsForLunchResponse>builder()

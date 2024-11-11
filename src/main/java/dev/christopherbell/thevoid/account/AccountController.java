@@ -54,7 +54,7 @@ public class AccountController {
    * @throws InvalidRequestException  - thrown if client id is not found
    * @throws ResourceNotFoundException - thrown if no accounts are on file with that id
    */
-  @GetMapping(value = "/v1/accountId/{accountId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/v1/{accountId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Response<AccountResponse>> getAccountById(@RequestHeader String clientId,
       @PathVariable Long accountId) throws InvalidRequestException, ResourceNotFoundException {
     return new ResponseEntity<>(Response.<AccountResponse>builder()
@@ -90,7 +90,7 @@ public class AccountController {
    * @throws InvalidRequestException        - thrown if client id is not found
    * @throws ResourceExistsException - thrown if no accounts are on file with that username
    */
-  @PostMapping(value = "/v1/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "/v1/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Response<VoidResponse>> createAccount(@RequestHeader String clientId,
       @RequestBody VoidRequest voidRequest) throws InvalidRequestException, ResourceExistsException {
     return new ResponseEntity<>(Response.<VoidResponse>builder()
@@ -109,7 +109,7 @@ public class AccountController {
    * @throws ResourceNotFoundException
    * @throws InvalidTokenException
    */
-  @GetMapping(value = "/v1/getActiveAccount", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/v1/active", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Response<AccountResponse>> getActiveAccount(@RequestHeader String clientId,
       @RequestHeader String loginToken,
       @RequestBody VoidRequest voidRequest)

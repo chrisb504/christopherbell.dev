@@ -2,8 +2,8 @@ package dev.christopherbell.thevoid.common;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import dev.christopherbell.thevoid.account.model.dto.AccountResponse;
-import dev.christopherbell.thevoid.cry.Cry;
-import dev.christopherbell.thevoid.invite.InviteCode;
+import dev.christopherbell.thevoid.cry.model.Cry;
+import dev.christopherbell.thevoid.invite.model.InviteCode;
 import dev.christopherbell.thevoid.account.model.dto.Account;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,14 +1,14 @@
-package dev.christopherbell.thevoid.account;
+package dev.christopherbell.thevoid.cry.model;
 
 import dev.christopherbell.thevoid.account.model.entity.AccountEntity;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,15 +22,29 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @Setter
-@Table(name = "void_role", schema = "void_api")
-public class VoidRoleEntity {
+@Table(name = "cry", schema = "void_api")
+public class CryEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column
   private Long id;
-  private String role;
+  @Column
+  private String creationDate;
+  @Column
+  private String expirationDate;
+  @Column
+  private boolean isRootCry;
+  @Column
+  private String lastAmplifiedDate;
+  @Column
+  private String text;
 
-  @OneToOne(targetEntity = AccountEntity.class, mappedBy = "voidRoleEntity", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+//    @Column
+//    private Long parentCryId;
+
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = false)
   private AccountEntity accountEntity;
+
 }

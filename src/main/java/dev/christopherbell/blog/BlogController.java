@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @AllArgsConstructor
 @RestController
+@RequestMapping("/api/blog")
 public class BlogController {
 
   private final BlogService blogService;
@@ -27,7 +29,7 @@ public class BlogController {
    * @param id of the blog post
    * @return BlogResponse containing the requested blog post.
    */
-  @GetMapping(value = "/api/blog/posts/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/v1/posts/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Response<BlogResponse>> getBlogPost(HttpServletRequest request, @PathVariable String id)
       throws InvalidRequestException {
     return new ResponseEntity<>(
@@ -42,7 +44,7 @@ public class BlogController {
    *
    * @return a BlogResponse containing all existing blog posts.
    */
-  @GetMapping(value = "/api/blog/posts", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/v1/posts", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Response<BlogResponse>> getBlogPosts(HttpServletRequest request) {
     return new ResponseEntity<>(
         Response.<BlogResponse>builder()
