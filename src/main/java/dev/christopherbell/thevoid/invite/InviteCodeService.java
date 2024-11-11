@@ -8,6 +8,7 @@ import dev.christopherbell.thevoid.common.VoidRequest;
 import dev.christopherbell.thevoid.common.VoidResponse;
 import dev.christopherbell.thevoid.account.model.dto.Account;
 import dev.christopherbell.thevoid.account.AccountMessenger;
+import dev.christopherbell.thevoid.invite.model.InviteCodeEntity;
 import dev.christopherbell.thevoid.permission.PermissionsService;
 import dev.christopherbell.thevoid.utils.ValidateUtil;
 import dev.christopherbell.thevoid.utils.mappers.MapStructMapper;

@@ -2,7 +2,6 @@ package dev.christopherbell.thevoid.account.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import dev.christopherbell.thevoid.account.Address;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

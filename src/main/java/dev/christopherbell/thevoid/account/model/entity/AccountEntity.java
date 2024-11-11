@@ -1,8 +1,7 @@
 package dev.christopherbell.thevoid.account.model.entity;
 
-import dev.christopherbell.thevoid.cry.CryEntity;
-import dev.christopherbell.thevoid.invite.InviteCodeEntity;
-import dev.christopherbell.thevoid.account.VoidRoleEntity;
+import dev.christopherbell.thevoid.cry.model.CryEntity;
+import dev.christopherbell.thevoid.invite.model.InviteCodeEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

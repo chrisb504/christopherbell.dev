@@ -6,6 +6,7 @@ import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
 import dev.christopherbell.libs.common.api.exceptions.ResourceExistsException;
 import dev.christopherbell.libs.common.api.utils.APIConstants;
 import dev.christopherbell.libs.common.api.utils.APIValidationUtils;
+import dev.christopherbell.thevoid.account.model.dto.VoidRolesEnum;
 import dev.christopherbell.thevoid.account.model.dto.AccountResponse;
 import dev.christopherbell.thevoid.account.model.dto.AccountsResponse;
 import dev.christopherbell.thevoid.account.model.dto.Account;

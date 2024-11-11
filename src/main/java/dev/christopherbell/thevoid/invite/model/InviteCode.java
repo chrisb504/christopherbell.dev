@@ -1,4 +1,4 @@
-package dev.christopherbell.thevoid.invite;
+package dev.christopherbell.thevoid.invite.model;
 
 import lombok.Builder;
 import lombok.Data;
