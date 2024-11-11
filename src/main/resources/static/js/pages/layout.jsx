@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Outlet, Link } from 'react-router-dom';
-import Navigation from "../components/nav/navigation.js"
+import Navigation from "../components/void/nav/navigation.js"
 
 class Layout extends Component {
     render() {
