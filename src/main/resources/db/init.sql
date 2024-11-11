@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS void_api.account(
 );
 
 INSERT INTO void_api.account(username, role_id)
-VALUES ('Azurras_Test_1', 1);
+VALUES ('cb_Test_1', 1);
 
 CREATE TABLE IF NOT EXISTS void_api.account_details(
   id serial PRIMARY KEY,
