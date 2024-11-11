@@ -4,7 +4,7 @@ logging:
   level:
     root: INFO
     org.springframework: INFO
-    dev.christopherbell.blog: DEBUG
+    dev.christopherbell: INFO
 ---
 spring:
   profiles:
@@ -22,10 +22,10 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 blog-properties:
   posts:
-    - author: Test
-      contentText: Test Content
+    - author: "Test"
+      contentText: "Test Content"
       date: 10-1-2022
-      description: test description
+      description: "test description"
       id: "021e2435-7259-4b48-99a0-e4ce43f3948f"
       imagePath: N/A
       tags:
@@ -34,71 +34,83 @@ blog-properties:
       title: test blog
 photo-properties:
   images:
-    - name: The River Walk - San Antonio
-      path: /images/photos/IMG_0072.jpeg
-      desc: n/a
+    - name: "The River Walk - San Antonio"
+      id: "18e1e89a-b739-4dab-9cf9-4d3bebc1f928"
+      path: "/images/photos/IMG_0072.jpeg"
+      description: n/a
       date-added: 8-31-2021
-    - name: The Gardens - Denver
-      path: /images/photos/IMG_0130.jpeg
-      desc: n/a
+    - name: "The Gardens - Denver"
+      id: "3a592438-de79-4842-a0b1-9aed06605486"
+      path: "/images/photos/IMG_0130.jpeg"
+      description: n/a
       date-added: 8-31-2021
-    - name: The Strip - Las Vegas
-      path: /images/photos/IMG_0257.jpeg
-      desc: n/a
+    - name: "The Strip - Las Vegas"
+      id: "8f9fce4e-8093-4e73-a632-aba3e1ee1cf9"
+      path: "/images/photos/IMG_0257.jpeg"
+      description: n/a
       date-added: 8-31-2021
-    - name: The Lake - New Orleans"
-      path: /images/photos/IMG_0390.jpeg
-      desc: n/a
+    - name: "The Lake - New Orleans"
+      id: "15edb715-6483-4a2f-b2fb-0b222c030b79"
+      path: "/images/photos/IMG_0390.jpeg"
+      description: n/a
       date-added: 8-31-2021
-    - name: The Austin Skyline - Austin
-      path: /images/photos/IMG_0691.jpeg
-      desc: n/a
+    - name: "The Austin Skyline - Austin"
+      id: "83bc23a3-ffd4-4892-b507-a7e8b1f02915"
+      path: "/images/photos/IMG_0691.jpeg"
+      description: n/a
       date-added: 8-31-2021
-    - name: Parakeet Eats - New Orleans
-      path: /images/photos/IMG_0947.jpeg
-      desc: n/a
+    - name: "Parakeet Eats - New Orleans"
+      id: "12263e26-7e86-4d0d-b034-f879544bbc7f"
+      path: "/images/photos/IMG_0947.jpeg"
+      description: n/a
       date-added: 8-31-2021
-    - name: The Beach - Miami Beach
-      path: /images/photos/IMG_1614.jpeg
-      desc: n/a
+    - name: "The Beach - Miami Beach"
+      id: "e7d02bf8-a44d-4d49-8ca4-69353560bff0"
+      path: "/images/photos/IMG_1614.jpeg"
+      description: n/a
       date-added: 8-31-2021
-    - name: The Colorado River - Austin
-      path: /images/photos/IMG_1666.JPG
-      desc: n/a
+    - name: "The Colorado River - Austin"
+      id: "84718af6-6621-4a83-93a7-f96235091cce"
+      path: "/images/photos/IMG_1666.JPG"
+      description: n/a
       date-added: 8-31-2021
-    - name: The Austin Skyline 2 - Austin
-      path: /images/photos/IMG_1668.JPG
-      desc: n/a
+    - name: "The Austin Skyline 2 - Austin"
+      id: "224bd926-1937-4a27-96cb-97246b0a88e1"
+      path: "/images/photos/IMG_1668.JPG"
+      description: n/a
       date-added: 8-31-2021
-    - name: NA Miata - Austin
-      path: /images/photos/IMG_1350.jpeg
-      desc: n/a
+    - name: "NA Miata - Austin"
+      id: "c80bb479-4e2e-4352-928a-f44afe1c163a"
+      path: "/images/photos/IMG_1350.jpeg"
+      description: n/a
       date-added: 8-31-2021
-    - name: Denver Botanic Gardens - Outside Tropical Plants Enclosure
-      path: /images/photos/IMG_1854.jpeg
-      desc: The outside view of the building that contains the Tropical Plants from the Denver Botanic Gardens.
+    - name: "Denver Botanic Gardens - Outside Tropical Plants Enclosure"
+      id: "9c8f4cb5-33c1-462b-8f15-8a1ea9da4968"
+      path: "/images/photos/IMG_1854.jpeg"
+      description: "The outside view of the building that contains the Tropical Plants from the Denver Botanic Gardens."
       date-added: 10-24-2021
-    - name: Denver Botanic Gardens
-      path: /images/photos/IMG_1836.jpeg
-      desc: n/a
+    - name: "Denver Botanic Gardens"
+      id: "551d3fd2-addc-4b7f-9921-eec9b4c2158c"
+      path: "/images/photos/IMG_1836.jpeg"
+      description: n/a
       date-added: 10-24-2021
-wfl-properties:
+whats-for-lunch-properties:
   restaurants:
     - id: "b9dd3cd3-5b9f-4063-922c-fc808b05374a"
-      name: McDonalds
+      name: "McDonalds"
     - id: "d7d96861-19a2-47bc-984d-bdc25c523535"
-      name: Pflugervile Taco House
+      name: "Pflugervile Taco House"
     - id: "1794b53c-6341-497b-b5b3-136abaf490ad"
-      name: Burger King
+      name: "Burger King"
     - id: "871da6f2-12e2-45c2-b963-669a2f1c3275"
-      name: Tacos La Catarina
+      name: "Tacos La Catarina"
     - id: "73c01364-f3f5-45e0-8a55-f7112b2bf1e2"
-      name: Asashi Imports
+      name: "Asashi Imports"
     - id: "c8bf9ae2-77a1-46d2-bc32-b39240ebeb76"
-      name: Kura Sushi
+      name: "Kura Sushi"
     - id: "b6632906-972e-4ef6-80d4-6fb65390f8b2"
-      name: Ramen Tatsuya
+      name: "Ramen Tatsuya"
     - id: "f7afc807-06e4-4a4a-8413-195f5139fb39"
-      name: Stile Switch
+      name: "Stile Switch"
     - id: "a148d6d5-3469-4d12-8047-9b6dbe4cd98d"
-      name: Bird Bird Biscuit
+      name: "Bird Bird Biscuit"

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Builder
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "wfl-properties")
+@ConfigurationProperties(prefix = "whats-for-lunch-properties")
 public class WhatsForLunchProperties {
 
   private final List<Restaurant> restaurants;
