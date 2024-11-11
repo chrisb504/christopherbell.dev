@@ -1,6 +1,5 @@
 package dev.christopherbell.libs.common.api.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,8 +10,6 @@ import lombok.Data;
 @Data
 public class Message {
 
-  @JsonProperty("code")
   private String code;
-  @JsonProperty("description")
   private String description;
 }
