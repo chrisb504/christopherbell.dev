@@ -96,7 +96,7 @@ ul {
 /* IDS Start here */
 
 #content {
-	background-image:url('background2.png');
+	background-image:url('/images/thebell/res/background2.png');
 	border: 0px solid #000000;
 	border-radius: 10px;
 	box-shadow: 10px 10px 10px #000000;
@@ -108,7 +108,7 @@ ul {
 }
 
 #header-container {
-	background-image:url('background2.png');
+	background-image:url('/images/thebell/res/background2.png');
 	box-shadow: 10px 10px 5px #000000;
 	border: 0px solid;
 	border-radius: 10px;

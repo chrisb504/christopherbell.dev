@@ -53,38 +53,58 @@ public class ViewController {
    * @return whatsforlunch home
    */
   @GetMapping(value = "/wfl")
-  public String getWhatsForLunch() {
+  public String getWhatsForLunchPage() {
     return "whatsforlunch.html";
   }
 
   /**
-   * Returns the home page.
+   * Returns the void's home page.
    *
    * @return index/html
    */
   @GetMapping(value = "/void")
-  public String getHome(HttpServletRequest request) {
+  public String getVoidHomePage(HttpServletRequest request) {
     return "void/index.html";
   }
 
   /**
-   * Returns the login page.
+   * Returns the void's login page.
    *
    * @return login/html
    */
   @GetMapping(value = "/void/login")
-  public String getLoginPage(HttpServletRequest request) {
+  public String getVoidLoginPage(HttpServletRequest request) {
     return "void/login.html";
   }
 
   /**
-   * Returns the create account page.
+   * Returns the void's create account page.
    *
-   * @return login/html
+   * @return sign_up/html
    */
   @GetMapping(value = "/void/signup")
-  public String getCreateAccountPage(HttpServletRequest request) {
+  public String getVoidCreateAccountPage(HttpServletRequest request) {
     return "void/sign_up.html";
+  }
+
+  /**
+   * Returns The Bell's home page.
+   *
+   * @return index/html
+   */
+  @GetMapping(value = "/thebell")
+  public String getTheBellHomePage(HttpServletRequest request) {
+    return "thebell/index.html";
+  }
+
+  /**
+   * Returns The Bell's Tony page.
+   *
+   * @return tony/html
+   */
+  @GetMapping(value = "/thebell/tony")
+  public String getTheBellTonyPage(HttpServletRequest request) {
+    return "thebell/tony.html";
   }
 
 }
