@@ -37,7 +37,7 @@ public class ControllerExceptionHandler {
   }
 
   @ExceptionHandler({ResourceNotFoundException.class})
-  public ResponseEntity<Response> handleAccountNotFoundException(ResourceNotFoundException e) {
+  public ResponseEntity<Response> handleResourceNotFoundException(ResourceNotFoundException e) {
     log.error(e.getMessage(), e);
     return new ResponseEntity<>(
         Response.builder()
