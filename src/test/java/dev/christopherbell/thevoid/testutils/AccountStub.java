@@ -1,11 +1,11 @@
 package dev.christopherbell.thevoid.testutils;
 
-import dev.christopherbell.thevoid.cry.CryEntity;
-import dev.christopherbell.thevoid.account.VoidRoleEntity;
+import dev.christopherbell.thevoid.cry.model.CryEntity;
+import dev.christopherbell.thevoid.account.model.entity.VoidRoleEntity;
 import dev.christopherbell.thevoid.account.model.entity.AccountDetailsEntity;
 import dev.christopherbell.thevoid.account.model.entity.AccountEntity;
 import dev.christopherbell.thevoid.account.model.entity.AccountSecurityEntity;
-import dev.christopherbell.thevoid.account.Address;
+import dev.christopherbell.thevoid.account.model.dto.Address;
 import dev.christopherbell.thevoid.account.model.dto.Account;
 import dev.christopherbell.thevoid.account.model.dto.AccountDetails;
 import dev.christopherbell.thevoid.account.model.dto.AccountSecurity;

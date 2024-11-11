@@ -1,4 +1,4 @@
-package dev.christopherbell.thevoid.account;
+package dev.christopherbell.thevoid.account.model.dto;
 
 import lombok.Builder;
 import lombok.Data;

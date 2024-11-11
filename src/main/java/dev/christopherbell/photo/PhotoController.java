@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @AllArgsConstructor
 @RestController
+@RequestMapping("/api/photo")
 public class PhotoController {
 
   private final PhotoService photoService;
@@ -23,7 +25,7 @@ public class PhotoController {
    *
    * @return a PhotoGalleryResponse containing all existing images.
    */
-  @GetMapping(value = "/api/photos", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/v1/", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Response<PhotoResponse>> getImages() {
     return new ResponseEntity<>(
         Response.<PhotoResponse>builder()

@@ -1,13 +1,12 @@
-package dev.christopherbell.thevoid.invite;
+package dev.christopherbell.thevoid.account.model.entity;
 
-import dev.christopherbell.thevoid.account.model.entity.AccountEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -22,16 +21,15 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @Setter
-@Table(name = "invite_code", schema = "void_api")
-public class InviteCodeEntity {
+@Table(name = "void_role", schema = "void_api")
+public class VoidRoleEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column
   private Long id;
-  @Column(name = "code")
-  private String code;
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "account_id", referencedColumnName = "id")
+  private String role;
+
+  @OneToOne(targetEntity = AccountEntity.class, mappedBy = "voidRoleEntity", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
   private AccountEntity accountEntity;
 }
