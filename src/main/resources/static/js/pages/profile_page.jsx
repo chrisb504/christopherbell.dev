@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import ProfileCryGallery from '../components/cries/profilecrygallery.js'
+import ProfileCryGallery from '../components/void/cries/profilecrygallery.js'
 
 class ProfilePage extends Component {
     constructor(props) {
