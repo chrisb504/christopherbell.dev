@@ -2,9 +2,9 @@ package dev.christopherbell.thevoid.utils;
 
 import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import dev.christopherbell.libs.common.api.utils.APIConstants;
-import dev.christopherbell.thevoid.models.user.VoidRequest;
-import dev.christopherbell.thevoid.models.domain.account.Account;
-import dev.christopherbell.thevoid.models.domain.account.AccountSecurity;
+import dev.christopherbell.thevoid.common.VoidRequest;
+import dev.christopherbell.thevoid.account.model.dto.Account;
+import dev.christopherbell.thevoid.account.model.dto.AccountSecurity;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
 
