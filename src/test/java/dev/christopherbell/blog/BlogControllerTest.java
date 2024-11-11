@@ -1,5 +1,6 @@
-package dev.christopherbell.photo;
+package dev.christopherbell.blog;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -10,20 +11,22 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WebMvcTest(PhotoController.class)
-public class PhotoControllerTest {
+@WebMvcTest(BlogController.class)
+public class BlogControllerTest {
 
-    @MockBean
-    private PhotoService photoService;
-    @Autowired
-    private MockMvc mockMvc;
+  @MockBean
+  private BlogService blogService;
 
-    @Test
-    public void testGetImages_success() throws Exception {
+  @Autowired
+  private MockMvc mockMvc;
 
-        when(photoService.getAllImages()).thenReturn(PhotoStub.getPhotoResponseStub());
+  @Test
+  public void testGetBlogPostById_success() throws Exception {
 
-        mockMvc.perform(get("/api/photo/v1/"))
-            .andExpect(status().isOk());
-    }
+    when(blogService.getPostById(any())).thenReturn(BlogStub.getBlogResponseStub());
+
+    mockMvc.perform(get("/api/blog/v1/posts/1"))
+        .andExpect(status().isOk());
+  }
+
 }

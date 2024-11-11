@@ -1,5 +1,6 @@
 package dev.christopherbell.blog;
 
+import dev.christopherbell.blog.model.BlogResponse;
 import dev.christopherbell.blog.model.Post;
 import java.time.Instant;
 import java.util.List;
@@ -25,6 +26,12 @@ public class BlogStub {
 
   public static List<Post> getPostsStub() {
     return List.of(getPostStub(), getPostStub(), getPostStub());
+  }
+
+  public static BlogResponse getBlogResponseStub() {
+    return BlogResponse.builder()
+        .posts(getPostsStub())
+        .build();
   }
 
 }
