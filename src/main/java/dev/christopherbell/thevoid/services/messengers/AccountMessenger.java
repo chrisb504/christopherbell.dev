@@ -1,6 +1,6 @@
 package dev.christopherbell.thevoid.services.messengers;
 
-import dev.christopherbell.libs.common.api.exceptions.NotFoundException;
+import dev.christopherbell.libs.common.api.exceptions.ResourceNotFoundException;
 import dev.christopherbell.thevoid.models.db.account.AccountDetailsEntity;
 import dev.christopherbell.thevoid.models.db.account.AccountEntity;
 import dev.christopherbell.thevoid.models.db.account.AccountSecurityEntity;
@@ -35,12 +35,12 @@ public class AccountMessenger {
    *
    * @param id
    * @return
-   * @throws NotFoundException
+   * @throws ResourceNotFoundException
    */
-  public AccountEntity getAccountEntityById(Long id) throws NotFoundException {
+  public AccountEntity getAccountEntityById(Long id) throws ResourceNotFoundException {
     var maybeAccountEntity = this.accountRepository.findById(id);
     if (maybeAccountEntity.isEmpty()) {
-      throw new NotFoundException();
+      throw new ResourceNotFoundException();
     }
     return maybeAccountEntity.get();
   }
@@ -49,12 +49,12 @@ public class AccountMessenger {
    *
    * @param username
    * @return
-   * @throws NotFoundException
+   * @throws ResourceNotFoundException
    */
-  public AccountEntity getAccountEntityByUsername(String username) throws NotFoundException {
+  public AccountEntity getAccountEntityByUsername(String username) throws ResourceNotFoundException {
     var maybeAccountEntity = this.accountRepository.findByUsername(username);
     if (maybeAccountEntity.isEmpty()) {
-      throw new NotFoundException();
+      throw new ResourceNotFoundException();
     }
     return maybeAccountEntity.get();
   }
@@ -63,12 +63,12 @@ public class AccountMessenger {
    *
    * @param id
    * @return
-   * @throws NotFoundException
+   * @throws ResourceNotFoundException
    */
-  public AccountDetailsEntity getAccountDetailsEntityById(Long id) throws NotFoundException {
+  public AccountDetailsEntity getAccountDetailsEntityById(Long id) throws ResourceNotFoundException {
     var maybeAccountDetailsEntity = this.accountDetailsRepository.findById(id);
     if (maybeAccountDetailsEntity.isEmpty()) {
-      throw new NotFoundException();
+      throw new ResourceNotFoundException();
     }
     return maybeAccountDetailsEntity.get();
   }
@@ -77,12 +77,12 @@ public class AccountMessenger {
    *
    * @param email
    * @return
-   * @throws NotFoundException
+   * @throws ResourceNotFoundException
    */
-  public AccountSecurityEntity getAccountSecurityEntityByEmail(String email) throws NotFoundException {
+  public AccountSecurityEntity getAccountSecurityEntityByEmail(String email) throws ResourceNotFoundException {
     var maybeAccountSecurityEntity = this.accountSecurityRepository.findByEmail(email);
     if (maybeAccountSecurityEntity.isEmpty()) {
-      throw new NotFoundException();
+      throw new ResourceNotFoundException();
     }
     return maybeAccountSecurityEntity.get();
   }
@@ -91,12 +91,12 @@ public class AccountMessenger {
    *
    * @param id
    * @return
-   * @throws NotFoundException
+   * @throws ResourceNotFoundException
    */
-  public AccountSecurityEntity getAccountSecurityEntityById(Long id) throws NotFoundException {
+  public AccountSecurityEntity getAccountSecurityEntityById(Long id) throws ResourceNotFoundException {
     var maybeAccountSecurityEntity = this.accountSecurityRepository.findById(id);
     if (maybeAccountSecurityEntity.isEmpty()) {
-      throw new NotFoundException();
+      throw new ResourceNotFoundException();
     }
     return maybeAccountSecurityEntity.get();
   }

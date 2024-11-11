@@ -1,13 +1,12 @@
 package dev.christopherbell.thevoid.controllers;
 
 import dev.christopherbell.libs.common.api.models.Response;
-import dev.christopherbell.libs.common.api.exceptions.NotFoundException;
+import dev.christopherbell.libs.common.api.exceptions.ResourceNotFoundException;
 import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
 import dev.christopherbell.thevoid.models.user.VoidRequest;
 import dev.christopherbell.thevoid.models.user.VoidResponse;
 import dev.christopherbell.thevoid.services.CryService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +30,7 @@ public class CryController {
   public ResponseEntity<Response<VoidResponse>> createCry(@RequestHeader String clientId,
       @RequestHeader String loginToken,
       @PathVariable Long accountId,
-      @RequestBody VoidRequest voidRequest) throws NotFoundException, InvalidTokenException {
+      @RequestBody VoidRequest voidRequest) throws ResourceNotFoundException, InvalidTokenException {
     return new ResponseEntity<>(Response.<VoidResponse>builder()
         .payload(cryService.createCry(clientId, loginToken, accountId, voidRequest))
         .success(true)
@@ -41,7 +40,7 @@ public class CryController {
   @GetMapping(value = "/v1/{accountId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Response<VoidResponse>> getAllCriesByAccountId(@RequestHeader String clientId,
       @RequestHeader String loginToken,
-      @PathVariable Long accountId) throws NotFoundException {
+      @PathVariable Long accountId) throws ResourceNotFoundException {
     return new ResponseEntity<>(Response.<VoidResponse>builder()
         .payload(cryService.getAllCriesByAccountId(clientId, accountId))
         .success(true)

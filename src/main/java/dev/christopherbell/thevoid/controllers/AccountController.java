@@ -1,7 +1,7 @@
 package dev.christopherbell.thevoid.controllers;
 
 import dev.christopherbell.libs.common.api.models.Response;
-import dev.christopherbell.libs.common.api.exceptions.NotFoundException;
+import dev.christopherbell.libs.common.api.exceptions.ResourceNotFoundException;
 import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
 import dev.christopherbell.libs.common.api.exceptions.ResourceExistsException;
@@ -53,11 +53,11 @@ public class AccountController {
    * @param accountId - Long value that represents the user's account id
    * @return an account for the given accountId
    * @throws InvalidRequestException  - thrown if client id is not found
-   * @throws NotFoundException - thrown if no accounts are on file with that id
+   * @throws ResourceNotFoundException - thrown if no accounts are on file with that id
    */
   @GetMapping(value = "/v1/accountId/{accountId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Response<AccountResponse>> getAccountById(@RequestHeader String clientId,
-      @PathVariable Long accountId) throws InvalidRequestException, NotFoundException {
+      @PathVariable Long accountId) throws InvalidRequestException, ResourceNotFoundException {
     return new ResponseEntity<>(Response.<AccountResponse>builder()
         .payload(accountService.getAccountById(clientId, accountId))
         .success(true)
@@ -71,11 +71,11 @@ public class AccountController {
    * @param username - String value that represents the account username
    * @return an account for the given username
    * @throws InvalidRequestException  - thrown if client id is not found
-   * @throws NotFoundException - thrown if no accounts are on file with that username
+   * @throws ResourceNotFoundException - thrown if no accounts are on file with that username
    */
   @GetMapping(value = "/v1/username/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Response<VoidResponse>> getAccountByUsername(@RequestHeader String clientId,
-      @PathVariable String username) throws InvalidRequestException, NotFoundException {
+      @PathVariable String username) throws InvalidRequestException, ResourceNotFoundException {
     return new ResponseEntity<>(Response.<VoidResponse>builder()
         .payload(accountService.getAccountByUsername(clientId, username))
         .success(true)
@@ -107,14 +107,14 @@ public class AccountController {
    * @return
    * @throws InvalidRequestException
    * @throws ResourceExistsException
-   * @throws NotFoundException
+   * @throws ResourceNotFoundException
    * @throws InvalidTokenException
    */
   @GetMapping(value = "/v1/getActiveAccount", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Response<AccountResponse>> getActiveAccount(@RequestHeader String clientId,
       @RequestHeader String loginToken,
       @RequestBody VoidRequest voidRequest)
-      throws InvalidRequestException, ResourceExistsException, NotFoundException, InvalidTokenException {
+      throws InvalidRequestException, ResourceExistsException, ResourceNotFoundException, InvalidTokenException {
     return new ResponseEntity<>(Response.<AccountResponse>builder()
         .payload(accountService.getActiveAccount(clientId, loginToken, voidRequest))
         .success(true)
@@ -127,14 +127,14 @@ public class AccountController {
    * @param clientId    - String value that represents the client's id
    * @param voidRequest Object containing details about the account
    * @return a void response and a header containing the loginToken
-   * @throws NotFoundException - thrown if no accounts are on file with that username
+   * @throws ResourceNotFoundException - thrown if no accounts are on file with that username
    * @throws InvalidRequestException  - thrown if client id is not found
    * @throws InvalidTokenException    - thrown is login info is not correct
    */
   @PostMapping(value = "/v1/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Response<VoidResponse>> loginAccount(@RequestHeader String clientId,
       @RequestBody VoidRequest voidRequest)
-      throws InvalidRequestException, NotFoundException, InvalidTokenException {
+      throws InvalidRequestException, ResourceNotFoundException, InvalidTokenException {
     var response = this.accountService.loginAccount(clientId, voidRequest);
     return new ResponseEntity<>(Response.<VoidResponse>builder()
         .payload(response)
@@ -148,14 +148,14 @@ public class AccountController {
    * @param accountId
    * @return
    * @throws InvalidRequestException
-   * @throws NotFoundException
+   * @throws ResourceNotFoundException
    * @throws InvalidTokenException
    */
   @GetMapping(value = "/v1/logout/{accountId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Response<VoidResponse>> logoutAccount(@RequestHeader String clientId,
       @RequestHeader String loginToken,
       @PathVariable Long accountId)
-      throws InvalidRequestException, NotFoundException, InvalidTokenException {
+      throws InvalidRequestException, ResourceNotFoundException, InvalidTokenException {
     var response = this.accountService.logoutAccount(clientId, loginToken, accountId);
     return new ResponseEntity<>(Response.<VoidResponse>builder()
         .payload(response)

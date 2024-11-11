@@ -1,6 +1,6 @@
 package dev.christopherbell.thevoid.services;
 
-import dev.christopherbell.libs.common.api.exceptions.NotFoundException;
+import dev.christopherbell.libs.common.api.exceptions.ResourceNotFoundException;
 import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
 import dev.christopherbell.libs.common.api.exceptions.ResourceExistsException;
@@ -24,7 +24,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -133,10 +132,10 @@ public class AccountService {
    * @param accountId
    * @return
    * @throws InvalidRequestException
-   * @throws NotFoundException
+   * @throws ResourceNotFoundException
    */
   public AccountResponse getAccountById(String clientId, Long accountId)
-      throws InvalidRequestException, NotFoundException {
+      throws InvalidRequestException, ResourceNotFoundException {
     log.info("Request for account with id: {} by clientId: {}", accountId, clientId);
 
     // Validate clientId
@@ -158,11 +157,11 @@ public class AccountService {
    * @param loginToken  - token a user receives after logging into their account
    * @param voidRequest - standard request body for a Void API request
    * @return response with details of the current user.
-   * @throws NotFoundException - if we can't match the username with one in the db
+   * @throws ResourceNotFoundException - if we can't match the username with one in the db
    * @throws InvalidRequestException  - if the requestBody is null
    */
   public AccountResponse getActiveAccount(String clientId, String loginToken, VoidRequest voidRequest)
-      throws NotFoundException, InvalidRequestException, InvalidTokenException {
+      throws ResourceNotFoundException, InvalidRequestException, InvalidTokenException {
     log.info("Request for active account by clientId: {}", clientId);
 
     // Validate inputs
@@ -192,10 +191,10 @@ public class AccountService {
    * @param voidRequest - standard request body for a Void API request
    * @return
    * @throws InvalidRequestException
-   * @throws NotFoundException
+   * @throws ResourceNotFoundException
    */
   public VoidResponse loginAccount(String clientId, VoidRequest voidRequest)
-      throws InvalidRequestException, NotFoundException, InvalidTokenException {
+      throws InvalidRequestException, ResourceNotFoundException, InvalidTokenException {
     log.info("Request to login by clientId: {}", clientId);
 
     // Validate inputs
@@ -247,12 +246,12 @@ public class AccountService {
    * @param loginToken
    * @param accountId
    * @return
-   * @throws NotFoundException
+   * @throws ResourceNotFoundException
    * @throws InvalidRequestException
    * @throws InvalidTokenException
    */
   public VoidResponse logoutAccount(String clientId, String loginToken, Long accountId)
-      throws NotFoundException, InvalidRequestException, InvalidTokenException {
+      throws ResourceNotFoundException, InvalidRequestException, InvalidTokenException {
     log.info("Request to logout by clientId: {}", clientId);
 
     // Validate clientId
@@ -275,10 +274,10 @@ public class AccountService {
    * @param username
    * @return
    * @throws InvalidRequestException
-   * @throws NotFoundException
+   * @throws ResourceNotFoundException
    */
   public VoidResponse getAccountByUsername(String clientId, String username)
-      throws InvalidRequestException, NotFoundException {
+      throws InvalidRequestException, ResourceNotFoundException {
     log.info("Requesting account with username: {} by clientId: {}", username, clientId);
 
     // Validate clientId

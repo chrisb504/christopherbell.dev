@@ -1,7 +1,7 @@
 package dev.christopherbell.thevoid.controllers;
 
 import dev.christopherbell.libs.common.api.models.Response;
-import dev.christopherbell.libs.common.api.exceptions.NotFoundException;
+import dev.christopherbell.libs.common.api.exceptions.ResourceNotFoundException;
 import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
 import dev.christopherbell.thevoid.models.user.VoidRequest;
@@ -29,7 +29,7 @@ public class InviteCodeController {
   public ResponseEntity<Response<VoidResponse>> generateInviteCode(@RequestHeader String clientId,
       @RequestHeader String loginToken,
       @RequestBody VoidRequest voidRequest)
-      throws InvalidRequestException, NotFoundException, InvalidTokenException {
+      throws InvalidRequestException, ResourceNotFoundException, InvalidTokenException {
     return new ResponseEntity<>(Response.<VoidResponse>builder()
         .payload(inviteCodeService.generateInviteCode(clientId, loginToken, voidRequest))
         .success(true)
