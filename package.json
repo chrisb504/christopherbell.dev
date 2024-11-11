@@ -15,8 +15,8 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^6.6.0",
         "babel-polyfill": "^6.26.0",
-        "body-parser": "~1.20.1",
-        "cookie-parser": "^1.4.6",
+        "body-parser": "~1.20.3",
+        "cookie-parser": "^1.4.7",
         "debug": "~4.3.5",
         "material-design-icons": "^3.0.1",
         "react": "^18.3.1",
@@ -42,7 +42,7 @@
         "nodemon": "^3.1.4",
         "style-loader": "^4.0.0",
         "url-loader": "^4.1.1",
-        "webpack": "^5.92.1",
+        "webpack": "^5.96.1",
         "webpack-cli": "^5.1.4",
         "webpack-dev-server": "^4.15.1"
     }
