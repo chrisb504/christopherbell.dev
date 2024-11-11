@@ -1,7 +1,7 @@
 package dev.christopherbell.photo;
 
 import dev.christopherbell.libs.common.api.models.Response;
-import dev.christopherbell.photo.model.PhotoGalleryResponse;
+import dev.christopherbell.photo.model.PhotoResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @AllArgsConstructor
 @RestController
-public class PhotoGalleryController {
+public class PhotoController {
 
-  private final PhotoGalleryService photoGalleryService;
+  private final PhotoService photoService;
 
   /**
    * Returns all existing images for the photo gallery.
@@ -24,10 +24,10 @@ public class PhotoGalleryController {
    * @return a PhotoGalleryResponse containing all existing images.
    */
   @GetMapping(value = "/api/photos", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Response<PhotoGalleryResponse>> getImages() {
+  public ResponseEntity<Response<PhotoResponse>> getImages() {
     return new ResponseEntity<>(
-        Response.<PhotoGalleryResponse>builder()
-            .payload(photoGalleryService.getAllImages())
+        Response.<PhotoResponse>builder()
+            .payload(photoService.getAllImages())
             .success(true)
             .build(), HttpStatus.OK);
   }

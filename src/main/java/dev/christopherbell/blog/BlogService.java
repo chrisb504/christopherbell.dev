@@ -5,6 +5,7 @@ import dev.christopherbell.blog.model.BlogResponse;
 import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class BlogService {
     }
 
     for (var post : blogProperties.getPosts()) {
-      if (post.getId().equals(Integer.parseInt(id))) {
+      if (post.getId().equals(UUID.fromString(id))) {
         return BlogResponse.builder()
             .posts(List.of(post))
             .build();

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 import java.util.Random;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -77,7 +78,7 @@ public class WhatsForLunchService {
     }
 
     for (var restaurant : whatsForLunchProperties.getRestaurants()) {
-      if (restaurant.getId().equals(Integer.parseInt(id))) {
+      if (restaurant.getId().equals(UUID.fromString(id))) {
         return WhatsForLunchResponse.builder()
             .restaurants(List.of(restaurant))
             .build();
