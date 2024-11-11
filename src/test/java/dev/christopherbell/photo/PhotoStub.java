@@ -1,6 +1,7 @@
 package dev.christopherbell.photo;
 
 import dev.christopherbell.photo.model.Photo;
+import dev.christopherbell.photo.model.PhotoResponse;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
@@ -23,5 +24,11 @@ public class PhotoStub {
 
   public static List<Photo> getPhotosStub() {
     return List.of(getPhotoStub(), getPhotoStub(), getPhotoStub());
+  }
+
+  public static PhotoResponse getPhotoResponseStub() {
+    return PhotoResponse.builder()
+        .images(getPhotosStub())
+        .build();
   }
 }

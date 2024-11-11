@@ -30,7 +30,7 @@ public class BlogController {
    * @return BlogResponse containing the requested blog post.
    */
   @GetMapping(value = "/v1/posts/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Response<BlogResponse>> getBlogPost(HttpServletRequest request, @PathVariable String id)
+  public ResponseEntity<Response<BlogResponse>> getBlogPostById(HttpServletRequest request, @PathVariable String id)
       throws InvalidRequestException {
     return new ResponseEntity<>(
         Response.<BlogResponse>builder()
