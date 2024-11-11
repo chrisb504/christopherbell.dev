@@ -1,5 +1,7 @@
 package dev.christopherbell.photo;
 
+import dev.christopherbell.photo.model.ImageProperties;
+import dev.christopherbell.photo.model.PhotoGalleryResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

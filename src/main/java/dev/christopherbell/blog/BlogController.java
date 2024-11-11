@@ -1,5 +1,6 @@
 package dev.christopherbell.blog;
 
+import dev.christopherbell.blog.model.BlogResponse;
 import dev.christopherbell.libs.common.api.models.Response;
 import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import jakarta.servlet.http.HttpServletRequest;

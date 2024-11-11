@@ -1,6 +1,7 @@
 package dev.christopherbell.whatsforlunch;
 
 import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
+import dev.christopherbell.whatsforlunch.model.WhatsForLunchProperties;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

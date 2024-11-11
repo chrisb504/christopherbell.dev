@@ -1,4 +1,4 @@
-package dev.christopherbell.blog;
+package dev.christopherbell.blog.model;
 
 import java.util.List;
 import lombok.Data;

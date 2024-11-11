@@ -1,4 +1,4 @@
-package dev.christopherbell.photo;
+package dev.christopherbell.photo.model;
 
 import java.util.List;
 import lombok.Builder;

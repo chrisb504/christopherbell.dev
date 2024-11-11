@@ -1,4 +1,4 @@
-package dev.christopherbell.whatsforlunch;
+package dev.christopherbell.whatsforlunch.model;
 
 import java.util.List;
 import lombok.Builder;

@@ -1,5 +1,6 @@
 package dev.christopherbell.blog;
 
+import dev.christopherbell.blog.model.BlogProperties;
 import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

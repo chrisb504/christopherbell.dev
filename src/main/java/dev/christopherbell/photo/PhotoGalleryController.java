@@ -1,6 +1,7 @@
 package dev.christopherbell.photo;
 
 import dev.christopherbell.libs.common.api.models.Response;
+import dev.christopherbell.photo.model.PhotoGalleryResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

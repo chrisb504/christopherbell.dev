@@ -1,6 +1,9 @@
 package dev.christopherbell.whatsforlunch;
 
 import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
+import dev.christopherbell.whatsforlunch.model.Restaurant;
+import dev.christopherbell.whatsforlunch.model.WhatsForLunchProperties;
+import dev.christopherbell.whatsforlunch.model.WhatsForLunchResponse;
 import java.util.List;
 import java.util.Objects;
 

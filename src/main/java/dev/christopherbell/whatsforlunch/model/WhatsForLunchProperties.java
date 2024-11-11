@@ -1,4 +1,4 @@
-package dev.christopherbell.photo;
+package dev.christopherbell.whatsforlunch.model;
 
 import java.util.List;
 import lombok.Data;
@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "image-properties")
-public class ImageProperties {
+@ConfigurationProperties(prefix = "wfl-properties")
+public class WhatsForLunchProperties {
 
-  private final List<Image> images;
+  private final List<Restaurant> restaurants;
 }
