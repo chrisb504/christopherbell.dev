@@ -1,20 +1,21 @@
 package dev.christopherbell.whatsforlunch;
 
+import static org.mockito.Mockito.when;
+
 import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import dev.christopherbell.whatsforlunch.model.WhatsForLunchProperties;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@SpringBootTest
-@ActiveProfiles("test")
+@ExtendWith(MockitoExtension.class)
 public class WhatsForLunchServiceTest {
 
   private WhatsForLunchService whatsForLunchService;
-  @Autowired
+  @Mock
   private WhatsForLunchProperties whatsForLunchProperties;
 
   @BeforeEach
@@ -24,6 +25,9 @@ public class WhatsForLunchServiceTest {
 
   @Test
   public void testSetRestaurantOfTheDay_success() {
+
+    when(whatsForLunchProperties.getRestaurants()).thenReturn(WhatsForLunchStub.getRestaurantsStub());
+
     whatsForLunchService.setRestaurantOfTheDay();
 
     Assertions.assertNotNull(WhatsForLunchService.restaurantOfTheDay);
@@ -32,6 +36,9 @@ public class WhatsForLunchServiceTest {
 
   @Test
   public void testGetRestaurantOfTheDayTest_success() {
+
+    when(whatsForLunchProperties.getRestaurants()).thenReturn(WhatsForLunchStub.getRestaurantsStub());
+
     var restaurant = whatsForLunchService.getRestaurantOfTheDay();
 
     Assertions.assertNotNull(WhatsForLunchService.restaurantOfTheDay);
@@ -42,9 +49,10 @@ public class WhatsForLunchServiceTest {
 
   @Test
   public void testGetRestaurantById_success() throws InvalidRequestException {
-    var id = 0;
 
-    var restaurant = whatsForLunchService.getRestaurantById(String.valueOf(id));
+    when(whatsForLunchProperties.getRestaurants()).thenReturn(WhatsForLunchStub.getRestaurantsStub());
+
+    var restaurant = whatsForLunchService.getRestaurantById(WhatsForLunchStub.RESTAURANT_ID);
     Assertions.assertEquals(restaurant.getRestaurants().getFirst().getName(),
         whatsForLunchProperties.getRestaurants().getFirst().getName());
   }

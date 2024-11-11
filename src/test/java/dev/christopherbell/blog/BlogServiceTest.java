@@ -1,19 +1,21 @@
 package dev.christopherbell.blog;
 
+import static org.mockito.Mockito.when;
+
 import dev.christopherbell.blog.model.BlogProperties;
 import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@SpringBootTest
-@ActiveProfiles("test")
+@ExtendWith(MockitoExtension.class)
 public class BlogServiceTest {
+
   private BlogService blogService;
-  @Autowired
+  @Mock
   private BlogProperties blogProperties;
 
   @BeforeEach
@@ -23,9 +25,10 @@ public class BlogServiceTest {
 
   @Test
   public void testGetPostById_success() throws InvalidRequestException {
-    var id = 0;
 
-    var post = blogService.getPostById(String.valueOf(id));
+    when(blogProperties.getPosts()).thenReturn(BlogStub.getPostsStub());
+
+    var post = blogService.getPostById(BlogStub.BLOG_ID);
     Assertions.assertEquals(post.getPosts().getFirst().getId(),
         blogProperties.getPosts().getFirst().getId());
   }
@@ -53,6 +56,9 @@ public class BlogServiceTest {
 
   @Test
   public void testGetPosts_success() {
+
+    when(blogProperties.getPosts()).thenReturn(BlogStub.getPostsStub());
+
     var posts = blogService.getPosts();
 
     Assertions.assertEquals(posts.getPosts().size(),

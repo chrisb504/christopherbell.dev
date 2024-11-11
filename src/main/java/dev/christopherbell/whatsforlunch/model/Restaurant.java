@@ -1,5 +1,6 @@
 package dev.christopherbell.whatsforlunch.model;
 
+import java.util.UUID;
 import lombok.Builder;
 import lombok.Data;
 
@@ -7,6 +8,6 @@ import lombok.Data;
 @Data
 public class Restaurant {
 
-  private Integer id;
+  private UUID id;
   private String name;
 }
