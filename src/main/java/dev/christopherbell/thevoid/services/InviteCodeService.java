@@ -1,6 +1,6 @@
 package dev.christopherbell.thevoid.services;
 
-import dev.christopherbell.libs.common.api.exceptions.NotFoundException;
+import dev.christopherbell.libs.common.api.exceptions.ResourceNotFoundException;
 import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
 import dev.christopherbell.libs.common.api.utils.APIValidationUtils;
@@ -36,11 +36,11 @@ public class InviteCodeService {
    * @param voidRequest
    * @return
    * @throws InvalidRequestException
-   * @throws NotFoundException
+   * @throws ResourceNotFoundException
    * @throws InvalidTokenException
    */
   public VoidResponse generateInviteCode(String clientId, String loginToken, VoidRequest voidRequest)
-      throws InvalidRequestException, NotFoundException, InvalidTokenException {
+      throws InvalidRequestException, ResourceNotFoundException, InvalidTokenException {
     ValidateUtil.validateAccount(voidRequest);
     APIValidationUtils.isValidClientId(ValidateUtil.ACCEPTED_CLIENT_IDs, clientId);
 

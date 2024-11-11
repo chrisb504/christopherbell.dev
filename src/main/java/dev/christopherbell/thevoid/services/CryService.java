@@ -1,6 +1,6 @@
 package dev.christopherbell.thevoid.services;
 
-import dev.christopherbell.libs.common.api.exceptions.NotFoundException;
+import dev.christopherbell.libs.common.api.exceptions.ResourceNotFoundException;
 import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
 import dev.christopherbell.thevoid.models.user.VoidRequest;
 import dev.christopherbell.thevoid.models.user.VoidResponse;
@@ -32,16 +32,16 @@ public class CryService {
    * @param accountId
    * @param voidRequest
    * @return
-   * @throws NotFoundException
+   * @throws ResourceNotFoundException
    * @throws InvalidTokenException
    */
   public VoidResponse createCry(String clientId, String loginToken, Long accountId, VoidRequest voidRequest)
-      throws NotFoundException, InvalidTokenException {
+      throws ResourceNotFoundException, InvalidTokenException {
     log.info("Request for all cries for given accountId: " + accountId);
 
     // Validate the token for the user
     if (!this.permissionsService.validateLoginToken(loginToken, accountId)) {
-      throw new NotFoundException();
+      throw new ResourceNotFoundException();
     }
     var cry = Objects.requireNonNullElse(voidRequest.getCry(), new Cry());
 
@@ -58,9 +58,9 @@ public class CryService {
    *
    * @param accountId
    * @return
-   * @throws NotFoundException
+   * @throws ResourceNotFoundException
    */
-  public VoidResponse getAllCriesByAccountId(String clientId, Long accountId) throws NotFoundException {
+  public VoidResponse getAllCriesByAccountId(String clientId, Long accountId) throws ResourceNotFoundException {
     //TODO: Write a test to see if this will prevent a DB attack
     //var username = Jsoup.clean(dirtyUsername, Safelist.basic());
     log.info("Request for all cries for given accountId: " + accountId);

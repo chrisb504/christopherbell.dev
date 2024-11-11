@@ -2,7 +2,7 @@ package dev.christopherbell.thevoid.controllers;
 
 import dev.christopherbell.libs.common.api.models.Message;
 import dev.christopherbell.libs.common.api.models.Response;
-import dev.christopherbell.libs.common.api.exceptions.NotFoundException;
+import dev.christopherbell.libs.common.api.exceptions.ResourceNotFoundException;
 import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
 import dev.christopherbell.libs.common.api.exceptions.ResourceExistsException;
@@ -36,8 +36,8 @@ public class ControllerExceptionHandler {
             .build(), HttpStatus.BAD_REQUEST);
   }
 
-  @ExceptionHandler({NotFoundException.class})
-  public ResponseEntity<Response> handleAccountNotFoundException(NotFoundException e) {
+  @ExceptionHandler({ResourceNotFoundException.class})
+  public ResponseEntity<Response> handleAccountNotFoundException(ResourceNotFoundException e) {
     log.error(e.getMessage(), e);
     return new ResponseEntity<>(
         Response.builder()

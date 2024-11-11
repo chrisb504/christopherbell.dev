@@ -1,6 +1,6 @@
 package dev.christopherbell.thevoid.services;
 
-import dev.christopherbell.libs.common.api.exceptions.NotFoundException;
+import dev.christopherbell.libs.common.api.exceptions.ResourceNotFoundException;
 import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
 import dev.christopherbell.thevoid.repositories.AccountRepository;
 import dev.christopherbell.thevoid.repositories.AccountSecurityRepository;
@@ -41,14 +41,14 @@ public class PermissionsService {
    * @param loginToken
    * @param accountId
    * @return
-   * @throws NotFoundException
+   * @throws ResourceNotFoundException
    * @throws InvalidTokenException
    */
   public boolean validateLoginToken(String loginToken, Long accountId)
-      throws NotFoundException, InvalidTokenException {
+      throws ResourceNotFoundException, InvalidTokenException {
     var maybeAccountEntity = this.accountRepository.findById(accountId);
     if (maybeAccountEntity.isEmpty()) {
-      throw new NotFoundException();
+      throw new ResourceNotFoundException();
     }
     var accountEntity = maybeAccountEntity.get();
     var accountSecurityEntity = accountEntity.getAccountSecurityEntity();
@@ -63,12 +63,12 @@ public class PermissionsService {
    * @param email
    * @param password
    * @return
-   * @throws NotFoundException
+   * @throws ResourceNotFoundException
    */
-  public boolean validatePassword(String email, String password) throws NotFoundException {
+  public boolean validatePassword(String email, String password) throws ResourceNotFoundException {
     var maybeAccountSecurityEntity = this.accountSecurityRepository.findByEmail(email);
     if (maybeAccountSecurityEntity.isEmpty()) {
-      throw new NotFoundException("No account found");
+      throw new ResourceNotFoundException("No account found");
     }
     var accountSecurityEntity = maybeAccountSecurityEntity.get();
     // Get the current password from that account
