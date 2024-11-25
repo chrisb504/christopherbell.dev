@@ -22,7 +22,7 @@
         "material-design-icons": "^3.0.1",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
-        "react-router-dom": "^6.21.1"
+        "react-router-dom": "^7.0.1"
     },
     "devDependencies": {
         "@babel/core": "^7.26.0",
