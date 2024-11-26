@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
  * Represents a controller handling all requests related to What's For Lunch
  */
 @AllArgsConstructor
-@RestController
 @RequestMapping("/api/whatsforlunch")
+@RestController
 public class WhatsForLunchController {
 
   private final WhatsForLunchService whatsForLunchService;

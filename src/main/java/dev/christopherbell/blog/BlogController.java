@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
  * Represents the controller for dealing with Blog related requests.
  */
 @AllArgsConstructor
-@RestController
 @RequestMapping("/api/blog")
+@RestController
 public class BlogController {
 
   private final BlogService blogService;

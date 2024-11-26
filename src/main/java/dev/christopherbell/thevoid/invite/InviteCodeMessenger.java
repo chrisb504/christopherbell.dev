@@ -1,11 +1,11 @@
 package dev.christopherbell.thevoid.invite;
 
 import dev.christopherbell.thevoid.invite.model.InviteCodeEntity;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Service
 @Slf4j
 public class InviteCodeMessenger {
