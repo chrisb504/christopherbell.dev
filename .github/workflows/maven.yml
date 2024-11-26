@@ -1,21 +1,32 @@
-name: Java CI
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-on: [push, pull_request]
+name: Java CI with Maven
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+    paths-ignore: # Optional: ignore pushes to non-code files
+      - '**/*.md'
+      - '**/*.txt'
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Java version
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
-          
+
       - name: Build with Maven
         run: mvn -B clean package --file pom.xml
