@@ -6,54 +6,69 @@ const outputDirectory = './src/main/resources/static/js';
 
 
 module.exports = {
-    mode: 'development',
-    entry: [
-        'babel-polyfill',
-        
-        /**
-         * The list for React components starts here. Please keep these in 
-         * alphabetical order.
-         */
-        './src/main/resources/static/js/pages/main.js',
-        './src/main/resources/static/js/components/blog/blog.js',
-        './src/main/resources/static/js/components/blogtags/blogtags.js',
-        './src/main/resources/static/js/components/footer/footer.js',
-        './src/main/resources/static/js/components/gallery/gallery.js',
-        './src/main/resources/static/js/components/nav/nav.js',
-        './src/main/resources/static/js/components/nav/navitems/navdropdown/navdropdown.js',
-        './src/main/resources/static/js/components/nav/navitems/navdropdown/navdropdownitem/navdropdownitem.js',
-        './src/main/resources/static/js/components/nav/navitems/navstditem/navstditem.js',
-    ],
-    output: {
-        path: path.join(__dirname, outputDirectory),
-        filename: 'main.js'
-    },
-    module: {
-        rules: [{
-            test: /\.js$|jsx/,
-            exclude: /node_modules/,
-            use: {
-                loader: 'babel-loader'
-            }
-        },
-        {
-            test: /\.css$/i,
-            use: [
-                "style-loader",
-                    {
-                        loader: "css-loader",
-                        options: {
-                            importLoaders: 1,
-                        },
-                    }
-                ]
-        }]
-    },
-    devServer: {
-        port: 3000,
-        open: true,
-        proxy: {
-            '/': 'http://localhost:8080'
+  mode: 'development',
+  entry: [
+    //        'babel-polyfill',
+
+    /**
+     * The list for React components starts here. Please keep these in 
+     * alphabetical order.
+     */
+    './src/main/resources/static/js/pages/main.js',
+    './src/main/resources/static/js/components/blog/blog.js',
+    './src/main/resources/static/js/components/blogtags/blogtags.js',
+    './src/main/resources/static/js/components/footer/footer.js',
+    './src/main/resources/static/js/components/gallery/gallery.js',
+    './src/main/resources/static/js/components/nav/nav.js',
+    './src/main/resources/static/js/components/nav/navitems/navdropdown/navdropdown.js',
+    './src/main/resources/static/js/components/nav/navitems/navdropdown/navdropdownitem/navdropdownitem.js',
+    './src/main/resources/static/js/components/nav/navitems/navstditem/navstditem.js',
+  ],
+  output: {
+    path: path.join(__dirname, outputDirectory),
+    filename: 'main.js'
+  },
+  module: {
+    rules: [{
+      test: /\.js$|jsx/,
+      exclude: /node_modules/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            '@babel/preset-env',
+            '@babel/preset-react'
+          ],
+          plugins: [
+            '@babel/plugin-proposal-class-properties',
+            '@babel/plugin-transform-runtime'  // For async/await support
+          ]
         }
+      }
+    },
+    {
+      test: /\.css$/i,
+      use: [
+        "style-loader",
+        {
+          loader: "css-loader",
+          options: {
+            importLoaders: 1,
+          },
+        }
+      ]
+    }]
+  },
+  devServer: {
+    port: 3000,
+    open: true,
+    proxy: {
+      '/': 'http://localhost:8080'
     }
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']  // Automatically resolve these extensions
+  },
+  // For better debugging support (optional)
+  devtool: 'source-map',  // Easier debugging in development
 };
