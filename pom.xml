@@ -9,10 +9,10 @@
   </parent>
 
   <groupId>dev.christopherbell</groupId>
-  <artifactId>dev.cbell</artifactId>
+  <artifactId>cbell-website</artifactId>
   <version>20241110</version>
-  <name>dev.cbell</name>
-  <description>dev.cbell</description>
+  <name>cbell-website</name>
+  <description>cbell-website</description>
 
   <properties>
     <java.version>21</java.version>
