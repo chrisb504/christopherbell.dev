@@ -4,12 +4,9 @@ const path = require('path');
 // Variables
 const outputDirectory = './src/main/resources/static/js';
 
-
 module.exports = {
   mode: 'development',
   entry: [
-    //        'babel-polyfill',
-
     /**
      * The list for React components starts here. Please keep these in 
      * alphabetical order.
@@ -29,35 +26,32 @@ module.exports = {
     filename: 'main.js'
   },
   module: {
-    rules: [{
-      test: /\.js$|jsx/,
-      exclude: /node_modules/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          presets: [
-            '@babel/preset-env',
-            '@babel/preset-react'
-          ],
-          plugins: [
-            '@babel/plugin-proposal-class-properties',
-            '@babel/plugin-transform-runtime'  // For async/await support
-          ]
-        }
-      }
-    },
-    {
-      test: /\.css$/i,
-      use: [
-        "style-loader",
-        {
-          loader: "css-loader",
+    rules: [
+      {
+        test: /\.js$|jsx/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
           options: {
-            importLoaders: 1,
-          },
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-react'
+            ],
+            plugins: [
+              '@babel/plugin-proposal-class-properties',
+              '@babel/plugin-transform-runtime'  // For async/await support
+            ]
+          }
         }
-      ]
-    }]
+      },
+      {
+        test: /\.css$/i,
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader'  // Added PostCSS for CSS optimizations
+        ]
+      }]
   },
   devServer: {
     port: 3000,
