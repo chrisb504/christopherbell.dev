@@ -2,13 +2,13 @@ package dev.christopherbell.thevoid.cry;
 
 import dev.christopherbell.thevoid.account.model.entity.AccountEntity;
 import dev.christopherbell.thevoid.cry.model.CryEntity;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Service
 @Slf4j
 public class CryMessenger {

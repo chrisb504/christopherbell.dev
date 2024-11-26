@@ -7,13 +7,13 @@ import dev.christopherbell.thevoid.account.model.dto.Account;
 import dev.christopherbell.thevoid.account.AccountMessenger;
 import dev.christopherbell.thevoid.utils.ValidateUtil;
 import dev.christopherbell.thevoid.utils.mappers.MapStructMapper;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Service
 @Slf4j
 public class SearchService {

@@ -9,7 +9,7 @@ import dev.christopherbell.thevoid.account.model.dto.AccountResponse;
 import dev.christopherbell.thevoid.account.model.dto.AccountsResponse;
 import dev.christopherbell.thevoid.common.VoidRequest;
 import dev.christopherbell.thevoid.common.VoidResponse;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@AllArgsConstructor
 @RequestMapping("/api/accounts")
-@RequiredArgsConstructor
 @RestController
 public class AccountController {
 

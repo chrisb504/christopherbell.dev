@@ -6,17 +6,15 @@ import dev.christopherbell.thevoid.cry.model.Cry;
 import dev.christopherbell.thevoid.invite.model.InviteCode;
 import dev.christopherbell.thevoid.account.model.dto.Account;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.springframework.http.HttpHeaders;
 
 import java.util.List;
 
-@Getter
-@Setter
 @AllArgsConstructor
+@Data
 @NoArgsConstructor
 @SuperBuilder
 @JsonInclude(JsonInclude.Include.NON_NULL)

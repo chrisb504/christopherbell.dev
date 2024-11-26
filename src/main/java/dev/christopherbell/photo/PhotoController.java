@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
  * Represents the controller that handles all photo gallery related requests.
  */
 @AllArgsConstructor
-@RestController
 @RequestMapping("/api/photo")
+@RestController
 public class PhotoController {
 
   private final PhotoService photoService;

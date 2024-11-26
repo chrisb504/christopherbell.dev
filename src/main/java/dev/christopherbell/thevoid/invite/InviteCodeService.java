@@ -12,14 +12,14 @@ import dev.christopherbell.thevoid.invite.model.InviteCodeEntity;
 import dev.christopherbell.thevoid.permission.PermissionsService;
 import dev.christopherbell.thevoid.utils.ValidateUtil;
 import dev.christopherbell.thevoid.utils.mappers.MapStructMapper;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 import java.util.UUID;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Service
 @Slf4j
 public class InviteCodeService {

@@ -13,8 +13,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class VoidRequest extends Request {
 
-  @JsonProperty("account")
   private Account account;
-  @JsonProperty("cry")
   private Cry cry;
 }

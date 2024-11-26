@@ -3,11 +3,15 @@ package dev.christopherbell.blog.model;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
 @Builder
 @Data
+@NoArgsConstructor
 public class Post {
 
   private String author;

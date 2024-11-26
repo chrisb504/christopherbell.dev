@@ -40,9 +40,6 @@ public class CryEntity {
   @Column
   private String text;
 
-//    @Column
-//    private Long parentCryId;
-
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = false)
   private AccountEntity accountEntity;

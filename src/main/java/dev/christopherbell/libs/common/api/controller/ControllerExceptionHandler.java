@@ -24,7 +24,7 @@ public class ControllerExceptionHandler {
 
 
   @ExceptionHandler({InvalidRequestException.class})
-  public ResponseEntity<Response> handleInvalidRequestException(InvalidRequestException e) {
+  public ResponseEntity<Response<?>> handleInvalidRequestException(InvalidRequestException e) {
     log.error(e.getMessage(), e);
     return new ResponseEntity<>(
         Response.builder()
@@ -37,7 +37,7 @@ public class ControllerExceptionHandler {
   }
 
   @ExceptionHandler({ResourceNotFoundException.class})
-  public ResponseEntity<Response> handleResourceNotFoundException(ResourceNotFoundException e) {
+  public ResponseEntity<Response<?>> handleResourceNotFoundException(ResourceNotFoundException e) {
     log.error(e.getMessage(), e);
     return new ResponseEntity<>(
         Response.builder()
@@ -50,7 +50,7 @@ public class ControllerExceptionHandler {
   }
 
   @ExceptionHandler({ResourceExistsException.class})
-  public ResponseEntity<Response> handleResourceExistsException(ResourceExistsException e) {
+  public ResponseEntity<Response<?>> handleResourceExistsException(ResourceExistsException e) {
     log.error(e.getMessage(), e);
     return new ResponseEntity<>(
         Response.builder()
@@ -63,7 +63,7 @@ public class ControllerExceptionHandler {
   }
 
   @ExceptionHandler({InvalidTokenException.class})
-  public ResponseEntity<Response> handleInvalidTokenException(InvalidTokenException e) {
+  public ResponseEntity<Response<?>> handleInvalidTokenException(InvalidTokenException e) {
     log.error(e.getMessage(), e);
     return new ResponseEntity<>(
         Response.builder()

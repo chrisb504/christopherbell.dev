@@ -3,7 +3,7 @@ package dev.christopherbell.thevoid.search;
 import dev.christopherbell.libs.common.api.models.Response;
 import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import dev.christopherbell.thevoid.common.VoidResponse;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@AllArgsConstructor
 @RequestMapping("/api/search")
-@RequiredArgsConstructor
+@RestController
 public class SearchController {
   public SearchService searchService;
 
