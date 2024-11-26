@@ -38,7 +38,7 @@ export default class LoginForm extends Component {
                     response.json().then(data => {
                         const accountId = data.myself.id
                         localStorage.setItem('voidAccountId', accountId);
-                        window.location.href = '/';
+                        window.location.href = '/void/';
                     });
                 } else {
                     this.setState({

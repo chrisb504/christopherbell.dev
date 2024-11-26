@@ -13,12 +13,12 @@ class App extends Component {
         return (
             <div id="app-root">
                 <Routes>
-                    <Route path="/" element={<Layout />}>
+                    <Route path="/void/" element={<Layout />} >
                         <Route index element={<HomePage />} />
-                        <Route path="login" element={<LoginPage />} />
-                        <Route path="signup" element={<SignUpPage />} />
-                        <Route path="profile*" element={<ProfilePage />} />
-                        <Route path="*" element={<NoMatch />} />
+                        <Route path="/void/login" element={<LoginPage />} />
+                        <Route path="/void/signup" element={<SignUpPage />} />
+                        <Route path="/void/profile/*" element={<ProfilePage />} />
+                        <Route path="/void/*" element={<NoMatch />} />
                     </Route>
                 </Routes>
             </div>
