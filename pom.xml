@@ -113,23 +113,6 @@
       <version>0.12.6</version>
     </dependency>
 
-<!--dependency    &lt;!&ndash; https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api &ndash;&gt;-->
-<!--    <dependency>-->
-<!--      <groupId>io.jsonwebtoken</groupId>-->
-<!--      <artifactId>jjwt-api</artifactId>-->
-<!--      <version>0.12.6</version>-->
-<!--    </dependency>-->
-
-<!--    &lt;!&ndash; https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl &ndash;&gt;-->
-<!--    <dependency>-->
-<!--      <groupId>io.jsonwebtoken</groupId>-->
-<!--      <artifactId>jjwt-impl</artifactId>-->
-<!--      <version>0.12.6</version>-->
-<!--      <scope>runtime</scope>-->
-<!--    </dependency>-->
-
-
-
     <dependency>
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
