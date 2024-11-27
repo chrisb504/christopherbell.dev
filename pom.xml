@@ -60,6 +60,13 @@
       <version>${spring.version}</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
@@ -105,6 +112,23 @@
       <artifactId>jjwt</artifactId>
       <version>0.12.6</version>
     </dependency>
+
+<!--dependency    &lt;!&ndash; https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>io.jsonwebtoken</groupId>-->
+<!--      <artifactId>jjwt-api</artifactId>-->
+<!--      <version>0.12.6</version>-->
+<!--    </dependency>-->
+
+<!--    &lt;!&ndash; https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>io.jsonwebtoken</groupId>-->
+<!--      <artifactId>jjwt-impl</artifactId>-->
+<!--      <version>0.12.6</version>-->
+<!--      <scope>runtime</scope>-->
+<!--    </dependency>-->
+
+
 
     <dependency>
       <groupId>org.springdoc</groupId>
