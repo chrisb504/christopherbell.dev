@@ -20,7 +20,7 @@ export default class Navigation extends Component {
     console.log("Logging out")
     localStorage.removeItem('voidLoginToken');
     localStorage.removeItem('voidAccountId');
-    window.location.href = '/';
+    window.location.href = '/void';
   }
 
   render() {
@@ -28,19 +28,19 @@ export default class Navigation extends Component {
     return (
       <nav className="navigation">
         <div className="logo">
-          <Link to="/">The Void</Link>
+          <Link to="/void">The Void</Link>
         </div>
         <Search />
         {isAccountLoggedIn === false && (
           <div className="auth-buttons">
-            <button className="login-button"><Link to="/login">Login</Link></button>
-            <button className="signup-button"><Link to="/signup">Sign Up</Link></button>
+            <button className="login-button"><Link to="/void/login">Login</Link></button>
+            <button className="signup-button"><Link to="/void/signup">Sign Up</Link></button>
           </div>
         )}
         {isAccountLoggedIn && (
           <div className="auth-buttons">
-            <button className="profile-button"> <Link to="/profile">Profile</Link></button>
-            <button className="logout-button" onClick={this.logout}> <Link to="/">Logout</Link></button>
+            <button className="profile-button"> <Link to="/void/profile">Profile</Link></button>
+            <button className="logout-button" onClick={this.logout}> <Link to="/void">Logout</Link></button>
           </div>
         )}
       </nav>

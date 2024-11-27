@@ -41,7 +41,7 @@ export default class SignUpForm extends Component {
                 if (response.status === 201) {
                     //const loginToken = response.headers.get('loginToken');
                     //localStorage.setItem('loginToken', loginToken);
-                    window.location.href = '/';
+                    window.location.href = '/void/';
                 } else {
                     this.setState({
                         showPopup: true,
@@ -64,7 +64,7 @@ export default class SignUpForm extends Component {
     render() {
         const { email, username, password, showPopup, popupMessage } = this.state;
         return (
-            <div className="login-form-container">
+            <div className="signup-form-container">
                 <form onSubmit={this.handleSubmit}>
                     <label htmlFor="email">Email:</label>
                     <input type="email" id="email" name="email" value={email} onChange={this.handleChange} required />

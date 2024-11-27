@@ -1,14 +1,13 @@
-# 
-
+# christopherbell.dev
 
 ## Quickstart
+
 ```bash
 npm install
 npm run-script build
 mvn clean package
 java -jar /target/{jar-name-here}
 ```
-
 
 ## Setup
 
@@ -76,9 +75,3 @@ Set SPRING_ACTIVE_PROFILE to "local" in your environment variables
 ```bash
 java -jar ./target/output.jar
 ```
-
-
-
-
-
-
