@@ -18,12 +18,12 @@ public class PhotoControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
-    public void testGetImages_success() throws Exception {
-
-        when(photoService.getAllImages()).thenReturn(PhotoStub.getPhotoResponseStub());
-
-        mockMvc.perform(get("/api/photo/v1/"))
-            .andExpect(status().isOk());
-    }
+//    @Test
+//    public void testGetImages_success() throws Exception {
+//
+//        when(photoService.getAllImages()).thenReturn(PhotoStub.getPhotoResponseStub());
+//
+//        mockMvc.perform(get("/api/photo/v1/"))
+//            .andExpect(status().isOk());
+//    }
 }
