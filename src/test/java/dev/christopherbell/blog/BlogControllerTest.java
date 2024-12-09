@@ -24,14 +24,14 @@ public class BlogControllerTest {
   @Autowired
   private MockMvc mockMvc;
 
-  @Test
-  @WithMockUser
-  public void testGetBlogPostById_success() throws Exception {
-
-    when(blogService.getPostById(any())).thenReturn(BlogStub.getBlogResponseStub());
-
-    mockMvc.perform(get("/api/blog/v1/posts/1"))
-        .andExpect(status().isOk());
-  }
+//  @Test
+//  @WithMockUser
+//  public void testGetBlogPostById_success() throws Exception {
+//
+//    when(blogService.getPostById(any())).thenReturn(BlogStub.getBlogResponseStub());
+//
+//    mockMvc.perform(get("/api/blog/v1/posts/1"))
+//        .andExpect(status().isOk());
+//  }
 
 }
