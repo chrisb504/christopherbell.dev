@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @AllArgsConstructor
-@RequestMapping("/api/accounts")
+@RequestMapping("/api/thevoid/accounts")
 @RestController
 public class AccountController {
 

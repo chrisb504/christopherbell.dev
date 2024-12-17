@@ -80,6 +80,12 @@
     </dependency>
 
     <dependency>
+      <groupId>com.azure</groupId>
+      <artifactId>azure-data-tables</artifactId>
+      <version>12.5.0</version> <!-- Check for the latest version -->
+    </dependency>
+
+    <dependency>
       <groupId>com.samaxes.maven</groupId>
       <artifactId>minify-maven-plugin</artifactId>
       <version>1.7.6</version>

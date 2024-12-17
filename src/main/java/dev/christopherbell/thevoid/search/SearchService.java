@@ -5,7 +5,7 @@ import dev.christopherbell.libs.common.api.utils.APIValidationUtils;
 import dev.christopherbell.thevoid.common.VoidResponse;
 import dev.christopherbell.thevoid.account.model.dto.Account;
 import dev.christopherbell.thevoid.account.AccountMessenger;
-import dev.christopherbell.thevoid.utils.ValidateUtil;
+import dev.christopherbell.libs.common.api.utils.ValidateUtil;
 import dev.christopherbell.thevoid.utils.mappers.MapStructMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
