@@ -25,9 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RequestMapping("/api/thevoid/accounts")
 @RestController
-public class AccountController {
+public class VoidAccountController {
 
-  private final AccountService accountService;
+  private final VoidAccountService voidAccountService;
 
   /**
    * Get all accounts on file, clientId is required.
@@ -40,7 +40,7 @@ public class AccountController {
   public ResponseEntity<Response<AccountsResponse>> getAccounts(@RequestHeader String clientId)
       throws InvalidRequestException {
     return new ResponseEntity<>(Response.<AccountsResponse>builder()
-        .payload(accountService.getAccounts(clientId))
+        .payload(voidAccountService.getAccounts(clientId))
         .success(true)
         .build(), HttpStatus.OK);
   }
@@ -58,7 +58,7 @@ public class AccountController {
   public ResponseEntity<Response<AccountResponse>> getAccountById(@RequestHeader String clientId,
       @PathVariable Long accountId) throws InvalidRequestException, ResourceNotFoundException {
     return new ResponseEntity<>(Response.<AccountResponse>builder()
-        .payload(accountService.getAccountById(clientId, accountId))
+        .payload(voidAccountService.getAccountById(clientId, accountId))
         .success(true)
         .build(), HttpStatus.OK);
   }
@@ -76,7 +76,7 @@ public class AccountController {
   public ResponseEntity<Response<VoidResponse>> getAccountByUsername(@RequestHeader String clientId,
       @PathVariable String username) throws InvalidRequestException, ResourceNotFoundException {
     return new ResponseEntity<>(Response.<VoidResponse>builder()
-        .payload(accountService.getAccountByUsername(clientId, username))
+        .payload(voidAccountService.getAccountByUsername(clientId, username))
         .success(true)
         .build(), HttpStatus.OK);
   }
@@ -94,7 +94,7 @@ public class AccountController {
   public ResponseEntity<Response<VoidResponse>> createAccount(@RequestHeader String clientId,
       @RequestBody VoidRequest voidRequest) throws InvalidRequestException, ResourceExistsException {
     return new ResponseEntity<>(Response.<VoidResponse>builder()
-        .payload(accountService.createAccount(clientId, voidRequest))
+        .payload(voidAccountService.createAccount(clientId, voidRequest))
         .success(true)
         .build(), HttpStatus.CREATED);
   }
@@ -115,7 +115,7 @@ public class AccountController {
       @RequestBody VoidRequest voidRequest)
       throws InvalidRequestException, ResourceExistsException, ResourceNotFoundException, InvalidTokenException {
     return new ResponseEntity<>(Response.<AccountResponse>builder()
-        .payload(accountService.getActiveAccount(clientId, loginToken, voidRequest))
+        .payload(voidAccountService.getActiveAccount(clientId, loginToken, voidRequest))
         .success(true)
         .build(), HttpStatus.OK);
   }
@@ -134,7 +134,7 @@ public class AccountController {
   public ResponseEntity<Response<VoidResponse>> loginAccount(@RequestHeader String clientId,
       @RequestBody VoidRequest voidRequest)
       throws InvalidRequestException, ResourceNotFoundException, InvalidTokenException {
-    var response = this.accountService.loginAccount(clientId, voidRequest);
+    var response = this.voidAccountService.loginAccount(clientId, voidRequest);
     return new ResponseEntity<>(Response.<VoidResponse>builder()
         .payload(response)
         .success(true)
@@ -155,7 +155,7 @@ public class AccountController {
       @RequestHeader String loginToken,
       @PathVariable Long accountId)
       throws InvalidRequestException, ResourceNotFoundException, InvalidTokenException {
-    var response = this.accountService.logoutAccount(clientId, loginToken, accountId);
+    var response = this.voidAccountService.logoutAccount(clientId, loginToken, accountId);
     return new ResponseEntity<>(Response.<VoidResponse>builder()
         .payload(response)
         .success(true)
@@ -176,7 +176,7 @@ public class AccountController {
       @PathVariable Long accountID,
       @RequestBody VoidRequest voidRequest) throws InvalidRequestException {
     return new ResponseEntity<>(Response.<VoidResponse>builder()
-        .payload(accountService.updateRole(clientId, accountID, voidRequest))
+        .payload(voidAccountService.updateRole(clientId, accountID, voidRequest))
         .success(true)
         .build(), HttpStatus.OK);
   }
