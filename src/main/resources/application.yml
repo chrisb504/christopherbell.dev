@@ -9,6 +9,9 @@ azure:
   storage:
     connection-string: "${AZURE_STORAGE_CONNECTION_STRING}"
     table-name: "${AZURE_STORAGE_TABLE_NAME}"
+api:
+  utils:
+    salt-password: "${SALT_PASSWORD}"
 ---
 spring:
   profiles:

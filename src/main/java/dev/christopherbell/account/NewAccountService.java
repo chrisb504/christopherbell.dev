@@ -4,7 +4,7 @@ import com.azure.data.tables.TableClient;
 import com.azure.data.tables.models.ListEntitiesOptions;
 import com.azure.data.tables.models.TableEntity;
 import com.azure.data.tables.models.TableServiceException;
-import dev.christopherbell.account.models.Account;
+import dev.christopherbell.account.models.AccountEntity;
 import dev.christopherbell.account.models.Role;
 import dev.christopherbell.libs.common.api.exceptions.ResourceNotFoundException;
 import dev.christopherbell.permission.PermissionService;
@@ -21,22 +21,22 @@ import org.springframework.stereotype.Service;
 public class NewAccountService {
   private final TableClient tableClient;
 
-  public TableEntity buildAccountTableEntity(Account account) {
+  public TableEntity buildAccountTableEntity(AccountEntity accountEntity) {
     return new TableEntity(
-        Account.PARTITION_KEY,
-        account.getEmail())
-        .addProperty(Account.PROPERTY_APPROVED_BY, account.getApprovedBy())
-        .addProperty(Account.PROPERTY_CREATED_ON, Instant.now())
-        .addProperty(Account.PROPERTY_EMAIL, account.getEmail())
-        .addProperty(Account.PROPERTY_IS_APPROVED, false)
-        .addProperty(Account.PROPERTY_NAME, account.getName())
-        .addProperty(Account.PROPERTY_PASSWORD, account.getPassword())
-        .addProperty(Account.PROPERTY_ROLE, Role.USER.name());
+        AccountEntity.PARTITION_KEY,
+        accountEntity.getEmail())
+        .addProperty(AccountEntity.PROPERTY_APPROVED_BY, accountEntity.getApprovedBy())
+        .addProperty(AccountEntity.PROPERTY_CREATED_ON, Instant.now())
+        .addProperty(AccountEntity.PROPERTY_EMAIL, accountEntity.getEmail())
+        .addProperty(AccountEntity.PROPERTY_IS_APPROVED, false)
+        .addProperty(AccountEntity.PROPERTY_NAME, accountEntity.getName())
+        .addProperty(AccountEntity.PROPERTY_PASSWORD, accountEntity.getPassword())
+        .addProperty(AccountEntity.PROPERTY_ROLE, Role.USER.name());
   }
 
-  public void createAccount(Account account) {
+  public void createAccount(AccountEntity accountEntity) {
     try {
-      var entity = buildAccountTableEntity(account);
+      var entity = buildAccountTableEntity(accountEntity);
       tableClient.createEntity(entity);
     } catch (TableServiceException e) {
       var statusCode = e.getResponse().getStatusCode();
@@ -49,7 +49,7 @@ public class NewAccountService {
     }
   }
 
-  public Account getAccount(String partitionKey, String rowKey) throws ResourceNotFoundException {
+  public AccountEntity getAccount(String partitionKey, String rowKey) throws ResourceNotFoundException {
     try {
       TableEntity entity = tableClient.getEntity(partitionKey, rowKey);
       return mapEntityToAccount(entity);
@@ -61,15 +61,15 @@ public class NewAccountService {
     }
   }
 
-  public List<Account> getAllAccounts() {
+  public List<AccountEntity> getAllAccounts() {
     var options = new ListEntitiesOptions().setFilter("PartitionKey eq 'ACCOUNT'");
     var accountEntities = tableClient.listEntities(options, null, null);
     return accountEntities.stream().map(this::mapEntityToAccount).toList();
   }
 
-  public String loginAccount(Account account) {
-    var email = account.getEmail();
-    var password = account.getPassword();
+  public String loginAccount(AccountEntity accountEntity) {
+    var email = accountEntity.getEmail();
+    var password = accountEntity.getPassword();
 
     var options = new ListEntitiesOptions().setFilter("email eq '" + email + "'");
     var accountEntities = tableClient.listEntities(options, null, null);
@@ -80,16 +80,16 @@ public class NewAccountService {
     return key;
   }
 
-  private Account mapEntityToAccount(TableEntity entity) {
+  private AccountEntity mapEntityToAccount(TableEntity entity) {
 
-    var approvedBy = (UUID) entity.getProperty(Account.PROPERTY_APPROVED_BY);
-    var createdOn = (OffsetDateTime) entity.getProperty(Account.PROPERTY_CREATED_ON);
-    var email = (String) entity.getProperty(Account.PROPERTY_EMAIL);
-    var isApproved = (Boolean) entity.getProperty(Account.PROPERTY_IS_APPROVED);
-    var name = (String) entity.getProperty(Account.PROPERTY_NAME);
-    var role = Role.valueOf((String) entity.getProperty(Account.PROPERTY_ROLE));
+    var approvedBy = (UUID) entity.getProperty(AccountEntity.PROPERTY_APPROVED_BY);
+    var createdOn = (OffsetDateTime) entity.getProperty(AccountEntity.PROPERTY_CREATED_ON);
+    var email = (String) entity.getProperty(AccountEntity.PROPERTY_EMAIL);
+    var isApproved = (Boolean) entity.getProperty(AccountEntity.PROPERTY_IS_APPROVED);
+    var name = (String) entity.getProperty(AccountEntity.PROPERTY_NAME);
+    var role = Role.valueOf((String) entity.getProperty(AccountEntity.PROPERTY_ROLE));
 
-    return Account.builder()
+    return AccountEntity.builder()
         .approvedBy(approvedBy)
         .createdOn(createdOn.toInstant())
         .email(email)

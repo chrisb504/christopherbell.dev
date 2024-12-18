@@ -1,6 +1,6 @@
 package dev.christopherbell.account;
 
-import dev.christopherbell.account.models.Account;
+import dev.christopherbell.account.models.AccountEntity;
 import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
 import dev.christopherbell.libs.common.api.exceptions.ResourceNotFoundException;
@@ -25,8 +25,8 @@ public class NewAccountController {
   private NewAccountService accountService;
 
   @PostMapping(value = "/v1", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Response> createAccount(@RequestBody Account account) {
-    accountService.createAccount(account);
+  public ResponseEntity<Response> createAccount(@RequestBody AccountEntity accountEntity) {
+    accountService.createAccount(accountEntity);
     return new ResponseEntity<>(
         Response.builder()
             .success(true)
@@ -34,30 +34,30 @@ public class NewAccountController {
   }
 
   @GetMapping(value = "/v1/{accountId}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Response<Account>> getAccountById(@RequestHeader String clientId,
+  public ResponseEntity<Response<AccountEntity>> getAccountById(@RequestHeader String clientId,
       @PathVariable String accountId) throws InvalidRequestException, ResourceNotFoundException {
     return new ResponseEntity<>(
-        Response.<Account>builder()
+        Response.<AccountEntity>builder()
             .payload(accountService.getAccount(clientId, accountId))
             .success(true)
             .build(), HttpStatus.OK);
   }
 
   @GetMapping(value = "/v1", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Response<List<Account>>> getAccounts() throws InvalidRequestException, ResourceNotFoundException {
+  public ResponseEntity<Response<List<AccountEntity>>> getAccounts() throws InvalidRequestException, ResourceNotFoundException {
     return new ResponseEntity<>(
-        Response.<List<Account>>builder()
+        Response.<List<AccountEntity>>builder()
             .payload(accountService.getAllAccounts())
             .success(true)
             .build(), HttpStatus.OK);
   }
 
   @PostMapping(value = "/v1/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Response<String>> loginAccount(@RequestBody Account account)
+  public ResponseEntity<Response<String>> loginAccount(@RequestBody AccountEntity accountEntity)
       throws InvalidRequestException, ResourceNotFoundException, InvalidTokenException {
 
     return new ResponseEntity<>(Response.<String>builder()
-        .payload(accountService.loginAccount(account))
+        .payload(accountService.loginAccount(accountEntity))
         .success(true)
         .build(), HttpStatus.OK);
   }

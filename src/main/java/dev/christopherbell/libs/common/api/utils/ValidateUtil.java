@@ -13,6 +13,8 @@ import java.util.Objects;
 
 public final class ValidateUtil {
 
+  private ValidateUtil() {}
+
   public static final ArrayList<String> ACCEPTED_CLIENT_IDs = new ArrayList<>(
       List.of("void-client")
   );
