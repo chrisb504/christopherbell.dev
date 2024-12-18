@@ -1,5 +1,6 @@
 package dev.christopherbell.account;
 
+import dev.christopherbell.account.models.Account;
 import dev.christopherbell.account.models.AccountEntity;
 import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
@@ -21,12 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RequestMapping("/api/accounts")
 @RestController
-public class NewAccountController {
-  private NewAccountService accountService;
+public class AccountController {
+  private AccountService accountService;
 
   @PostMapping(value = "/v1", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Response> createAccount(@RequestBody AccountEntity accountEntity) {
-    accountService.createAccount(accountEntity);
+  public ResponseEntity<Response> createAccount(@RequestBody Account account) {
+    accountService.createAccount(account);
     return new ResponseEntity<>(
         Response.builder()
             .success(true)
@@ -53,11 +54,11 @@ public class NewAccountController {
   }
 
   @PostMapping(value = "/v1/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Response<String>> loginAccount(@RequestBody AccountEntity accountEntity)
+  public ResponseEntity<Response<String>> loginAccount(@RequestBody Account account)
       throws InvalidRequestException, ResourceNotFoundException, InvalidTokenException {
 
     return new ResponseEntity<>(Response.<String>builder()
-        .payload(accountService.loginAccount(accountEntity))
+        .payload(accountService.loginAccount(account))
         .success(true)
         .build(), HttpStatus.OK);
   }
