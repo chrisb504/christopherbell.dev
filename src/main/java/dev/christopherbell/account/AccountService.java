@@ -8,6 +8,7 @@ import dev.christopherbell.account.models.Account;
 import dev.christopherbell.account.models.AccountEntity;
 import dev.christopherbell.configuration.ApiUtilProperties;
 import dev.christopherbell.account.models.Role;
+import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
 import dev.christopherbell.libs.common.api.exceptions.ResourceNotFoundException;
 import dev.christopherbell.libs.common.api.utils.PasswordUtils;
@@ -30,7 +31,6 @@ import org.springframework.stereotype.Service;
 public class AccountService {
 
   private final AccountMapper accountMapper;
-  private final ApiUtilProperties apiUtilProperties;
   private final TableClient tableClient;
 
   /**
@@ -55,10 +55,10 @@ public class AccountService {
         .addProperty(AccountEntity.PROPERTY_USERNAME, accountEntity.getUsername());
   }
 
-  public Account createAccount(Account account) {
+  public Account createAccount(Account account) throws InvalidRequestException {
     try {
       var accountEntity = createNewAccountEntity(account);
-      PasswordUtils.saltPassword(account, accountEntity, apiUtilProperties.getSaltPassword());
+      PasswordUtils.saltPassword(account, accountEntity);
       var entity = buildTableEntityFromAccountEntity(accountEntity);
       tableClient.createEntity(entity);
       return accountMapper.toAccount(accountEntity);
@@ -69,9 +69,9 @@ public class AccountService {
       } else if(HttpStatus.ALREADY_REPORTED.value() == statusCode) {
         throw new RuntimeException("Failed to create account: " + e.getMessage(), e);
       }
-      throw new RuntimeException("Failed to create account: " + e.getMessage(), e);
-    } catch (Exception e) {
-      throw new RuntimeException("Failed to create account due to password salting: " + e.getMessage(), e);
+      throw new InvalidRequestException("Failed to create account: " + e.getMessage(), e);
+    } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+      throw new InvalidRequestException("Failed to create account due to password salting: " + e.getMessage(), e);
     }
   }
 
@@ -123,7 +123,7 @@ public class AccountService {
       var accountEntity = accountEntities.getFirst();
       var salt = accountEntity.getPasswordSalt();
       var hash = accountEntity.getPasswordHash();
-      var isValidPassword = PasswordUtils.verifyPassword(password, salt, hash, apiUtilProperties.getSaltPassword());
+      var isValidPassword = PasswordUtils.verifyPassword(password, salt, hash);
 
       if(isValidPassword) {
         PermissionService.isAccountApproved(accountEntity);

@@ -1,23 +1,36 @@
 package dev.christopherbell.account;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+
 import com.azure.data.tables.TableClient;
 import dev.christopherbell.account.models.AccountEntity;
 import dev.christopherbell.account.models.Role;
+import dev.christopherbell.configuration.ApiUtilProperties;
+import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 public class AccountServiceTest {
 
-  @InjectMocks
   private AccountService accountService;
-
+  private AccountMapper accountMapper;
   @Mock
   private TableClient tableClient;
+
+  @BeforeEach
+  public void init() {
+    accountMapper = new AccountMapperImpl();
+    accountService = new AccountService(accountMapper, tableClient);
+  }
 
   @Test
   public void buildTableEntityFromAccountEntity() {
@@ -34,14 +47,29 @@ public class AccountServiceTest {
     var tableEntityRole = tableEntity.getProperty(AccountEntity.PROPERTY_ROLE);
     var tableEntityUsername = tableEntity.getProperty(AccountEntity.PROPERTY_USERNAME);
 
-    Assertions.assertEquals(accountEntity.getApprovedBy(), tableEntityApprovedBy);
+    assertEquals(accountEntity.getApprovedBy(), tableEntityApprovedBy);
     Assertions.assertNotNull(tableEntityCreatedOn);
-    Assertions.assertEquals(accountEntity.getEmail(), tableEntityEmail);
-    Assertions.assertEquals(accountEntity.getFirstName(), tableEntityFirstName);
-    Assertions.assertEquals(accountEntity.getIsApproved(), tableEntityIsApproved);
-    Assertions.assertEquals(accountEntity.getLastName(), tableEntityLastName);
-    Assertions.assertEquals(accountEntity.getRole(), tableEntityRole);
-    Assertions.assertEquals(accountEntity.getUsername(), tableEntityUsername);
+    assertEquals(accountEntity.getEmail(), tableEntityEmail);
+    assertEquals(accountEntity.getFirstName(), tableEntityFirstName);
+    assertEquals(accountEntity.getIsApproved(), tableEntityIsApproved);
+    assertEquals(accountEntity.getLastName(), tableEntityLastName);
+    assertEquals(accountEntity.getRole(), tableEntityRole);
+    assertEquals(accountEntity.getUsername(), tableEntityUsername);
+  }
+
+  @Test
+  public void createAccount_success() throws InvalidRequestException {
+
+    var account = AccountStub.getAccountStub();
+
+    doNothing().when(tableClient).createEntity(any());
+    var result = accountService.createAccount(account);
+
+    assertNotNull(result.getCreatedOn());
+    assertEquals(account.getEmail(), result.getEmail());
+    assertEquals(account.getFirstName(), result.getFirstName());
+    assertEquals(account.getLastName(), result.getLastName());
+    assertEquals(account.getUsername(), result.getUsername());
   }
 
   @Test
@@ -50,14 +78,14 @@ public class AccountServiceTest {
     var account = AccountStub.getAccountStub();
     var accountEntity = accountService.createNewAccountEntity(account);
 
-    Assertions.assertEquals(account.getApprovedBy(), accountEntity.getApprovedBy());
+    assertEquals(account.getApprovedBy(), accountEntity.getApprovedBy());
     Assertions.assertNotNull(accountEntity.getCreatedOn());
-    Assertions.assertEquals(account.getEmail(), accountEntity.getEmail());
-    Assertions.assertEquals(account.getFirstName(), accountEntity.getFirstName());
+    assertEquals(account.getEmail(), accountEntity.getEmail());
+    assertEquals(account.getFirstName(), accountEntity.getFirstName());
     Assertions.assertFalse(accountEntity.getIsApproved());
-    Assertions.assertEquals(account.getLastName(), accountEntity.getLastName());
-    Assertions.assertEquals(Role.USER, accountEntity.getRole());
-    Assertions.assertEquals(account.getUsername(), accountEntity.getUsername());
+    assertEquals(account.getLastName(), accountEntity.getLastName());
+    assertEquals(Role.USER, accountEntity.getRole());
+    assertEquals(account.getUsername(), accountEntity.getUsername());
   }
 
 }

@@ -14,6 +14,7 @@ public class AccountStub {
   public static final String INVITE_CODE = "392af584-8ca5-4531-ad09-9767168e1d91";
   public static final String INVITE_CODE_OWNER = "afbcf77d-d5d8-4d89-b89f-c24d82b61b0f";
   public static final String LAST_NAME = "Jones";
+  public static final String PASSWORD = "NotAUsedPasswordInAnyEnvironmentIncludingProduction";
   public static final String ROLE = Role.ADMIN.name();
   public static final String USERNAME = "jacobfreakingjones";
 
@@ -27,6 +28,7 @@ public class AccountStub {
         .inviteCodeOwner(UUID.fromString(INVITE_CODE_OWNER))
         .lastLoginOn(Instant.now())
         .lastName(LAST_NAME)
+        .password(PASSWORD)
         .role(Role.valueOf(ROLE))
         .username(USERNAME)
         .build();

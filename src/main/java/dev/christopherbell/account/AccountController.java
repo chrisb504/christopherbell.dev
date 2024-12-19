@@ -2,6 +2,7 @@ package dev.christopherbell.account;
 
 import dev.christopherbell.account.models.Account;
 import dev.christopherbell.account.models.AccountEntity;
+import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
 import dev.christopherbell.libs.common.api.exceptions.ResourceNotFoundException;
 import dev.christopherbell.libs.common.api.models.Response;
@@ -31,7 +32,7 @@ public class AccountController {
 
   @PostMapping(value = VERSION_DECEMBER_15_2024, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
-  public ResponseEntity<Response<Account>> createAccount(@RequestBody Account account) {
+  public ResponseEntity<Response<Account>> createAccount(@RequestBody Account account) throws InvalidRequestException {
     return new ResponseEntity<>(
         Response.<Account>builder()
             .payload(accountService.createAccount(account))

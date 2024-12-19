@@ -30,20 +30,20 @@ public final class PasswordUtils {
   /**
    * Hashes a password with a given salt.
    */
-  public static String hashPassword(String password, String salt, String saltPassword)
+  public static String hashPassword(String password, String salt)
       throws NoSuchAlgorithmException, InvalidKeySpecException {
     PBEKeySpec spec = new PBEKeySpec(
         password.toCharArray(), Base64.getDecoder().decode(salt), HASH_ITERATIONS, HASH_KEY_LENGTH);
-    SecretKeyFactory factory = SecretKeyFactory.getInstance(saltPassword);
+    SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
     byte[] hash = factory.generateSecret(spec).getEncoded();
     return Base64.getEncoder().encodeToString(hash);
   }
 
-  public static void saltPassword(Account account, AccountEntity accountEntity, String saltPassword)
+  public static void saltPassword(Account account, AccountEntity accountEntity)
       throws NoSuchAlgorithmException, InvalidKeySpecException {
     var password = account.getPassword();
     var salt = PasswordUtils.generateSalt();
-    var hash = PasswordUtils.hashPassword(password, salt, saltPassword);
+    var hash = PasswordUtils.hashPassword(password, salt);
     accountEntity.setPasswordSalt(salt);
     accountEntity.setPasswordHash(hash);
   }
@@ -51,9 +51,9 @@ public final class PasswordUtils {
   /**
    * Verifies a password against a stored hash.
    */
-  public static boolean verifyPassword(String password, String salt, String storedHash, String saltPassword)
+  public static boolean verifyPassword(String password, String salt, String storedHash)
       throws NoSuchAlgorithmException, InvalidKeySpecException {
-    String computedHash = hashPassword(password, salt, saltPassword);
+    String computedHash = hashPassword(password, salt);
     return computedHash.equals(storedHash);
   }
 }
