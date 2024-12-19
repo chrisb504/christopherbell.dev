@@ -5,6 +5,7 @@ import dev.christopherbell.libs.common.api.exceptions.ResourceNotFoundException;
 import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
 import dev.christopherbell.libs.common.api.exceptions.ResourceExistsException;
+import dev.christopherbell.permission.PermissionService;
 import dev.christopherbell.thevoid.account.model.dto.AccountResponse;
 import dev.christopherbell.thevoid.account.model.dto.AccountsResponse;
 import dev.christopherbell.thevoid.common.VoidRequest;
@@ -13,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class VoidAccountController {
 
+  private final PermissionService permissionService;
   private final VoidAccountService voidAccountService;
 
   /**
@@ -37,6 +40,7 @@ public class VoidAccountController {
    * @throws InvalidRequestException - thrown is request is considered invalid
    */
   @GetMapping(value = "/v1", produces = MediaType.APPLICATION_JSON_VALUE)
+  @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
   public ResponseEntity<Response<AccountsResponse>> getAccounts(@RequestHeader String clientId)
       throws InvalidRequestException {
     return new ResponseEntity<>(Response.<AccountsResponse>builder()
@@ -55,6 +59,7 @@ public class VoidAccountController {
    * @throws ResourceNotFoundException - thrown if no accounts are on file with that id
    */
   @GetMapping(value = "/v1/{accountId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
   public ResponseEntity<Response<AccountResponse>> getAccountById(@RequestHeader String clientId,
       @PathVariable Long accountId) throws InvalidRequestException, ResourceNotFoundException {
     return new ResponseEntity<>(Response.<AccountResponse>builder()
@@ -73,6 +78,7 @@ public class VoidAccountController {
    * @throws ResourceNotFoundException - thrown if no accounts are on file with that username
    */
   @GetMapping(value = "/v1/username/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
   public ResponseEntity<Response<VoidResponse>> getAccountByUsername(@RequestHeader String clientId,
       @PathVariable String username) throws InvalidRequestException, ResourceNotFoundException {
     return new ResponseEntity<>(Response.<VoidResponse>builder()
@@ -91,6 +97,7 @@ public class VoidAccountController {
    * @throws ResourceExistsException - thrown if no accounts are on file with that username
    */
   @PostMapping(value = "/v1/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
   public ResponseEntity<Response<VoidResponse>> createAccount(@RequestHeader String clientId,
       @RequestBody VoidRequest voidRequest) throws InvalidRequestException, ResourceExistsException {
     return new ResponseEntity<>(Response.<VoidResponse>builder()
@@ -110,6 +117,7 @@ public class VoidAccountController {
    * @throws InvalidTokenException
    */
   @GetMapping(value = "/v1/active", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
   public ResponseEntity<Response<AccountResponse>> getActiveAccount(@RequestHeader String clientId,
       @RequestHeader String loginToken,
       @RequestBody VoidRequest voidRequest)
@@ -131,6 +139,7 @@ public class VoidAccountController {
    * @throws InvalidTokenException    - thrown is login info is not correct
    */
   @PostMapping(value = "/v1/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
   public ResponseEntity<Response<VoidResponse>> loginAccount(@RequestHeader String clientId,
       @RequestBody VoidRequest voidRequest)
       throws InvalidRequestException, ResourceNotFoundException, InvalidTokenException {
@@ -151,6 +160,7 @@ public class VoidAccountController {
    * @throws InvalidTokenException
    */
   @GetMapping(value = "/v1/logout/{accountId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
   public ResponseEntity<Response<VoidResponse>> logoutAccount(@RequestHeader String clientId,
       @RequestHeader String loginToken,
       @PathVariable Long accountId)
@@ -171,6 +181,7 @@ public class VoidAccountController {
    * @throws InvalidRequestException
    */
   @PatchMapping(value = "/v1/{accountId}/updateRole", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
   public ResponseEntity<Response<VoidResponse>> updateRole(@RequestHeader String clientId,
       @RequestHeader String loginToken,
       @PathVariable Long accountID,
