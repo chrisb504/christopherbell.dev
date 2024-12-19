@@ -6,7 +6,6 @@ import com.azure.data.tables.models.TableEntity;
 import com.azure.data.tables.models.TableServiceException;
 import dev.christopherbell.account.models.Account;
 import dev.christopherbell.account.models.AccountEntity;
-import dev.christopherbell.configuration.ApiUtilProperties;
 import dev.christopherbell.account.models.Role;
 import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
 import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
@@ -55,6 +54,13 @@ public class AccountService {
         .addProperty(AccountEntity.PROPERTY_USERNAME, accountEntity.getUsername());
   }
 
+  /**
+   * Creates a new account.
+   *
+   * @param account - contains new information for an account.
+   * @return back an account object if creation was successful.
+   * @throws InvalidRequestException if something went wrong with the request.
+   */
   public Account createAccount(Account account) throws InvalidRequestException {
     try {
       var accountEntity = createNewAccountEntity(account);
@@ -75,6 +81,12 @@ public class AccountService {
     }
   }
 
+  /**
+   * Creates a new default account entity using a given account object.
+   *
+   * @param account - the account to create the accountEntity based on.
+   * @return a new account entity with default settings.
+   */
   public AccountEntity createNewAccountEntity(Account account) {
     return AccountEntity.builder()
         .approvedBy(null)
@@ -88,10 +100,18 @@ public class AccountService {
         .build();
   }
 
-  public AccountEntity getAccount(String partitionKey, String rowKey) throws ResourceNotFoundException {
+  /**
+   * Gets an account by its email address.
+   *
+   * @param rowKey the email address of the account.
+   * @return the account with the given email address.
+   * @throws ResourceNotFoundException if the account cannot be found.
+   */
+  public Account getAccount(String rowKey) throws ResourceNotFoundException {
     try {
-      TableEntity entity = tableClient.getEntity(partitionKey, rowKey);
-      return TableEntityUtils.toAccountEntity(entity);
+      var entity = tableClient.getEntity(AccountEntity.PARTITION_KEY, rowKey);
+      var accountEntity = TableEntityUtils.toAccountEntity(entity);
+      return accountMapper.toAccount(accountEntity);
     } catch (TableServiceException e) {
       if (e.getResponse().getStatusCode() == 404) {
         throw new ResourceNotFoundException("can't find resource");
@@ -100,14 +120,29 @@ public class AccountService {
     }
   }
 
-  public List<AccountEntity> getAllAccounts() {
-    var options = new ListEntitiesOptions().setFilter("PartitionKey eq 'ACCOUNT'");
+  /**
+   * List all accounts on in the system.
+   *
+   * @return a list of all accounts.
+   */
+  public List<Account> getAccounts() {
+
+    var options = new ListEntitiesOptions()
+        .setFilter("PartitionKey eq 'ACCOUNT'");
     var accountEntities = tableClient.listEntities(options, null, null);
     return accountEntities.stream()
         .map(TableEntityUtils::toAccountEntity)
+        .map(accountMapper::toAccount)
         .toList();
   }
 
+  /**
+   * Validates login information from a request and returns a JWT if it is correct.
+   *
+   * @param account - account for which the requester wishes to gain access to.
+   * @return a JWT token.
+   * @throws InvalidTokenException - if login information is incorrect.
+   */
   public String loginAccount(Account account) throws InvalidTokenException {
 
     try {
