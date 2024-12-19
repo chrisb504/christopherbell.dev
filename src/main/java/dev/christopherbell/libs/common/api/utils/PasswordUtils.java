@@ -1,5 +1,7 @@
 package dev.christopherbell.libs.common.api.utils;
 
+import dev.christopherbell.account.models.Account;
+import dev.christopherbell.account.models.AccountEntity;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import javax.crypto.SecretKeyFactory;
@@ -35,6 +37,15 @@ public final class PasswordUtils {
     SecretKeyFactory factory = SecretKeyFactory.getInstance(saltPassword);
     byte[] hash = factory.generateSecret(spec).getEncoded();
     return Base64.getEncoder().encodeToString(hash);
+  }
+
+  public static void saltPassword(Account account, AccountEntity accountEntity, String saltPassword)
+      throws NoSuchAlgorithmException, InvalidKeySpecException {
+    var password = account.getPassword();
+    var salt = PasswordUtils.generateSalt();
+    var hash = PasswordUtils.hashPassword(password, salt, saltPassword);
+    accountEntity.setPasswordSalt(salt);
+    accountEntity.setPasswordHash(hash);
   }
 
   /**

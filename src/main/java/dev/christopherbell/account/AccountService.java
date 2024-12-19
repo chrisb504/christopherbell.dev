@@ -15,9 +15,7 @@ import dev.christopherbell.permission.PermissionService;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.Instant;
-import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -31,6 +29,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccountService {
 
+  private final AccountMapper accountMapper;
   private final ApiUtilProperties apiUtilProperties;
   private final TableClient tableClient;
 
@@ -56,12 +55,13 @@ public class AccountService {
         .addProperty(AccountEntity.PROPERTY_USERNAME, accountEntity.getUsername());
   }
 
-  public void createAccount(Account account) {
+  public Account createAccount(Account account) {
     try {
       var accountEntity = createNewAccountEntity(account);
-      saltPassword(account, accountEntity);
+      PasswordUtils.saltPassword(account, accountEntity, apiUtilProperties.getSaltPassword());
       var entity = buildTableEntityFromAccountEntity(accountEntity);
       tableClient.createEntity(entity);
+      return accountMapper.toAccount(accountEntity);
     } catch (TableServiceException e) {
       var statusCode = e.getResponse().getStatusCode();
       if (HttpStatus.BAD_REQUEST.value() == statusCode) {
@@ -91,7 +91,7 @@ public class AccountService {
   public AccountEntity getAccount(String partitionKey, String rowKey) throws ResourceNotFoundException {
     try {
       TableEntity entity = tableClient.getEntity(partitionKey, rowKey);
-      return mapEntityToAccount(entity);
+      return TableEntityUtils.toAccountEntity(entity);
     } catch (TableServiceException e) {
       if (e.getResponse().getStatusCode() == 404) {
         throw new ResourceNotFoundException("can't find resource");
@@ -103,7 +103,9 @@ public class AccountService {
   public List<AccountEntity> getAllAccounts() {
     var options = new ListEntitiesOptions().setFilter("PartitionKey eq 'ACCOUNT'");
     var accountEntities = tableClient.listEntities(options, null, null);
-    return accountEntities.stream().map(this::mapEntityToAccount).toList();
+    return accountEntities.stream()
+        .map(TableEntityUtils::toAccountEntity)
+        .toList();
   }
 
   public String loginAccount(Account account) throws InvalidTokenException {
@@ -114,13 +116,17 @@ public class AccountService {
 
       var options = new ListEntitiesOptions().setFilter("email eq '" + email + "'");
       var tableEntityAccounts = tableClient.listEntities(options, null, null);
-      var accountEntities = tableEntityAccounts.stream().map(this::mapEntityToAccount).toList();
+      var accountEntities = tableEntityAccounts.stream()
+          .map(TableEntityUtils::toAccountEntity)
+          .toList();
+
       var accountEntity = accountEntities.getFirst();
       var salt = accountEntity.getPasswordSalt();
       var hash = accountEntity.getPasswordHash();
       var isValidPassword = PasswordUtils.verifyPassword(password, salt, hash, apiUtilProperties.getSaltPassword());
 
       if(isValidPassword) {
+        PermissionService.isAccountApproved(accountEntity);
         return PermissionService.generateToken(accountEntity);
       } else {
         throw new InvalidTokenException("Given Login information was not correct.");
@@ -130,39 +136,4 @@ public class AccountService {
     }
   }
 
-  private AccountEntity mapEntityToAccount(TableEntity entity) {
-
-    var approvedBy = (UUID) entity.getProperty(AccountEntity.PROPERTY_APPROVED_BY);
-    var createdOn = (OffsetDateTime) entity.getProperty(AccountEntity.PROPERTY_CREATED_ON);
-    var email = (String) entity.getProperty(AccountEntity.PROPERTY_EMAIL);
-    var firstName = (String) entity.getProperty(AccountEntity.PROPERTY_FIRST_NAME);
-    var isApproved = (Boolean) entity.getProperty(AccountEntity.PROPERTY_IS_APPROVED);
-    var lastName = (String) entity.getProperty(AccountEntity.PROPERTY_LAST_NAME);
-    var passwordHash = (String) entity.getProperty(AccountEntity.PROPERTY_PASSWORD_HASH);
-    var passwordSalt =  (String) entity.getProperty(AccountEntity.PROPERTY_PASSWORD_SALT);
-    var role = Role.valueOf((String) entity.getProperty(AccountEntity.PROPERTY_ROLE));
-    var username = (String) entity.getProperty(AccountEntity.PROPERTY_USERNAME);
-
-    return AccountEntity.builder()
-        .approvedBy(approvedBy)
-        .createdOn(createdOn.toInstant())
-        .email(email)
-        .firstName(firstName)
-        .isApproved(isApproved)
-        .lastName(lastName)
-        .role(role)
-        .rowKey(email)
-        .passwordHash(passwordHash)
-        .passwordSalt(passwordSalt)
-        .username(username)
-        .build();
-  }
-
-  public void saltPassword(Account account, AccountEntity accountEntity) throws Exception {
-    var password = account.getPassword();
-    var salt = PasswordUtils.generateSalt();
-    var hash = PasswordUtils.hashPassword(password, salt, apiUtilProperties.getSaltPassword());
-    accountEntity.setPasswordSalt(salt);
-    accountEntity.setPasswordHash(hash);
-  }
 }

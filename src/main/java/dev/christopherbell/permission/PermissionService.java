@@ -1,6 +1,7 @@
 package dev.christopherbell.permission;
 
 import dev.christopherbell.account.models.AccountEntity;
+import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -100,6 +101,14 @@ public class PermissionService {
 
       log.error("Error validating token or extracting claims: {}", e.getMessage(), e);
       return false; // Deny access on any error
+    }
+  }
+
+  public static boolean isAccountApproved(AccountEntity accountEntity) throws InvalidTokenException {
+    if (accountEntity.getIsApproved()) {
+      return true;
+    } else {
+      throw new InvalidTokenException("Account is not approved.");
     }
   }
 }

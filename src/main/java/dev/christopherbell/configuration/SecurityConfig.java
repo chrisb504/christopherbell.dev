@@ -31,8 +31,7 @@ public class SecurityConfig {
       "/void/signup",
       "/js/**",
       "/css/**",
-      "/api/accounts" + AccountController.VERSION_DECEMBER_15_2024 + "/login",
-      "/api/accounts" + AccountController.VERSION_DECEMBER_15_2024
+      "/api/accounts" + AccountController.VERSION_DECEMBER_15_2024 + "/login"
   };
 
   @Bean

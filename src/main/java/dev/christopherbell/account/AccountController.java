@@ -31,10 +31,10 @@ public class AccountController {
 
   @PostMapping(value = VERSION_DECEMBER_15_2024, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
-  public ResponseEntity<Response> createAccount(@RequestBody Account account) {
-    accountService.createAccount(account);
+  public ResponseEntity<Response<Account>> createAccount(@RequestBody Account account) {
     return new ResponseEntity<>(
-        Response.builder()
+        Response.<Account>builder()
+            .payload(accountService.createAccount(account))
             .success(true)
             .build(), HttpStatus.OK);
   }
