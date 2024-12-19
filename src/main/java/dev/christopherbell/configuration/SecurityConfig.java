@@ -24,14 +24,19 @@ public class SecurityConfig {
 
   private static final String[] PUBLIC_URLS = {
       "/",
+      "/api/accounts" + AccountController.VERSION_DECEMBER_15_2024 + "/login",
+      "/api/accounts" + AccountController.VERSION_DECEMBER_15_2024,
       "/blog",
+      "/css/**",
+      "/js/**",
+      "/login",
+      "/photos",
+      "/photos/**",
+      "/signup",
+      "/thebell/**",
       "/void",
       "/void/**",
-      "/void/login",
-      "/void/signup",
-      "/js/**",
-      "/css/**",
-      "/api/accounts" + AccountController.VERSION_DECEMBER_15_2024 + "/login"
+      "/wfl"
   };
 
   @Bean

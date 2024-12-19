@@ -30,7 +30,6 @@ public class AccountController {
 
   @PostMapping(value = VERSION_DECEMBER_15_2024,
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
   public ResponseEntity<Response<Account>> createAccount(@RequestBody Account account) throws InvalidRequestException {
 
     return new ResponseEntity<>(
