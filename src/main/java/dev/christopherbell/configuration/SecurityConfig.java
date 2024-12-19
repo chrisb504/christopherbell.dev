@@ -1,5 +1,6 @@
 package dev.christopherbell.configuration;
 
+import dev.christopherbell.account.AccountController;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -16,6 +18,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @Configuration
+@EnableMethodSecurity
 @EnableWebSecurity
 public class SecurityConfig {
 
@@ -26,10 +29,10 @@ public class SecurityConfig {
       "/void/**",
       "/void/login",
       "/void/signup",
-      "/api/permission/v1/getToken",
       "/js/**",
       "/css/**",
-      "/api/accounts/**"
+      "/api/accounts" + AccountController.VERSION_DECEMBER_15_2024 + "/login",
+      "/api/accounts" + AccountController.VERSION_DECEMBER_15_2024
   };
 
   @Bean

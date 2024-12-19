@@ -6,14 +6,20 @@ import com.azure.data.tables.models.TableEntity;
 import com.azure.data.tables.models.TableServiceException;
 import dev.christopherbell.account.models.Account;
 import dev.christopherbell.account.models.AccountEntity;
+import dev.christopherbell.configuration.ApiUtilProperties;
 import dev.christopherbell.account.models.Role;
+import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
 import dev.christopherbell.libs.common.api.exceptions.ResourceNotFoundException;
+import dev.christopherbell.libs.common.api.utils.PasswordUtils;
 import dev.christopherbell.permission.PermissionService;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +27,11 @@ import org.springframework.stereotype.Service;
  * Represents the service responsible for handling getting, creating, updating, and deleting accounts.
  */
 @AllArgsConstructor
+@Slf4j
 @Service
 public class AccountService {
 
+  private final ApiUtilProperties apiUtilProperties;
   private final TableClient tableClient;
 
   /**
@@ -51,6 +59,7 @@ public class AccountService {
   public void createAccount(Account account) {
     try {
       var accountEntity = createNewAccountEntity(account);
+      saltPassword(account, accountEntity);
       var entity = buildTableEntityFromAccountEntity(accountEntity);
       tableClient.createEntity(entity);
     } catch (TableServiceException e) {
@@ -61,6 +70,8 @@ public class AccountService {
         throw new RuntimeException("Failed to create account: " + e.getMessage(), e);
       }
       throw new RuntimeException("Failed to create account: " + e.getMessage(), e);
+    } catch (Exception e) {
+      throw new RuntimeException("Failed to create account due to password salting: " + e.getMessage(), e);
     }
   }
 
@@ -95,15 +106,28 @@ public class AccountService {
     return accountEntities.stream().map(this::mapEntityToAccount).toList();
   }
 
-  public String loginAccount(Account account) {
-    var email = account.getEmail();
-    var password = account.getPassword();
+  public String loginAccount(Account account) throws InvalidTokenException {
 
-    var options = new ListEntitiesOptions().setFilter("email eq '" + email + "'");
-    var accountEntities = tableClient.listEntities(options, null, null);
-    var accounts = accountEntities.stream().map(this::mapEntityToAccount).toList();
+    try {
+      var email = account.getEmail();
+      var password = account.getPassword();
 
-    return PermissionService.generateToken(email);
+      var options = new ListEntitiesOptions().setFilter("email eq '" + email + "'");
+      var tableEntityAccounts = tableClient.listEntities(options, null, null);
+      var accountEntities = tableEntityAccounts.stream().map(this::mapEntityToAccount).toList();
+      var accountEntity = accountEntities.getFirst();
+      var salt = accountEntity.getPasswordSalt();
+      var hash = accountEntity.getPasswordHash();
+      var isValidPassword = PasswordUtils.verifyPassword(password, salt, hash, apiUtilProperties.getSaltPassword());
+
+      if(isValidPassword) {
+        return PermissionService.generateToken(accountEntity);
+      } else {
+        throw new InvalidTokenException("Given Login information was not correct.");
+      }
+    } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   private AccountEntity mapEntityToAccount(TableEntity entity) {
@@ -114,6 +138,8 @@ public class AccountService {
     var firstName = (String) entity.getProperty(AccountEntity.PROPERTY_FIRST_NAME);
     var isApproved = (Boolean) entity.getProperty(AccountEntity.PROPERTY_IS_APPROVED);
     var lastName = (String) entity.getProperty(AccountEntity.PROPERTY_LAST_NAME);
+    var passwordHash = (String) entity.getProperty(AccountEntity.PROPERTY_PASSWORD_HASH);
+    var passwordSalt =  (String) entity.getProperty(AccountEntity.PROPERTY_PASSWORD_SALT);
     var role = Role.valueOf((String) entity.getProperty(AccountEntity.PROPERTY_ROLE));
     var username = (String) entity.getProperty(AccountEntity.PROPERTY_USERNAME);
 
@@ -126,7 +152,17 @@ public class AccountService {
         .lastName(lastName)
         .role(role)
         .rowKey(email)
+        .passwordHash(passwordHash)
+        .passwordSalt(passwordSalt)
         .username(username)
         .build();
+  }
+
+  public void saltPassword(Account account, AccountEntity accountEntity) throws Exception {
+    var password = account.getPassword();
+    var salt = PasswordUtils.generateSalt();
+    var hash = PasswordUtils.hashPassword(password, salt, apiUtilProperties.getSaltPassword());
+    accountEntity.setPasswordSalt(salt);
+    accountEntity.setPasswordHash(hash);
   }
 }
