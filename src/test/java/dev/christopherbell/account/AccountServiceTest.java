@@ -4,13 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
 
 import com.azure.data.tables.TableClient;
-import dev.christopherbell.account.models.AccountEntity;
-import dev.christopherbell.account.models.Role;
-import dev.christopherbell.configuration.ApiUtilProperties;
-import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
+import dev.christopherbell.account.model.entity.AccountEntity;
+import dev.christopherbell.account.model.Role;
+import dev.christopherbell.libs.common.api.exception.InvalidRequestException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

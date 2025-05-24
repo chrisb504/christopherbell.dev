@@ -1,4 +1,4 @@
-package dev.christopherbell.account.models;
+package dev.christopherbell.account.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.Instant;

@@ -1,8 +1,8 @@
 package dev.christopherbell.blog;
 
 import dev.christopherbell.blog.model.BlogResponse;
-import dev.christopherbell.libs.common.api.models.Response;
-import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
+import dev.christopherbell.libs.common.api.model.Response;
+import dev.christopherbell.libs.common.api.exception.InvalidRequestException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

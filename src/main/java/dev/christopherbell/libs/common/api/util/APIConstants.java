@@ -1,4 +1,4 @@
-package dev.christopherbell.libs.common.api.utils;
+package dev.christopherbell.libs.common.api.util;
 
 /**
  * Represents a spot to keep commonly used constants.

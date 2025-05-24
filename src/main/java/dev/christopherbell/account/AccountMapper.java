@@ -1,7 +1,7 @@
 package dev.christopherbell.account;
 
-import dev.christopherbell.account.models.Account;
-import dev.christopherbell.account.models.AccountEntity;
+import dev.christopherbell.account.model.Account;
+import dev.christopherbell.account.model.entity.AccountEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

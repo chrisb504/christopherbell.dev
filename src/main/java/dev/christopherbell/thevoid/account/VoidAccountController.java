@@ -1,10 +1,10 @@
 package dev.christopherbell.thevoid.account;
 
-import dev.christopherbell.libs.common.api.models.Response;
-import dev.christopherbell.libs.common.api.exceptions.ResourceNotFoundException;
-import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
-import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
-import dev.christopherbell.libs.common.api.exceptions.ResourceExistsException;
+import dev.christopherbell.libs.common.api.model.Response;
+import dev.christopherbell.libs.common.api.exception.ResourceNotFoundException;
+import dev.christopherbell.libs.common.api.exception.InvalidRequestException;
+import dev.christopherbell.libs.common.api.exception.InvalidTokenException;
+import dev.christopherbell.libs.common.api.exception.ResourceExistsException;
 import dev.christopherbell.permission.PermissionService;
 import dev.christopherbell.thevoid.account.model.dto.AccountResponse;
 import dev.christopherbell.thevoid.account.model.dto.AccountsResponse;

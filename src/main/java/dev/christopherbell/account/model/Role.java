@@ -1,4 +1,4 @@
-package dev.christopherbell.account.models;
+package dev.christopherbell.account.model;
 
 public enum Role {
   ADMIN,

@@ -1,7 +1,7 @@
 package dev.christopherbell.whatsforlunch;
 
 import com.azure.data.tables.TableClient;
-import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
+import dev.christopherbell.libs.common.api.exception.InvalidRequestException;
 import dev.christopherbell.whatsforlunch.model.Restaurant;
 import dev.christopherbell.whatsforlunch.model.WhatsForLunchProperties;
 import dev.christopherbell.whatsforlunch.model.WhatsForLunchResponse;

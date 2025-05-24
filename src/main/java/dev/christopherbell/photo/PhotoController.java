@@ -1,6 +1,6 @@
 package dev.christopherbell.photo;
 
-import dev.christopherbell.libs.common.api.models.Response;
+import dev.christopherbell.libs.common.api.model.Response;
 import dev.christopherbell.photo.model.PhotoResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ public class PhotoController {
    *
    * @return a PhotoGalleryResponse containing all existing images.
    */
-  @GetMapping(value = "/v1/", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/v1", produces = MediaType.APPLICATION_JSON_VALUE)
   @PreAuthorize("@permissionService.hasAuthority('USER')")
   public ResponseEntity<Response<PhotoResponse>> getImages() {
     return new ResponseEntity<>(

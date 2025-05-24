@@ -1,10 +1,10 @@
 package dev.christopherbell.account;
 
-import dev.christopherbell.account.models.Account;
-import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
-import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
-import dev.christopherbell.libs.common.api.exceptions.ResourceNotFoundException;
-import dev.christopherbell.libs.common.api.models.Response;
+import dev.christopherbell.account.model.Account;
+import dev.christopherbell.libs.common.api.exception.InvalidRequestException;
+import dev.christopherbell.libs.common.api.exception.InvalidTokenException;
+import dev.christopherbell.libs.common.api.exception.ResourceNotFoundException;
+import dev.christopherbell.libs.common.api.model.Response;
 import dev.christopherbell.permission.PermissionService;
 import java.util.List;
 import lombok.AllArgsConstructor;

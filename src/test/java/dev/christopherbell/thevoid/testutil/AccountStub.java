@@ -1,4 +1,4 @@
-package dev.christopherbell.thevoid.testutils;
+package dev.christopherbell.thevoid.testutil;
 
 import dev.christopherbell.thevoid.cry.model.CryEntity;
 import dev.christopherbell.thevoid.account.model.entity.VoidRoleEntity;

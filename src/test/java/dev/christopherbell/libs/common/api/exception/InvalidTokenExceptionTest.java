@@ -1,4 +1,4 @@
-package dev.christopherbell.libs.common.api.exceptions;
+package dev.christopherbell.libs.common.api.exception;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

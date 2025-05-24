@@ -1,6 +1,6 @@
 package dev.christopherbell.configuration;
 
-import dev.christopherbell.account.models.AccountEntity;
+import dev.christopherbell.account.model.entity.AccountEntity;
 import dev.christopherbell.permission.PermissionService;
 import io.jsonwebtoken.Claims;
 import java.util.ArrayList;

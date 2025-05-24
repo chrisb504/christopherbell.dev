@@ -1,4 +1,4 @@
-package dev.christopherbell.libs.common.api.models;
+package dev.christopherbell.libs.common.api.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

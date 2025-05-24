@@ -1,4 +1,4 @@
-package dev.christopherbell.libs.common.api.exceptions;
+package dev.christopherbell.libs.common.api.exception;
 
 import lombok.Builder;
 
