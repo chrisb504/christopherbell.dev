@@ -1,6 +1,6 @@
-package dev.christopherbell.libs.common.api.utils;
+package dev.christopherbell.libs.common.api.util;
 
-import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
+import dev.christopherbell.libs.common.api.exception.InvalidRequestException;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

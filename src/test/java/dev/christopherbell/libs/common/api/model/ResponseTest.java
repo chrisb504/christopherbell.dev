@@ -1,4 +1,4 @@
-package dev.christopherbell.libs.common.api.models;
+package dev.christopherbell.libs.common.api.model;
 
 import dev.christopherbell.libs.common.api.common.TestUtil;
 import java.util.List;

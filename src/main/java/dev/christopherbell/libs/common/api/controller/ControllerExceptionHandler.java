@@ -1,11 +1,11 @@
 package dev.christopherbell.libs.common.api.controller;
 
-import dev.christopherbell.libs.common.api.models.Message;
-import dev.christopherbell.libs.common.api.models.Response;
-import dev.christopherbell.libs.common.api.exceptions.ResourceNotFoundException;
-import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
-import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
-import dev.christopherbell.libs.common.api.exceptions.ResourceExistsException;
+import dev.christopherbell.libs.common.api.model.Message;
+import dev.christopherbell.libs.common.api.model.Response;
+import dev.christopherbell.libs.common.api.exception.ResourceNotFoundException;
+import dev.christopherbell.libs.common.api.exception.InvalidRequestException;
+import dev.christopherbell.libs.common.api.exception.InvalidTokenException;
+import dev.christopherbell.libs.common.api.exception.ResourceExistsException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package dev.christopherbell.permission;
 
-import dev.christopherbell.account.models.AccountEntity;
-import dev.christopherbell.libs.common.api.exceptions.InvalidTokenException;
+import dev.christopherbell.account.model.entity.AccountEntity;
+import dev.christopherbell.libs.common.api.exception.InvalidTokenException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

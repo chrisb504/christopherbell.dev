@@ -6,14 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
-import dev.christopherbell.libs.common.api.exceptions.ResourceExistsException;
-import dev.christopherbell.libs.common.api.utils.APIConstants;
+import dev.christopherbell.libs.common.api.exception.InvalidRequestException;
+import dev.christopherbell.libs.common.api.exception.ResourceExistsException;
+import dev.christopherbell.libs.common.api.util.APIConstants;
 import dev.christopherbell.thevoid.common.VoidRequest;
 import dev.christopherbell.thevoid.account.model.entity.AccountEntity;
 import dev.christopherbell.thevoid.account.model.dto.Account;
 import dev.christopherbell.thevoid.permission.PermissionsService;
-import dev.christopherbell.thevoid.testutils.AccountStub;
+import dev.christopherbell.thevoid.testutil.AccountStub;
 import dev.christopherbell.thevoid.utils.mappers.MapStructMapper;
 import dev.christopherbell.thevoid.utils.mappers.MapStructMapperImpl;
 import java.util.ArrayList;

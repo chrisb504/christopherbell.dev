@@ -1,7 +1,7 @@
 package dev.christopherbell.whatsforlunch;
 
-import dev.christopherbell.libs.common.api.models.Response;
-import dev.christopherbell.libs.common.api.exceptions.InvalidRequestException;
+import dev.christopherbell.libs.common.api.model.Response;
+import dev.christopherbell.libs.common.api.exception.InvalidRequestException;
 import dev.christopherbell.permission.PermissionService;
 import dev.christopherbell.whatsforlunch.model.WhatsForLunchResponse;
 import jakarta.servlet.http.HttpServletRequest;

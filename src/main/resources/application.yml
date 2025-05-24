@@ -13,17 +13,17 @@ azure:
 spring:
   profiles:
     default: local
-  datasource:
-    url: jdbc:postgresql://localhost:5432/christopherbell.dev
-    username: postgres
-    password: postgres
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/christopherbell.dev
+#    username: postgres
+#    password: postgres
     #    jpa:
     #        hibernate:
     #            ddl-auto: create-drop
-    properties:
-      hibernate:
-        default_schema: void-api
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+#    properties:
+#      hibernate:
+#        default_schema: void-api
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
 blog-properties:
   posts:
     - author: "Test"

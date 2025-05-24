@@ -1,6 +1,6 @@
 package dev.christopherbell.thevoid.account;
 
-import dev.christopherbell.libs.common.api.exceptions.ResourceNotFoundException;
+import dev.christopherbell.libs.common.api.exception.ResourceNotFoundException;
 import dev.christopherbell.thevoid.account.model.entity.AccountDetailsEntity;
 import dev.christopherbell.thevoid.account.model.entity.AccountEntity;
 import dev.christopherbell.thevoid.account.model.entity.AccountSecurityEntity;

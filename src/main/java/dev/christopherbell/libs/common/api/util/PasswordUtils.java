@@ -1,7 +1,7 @@
-package dev.christopherbell.libs.common.api.utils;
+package dev.christopherbell.libs.common.api.util;
 
-import dev.christopherbell.account.models.Account;
-import dev.christopherbell.account.models.AccountEntity;
+import dev.christopherbell.account.model.Account;
+import dev.christopherbell.account.model.entity.AccountEntity;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import javax.crypto.SecretKeyFactory;

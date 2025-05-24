@@ -1,6 +1,7 @@
-package dev.christopherbell.account.models;
+package dev.christopherbell.account.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import dev.christopherbell.account.model.Role;
 import java.time.Instant;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
