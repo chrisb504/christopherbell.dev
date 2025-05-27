@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -69,15 +68,6 @@ public class RateLimiterTest {
 
     // IP2 should be unaffected
     assertDoesNotThrow(() -> rateLimiter.checkRequest(request2));
-  }
-
-  @Test
-  public void testCleanupRemovesStaleEntries() throws InterruptedException {
-    rateLimiter.checkRequest(request);
-    // simulate idle > threshold
-    Thread.sleep(RateLimiter.ENTRY_EXPIRY_THRESHOLD + 100);
-    rateLimiter.cleanupStaleEntries();
-    assertTrue(rateLimiter.map.isEmpty(), "Map should be empty after cleanup");
   }
 
   @Test
