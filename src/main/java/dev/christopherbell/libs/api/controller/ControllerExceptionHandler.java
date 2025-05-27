@@ -1,5 +1,7 @@
 package dev.christopherbell.libs.api.controller;
 
+import dev.christopherbell.libs.api.exception.TooManyRequestsException;
+import dev.christopherbell.libs.api.model.ErrorCode;
 import dev.christopherbell.libs.api.model.Message;
 import dev.christopherbell.libs.api.model.Response;
 import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
@@ -17,23 +19,36 @@ import java.util.List;
 @ControllerAdvice
 @Slf4j
 public class ControllerExceptionHandler {
-  private final static String INVALID_REQUEST_CODE = "001";
-  private final static String ACCOUNT_NOT_FOUND_CODE = "002";
-  private final static String ACCOUNT_USER_NAME_EXISTS_CODE = "003";
-  private final static String INVALID_TOKEN_CODE = "004";
 
+  @ExceptionHandler({Exception.class})
+  public ResponseEntity<Response<?>> handleGenericException(Exception e) {
+    log.error("Unhandled exception: {}", e.getMessage(), e);
+    return new ResponseEntity<>(
+        Response.builder()
+            .messages(
+                List.of(
+                    Message.builder()
+                        .code(ErrorCode.GENERIC_ERROR.getCode())
+                        .description("An unexpected error occurred. Please contact support.")
+                        .build()))
+            .success(false)
+            .build(), HttpStatus.INTERNAL_SERVER_ERROR);
+  }
 
   @ExceptionHandler({InvalidRequestException.class})
   public ResponseEntity<Response<?>> handleInvalidRequestException(InvalidRequestException e) {
     log.error(e.getMessage(), e);
     return new ResponseEntity<>(
         Response.builder()
-            .messages(List.of(Message.builder()
-                .code(INVALID_REQUEST_CODE)
-                .description(e.getMessage())
-                .build()))
+            .messages(
+                List.of(
+                    Message.builder()
+                        .code(ErrorCode.INVALID_REQUEST.getCode())
+                        .description(e.getMessage())
+                        .build()))
             .success(false)
-            .build(), HttpStatus.BAD_REQUEST);
+            .build(),
+        HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler({ResourceNotFoundException.class})
@@ -41,12 +56,15 @@ public class ControllerExceptionHandler {
     log.error(e.getMessage(), e);
     return new ResponseEntity<>(
         Response.builder()
-            .messages(List.of(Message.builder()
-                .code(ACCOUNT_NOT_FOUND_CODE)
-                .description(e.getMessage())
-                .build()))
+            .messages(
+                List.of(
+                    Message.builder()
+                        .code(ErrorCode.ACCOUNT_NOT_FOUND.getCode())
+                        .description(e.getMessage())
+                        .build()))
             .success(false)
-            .build(), HttpStatus.NOT_FOUND);
+            .build(),
+        HttpStatus.NOT_FOUND);
   }
 
   @ExceptionHandler({ResourceExistsException.class})
@@ -54,10 +72,12 @@ public class ControllerExceptionHandler {
     log.error(e.getMessage(), e);
     return new ResponseEntity<>(
         Response.builder()
-            .messages(List.of(Message.builder()
-                .code(ACCOUNT_USER_NAME_EXISTS_CODE)
-                .description(e.getMessage())
-                .build()))
+            .messages(
+                List.of(
+                    Message.builder()
+                        .code(ErrorCode.ACCOUNT_USER_NAME_EXISTS.getCode())
+                        .description(e.getMessage())
+                        .build()))
             .success(false)
             .build(), HttpStatus.BAD_REQUEST);
   }
@@ -67,11 +87,30 @@ public class ControllerExceptionHandler {
     log.error(e.getMessage(), e);
     return new ResponseEntity<>(
         Response.builder()
-            .messages(List.of(Message.builder()
-                .code(INVALID_TOKEN_CODE)
-                .description(e.getMessage())
-                .build()))
+            .messages(
+                List.of(
+                    Message.builder()
+                        .code(ErrorCode.INVALID_TOKEN.getCode())
+                        .description(e.getMessage())
+                        .build()))
             .success(false)
-            .build(), HttpStatus.UNAUTHORIZED);
+            .build(),
+        HttpStatus.UNAUTHORIZED);
+  }
+
+  @ExceptionHandler({TooManyRequestsException.class})
+  public ResponseEntity<Response<?>> handleTooManyRequests(TooManyRequestsException e) {
+    log.warn(e.getMessage(), e);
+    return new ResponseEntity<>(
+        Response.builder()
+            .messages(
+                List.of(
+                    Message.builder()
+                        .code(ErrorCode.TOO_MANY_REQUESTS.getCode())
+                        .description(e.getMessage())
+                        .build()))
+            .success(false)
+            .build(),
+        HttpStatus.TOO_MANY_REQUESTS);
   }
 }

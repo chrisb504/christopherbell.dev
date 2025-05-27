@@ -6,8 +6,10 @@ import dev.christopherbell.libs.api.exception.InvalidTokenException;
 import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
 import dev.christopherbell.libs.api.model.Response;
 import dev.christopherbell.libs.security.PermissionService;
+import dev.christopherbell.libs.security.RateLimiter;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,19 +21,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/api/accounts")
 @RestController
 public class AccountController {
 
-  private AccountService accountService;
-  private PermissionService permissionService;
+  private final AccountService accountService;
+  private final PermissionService permissionService;
+  private final RateLimiter rateLimiter;
   public static final String VERSION_DECEMBER_15_2024 = "/20241215";
 
   @PostMapping(value = VERSION_DECEMBER_15_2024,
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Response<Account>> createAccount(@RequestBody Account account) throws InvalidRequestException {
+  public ResponseEntity<Response<Account>> createAccount(
+      HttpServletRequest request,
+      @RequestBody Account account
+  ) throws InvalidRequestException {
 
+    rateLimiter.checkRequest(request);
     return new ResponseEntity<>(
         Response.<Account>builder()
             .payload(accountService.createAccount(account))
@@ -63,8 +70,12 @@ public class AccountController {
 
   @PostMapping(value = VERSION_DECEMBER_15_2024 + "/login",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Response<String>> loginAccount(@RequestBody Account account) throws InvalidTokenException {
+  public ResponseEntity<Response<String>> loginAccount(
+      HttpServletRequest request,
+      @RequestBody Account account
+  ) throws InvalidTokenException {
 
+    rateLimiter.checkRequest(request);
     return new ResponseEntity<>(Response.<String>builder()
         .payload(accountService.loginAccount(account))
         .success(true)
