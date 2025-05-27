@@ -4,13 +4,13 @@ import com.azure.data.tables.TableClient;
 import com.azure.data.tables.models.ListEntitiesOptions;
 import com.azure.data.tables.models.TableEntity;
 import com.azure.data.tables.models.TableServiceException;
-import dev.christopherbell.account.model.Account;
+import dev.christopherbell.account.model.dto.Account;
 import dev.christopherbell.account.model.entity.AccountEntity;
-import dev.christopherbell.account.model.Role;
+import dev.christopherbell.account.model.dto.Role;
 import dev.christopherbell.libs.api.exception.InvalidRequestException;
 import dev.christopherbell.libs.api.exception.InvalidTokenException;
 import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
-import dev.christopherbell.libs.api.util.PasswordUtils;
+import dev.christopherbell.libs.api.util.PasswordUtil;
 import dev.christopherbell.libs.security.PermissionService;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -65,7 +65,7 @@ public class AccountService {
   public Account createAccount(Account account) throws InvalidRequestException {
     try {
       var accountEntity = createNewAccountEntity(account);
-      PasswordUtils.saltPassword(account, accountEntity);
+      PasswordUtil.saltPassword(account, accountEntity);
       var entity = buildTableEntityFromAccountEntity(accountEntity);
       tableClient.createEntity(entity);
       return accountMapper.toAccount(accountEntity);
@@ -159,7 +159,7 @@ public class AccountService {
       var accountEntity = accountEntities.getFirst();
       var salt = accountEntity.getPasswordSalt();
       var hash = accountEntity.getPasswordHash();
-      var isValidPassword = PasswordUtils.verifyPassword(password, salt, hash);
+      var isValidPassword = PasswordUtil.verifyPassword(password, salt, hash);
 
       if(isValidPassword) {
         permissionService.isAccountApproved(accountEntity);

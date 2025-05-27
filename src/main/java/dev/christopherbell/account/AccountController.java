@@ -1,6 +1,6 @@
 package dev.christopherbell.account;
 
-import dev.christopherbell.account.model.Account;
+import dev.christopherbell.account.model.dto.Account;
 import dev.christopherbell.libs.api.exception.InvalidRequestException;
 import dev.christopherbell.libs.api.exception.InvalidTokenException;
 import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
@@ -26,10 +26,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AccountController {
 
+  public static final String VERSION_DECEMBER_15_2024 = "/20241215";
+
   private final AccountService accountService;
   private final PermissionService permissionService;
   private final RateLimiter rateLimiter;
-  public static final String VERSION_DECEMBER_15_2024 = "/20241215";
+
 
   @PostMapping(value = VERSION_DECEMBER_15_2024,
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,36 +41,44 @@ public class AccountController {
   ) throws InvalidRequestException {
 
     rateLimiter.checkRequest(request);
+    var response = accountService.createAccount(account);
+
     return new ResponseEntity<>(
         Response.<Account>builder()
-            .payload(accountService.createAccount(account))
+            .payload(response)
             .success(true)
-            .build(), HttpStatus.OK);
+            .build(),
+        HttpStatus.CREATED);
   }
 
   @GetMapping(value = VERSION_DECEMBER_15_2024 + "/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
   @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
-  public ResponseEntity<Response<Account>> getAccountById(@PathVariable String email) throws ResourceNotFoundException {
+  public ResponseEntity<Response<Account>> getAccountByEmail(@PathVariable String email) throws ResourceNotFoundException {
+    var result = accountService.getAccount(email);
 
     return new ResponseEntity<>(
         Response.<Account>builder()
-            .payload(accountService.getAccount(email))
+            .payload(result)
             .success(true)
-            .build(), HttpStatus.OK);
+            .build(),
+        HttpStatus.OK);
   }
 
-  @GetMapping(value = VERSION_DECEMBER_15_2024 + "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = VERSION_DECEMBER_15_2024, produces = MediaType.APPLICATION_JSON_VALUE)
   @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
   public ResponseEntity<Response<List<Account>>> getAccounts() {
 
+    var response = accountService.getAccounts();
+
     return new ResponseEntity<>(
         Response.<List<Account>>builder()
-            .payload(accountService.getAccounts())
+            .payload(response)
             .success(true)
-            .build(), HttpStatus.OK);
+            .build(),
+        HttpStatus.OK);
   }
 
-  @PostMapping(value = VERSION_DECEMBER_15_2024 + "/login",
+  @PostMapping(value = VERSION_DECEMBER_15_2024 + "/authenticate",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Response<String>> loginAccount(
       HttpServletRequest request,
@@ -76,10 +86,14 @@ public class AccountController {
   ) throws InvalidTokenException {
 
     rateLimiter.checkRequest(request);
-    return new ResponseEntity<>(Response.<String>builder()
-        .payload(accountService.loginAccount(account))
-        .success(true)
-        .build(), HttpStatus.OK);
+    var response = accountService.loginAccount(account);
+
+    return new ResponseEntity<>(
+        Response.<String>builder()
+            .payload(response)
+            .success(true)
+            .build(),
+        HttpStatus.OK);
   }
 
 }

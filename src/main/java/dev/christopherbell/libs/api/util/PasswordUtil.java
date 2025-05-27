@@ -1,6 +1,6 @@
 package dev.christopherbell.libs.api.util;
 
-import dev.christopherbell.account.model.Account;
+import dev.christopherbell.account.model.dto.Account;
 import dev.christopherbell.account.model.entity.AccountEntity;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -9,13 +9,13 @@ import javax.crypto.spec.PBEKeySpec;
 import java.security.SecureRandom;
 import java.util.Base64;
 
-public final class PasswordUtils {
+public final class PasswordUtil {
 
   private static final int SALT_LENGTH = 16;  // Length of the salt in bytes
   private static final int HASH_ITERATIONS = 65536; // Number of iterations
   private static final int HASH_KEY_LENGTH = 256; // Derived key length in bits
 
-  private PasswordUtils() {}
+  private PasswordUtil() {}
 
   /**
    * Generates a random salt.
@@ -42,8 +42,8 @@ public final class PasswordUtils {
   public static void saltPassword(Account account, AccountEntity accountEntity)
       throws NoSuchAlgorithmException, InvalidKeySpecException {
     var password = account.getPassword();
-    var salt = PasswordUtils.generateSalt();
-    var hash = PasswordUtils.hashPassword(password, salt);
+    var salt = PasswordUtil.generateSalt();
+    var hash = PasswordUtil.hashPassword(password, salt);
     accountEntity.setPasswordSalt(salt);
     accountEntity.setPasswordHash(hash);
   }

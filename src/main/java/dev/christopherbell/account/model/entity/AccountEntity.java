@@ -1,7 +1,7 @@
 package dev.christopherbell.account.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import dev.christopherbell.account.model.Role;
+import dev.christopherbell.account.model.dto.Role;
 import java.time.Instant;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -19,6 +19,7 @@ public class AccountEntity {
   public static final String PARTITION_KEY = "ACCOUNT";
   private String rowKey; // This is the user's email.
 
+  private UUID id;
   private UUID approvedBy;
   private Instant createdOn;
   private String email;

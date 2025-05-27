@@ -7,7 +7,7 @@ import static org.mockito.Mockito.doNothing;
 
 import com.azure.data.tables.TableClient;
 import dev.christopherbell.account.model.entity.AccountEntity;
-import dev.christopherbell.account.model.Role;
+import dev.christopherbell.account.model.dto.Role;
 import dev.christopherbell.libs.api.exception.InvalidRequestException;
 import dev.christopherbell.libs.security.PermissionService;
 import org.junit.jupiter.api.Assertions;

@@ -1,4 +1,4 @@
-package dev.christopherbell.account.model;
+package dev.christopherbell.account.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.Instant;
@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Account {
 
+  private UUID id;
   private UUID approvedBy;
   private Instant createdOn;
   private String email;

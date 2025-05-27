@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -41,12 +40,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
    */
   @Override
   protected boolean shouldNotFilter(HttpServletRequest request) {
-    return skipMatchers.stream().anyMatch(matcher -> matcher.matches(request));
+    return skipMatchers
+        .stream()
+        .anyMatch(matcher -> matcher.matches(request));
   }
 
   @Override
-  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-      throws ServletException, IOException {
+  protected void doFilterInternal(
+      HttpServletRequest request,
+      HttpServletResponse response,
+      FilterChain chain
+  ) throws ServletException, IOException {
 
     String token = resolveToken(request);
     if (token != null && Objects.nonNull(permissionService.validateToken(token))) {
@@ -86,5 +90,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         .toList();
     return new UsernamePasswordAuthenticationToken(username, token, authorities);
   }
-
 }
