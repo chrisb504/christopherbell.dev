@@ -1,7 +1,7 @@
 package dev.christopherbell.thevoid.cry;
 
-import dev.christopherbell.libs.common.api.exception.ResourceNotFoundException;
-import dev.christopherbell.libs.common.api.exception.InvalidTokenException;
+import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
+import dev.christopherbell.libs.api.exception.InvalidTokenException;
 import dev.christopherbell.thevoid.common.VoidRequest;
 import dev.christopherbell.thevoid.common.VoidResponse;
 import dev.christopherbell.thevoid.account.model.entity.AccountEntity;

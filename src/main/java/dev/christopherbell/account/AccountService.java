@@ -7,10 +7,10 @@ import com.azure.data.tables.models.TableServiceException;
 import dev.christopherbell.account.model.Account;
 import dev.christopherbell.account.model.entity.AccountEntity;
 import dev.christopherbell.account.model.Role;
-import dev.christopherbell.libs.common.api.exception.InvalidRequestException;
-import dev.christopherbell.libs.common.api.exception.InvalidTokenException;
-import dev.christopherbell.libs.common.api.exception.ResourceNotFoundException;
-import dev.christopherbell.libs.common.api.util.PasswordUtils;
+import dev.christopherbell.libs.api.exception.InvalidRequestException;
+import dev.christopherbell.libs.api.exception.InvalidTokenException;
+import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
+import dev.christopherbell.libs.api.util.PasswordUtils;
 import dev.christopherbell.permission.PermissionService;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -33,7 +33,7 @@ public class AccountService {
   private final TableClient tableClient;
 
   /**
-   * Takes in an AccountEntity and returns back a TableEntity with all the properties from the AccountEntity.
+   * Takes in an AccountEntity and returns a TableEntity with all the properties from the AccountEntity.
    *
    * @param accountEntity - the AccountEntity to map to a TableEntity.
    * @return a TableEntity mapped from the given AccountEntity.

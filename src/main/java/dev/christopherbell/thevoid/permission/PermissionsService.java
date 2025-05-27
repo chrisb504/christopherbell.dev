@@ -1,7 +1,7 @@
 package dev.christopherbell.thevoid.permission;
 
-import dev.christopherbell.libs.common.api.exception.ResourceNotFoundException;
-import dev.christopherbell.libs.common.api.exception.InvalidTokenException;
+import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
+import dev.christopherbell.libs.api.exception.InvalidTokenException;
 import dev.christopherbell.thevoid.account.VoidAccountRepository;
 import dev.christopherbell.thevoid.account.VoidAccountSecurityRepository;
 import io.jsonwebtoken.Jwts;

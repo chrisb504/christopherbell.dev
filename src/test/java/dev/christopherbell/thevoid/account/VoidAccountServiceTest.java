@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-import dev.christopherbell.libs.common.api.exception.InvalidRequestException;
-import dev.christopherbell.libs.common.api.exception.ResourceExistsException;
-import dev.christopherbell.libs.common.api.util.APIConstants;
+import dev.christopherbell.libs.api.exception.InvalidRequestException;
+import dev.christopherbell.libs.api.exception.ResourceExistsException;
+import dev.christopherbell.libs.api.util.APIConstants;
 import dev.christopherbell.thevoid.common.VoidRequest;
 import dev.christopherbell.thevoid.account.model.entity.AccountEntity;
 import dev.christopherbell.thevoid.account.model.dto.Account;

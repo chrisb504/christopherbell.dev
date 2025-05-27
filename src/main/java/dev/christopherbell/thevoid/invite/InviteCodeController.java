@@ -1,9 +1,9 @@
 package dev.christopherbell.thevoid.invite;
 
-import dev.christopherbell.libs.common.api.model.Response;
-import dev.christopherbell.libs.common.api.exception.ResourceNotFoundException;
-import dev.christopherbell.libs.common.api.exception.InvalidRequestException;
-import dev.christopherbell.libs.common.api.exception.InvalidTokenException;
+import dev.christopherbell.libs.api.model.Response;
+import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
+import dev.christopherbell.libs.api.exception.InvalidRequestException;
+import dev.christopherbell.libs.api.exception.InvalidTokenException;
 import dev.christopherbell.permission.PermissionService;
 import dev.christopherbell.thevoid.common.VoidRequest;
 import dev.christopherbell.thevoid.common.VoidResponse;
