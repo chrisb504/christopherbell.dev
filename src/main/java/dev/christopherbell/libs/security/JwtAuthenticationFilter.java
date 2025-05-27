@@ -1,13 +1,12 @@
 package dev.christopherbell.libs.security;
 
 import dev.christopherbell.account.model.entity.AccountEntity;
-import dev.christopherbell.permission.PermissionService;
 import io.jsonwebtoken.Claims;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,13 +19,19 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-  private final List<RequestMatcher> skipMatchers = new ArrayList<>();
+  private final PermissionService permissionService;
+  private final List<RequestMatcher> skipMatchers;
 
-  public JwtAuthenticationFilter(List<RequestMatcher> skipMatchers) {
-    this.skipMatchers.addAll(skipMatchers);
+  public JwtAuthenticationFilter(
+      PermissionService permissionService,
+      String[] skipUrls
+  ) {
+    this.permissionService = permissionService;
+    this.skipMatchers = Arrays.stream(skipUrls).<RequestMatcher>map(AntPathRequestMatcher::new).toList();
   }
 
   /**
@@ -44,7 +49,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       throws ServletException, IOException {
 
     String token = resolveToken(request);
-    if (token != null && Objects.nonNull(PermissionService.validateToken(token))) {
+    if (token != null && Objects.nonNull(permissionService.validateToken(token))) {
       Authentication authenticationToken = getAuthentication(token);
       SecurityContextHolder.getContext().setAuthentication(authenticationToken);
       if (authenticationToken.isAuthenticated()) {
@@ -64,12 +69,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   }
 
   private Authentication getAuthentication(String token) {
-    Claims claims = PermissionService.validateToken(token);
+    Claims claims = permissionService.validateToken(token);
     String username = claims.getSubject();
     String roles = claims.get(AccountEntity.PROPERTY_ROLE, String.class);
     List<GrantedAuthority> authorities = Arrays.stream(roles.split(","))
         .map(SimpleGrantedAuthority::new)
         .collect(Collectors.toList());
+    return new UsernamePasswordAuthenticationToken(username, token, authorities);
+  }
+
+  private Authentication buildAuthentication(Claims claims, String token) {
+    String username = claims.getSubject();
+    String roles = claims.get(AccountEntity.PROPERTY_ROLE, String.class);
+    List<GrantedAuthority> authorities = Arrays.stream(roles.split(","))
+        .<GrantedAuthority>map(SimpleGrantedAuthority::new)
+        .toList();
     return new UsernamePasswordAuthenticationToken(username, token, authorities);
   }
 

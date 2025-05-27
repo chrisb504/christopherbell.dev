@@ -9,6 +9,7 @@ import com.azure.data.tables.TableClient;
 import dev.christopherbell.account.model.entity.AccountEntity;
 import dev.christopherbell.account.model.Role;
 import dev.christopherbell.libs.api.exception.InvalidRequestException;
+import dev.christopherbell.libs.security.PermissionService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,12 +23,14 @@ public class AccountServiceTest {
   private AccountService accountService;
   private AccountMapper accountMapper;
   @Mock
+  private PermissionService permissionService;
+  @Mock
   private TableClient tableClient;
 
   @BeforeEach
   public void init() {
     accountMapper = new AccountMapperImpl();
-    accountService = new AccountService(accountMapper, tableClient);
+    accountService = new AccountService(accountMapper, permissionService, tableClient);
   }
 
   @Test

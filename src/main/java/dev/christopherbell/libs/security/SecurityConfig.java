@@ -1,25 +1,20 @@
 package dev.christopherbell.libs.security;
 
 import dev.christopherbell.account.AccountController;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @Configuration
 @EnableMethodSecurity
-@EnableWebSecurity
 public class SecurityConfig {
 
   private static final String[] PUBLIC_URLS = {
@@ -40,34 +35,33 @@ public class SecurityConfig {
   };
 
   @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+  public SecurityFilterChain securityFilterChain(
+      HttpSecurity http,
+      JwtAuthenticationFilter jwtAuthenticationFilter
+  ) throws Exception {
     return http
         // Disable CSRF for APIs (use with care)
         .csrf(AbstractHttpConfigurer::disable)
-
+        .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         // Configure authorization rules
         .authorizeHttpRequests(auth -> auth
             .requestMatchers(PUBLIC_URLS).permitAll() // Allow public access to defined URLs
             .anyRequest().authenticated() // Secure all other endpoints
         )
-
+        .exceptionHandling(eh -> eh.authenticationEntryPoint(
+            (req, res, ex) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED)))
         // Add custom JWT authentication filter
-        .addFilterBefore(new JwtAuthenticationFilter(createSkipMatchers(PUBLIC_URLS)),
-            UsernamePasswordAuthenticationFilter.class)
-
-        // Build the SecurityFilterChain
+        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
         .build();
   }
 
   @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-    return configuration.getAuthenticationManager();
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    return config.getAuthenticationManager();
   }
 
-  // Helper method to create a list of AntPathRequestMatchers for JwtAuthenticationFilter
-  private List<RequestMatcher> createSkipMatchers(String[] urls) {
-    return Arrays.stream(urls)
-        .map(AntPathRequestMatcher::new)
-        .collect(Collectors.toList());
+  @Bean
+  public JwtAuthenticationFilter jwtAuthenticationFilter(PermissionService permissionService) {
+    return new JwtAuthenticationFilter(permissionService, PUBLIC_URLS);
   }
 }

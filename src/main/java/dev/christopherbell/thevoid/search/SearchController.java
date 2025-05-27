@@ -2,7 +2,7 @@ package dev.christopherbell.thevoid.search;
 
 import dev.christopherbell.libs.api.model.Response;
 import dev.christopherbell.libs.api.exception.InvalidRequestException;
-import dev.christopherbell.permission.PermissionService;
+import dev.christopherbell.libs.security.PermissionService;
 import dev.christopherbell.thevoid.common.VoidResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

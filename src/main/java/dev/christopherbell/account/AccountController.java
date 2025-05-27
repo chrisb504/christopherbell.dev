@@ -5,7 +5,7 @@ import dev.christopherbell.libs.api.exception.InvalidRequestException;
 import dev.christopherbell.libs.api.exception.InvalidTokenException;
 import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
 import dev.christopherbell.libs.api.model.Response;
-import dev.christopherbell.permission.PermissionService;
+import dev.christopherbell.libs.security.PermissionService;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

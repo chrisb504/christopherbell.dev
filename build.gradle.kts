@@ -40,7 +40,7 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
 
     // Postgres
-    runtimeOnly("org.postgresql:postgresql:42.7.5")
+//    runtimeOnly("org.postgresql:postgresql:42.7.5")
 
     // JSoup
     implementation("org.jsoup:jsoup:1.20.1")

@@ -3,7 +3,7 @@ package dev.christopherbell.thevoid.cry;
 import dev.christopherbell.libs.api.model.Response;
 import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
 import dev.christopherbell.libs.api.exception.InvalidTokenException;
-import dev.christopherbell.permission.PermissionService;
+import dev.christopherbell.libs.security.PermissionService;
 import dev.christopherbell.thevoid.common.VoidRequest;
 import dev.christopherbell.thevoid.common.VoidResponse;
 import lombok.AllArgsConstructor;

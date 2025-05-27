@@ -5,7 +5,7 @@ import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
 import dev.christopherbell.libs.api.exception.InvalidRequestException;
 import dev.christopherbell.libs.api.exception.InvalidTokenException;
 import dev.christopherbell.libs.api.exception.ResourceExistsException;
-import dev.christopherbell.permission.PermissionService;
+import dev.christopherbell.libs.security.PermissionService;
 import dev.christopherbell.thevoid.account.model.dto.AccountResponse;
 import dev.christopherbell.thevoid.account.model.dto.AccountsResponse;
 import dev.christopherbell.thevoid.common.VoidRequest;

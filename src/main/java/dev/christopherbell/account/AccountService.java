@@ -11,7 +11,7 @@ import dev.christopherbell.libs.api.exception.InvalidRequestException;
 import dev.christopherbell.libs.api.exception.InvalidTokenException;
 import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
 import dev.christopherbell.libs.api.util.PasswordUtils;
-import dev.christopherbell.permission.PermissionService;
+import dev.christopherbell.libs.security.PermissionService;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.Instant;
@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 public class AccountService {
 
   private final AccountMapper accountMapper;
+  private final PermissionService permissionService;
   private final TableClient tableClient;
 
   /**
@@ -161,8 +162,8 @@ public class AccountService {
       var isValidPassword = PasswordUtils.verifyPassword(password, salt, hash);
 
       if(isValidPassword) {
-        PermissionService.isAccountApproved(accountEntity);
-        return PermissionService.generateToken(accountEntity);
+        permissionService.isAccountApproved(accountEntity);
+        return permissionService.generateToken(accountEntity);
       } else {
         throw new InvalidTokenException("Given Login information was not correct.");
       }

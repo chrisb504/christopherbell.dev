@@ -24,21 +24,13 @@ public interface MapStructMapper {
 
   AccountDetailsEntity mapToAccountDetailsEntity(AccountDetails accountDetails);
 
-  AccountDetails mapToAccountDetails(AccountDetailsEntity accountDetailsEntity);
-
   AccountSecurityEntity mapToAccountSecurityEntity(AccountSecurity accountSecurity);
-
-  AccountSecurity mapToAccountSecurity(AccountSecurityEntity accountSecurityEntity);
 
   CryEntity mapToCryEntity(Cry cry);
 
   Cry mapToCry(CryEntity cryEntity);
 
-  InviteCodeEntity mapToInviteCodeEntity(InviteCode inviteCode);
-
   InviteCode mapToInviteCode(InviteCodeEntity inviteCodeEntity);
 
   VoidRoleEntity mapToVoidRoleEntity(VoidRolesEnum voidRolesEnum);
-
-  //VoidRolesEnum mapToVoidRoleEnum(VoidRoleEntity voidRoleEntity);
 }
