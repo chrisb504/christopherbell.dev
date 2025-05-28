@@ -1,4 +1,4 @@
-package dev.christopherbell.libs.api.util;
+package dev.christopherbell.libs.security;
 
 import dev.christopherbell.account.model.dto.Account;
 import dev.christopherbell.account.model.entity.AccountEntity;

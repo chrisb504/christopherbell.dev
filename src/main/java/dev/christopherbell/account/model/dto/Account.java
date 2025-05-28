@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Account {
 
-  private UUID id;
   private UUID approvedBy;
   private Instant createdOn;
   private String email;
@@ -28,5 +27,6 @@ public class Account {
   private String loginToken;
   private String password;
   private Role role;
+  private String rowKey;
   private String username;
 }

@@ -6,7 +6,7 @@ import lombok.Builder;
  * Exception to throw if the request token is not valid.
  */
 @Builder
-public class InvalidTokenException extends Exception {
+public class InvalidTokenException extends RuntimeException {
 
   public InvalidTokenException() {
     super();

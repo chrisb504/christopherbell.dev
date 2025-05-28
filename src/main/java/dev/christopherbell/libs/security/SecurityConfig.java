@@ -19,8 +19,8 @@ public class SecurityConfig {
 
   private static final String[] PUBLIC_URLS = {
       "/",
-      "/api/accounts" + AccountController.VERSION_DECEMBER_15_2024 + "/login",
-      "/api/accounts" + AccountController.VERSION_DECEMBER_15_2024,
+      "/api/accounts" + AccountController.V20241215 + "/authenticate",
+      "/api/accounts" + AccountController.V20241215 + "/create",
       "/blog",
       "/css/**",
       "/js/**",

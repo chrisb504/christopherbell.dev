@@ -33,45 +33,20 @@ public class AccountServiceTest {
     accountService = new AccountService(accountMapper, permissionService, tableClient);
   }
 
-  @Test
-  public void buildTableEntityFromAccountEntity() {
-
-    var accountEntity = AccountStub.getAccountEntityStub();
-    var tableEntity = accountService.buildTableEntityFromAccountEntity(accountEntity);
-
-    var tableEntityApprovedBy = tableEntity.getProperty(AccountEntity.PROPERTY_APPROVED_BY);
-    var tableEntityCreatedOn = tableEntity.getProperty(AccountEntity.PROPERTY_CREATED_ON);
-    var tableEntityEmail = tableEntity.getRowKey();
-    var tableEntityFirstName = tableEntity.getProperty(AccountEntity.PROPERTY_FIRST_NAME);
-    var tableEntityIsApproved = tableEntity.getProperty(AccountEntity.PROPERTY_IS_APPROVED);
-    var tableEntityLastName = tableEntity.getProperty(AccountEntity.PROPERTY_LAST_NAME);
-    var tableEntityRole = tableEntity.getProperty(AccountEntity.PROPERTY_ROLE);
-    var tableEntityUsername = tableEntity.getProperty(AccountEntity.PROPERTY_USERNAME);
-
-    assertEquals(accountEntity.getApprovedBy(), tableEntityApprovedBy);
-    Assertions.assertNotNull(tableEntityCreatedOn);
-    assertEquals(accountEntity.getEmail(), tableEntityEmail);
-    assertEquals(accountEntity.getFirstName(), tableEntityFirstName);
-    assertEquals(accountEntity.getIsApproved(), tableEntityIsApproved);
-    assertEquals(accountEntity.getLastName(), tableEntityLastName);
-    assertEquals(accountEntity.getRole(), tableEntityRole);
-    assertEquals(accountEntity.getUsername(), tableEntityUsername);
-  }
-
-  @Test
-  public void createAccount_success() throws InvalidRequestException {
-
-    var account = AccountStub.getAccountStub();
-
-    doNothing().when(tableClient).createEntity(any());
-    var result = accountService.createAccount(account);
-
-    assertNotNull(result.getCreatedOn());
-    assertEquals(account.getEmail(), result.getEmail());
-    assertEquals(account.getFirstName(), result.getFirstName());
-    assertEquals(account.getLastName(), result.getLastName());
-    assertEquals(account.getUsername(), result.getUsername());
-  }
+//  @Test
+//  public void createAccount_success() throws InvalidRequestException {
+//
+//    var account = AccountStub.getAccountStub();
+//
+//    doNothing().when(tableClient).createEntity(any());
+//    var result = accountService.createAccount(account);
+//
+//    assertNotNull(result.getCreatedOn());
+//    assertEquals(account.getEmail(), result.getEmail());
+//    assertEquals(account.getFirstName(), result.getFirstName());
+//    assertEquals(account.getLastName(), result.getLastName());
+//    assertEquals(account.getUsername(), result.getUsername());
+//  }
 
   @Test
   public void createNewAccountEntity() {

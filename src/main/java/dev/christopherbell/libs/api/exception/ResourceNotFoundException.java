@@ -6,7 +6,7 @@ import lombok.Builder;
  * Exception to throw if we cannot find an account for a request.
  */
 @Builder
-public class ResourceNotFoundException extends Exception {
+public class ResourceNotFoundException extends RuntimeException {
 
   public ResourceNotFoundException() {
     super();
