@@ -24,7 +24,7 @@ public class PhotoController {
   /**
    * Returns all existing images for the photo gallery.
    *
-   * @return a PhotoGalleryResponse containing all existing images.
+   * @return a PhotoResponse containing all existing images.
    */
   @GetMapping(value = "/v1", produces = MediaType.APPLICATION_JSON_VALUE)
   @PreAuthorize("@permissionService.hasAuthority('USER')")
