@@ -19,7 +19,7 @@ public class PhotoService {
   /**
    * Get all existing photos.
    *
-   * @return a PhotoGalleryResponse containing all existing photos.
+   * @return a PhotoResponse containing all existing photos.
    */
   public PhotoResponse getAllImages() {
     return PhotoResponse.builder()
