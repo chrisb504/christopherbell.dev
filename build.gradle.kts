@@ -31,6 +31,9 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8")
     implementation("org.springframework.boot:spring-boot-starter-json")
 
+    // Rate Limiting
+    implementation("com.github.vladimir-bukhtoyarov:bucket4j-core:8.0.1")
+
     // Azure SDK
     implementation("com.azure:azure-data-tables:12.5.3")
 
