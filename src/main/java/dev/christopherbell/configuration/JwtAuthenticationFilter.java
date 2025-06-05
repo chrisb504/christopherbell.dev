@@ -20,7 +20,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.core.annotation.Order;
 
+@Order(2)
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
   private final List<RequestMatcher> skipMatchers = new ArrayList<>();
