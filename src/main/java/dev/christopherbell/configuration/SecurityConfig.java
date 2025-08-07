@@ -18,6 +18,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import dev.christopherbell.configuration.RateLimitFilter;
 import dev.christopherbell.configuration.JwtAuthenticationFilter;
+import dev.christopherbell.configuration.RequestSizeLimitFilter;
 
 @Configuration
 @EnableMethodSecurity
@@ -44,7 +45,8 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http,
       RateLimitFilter rateLimitFilter,
-      JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
+      JwtAuthenticationFilter jwtAuthenticationFilter,
+      RequestSizeLimitFilter requestSizeLimitFilter) throws Exception {
     return http
         // Disable CSRF for APIs (use with care)
         .csrf(AbstractHttpConfigurer::disable)
@@ -58,6 +60,7 @@ public class SecurityConfig {
         // Add rate limiting and JWT authentication filters
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
         .addFilterBefore(rateLimitFilter, JwtAuthenticationFilter.class)
+        .addFilterBefore(requestSizeLimitFilter, RateLimitFilter.class)
         
         // Build the SecurityFilterChain
         .build();
@@ -71,6 +74,11 @@ public class SecurityConfig {
   @Bean
   public JwtAuthenticationFilter jwtAuthenticationFilter() {
     return new JwtAuthenticationFilter(createSkipMatchers(PUBLIC_URLS));
+  }
+
+  @Bean
+  public RequestSizeLimitFilter requestSizeLimitFilter() {
+    return new RequestSizeLimitFilter();
   }
 
   @Bean
