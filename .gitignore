@@ -19,6 +19,11 @@ npm/
 main.min.css
 main.js
 main.js.LICENSE.txt
+main.js.map
+
+# Gradle
+.gradle/
+build/
 
 # VSCode
 .vscode
@@ -50,4 +55,4 @@ yarn.lock
 *.ctxt
 
 # Mobile Tools for Java (J2ME)
-.mtj.tmp/
+.mtj.tmp

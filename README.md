@@ -1,10 +1,10 @@
 # christopherbell.dev
 
-Personal website and application for Christopher Bell. The project combines a Spring Boot backend with a React frontend and serves as both an API and a personal site.
+Personal website and application for Christopher Bell. The project combines a Spring Boot backend with a vanilla JavaScript frontend that uses Web Components and a simple pub/sub system.
 
 ## Tech Stack
 - **Backend:** Java 21, Spring Boot 3, Gradle
-- **Frontend:** React 19, Webpack 5, Babel
+- **Frontend:** Vanilla JavaScript, Web Components, Webpack 5, Babel
 - **Build Tools:** Gradle Wrapper, Node.js (>=18), npm (>=9)
 - **Database:** PostgreSQL
 
@@ -34,4 +34,3 @@ The artifact will be located under `build/libs/`.
 
 ### Environment
 Set `SPRING_ACTIVE_PROFILE=local` for a local development profile and configure any required PostgreSQL connection details in `application.yml`.
-

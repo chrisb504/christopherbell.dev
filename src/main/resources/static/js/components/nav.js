@@ -1,0 +1,45 @@
+import pubsub from './pubsub.js';
+
+class AppNav extends HTMLElement {
+    connectedCallback() {
+        this.render();
+        pubsub.subscribe('auth:login', () => this.render());
+        pubsub.subscribe('auth:logout', () => this.render());
+    }
+
+    render() {
+        const isAuthenticated = !!localStorage.getItem('cbellLoginToken');
+        this.innerHTML = `
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a href="/" class="navbar-brand">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
+                <li class="nav-item"><a href="/photos" class="nav-link">Photography</a></li>
+                <li class="nav-item"><a href="/wfl" class="nav-link">What's For Lunch</a></li>
+            </ul>
+            ${!isAuthenticated ? `
+            <div class="d-lg-flex col-lg-3 justify-content-lg-end">
+                <a href="/login" class="btn btn-outline-light me-2">Login</a>
+                <a href="/signup" class="btn btn-warning">Sign-up</a>
+            </div>` : `
+            <div class="col-auto d-flex justify-content-end align-items-center">
+                <button id="logout" type="button" class="btn btn-danger btn-md">Logout</button>
+            </div>`}
+        </div>
+    </div>
+</nav>`;
+        const logoutBtn = this.querySelector('#logout');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                pubsub.publish('auth:logout');
+            });
+        }
+    }
+}
+
+customElements.define('app-nav', AppNav);
