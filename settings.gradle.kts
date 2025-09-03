@@ -1,3 +1,3 @@
-rootProject.name = "cbell-website"
+rootProject.name = "website"
 
 
