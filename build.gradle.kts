@@ -24,11 +24,13 @@ repositories {
 dependencies {
     // Spring Boot dependencies
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+    implementation("org.springframework.boot:spring-boot-starter-json")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8")
-    implementation("org.springframework.boot:spring-boot-starter-json")
 
     // Rate Limiting
     implementation("com.github.vladimir-bukhtoyarov:bucket4j-core:8.0.1")
@@ -40,9 +42,6 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:0.12.6")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
-
-    // Postgres
-    runtimeOnly("org.postgresql:postgresql:42.7.5")
 
     // JSoup
     implementation("org.jsoup:jsoup:1.20.1")

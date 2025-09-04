@@ -1,6 +1,6 @@
 package dev.christopherbell.configuration;
 
-import dev.christopherbell.account.AccountController;
+import dev.christopherbell.libs.common.api.util.APIVersion;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,9 +16,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
-import dev.christopherbell.configuration.RateLimitFilter;
-import dev.christopherbell.configuration.JwtAuthenticationFilter;
-import dev.christopherbell.configuration.RequestSizeLimitFilter;
 
 @Configuration
 @EnableMethodSecurity
@@ -27,8 +24,8 @@ public class SecurityConfig {
 
   private static final String[] PUBLIC_URLS = {
       "/",
-      "/api/accounts" + AccountController.VERSION_DECEMBER_15_2024 + "/login",
-      "/api/accounts" + AccountController.VERSION_DECEMBER_15_2024,
+      "/api/accounts" + APIVersion.V20241215 + "/login",
+      "/api/accounts" + APIVersion.V20241215 + "/create",
       "/blog",
       "/css/**",
       "/js/**",

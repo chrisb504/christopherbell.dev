@@ -1,11 +1,15 @@
-package dev.christopherbell.permission;
+package dev.christopherbell.libs.common.security;
 
-import dev.christopherbell.account.model.entity.AccountEntity;
+import dev.christopherbell.account.model.Account;
+import dev.christopherbell.account.model.AccountStatus;
+import dev.christopherbell.account.model.dto.AccountLoginRequest;
 import dev.christopherbell.libs.common.api.exception.InvalidTokenException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,20 +30,41 @@ public class PermissionService {
   private static final long EXPIRATION_TIME = 3600_000; // 1 hour in milliseconds
   private static final Key KEY = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 
+  public static String getSelf() {
+    var authentication = SecurityContextHolder.getContext().getAuthentication();
+    String token = (String) authentication.getCredentials();
+    return  Jwts.parser()
+        .setSigningKey(KEY)
+        .build()
+        .parseClaimsJws(token)
+        .getBody()
+        .getSubject();
+  }
+
+  public static boolean isAuthenticated(
+      AccountLoginRequest accountLoginRequest,
+      Account account
+  ) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    var password = accountLoginRequest.password();
+    var salt = account.getPasswordSalt();
+    var hash = account.getPasswordHash();
+    return PasswordUtils.verifyPassword(password, salt, hash);
+  }
+
   /**
    * Generates a JWT token with key that was created on application startup.
    *
-   * @param accountEntity - the account that will be getting the new token.
+   * @param account - the account that will be getting the new token.
    * @return a JWT token in String format.
    */
-  public static String generateToken(AccountEntity accountEntity) {
+  public static String generateToken(Account account) {
     var claims = new HashMap<String, Object>();
-    claims.put(AccountEntity.PROPERTY_ROLE, accountEntity.getRole());
+    claims.put(Account.PROPERTY_ROLE, account.getRole());
 
     return Jwts.builder()
         .claims(claims)
         .id(UUID.randomUUID().toString())
-        .subject(accountEntity.getUsername())
+        .subject(account.getId())
         .issuedAt(new Date())
         .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
         .signWith(KEY)
@@ -53,10 +78,12 @@ public class PermissionService {
    * @return the claims for that JWT.
    */
   public static Claims validateToken(String token) {
+    var jwt = stripBearer(token);
+
     return Jwts.parser()
         .setSigningKey(KEY)
         .build()
-        .parseClaimsJws(token)
+        .parseClaimsJws(jwt)
         .getBody();
   }
 
@@ -95,7 +122,7 @@ public class PermissionService {
 
       String token = (String) authentication.getCredentials();
       Claims claims = validateToken(token);
-      String roles  = claims.get(AccountEntity.PROPERTY_ROLE, String.class);
+      String roles  = claims.get(Account.PROPERTY_ROLE, String.class);
       return roles != null && roles.contains(requiredRole);
     } catch (Exception e) {
 
@@ -104,11 +131,43 @@ public class PermissionService {
     }
   }
 
-  public static boolean isAccountApproved(AccountEntity accountEntity) throws InvalidTokenException {
-    if (accountEntity.getIsApproved()) {
+  public static boolean isAccountApproved(Account account) throws InvalidTokenException {
+    if (account.getIsApproved()) {
       return true;
     } else {
       throw new InvalidTokenException("Account is not approved.");
     }
+  }
+
+  /**
+   * Checks to see if an account is active.
+   *
+   * @param status - the status of the account.
+   * @return true if the account is active.
+   * @throws InvalidTokenException if the account is not active.
+   */
+  public static boolean isAccountActive(AccountStatus status) throws InvalidTokenException {
+    return AccountStatus.ACTIVE == status;
+  }
+
+  /**
+   * Removes the {@code "Bearer "} prefix from a JWT token string if present.
+   * <p>
+   * Many HTTP Authorization headers are formatted as
+   * {@code "Authorization: Bearer <token>"}. This method ensures that only the
+   * raw token value (the {@code <token>} part) is returned for downstream
+   * parsing and validation.
+   * </p>
+   *
+   * <p>If the input is {@code null}, this method returns {@code null}.
+   * If the input does not start with the {@code "Bearer "} prefix,
+   * the original string is returned unchanged.</p>
+   *
+   * @param token the full token string, possibly prefixed with {@code "Bearer "}
+   * @return the token string without the {@code "Bearer "} prefix,
+   *         or {@code null} if the input was {@code null}
+   */
+  private static String stripBearer(String token) {
+    return token != null && token.startsWith("Bearer ") ? token.substring(7) : token;
   }
 }
