@@ -1,6 +1,6 @@
-package dev.christopherbell.permission;
+package dev.christopherbell.libs.common.security;
 
-import dev.christopherbell.account.model.entity.AccountEntity;
+import dev.christopherbell.account.model.AccountEntity;
 import dev.christopherbell.libs.common.api.exception.InvalidTokenException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -53,10 +53,12 @@ public class PermissionService {
    * @return the claims for that JWT.
    */
   public static Claims validateToken(String token) {
+    var jwt = stripBearer(token);
+
     return Jwts.parser()
         .setSigningKey(KEY)
         .build()
-        .parseClaimsJws(token)
+        .parseClaimsJws(jwt)
         .getBody();
   }
 
@@ -110,5 +112,26 @@ public class PermissionService {
     } else {
       throw new InvalidTokenException("Account is not approved.");
     }
+  }
+
+  /**
+   * Removes the {@code "Bearer "} prefix from a JWT token string if present.
+   * <p>
+   * Many HTTP Authorization headers are formatted as
+   * {@code "Authorization: Bearer <token>"}. This method ensures that only the
+   * raw token value (the {@code <token>} part) is returned for downstream
+   * parsing and validation.
+   * </p>
+   *
+   * <p>If the input is {@code null}, this method returns {@code null}.
+   * If the input does not start with the {@code "Bearer "} prefix,
+   * the original string is returned unchanged.</p>
+   *
+   * @param token the full token string, possibly prefixed with {@code "Bearer "}
+   * @return the token string without the {@code "Bearer "} prefix,
+   *         or {@code null} if the input was {@code null}
+   */
+  private static String stripBearer(String token) {
+    return token != null && token.startsWith("Bearer ") ? token.substring(7) : token;
   }
 }

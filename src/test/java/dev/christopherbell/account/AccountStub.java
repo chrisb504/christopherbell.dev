@@ -1,7 +1,7 @@
 package dev.christopherbell.account;
 
 import dev.christopherbell.account.model.Account;
-import dev.christopherbell.account.model.entity.AccountEntity;
+import dev.christopherbell.account.model.AccountEntity;
 import dev.christopherbell.account.model.Role;
 import java.time.Instant;
 import java.util.UUID;

@@ -1,21 +1,20 @@
-package dev.christopherbell.libs.common.api.util;
+package dev.christopherbell.libs.common.security;
 
 import dev.christopherbell.account.model.Account;
-import dev.christopherbell.account.model.entity.AccountEntity;
+import dev.christopherbell.account.model.AccountEntity;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.SecureRandom;
 import java.util.Base64;
+import lombok.experimental.UtilityClass;
 
-public final class PasswordUtils {
-
+@UtilityClass
+public class PasswordUtils {
   private static final int SALT_LENGTH = 16;  // Length of the salt in bytes
   private static final int HASH_ITERATIONS = 65536; // Number of iterations
   private static final int HASH_KEY_LENGTH = 256; // Derived key length in bits
-
-  private PasswordUtils() {}
 
   /**
    * Generates a random salt.

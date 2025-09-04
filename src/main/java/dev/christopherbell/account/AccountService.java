@@ -1,22 +1,21 @@
 package dev.christopherbell.account;
 
-import com.azure.data.tables.TableClient;
-import com.azure.data.tables.models.ListEntitiesOptions;
-import com.azure.data.tables.models.TableEntity;
 import com.azure.data.tables.models.TableServiceException;
 import dev.christopherbell.account.model.Account;
-import dev.christopherbell.account.model.entity.AccountEntity;
+import dev.christopherbell.account.model.AccountEntity;
+import dev.christopherbell.account.model.LoginRequest;
 import dev.christopherbell.account.model.Role;
 import dev.christopherbell.libs.common.api.exception.InvalidRequestException;
 import dev.christopherbell.libs.common.api.exception.InvalidTokenException;
 import dev.christopherbell.libs.common.api.exception.ResourceNotFoundException;
-import dev.christopherbell.libs.common.api.util.PasswordUtils;
-import dev.christopherbell.permission.PermissionService;
+import dev.christopherbell.libs.common.security.EmailSanitizer;
+import dev.christopherbell.libs.common.security.PasswordUtils;
+import dev.christopherbell.libs.common.security.PermissionService;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.Instant;
 import java.util.List;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,35 +23,12 @@ import org.springframework.stereotype.Service;
 /**
  * Represents the service responsible for handling getting, creating, updating, and deleting accounts.
  */
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 @Service
 public class AccountService {
-
   private final AccountMapper accountMapper;
-  private final TableClient tableClient;
-
-  /**
-   * Takes in an AccountEntity and returns back a TableEntity with all the properties from the AccountEntity.
-   *
-   * @param accountEntity - the AccountEntity to map to a TableEntity.
-   * @return a TableEntity mapped from the given AccountEntity.
-   */
-  public TableEntity buildTableEntityFromAccountEntity(AccountEntity accountEntity) {
-    return new TableEntity(
-        AccountEntity.PARTITION_KEY,
-        accountEntity.getEmail())
-        .addProperty(AccountEntity.PROPERTY_APPROVED_BY, accountEntity.getApprovedBy())
-        .addProperty(AccountEntity.PROPERTY_CREATED_ON, accountEntity.getCreatedOn())
-        .addProperty(AccountEntity.PROPERTY_EMAIL, accountEntity.getEmail())
-        .addProperty(AccountEntity.PROPERTY_FIRST_NAME, accountEntity.getFirstName())
-        .addProperty(AccountEntity.PROPERTY_IS_APPROVED, accountEntity.getIsApproved())
-        .addProperty(AccountEntity.PROPERTY_LAST_NAME, accountEntity.getLastName())
-        .addProperty(AccountEntity.PROPERTY_PASSWORD_HASH, accountEntity.getPasswordHash())
-        .addProperty(AccountEntity.PROPERTY_PASSWORD_SALT, accountEntity.getPasswordSalt())
-        .addProperty(AccountEntity.PROPERTY_ROLE, accountEntity.getRole())
-        .addProperty(AccountEntity.PROPERTY_USERNAME, accountEntity.getUsername());
-  }
+  private final AccountRepository accountRepository;
 
   /**
    * Creates a new account.
@@ -65,8 +41,7 @@ public class AccountService {
     try {
       var accountEntity = createNewAccountEntity(account);
       PasswordUtils.saltPassword(account, accountEntity);
-      var entity = buildTableEntityFromAccountEntity(accountEntity);
-      tableClient.createEntity(entity);
+      accountRepository.save(accountEntity);
       return accountMapper.toAccount(accountEntity);
     } catch (TableServiceException e) {
       var statusCode = e.getResponse().getStatusCode();
@@ -103,21 +78,19 @@ public class AccountService {
   /**
    * Gets an account by its email address.
    *
-   * @param rowKey the email address of the account.
+   * @param email the email address of the account.
    * @return the account with the given email address.
    * @throws ResourceNotFoundException if the account cannot be found.
    */
-  public Account getAccount(String rowKey) throws ResourceNotFoundException {
-    try {
-      var entity = tableClient.getEntity(AccountEntity.PARTITION_KEY, rowKey);
-      var accountEntity = TableEntityUtils.toAccountEntity(entity);
+  public Account getAccountByEmail(String email) throws ResourceNotFoundException {
+    var sanitizedEmail = EmailSanitizer.sanitize(email);
+    var accountEntity = accountRepository.findByEmail(sanitizedEmail)
+        .orElseThrow(() ->
+            new ResourceNotFoundException(
+                String.format("Account with email %s not found.", sanitizedEmail)
+            )
+        );
       return accountMapper.toAccount(accountEntity);
-    } catch (TableServiceException e) {
-      if (e.getResponse().getStatusCode() == 404) {
-        throw new ResourceNotFoundException("can't find resource");
-      }
-      throw new RuntimeException("Failed to retrieve account: " + e.getMessage(), e);
-    }
   }
 
   /**
@@ -126,12 +99,8 @@ public class AccountService {
    * @return a list of all accounts.
    */
   public List<Account> getAccounts() {
-
-    var options = new ListEntitiesOptions()
-        .setFilter("PartitionKey eq 'ACCOUNT'");
-    var accountEntities = tableClient.listEntities(options, null, null);
+    var accountEntities = accountRepository.findAll();
     return accountEntities.stream()
-        .map(TableEntityUtils::toAccountEntity)
         .map(accountMapper::toAccount)
         .toList();
   }
@@ -139,23 +108,24 @@ public class AccountService {
   /**
    * Validates login information from a request and returns a JWT if it is correct.
    *
-   * @param account - account for which the requester wishes to gain access to.
+   * @param loginRequest - account for which the requester wishes to gain access to.
    * @return a JWT token.
    * @throws InvalidTokenException - if login information is incorrect.
    */
-  public String loginAccount(Account account) throws InvalidTokenException {
+  public String loginAccount(LoginRequest loginRequest) throws InvalidTokenException {
 
     try {
-      var email = account.getEmail();
-      var password = account.getPassword();
+      var email = loginRequest.email();
+      var password = loginRequest.password();
+      var sanitizedEmail = EmailSanitizer.sanitize(email);
 
-      var options = new ListEntitiesOptions().setFilter("email eq '" + email + "'");
-      var tableEntityAccounts = tableClient.listEntities(options, null, null);
-      var accountEntities = tableEntityAccounts.stream()
-          .map(TableEntityUtils::toAccountEntity)
-          .toList();
+      var accountEntity = accountRepository.findByEmail(sanitizedEmail)
+          .orElseThrow(() ->
+              new ResourceNotFoundException(
+                  String.format("Account with email %s not found.", sanitizedEmail)
+              )
+          );
 
-      var accountEntity = accountEntities.getFirst();
       var salt = accountEntity.getPasswordSalt();
       var hash = accountEntity.getPasswordHash();
       var isValidPassword = PasswordUtils.verifyPassword(password, salt, hash);
@@ -166,7 +136,7 @@ public class AccountService {
       } else {
         throw new InvalidTokenException("Given Login information was not correct.");
       }
-    } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+    } catch (InvalidKeySpecException | NoSuchAlgorithmException | ResourceNotFoundException e) {
       throw new RuntimeException(e);
     }
   }

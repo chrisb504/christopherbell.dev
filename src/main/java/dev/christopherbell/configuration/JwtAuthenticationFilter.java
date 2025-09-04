@@ -1,7 +1,7 @@
 package dev.christopherbell.configuration;
 
-import dev.christopherbell.account.model.entity.AccountEntity;
-import dev.christopherbell.permission.PermissionService;
+import dev.christopherbell.account.model.AccountEntity;
+import dev.christopherbell.libs.common.security.PermissionService;
 import io.jsonwebtoken.Claims;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,5 +74,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         .collect(Collectors.toList());
     return new UsernamePasswordAuthenticationToken(username, token, authorities);
   }
-
 }

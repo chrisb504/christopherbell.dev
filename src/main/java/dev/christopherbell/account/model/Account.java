@@ -1,6 +1,5 @@
 package dev.christopherbell.account.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.Instant;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -11,10 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 public class Account {
-
   private UUID approvedBy;
   private Instant createdOn;
   private String email;

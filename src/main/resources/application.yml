@@ -5,25 +5,14 @@ logging:
     root: INFO
     org.springframework: INFO
     dev.christopherbell: INFO
-azure:
-  storage:
-    connection-string: "${AZURE_STORAGE_CONNECTION_STRING}"
-    table-name: "${AZURE_STORAGE_TABLE_NAME}"
 ---
 spring:
   profiles:
     default: local
-#  datasource:
-#    url: jdbc:postgresql://localhost:5432/christopherbell.dev
-#    username: postgres
-#    password: postgres
-    #    jpa:
-    #        hibernate:
-    #            ddl-auto: create-drop
-#    properties:
-#      hibernate:
-#        default_schema: void-api
-#        dialect: org.hibernate.dialect.PostgreSQLDialect
+  data:
+    mongodb:
+      database: christopherbell
+      uri: mongodb://localhost:27017
 blog-properties:
   posts:
     - author: "Test"

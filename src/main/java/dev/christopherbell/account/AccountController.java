@@ -1,11 +1,14 @@
 package dev.christopherbell.account;
 
+import static dev.christopherbell.libs.common.api.util.APIVersion.V20241215;
+
 import dev.christopherbell.account.model.Account;
+import dev.christopherbell.account.model.LoginRequest;
 import dev.christopherbell.libs.common.api.exception.InvalidRequestException;
 import dev.christopherbell.libs.common.api.exception.InvalidTokenException;
 import dev.christopherbell.libs.common.api.exception.ResourceNotFoundException;
 import dev.christopherbell.libs.common.api.model.Response;
-import dev.christopherbell.permission.PermissionService;
+import dev.christopherbell.libs.common.security.PermissionService;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,15 +26,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/accounts")
 @RestController
 public class AccountController {
-
   private AccountService accountService;
   private PermissionService permissionService;
-  public static final String VERSION_DECEMBER_15_2024 = "/20241215";
 
-  @PostMapping(value = VERSION_DECEMBER_15_2024,
+  @PostMapping(value = V20241215 + "/create",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Response<Account>> createAccount(@RequestBody Account account) throws InvalidRequestException {
-
     return new ResponseEntity<>(
         Response.<Account>builder()
             .payload(accountService.createAccount(account))
@@ -39,18 +39,17 @@ public class AccountController {
             .build(), HttpStatus.OK);
   }
 
-  @GetMapping(value = VERSION_DECEMBER_15_2024 + "/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = V20241215 + "/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
   @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
   public ResponseEntity<Response<Account>> getAccountById(@PathVariable String email) throws ResourceNotFoundException {
-
     return new ResponseEntity<>(
         Response.<Account>builder()
-            .payload(accountService.getAccount(email))
+            .payload(accountService.getAccountByEmail(email))
             .success(true)
             .build(), HttpStatus.OK);
   }
 
-  @GetMapping(value = VERSION_DECEMBER_15_2024 + "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = V20241215, produces = MediaType.APPLICATION_JSON_VALUE)
   @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
   public ResponseEntity<Response<List<Account>>> getAccounts() {
 
@@ -61,14 +60,12 @@ public class AccountController {
             .build(), HttpStatus.OK);
   }
 
-  @PostMapping(value = VERSION_DECEMBER_15_2024 + "/login",
+  @PostMapping(value = V20241215 + "/login",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Response<String>> loginAccount(@RequestBody Account account) throws InvalidTokenException {
-
+  public ResponseEntity<Response<String>> loginAccount(@RequestBody LoginRequest loginRequest) throws InvalidTokenException {
     return new ResponseEntity<>(Response.<String>builder()
-        .payload(accountService.loginAccount(account))
+        .payload(accountService.loginAccount(loginRequest))
         .success(true)
         .build(), HttpStatus.OK);
   }
-
 }
