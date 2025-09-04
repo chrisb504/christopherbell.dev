@@ -1,6 +1,6 @@
 package dev.christopherbell.configuration;
 
-import dev.christopherbell.account.model.AccountEntity;
+import dev.christopherbell.account.model.Account;
 import dev.christopherbell.libs.common.security.PermissionService;
 import io.jsonwebtoken.Claims;
 import java.util.ArrayList;
@@ -68,7 +68,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   private Authentication getAuthentication(String token) {
     Claims claims = PermissionService.validateToken(token);
     String username = claims.getSubject();
-    String roles = claims.get(AccountEntity.PROPERTY_ROLE, String.class);
+    String roles = claims.get(Account.PROPERTY_ROLE, String.class);
     List<GrantedAuthority> authorities = Arrays.stream(roles.split(","))
         .map(SimpleGrantedAuthority::new)
         .collect(Collectors.toList());

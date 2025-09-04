@@ -1,7 +1,6 @@
 package dev.christopherbell.libs.common.security;
 
 import dev.christopherbell.account.model.Account;
-import dev.christopherbell.account.model.AccountEntity;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import javax.crypto.SecretKeyFactory;
@@ -10,6 +9,9 @@ import java.security.SecureRandom;
 import java.util.Base64;
 import lombok.experimental.UtilityClass;
 
+/**
+ * Utility class for password hashing and verification using PBKDF2 with HMAC-SHA256.
+ */
 @UtilityClass
 public class PasswordUtils {
   private static final int SALT_LENGTH = 16;  // Length of the salt in bytes
@@ -38,13 +40,15 @@ public class PasswordUtils {
     return Base64.getEncoder().encodeToString(hash);
   }
 
-  public static void saltPassword(Account account, AccountEntity accountEntity)
+  /**
+   * Salts and hashes a password, then sets the salt and hash on the given account.
+   */
+  public static void saltPassword(String password, Account account)
       throws NoSuchAlgorithmException, InvalidKeySpecException {
-    var password = account.getPassword();
     var salt = PasswordUtils.generateSalt();
     var hash = PasswordUtils.hashPassword(password, salt);
-    accountEntity.setPasswordSalt(salt);
-    accountEntity.setPasswordHash(hash);
+    account.setPasswordSalt(salt);
+    account.setPasswordHash(hash);
   }
 
   /**

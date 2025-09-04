@@ -1,13 +1,12 @@
 package dev.christopherbell.account;
 
 import dev.christopherbell.account.model.Account;
-import dev.christopherbell.account.model.AccountEntity;
+import dev.christopherbell.account.model.dto.AccountDetail;
 import dev.christopherbell.account.model.Role;
 import java.time.Instant;
 import java.util.UUID;
 
 public class AccountStub {
-
   public static final String APPROVED_BY = "afbcf77d-d5d8-4d89-b89f-c24d82b61b0f";
   public static final String EMAIL = "test@example.com";
   public static final String FIRST_NAME = "Jacob";
@@ -19,24 +18,21 @@ public class AccountStub {
   public static final String USERNAME = "jacobfreakingjones";
 
 
-  public static Account getAccountStub() {
-    return Account.builder()
+  public static AccountDetail getAccountStub() {
+    return AccountDetail.builder()
         .createdOn(Instant.now())
         .email(EMAIL)
         .firstName(FIRST_NAME)
-        .inviteCode(UUID.fromString(INVITE_CODE))
-        .inviteCodeOwner(UUID.fromString(INVITE_CODE_OWNER))
         .lastLoginOn(Instant.now())
         .lastName(LAST_NAME)
-        .password(PASSWORD)
         .role(Role.valueOf(ROLE))
         .username(USERNAME)
         .build();
   }
 
-  public static AccountEntity getAccountEntityStub() {
-    return AccountEntity.builder()
-        .approvedBy(UUID.fromString(APPROVED_BY))
+  public static Account getAccountEntityStub() {
+    return Account.builder()
+        .approvedBy(APPROVED_BY)
         .createdOn(Instant.now())
         .email(EMAIL)
         .isApproved(false)

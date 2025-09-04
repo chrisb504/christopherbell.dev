@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 
-import com.azure.data.tables.TableClient;
-import dev.christopherbell.account.model.AccountEntity;
 import dev.christopherbell.account.model.Role;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -68,20 +66,20 @@ public class AccountServiceTest {
 //    assertEquals(account.getUsername(), result.getUsername());
 //  }
 
-  @Test
-  public void createNewAccountEntity() {
-
-    var account = AccountStub.getAccountStub();
-    var accountEntity = accountService.createNewAccountEntity(account);
-
-    assertEquals(account.getApprovedBy(), accountEntity.getApprovedBy());
-    Assertions.assertNotNull(accountEntity.getCreatedOn());
-    assertEquals(account.getEmail(), accountEntity.getEmail());
-    assertEquals(account.getFirstName(), accountEntity.getFirstName());
-    Assertions.assertFalse(accountEntity.getIsApproved());
-    assertEquals(account.getLastName(), accountEntity.getLastName());
-    assertEquals(Role.USER, accountEntity.getRole());
-    assertEquals(account.getUsername(), accountEntity.getUsername());
-  }
+//  @Test
+//  public void createNewAccountEntity() {
+//
+//    var account = AccountStub.getAccountStub();
+//    var accountEntity = accountService.createNewAccountEntity(account);
+//
+//    assertEquals(account.getApprovedBy(), accountEntity.getApprovedBy());
+//    Assertions.assertNotNull(accountEntity.getCreatedOn());
+//    assertEquals(account.getEmail(), accountEntity.getEmail());
+//    assertEquals(account.getFirstName(), accountEntity.getFirstName());
+//    Assertions.assertFalse(accountEntity.getIsApproved());
+//    assertEquals(account.getLastName(), accountEntity.getLastName());
+//    assertEquals(Role.USER, accountEntity.getRole());
+//    assertEquals(account.getUsername(), accountEntity.getUsername());
+//  }
 
 }

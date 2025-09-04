@@ -13,6 +13,8 @@ spring:
     mongodb:
       database: christopherbell
       uri: mongodb://localhost:27017
+      auto-index-creation: true
+---
 blog-properties:
   posts:
     - author: "Test"

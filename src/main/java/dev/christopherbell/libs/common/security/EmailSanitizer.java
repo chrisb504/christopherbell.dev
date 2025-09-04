@@ -8,6 +8,14 @@ import java.text.Normalizer.Form;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+/**
+ * Utility class for sanitizing and validating email addresses.
+ *
+ * This class provides a method to normalize and validate email addresses
+ * according to a pragmatic, deliverability-first profile. It handles common
+ * wrappers, Unicode normalization, and enforces rules on the local part and
+ * domain part of the email address.
+ */
 public final class EmailSanitizer {
   private EmailSanitizer() {}
 
