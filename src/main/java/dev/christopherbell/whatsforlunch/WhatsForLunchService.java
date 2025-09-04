@@ -19,8 +19,6 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class WhatsForLunchService {
-
-  private final TableClient tableClient;
   private final WhatsForLunchProperties whatsForLunchProperties;
   public static Restaurant restaurantOfTheDay;
   public static int randomNumberForRestaurant;
