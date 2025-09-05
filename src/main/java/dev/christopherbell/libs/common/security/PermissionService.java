@@ -48,7 +48,7 @@ public class PermissionService {
     var password = accountLoginRequest.password();
     var salt = account.getPasswordSalt();
     var hash = account.getPasswordHash();
-    return PasswordUtils.verifyPassword(password, salt, hash);
+    return PasswordUtil.verifyPassword(password, salt, hash);
   }
 
   /**

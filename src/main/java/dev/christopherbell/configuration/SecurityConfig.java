@@ -1,6 +1,6 @@
 package dev.christopherbell.configuration;
 
-import dev.christopherbell.libs.common.api.util.APIVersion;
+import dev.christopherbell.libs.common.api.APIVersion;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

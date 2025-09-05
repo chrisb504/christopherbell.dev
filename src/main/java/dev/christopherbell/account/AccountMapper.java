@@ -11,6 +11,13 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface AccountMapper {
 
+  /**
+   * Maps AccountDetail DTO to Account entity.
+   * Ignores fields that should not be set during this mapping.
+   *
+   * @param accountDetail the AccountDetail DTO
+   * @return the mapped Account entity
+   */
   @Mapping(target = "inviteCode", ignore = true)
   @Mapping(target = "inviteCodeOwner", ignore = true)
   @Mapping(target = "loginToken", ignore = true)
@@ -18,5 +25,11 @@ public interface AccountMapper {
   @Mapping(target = "passwordHash", ignore = true)
   Account toAccountEntity(AccountDetail accountDetail);
 
+  /**
+   * Maps Account entity to AccountDetail DTO.
+   *
+   * @param account the Account entity
+   * @return the mapped AccountDetail DTO
+   */
   AccountDetail toAccount(Account account);
 }
