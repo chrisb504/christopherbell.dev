@@ -1,7 +1,7 @@
 package dev.christopherbell.account;
 
-import static dev.christopherbell.libs.common.api.util.APIVersion.V20241215;
-import static dev.christopherbell.libs.common.api.util.APIVersion.V20250903;
+import static dev.christopherbell.libs.common.api.APIVersion.V20241215;
+import static dev.christopherbell.libs.common.api.APIVersion.V20250903;
 
 import dev.christopherbell.account.model.dto.AccountDetail;
 import dev.christopherbell.account.model.dto.AccountCreateRequest;
@@ -70,6 +70,13 @@ public class AccountController {
             .build(), HttpStatus.OK);
   }
 
+  /**
+   * Deletes an account by its ID.
+   *
+   * @param accountId - the ID of the account to delete.
+   * @return the deleted account.
+   * @throws Exception if there is an error deleting the account.
+   */
   @DeleteMapping(
       value = V20250903 + "/{accountId}",
       consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -170,6 +177,12 @@ public class AccountController {
             .build(), HttpStatus.OK);
   }
 
+  /**
+   * Gets the account of the currently authenticated user.
+   *
+   * @return the account of the currently authenticated user.
+   * @throws Exception if there is an error getting the account.
+   */
   @GetMapping(
       value = V20250903 + "/me",
       produces = MediaType.APPLICATION_JSON_VALUE

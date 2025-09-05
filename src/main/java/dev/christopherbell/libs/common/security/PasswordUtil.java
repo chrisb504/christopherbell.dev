@@ -13,7 +13,7 @@ import lombok.experimental.UtilityClass;
  * Utility class for password hashing and verification using PBKDF2 with HMAC-SHA256.
  */
 @UtilityClass
-public class PasswordUtils {
+public class PasswordUtil {
   private static final int SALT_LENGTH = 16;  // Length of the salt in bytes
   private static final int HASH_ITERATIONS = 65536; // Number of iterations
   private static final int HASH_KEY_LENGTH = 256; // Derived key length in bits
@@ -45,8 +45,8 @@ public class PasswordUtils {
    */
   public static void saltPassword(String password, Account account)
       throws NoSuchAlgorithmException, InvalidKeySpecException {
-    var salt = PasswordUtils.generateSalt();
-    var hash = PasswordUtils.hashPassword(password, salt);
+    var salt = PasswordUtil.generateSalt();
+    var hash = PasswordUtil.hashPassword(password, salt);
     account.setPasswordSalt(salt);
     account.setPasswordHash(hash);
   }

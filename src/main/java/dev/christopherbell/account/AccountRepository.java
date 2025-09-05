@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
  * </p>
  *
  * <p>
- * The primary key type for {@link Account} is {@link UUID}.
+ * The primary key type for {@link Account} is {@link String}.
  * </p>
  *
  * <p>

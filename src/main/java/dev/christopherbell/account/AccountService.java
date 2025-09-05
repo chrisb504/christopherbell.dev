@@ -11,7 +11,7 @@ import dev.christopherbell.libs.common.api.exception.InvalidTokenException;
 import dev.christopherbell.libs.common.api.exception.ResourceExistsException;
 import dev.christopherbell.libs.common.api.exception.ResourceNotFoundException;
 import dev.christopherbell.libs.common.security.EmailSanitizer;
-import dev.christopherbell.libs.common.security.PasswordUtils;
+import dev.christopherbell.libs.common.security.PasswordUtil;
 import dev.christopherbell.libs.common.security.PermissionService;
 import dev.christopherbell.libs.common.security.UsernameSanitizer;
 import java.security.NoSuchAlgorithmException;
@@ -68,7 +68,7 @@ public class AccountService {
     log.info("Creating account for username {}", accountCreateRequest.username());
     var accountEntity = createAccountEntity(accountCreateRequest);
     try {
-      PasswordUtils.saltPassword(accountCreateRequest.password(), accountEntity);
+      PasswordUtil.saltPassword(accountCreateRequest.password(), accountEntity);
       accountRepository.save(accountEntity);
     } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
       throw new RuntimeException("Can't create account due to password issues", e);

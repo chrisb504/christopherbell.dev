@@ -1,15 +1,16 @@
-package dev.christopherbell.libs.common.api.util;
+package dev.christopherbell.libs.common.security;
 
 import dev.christopherbell.libs.common.api.exception.InvalidRequestException;
+import dev.christopherbell.libs.common.api.APIConstants;
 import java.util.List;
 import java.util.Objects;
 
 /**
  * Represents common utils for requests.
  */
-public final class APIValidationUtils {
+public final class APIValidationUtil {
 
-  private APIValidationUtils() {
+  private APIValidationUtil() {
   }
 
   /**
