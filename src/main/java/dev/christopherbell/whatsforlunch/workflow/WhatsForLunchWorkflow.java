@@ -4,6 +4,7 @@ import dev.christopherbell.libs.common.workflow.Workflow;
 import dev.christopherbell.libs.common.workflow.exception.WorkflowException;
 import dev.christopherbell.libs.common.workflow.exception.WorkflowStopExecutionException;
 import dev.christopherbell.libs.common.workflow.model.WorkflowContext;
+import dev.christopherbell.libs.common.workflow.model.WorkflowResult;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class WhatsForLunchWorkflow implements Workflow {
 
   @Override
-  public <T extends WorkflowContext> T execute(T ctx) throws WorkflowException {
+  public WorkflowResult execute(WorkflowContext ctx) throws WorkflowException {
     if (!(ctx instanceof WhatsForLunchWorkflowContext whatsForLunchWorkflowContext)) {
       throw new WorkflowStopExecutionException(
           "Invalid context type provided to WhatsForLunchWorkflow. Expected WhatsForLunchWorkflowContext."

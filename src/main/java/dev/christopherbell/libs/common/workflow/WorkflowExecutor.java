@@ -3,8 +3,14 @@ package dev.christopherbell.libs.common.workflow;
 import dev.christopherbell.libs.common.workflow.exception.WorkflowRetryableException;
 import dev.christopherbell.libs.common.workflow.exception.WorkflowStopExecutionException;
 import dev.christopherbell.libs.common.workflow.model.WorkflowContext;
+import dev.christopherbell.libs.common.workflow.model.WorkflowResult;
 import dev.christopherbell.libs.common.workflow.model.WorkflowStatus;
 import dev.christopherbell.libs.common.workflow.operation.Operation;
+import dev.christopherbell.libs.common.workflow.operation.OperationResult;
+import dev.christopherbell.libs.common.workflow.operation.OperationStatus;
+import dev.christopherbell.libs.common.workflow.operation.WorkflowEngine;
+import java.time.Instant;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +19,7 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class WorkflowEngine {
+public class WorkflowExecutor implements WorkflowEngine {
 
   /**
    * Executes the given operation with the provided context.
@@ -21,16 +27,26 @@ public class WorkflowEngine {
    * @param operation the operation to be executed
    * @param context the context for the operation execution
    */
-  public void executeOperation(Operation operation, WorkflowContext context) {
+  public OperationResult executeOperation(Operation operation, WorkflowContext context) {
+    OperationResult result;
     var operationName = operation.getOperationName();
     try {
       log.info("Starting execution of operation: {}", operationName);
-      var result = operation.execute(context);
+      result = operation.execute(context);
       context.getOperationHistory().put(operationName, result.getStatus());
       log.info("Successfully completed execution of operation: {}", operationName);
     } catch (Exception e) {
       log.error("Error occurred during operation execution: {}. Operation: {}", e.getMessage(), operationName, e);
+      context.getOperationHistory().put(operationName, OperationStatus.FAILED);
+      var now = Instant.now();
+      result = OperationResult.builder()
+          .id(UUID.randomUUID())
+          .createdAt(now)
+          .updatedAt(now)
+          .status(OperationStatus.FAILED)
+          .build();
     }
+    return result;
   }
 
   /**
@@ -39,12 +55,12 @@ public class WorkflowEngine {
    * @param workflow the workflow to be executed
    * @param context the context for the workflow execution
    */
-  public void executeWorkflow(Workflow workflow, WorkflowContext context) {
+  public WorkflowResult executeWorkflow(Workflow workflow, WorkflowContext context) {
+    WorkflowResult result;
     var workflowName = workflow.getWorkflowName();
-    WorkflowContext updatedContext;
      try {
        log.info("Starting execution of workflow: {}", workflowName);
-       workflow.execute(context);
+       result = workflow.execute(context);
        handleWorkflowSuccessState(context);
        log.info("Successfully completed execution of workflow: {}", workflowName);
      } catch (WorkflowRetryableException e) {
@@ -53,16 +69,38 @@ public class WorkflowEngine {
            e.getMessage(),
            workflowName
        );
+       var now = Instant.now();
+       result = WorkflowResult.builder()
+           .id(UUID.randomUUID())
+           .createdAt(now)
+           .updatedAt(now)
+           .status(WorkflowStatus.RETRYABLE_FAILURE)
+           .build();
        retryWorkflow(workflow, context);
      } catch (WorkflowStopExecutionException e) {
        log.error("Stopping workflow execution due to stop execution exception: {}", e.getMessage());
+       handleWorkflowStopExecutionException(e, workflowName, context);
+       var now = Instant.now();
+       result = WorkflowResult.builder()
+           .id(UUID.randomUUID())
+           .createdAt(now)
+           .updatedAt(now)
+           .status(WorkflowStatus.STOPPED)
+           .build();
 
-       updatedContext = handleWorkflowStopExecutionException(e, workflowName, context);
      } catch (Exception e) {
        log.error("Stopping workflow: Unexpected error occurred during workflow execution: {}", e.getMessage(), e);
+       var now = Instant.now();
+       result = WorkflowResult.builder()
+           .id(UUID.randomUUID())
+           .createdAt(now)
+           .updatedAt(now)
+           .status(WorkflowStatus.FAILED)
+           .build();
      } finally {
        saveContext(context);
      }
+     return result;
   }
 
   public void retryWorkflow(Workflow workflow, WorkflowContext context) {

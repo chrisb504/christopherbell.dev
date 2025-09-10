@@ -9,6 +9,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Represents the context of a workflow, containing information about its type, status, and operation history.
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor

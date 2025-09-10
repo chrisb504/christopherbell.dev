@@ -2,6 +2,7 @@ package dev.christopherbell.libs.common.workflow;
 
 import dev.christopherbell.libs.common.workflow.exception.WorkflowException;
 import dev.christopherbell.libs.common.workflow.model.WorkflowContext;
+import dev.christopherbell.libs.common.workflow.model.WorkflowResult;
 
 /**
  * Represents a workflow that can be executed with a given context.
@@ -15,7 +16,7 @@ public interface Workflow {
    * @return the updated context after execution
    * @throws WorkflowException if an error occurs during workflow execution
    */
-  <T extends WorkflowContext> T execute(T ctx) throws WorkflowException;
+  WorkflowResult execute(WorkflowContext ctx) throws WorkflowException;
 
   /**
    * Returns the name of the workflow.
