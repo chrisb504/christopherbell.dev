@@ -5,6 +5,9 @@ import dev.christopherbell.libs.common.workflow.exception.WorkflowException;
 import dev.christopherbell.libs.common.workflow.exception.WorkflowStopExecutionException;
 import dev.christopherbell.libs.common.workflow.model.WorkflowContext;
 import dev.christopherbell.libs.common.workflow.model.WorkflowResult;
+import dev.christopherbell.libs.common.workflow.model.WorkflowStatus;
+import java.time.Instant;
+import java.util.UUID;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,7 +23,13 @@ public class WhatsForLunchWorkflow implements Workflow {
           "Invalid context type provided to WhatsForLunchWorkflow. Expected WhatsForLunchWorkflowContext."
       );
     }
-    whatsForLunchWorkflowContext.getId();
-    return null;
+
+    var now = Instant.now();
+    return WhatsForLunchWorkflowResult.builder()
+        .createdAt(now)
+        .updatedAt(now)
+        .id(UUID.randomUUID())
+        .status(WorkflowStatus.COMPLETED)
+        .build();
   }
 }

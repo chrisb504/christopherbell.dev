@@ -1,8 +1,10 @@
-package dev.christopherbell.libs.common.workflow.operation;
+package dev.christopherbell.libs.common.workflow;
 
-import dev.christopherbell.libs.common.workflow.Workflow;
 import dev.christopherbell.libs.common.workflow.model.WorkflowContext;
 import dev.christopherbell.libs.common.workflow.model.WorkflowResult;
+import dev.christopherbell.libs.common.workflow.operation.Operation;
+import dev.christopherbell.libs.common.workflow.operation.OperationResult;
+import dev.christopherbell.libs.common.workflow.retry.RetryPolicy;
 
 /**
  * Interface representing a workflow engine capable of executing operations and workflows.
@@ -17,6 +19,16 @@ public interface WorkflowEngine {
    * @return the result of the operation execution
    */
   OperationResult executeOperation(Operation operation, WorkflowContext context);
+
+  /**
+   * Executes the given workflow with retry logic based on the provided retry policy.
+   *
+   * @param retryPolicy the retry policy to be applied for workflow execution
+   * @param workflow the workflow to be executed
+   * @param context the workflow context to be used for execution
+   * @return the result of the workflow execution with retry information
+   */
+  WorkflowResult executeWorkflowWithRetry(RetryPolicy retryPolicy, Workflow workflow, WorkflowContext context);
 
   /**
    * Executes the given workflow within the provided workflow context.

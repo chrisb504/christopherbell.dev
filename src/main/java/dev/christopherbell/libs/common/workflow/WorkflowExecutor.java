@@ -8,7 +8,7 @@ import dev.christopherbell.libs.common.workflow.model.WorkflowStatus;
 import dev.christopherbell.libs.common.workflow.operation.Operation;
 import dev.christopherbell.libs.common.workflow.operation.OperationResult;
 import dev.christopherbell.libs.common.workflow.operation.OperationStatus;
-import dev.christopherbell.libs.common.workflow.operation.WorkflowEngine;
+import dev.christopherbell.libs.common.workflow.retry.RetryPolicy;
 import java.time.Instant;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +49,22 @@ public class WorkflowExecutor implements WorkflowEngine {
     return result;
   }
 
+  public WorkflowResult executeWorkflowWithRetry(RetryPolicy retryPolicy, Workflow workflow, WorkflowContext context) {
+    var jobTimeout = retryPolicy.getWorkflowTimeOutInMinutes();
+    var backOff = retryPolicy.getWorkflowTimeOutInMinutes();
+    var startTime = context.getCreatedAt();
+
+    if (retryPolicy.isJobStillRetryable(jobTimeout, startTime)) {
+      var result = this.executeWorkflow(workflow, context);
+      if (result.getStatus() == WorkflowStatus.FAILED) {
+        var retryResult = retryPolicy.calculateNextRetry(backOff);
+        //TODO: Implement logic to schedule the next retry based on the calculated next retry time.
+      }
+    }
+
+    throw new WorkflowStopExecutionException("Workflow execution exceeded the maximum retry time limit.");
+  }
+
   /**
    * Executes the given workflow with the provided context.
    *
@@ -76,7 +92,6 @@ public class WorkflowExecutor implements WorkflowEngine {
            .updatedAt(now)
            .status(WorkflowStatus.RETRYABLE_FAILURE)
            .build();
-       retryWorkflow(workflow, context);
      } catch (WorkflowStopExecutionException e) {
        log.error("Stopping workflow execution due to stop execution exception: {}", e.getMessage());
        handleWorkflowStopExecutionException(e, workflowName, context);
@@ -101,11 +116,6 @@ public class WorkflowExecutor implements WorkflowEngine {
        saveContext(context);
      }
      return result;
-  }
-
-  public void retryWorkflow(Workflow workflow, WorkflowContext context) {
-    // Implementation for retrying the workflow goes here
-    log.info("Retrying workflow: {} with context: {}", workflow.getWorkflowName(), context);
   }
 
   public void stopWorkflowExecution(String workflowName) {
