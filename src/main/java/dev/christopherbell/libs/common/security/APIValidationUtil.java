@@ -3,15 +3,13 @@ package dev.christopherbell.libs.common.security;
 import dev.christopherbell.libs.common.api.exception.InvalidRequestException;
 import dev.christopherbell.libs.common.api.APIConstants;
 import java.util.List;
-import java.util.Objects;
+import lombok.experimental.UtilityClass;
 
 /**
- * Represents common utils for requests.
+ * Utility class for validating API requests and resources.
  */
+@UtilityClass
 public final class APIValidationUtil {
-
-  private APIValidationUtil() {
-  }
 
   /**
    * Checks to see if a request's clientId is allowed to make the request. If not, throw an InvalidResourceException.
@@ -21,8 +19,10 @@ public final class APIValidationUtil {
    * @return true if the client id is allowed.
    * @throws InvalidRequestException if the client id is not allowed.
    */
-  public static boolean isValidClientId(List<String> acceptedClients, String requestClientId)
-      throws InvalidRequestException {
+  public static boolean isValidClientId(
+      List<String> acceptedClients,
+      String requestClientId
+  ) throws InvalidRequestException {
     if (!acceptedClients.contains(requestClientId)) {
       throw new InvalidRequestException(APIConstants.VALIDATION_BAD_CLIENT_ID);
     }
@@ -38,9 +38,11 @@ public final class APIValidationUtil {
    * @return true if the resource is valid.
    * @throws InvalidRequestException if the resource is not valid.
    */
-  public static boolean isValidResource(String errorMessage, String questionableResource)
-      throws InvalidRequestException {
-    if (Objects.isNull(questionableResource) || questionableResource.isBlank()) {
+  public static boolean isValidResource(
+      String errorMessage,
+      String questionableResource
+  ) throws InvalidRequestException {
+    if (questionableResource == null || questionableResource.isBlank()) {
       throw new InvalidRequestException(errorMessage);
     }
     return true;
