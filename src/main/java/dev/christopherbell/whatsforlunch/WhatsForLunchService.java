@@ -1,6 +1,6 @@
 package dev.christopherbell.whatsforlunch;
 
-import dev.christopherbell.libs.common.api.exception.InvalidRequestException;
+import dev.christopherbell.libs.api.exception.InvalidRequestException;
 import dev.christopherbell.whatsforlunch.model.Restaurant;
 import dev.christopherbell.whatsforlunch.model.WhatsForLunchProperties;
 import dev.christopherbell.whatsforlunch.model.WhatsForLunchResponse;

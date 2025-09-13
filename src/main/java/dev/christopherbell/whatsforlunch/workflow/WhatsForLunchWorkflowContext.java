@@ -1,7 +1,7 @@
 package dev.christopherbell.whatsforlunch.workflow;
 
-import dev.christopherbell.libs.common.workflow.model.WorkflowContext;
-import dev.christopherbell.libs.common.workflow.model.WorkflowType;
+import dev.christopherbell.libs.workflow.model.WorkflowContext;
+import dev.christopherbell.libs.workflow.model.WorkflowType;
 import dev.christopherbell.whatsforlunch.model.Restaurant;
 import java.time.Instant;
 import lombok.AllArgsConstructor;
