@@ -10,6 +10,7 @@ import dev.christopherbell.libs.api.model.Response;
 import dev.christopherbell.libs.security.PermissionService;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Represents the controller responsible for handling account related endpoints.
  */
+@Slf4j
 @AllArgsConstructor
 @RequestMapping("/api/accounts")
 @RestController

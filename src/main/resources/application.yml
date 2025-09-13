@@ -8,7 +8,7 @@ logging:
 ---
 spring:
   profiles:
-    default: local
+    active: local
   data:
     mongodb:
       database: christopherbell
@@ -89,23 +89,3 @@ photo-properties:
       path: "/images/photos/IMG_1836.jpeg"
       description: n/a
       date-added: 10-24-2021
-whats-for-lunch-properties:
-  restaurants:
-    - id: "b9dd3cd3-5b9f-4063-922c-fc808b05374a"
-      name: "McDonalds"
-    - id: "d7d96861-19a2-47bc-984d-bdc25c523535"
-      name: "Pflugervile Taco House"
-    - id: "1794b53c-6341-497b-b5b3-136abaf490ad"
-      name: "Burger King"
-    - id: "871da6f2-12e2-45c2-b963-669a2f1c3275"
-      name: "Tacos La Catarina"
-    - id: "73c01364-f3f5-45e0-8a55-f7112b2bf1e2"
-      name: "Asashi Imports"
-    - id: "c8bf9ae2-77a1-46d2-bc32-b39240ebeb76"
-      name: "Kura Sushi"
-    - id: "b6632906-972e-4ef6-80d4-6fb65390f8b2"
-      name: "Ramen Tatsuya"
-    - id: "f7afc807-06e4-4a4a-8413-195f5139fb39"
-      name: "Stile Switch"
-    - id: "a148d6d5-3469-4d12-8047-9b6dbe4cd98d"
-      name: "Bird Bird Biscuit"

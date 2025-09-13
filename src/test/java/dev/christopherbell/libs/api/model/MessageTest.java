@@ -1,7 +1,8 @@
 package dev.christopherbell.libs.api.model;
 
-import dev.christopherbell.libs.common.api.common.TestUtil;
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import org.junit.jupiter.api.Test;
 
 public class MessageTest {
@@ -9,24 +10,24 @@ public class MessageTest {
   @Test
   public void testMessageBuilder() {
     var message = Message.builder()
-        .code(TestUtil.TEST_CODE)
-        .description(TestUtil.TEST_DESCRIPTION)
+        .code(ApiModelStub.TEST_CODE)
+        .description(ApiModelStub.TEST_DESCRIPTION)
         .build();
 
-    Assertions.assertNotNull(message);
-    Assertions.assertEquals(TestUtil.TEST_CODE, message.getCode());
-    Assertions.assertEquals(TestUtil.TEST_DESCRIPTION, message.getDescription());
+    assertNotNull(message);
+    assertEquals(ApiModelStub.TEST_CODE, message.getCode());
+    assertEquals(ApiModelStub.TEST_DESCRIPTION, message.getDescription());
   }
 
   @Test
   public void testMessageSetters() {
     var message = Message.builder()
         .build();
-    message.setCode(TestUtil.TEST_CODE);
-    message.setDescription(TestUtil.TEST_DESCRIPTION);
+    message.setCode(ApiModelStub.TEST_CODE);
+    message.setDescription(ApiModelStub.TEST_DESCRIPTION);
 
-    Assertions.assertNotNull(message);
-    Assertions.assertEquals(TestUtil.TEST_CODE, message.getCode());
-    Assertions.assertEquals(TestUtil.TEST_DESCRIPTION, message.getDescription());
+    assertNotNull(message);
+    assertEquals(ApiModelStub.TEST_CODE, message.getCode());
+    assertEquals(ApiModelStub.TEST_DESCRIPTION, message.getDescription());
   }
 }
