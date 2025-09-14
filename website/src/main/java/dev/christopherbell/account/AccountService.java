@@ -5,9 +5,11 @@ import dev.christopherbell.account.model.dto.AccountDetail;
 import dev.christopherbell.account.model.Account;
 import dev.christopherbell.account.model.AccountStatus;
 import dev.christopherbell.account.model.dto.AccountCreateRequest;
+import dev.christopherbell.account.model.dto.AccountUpdateRequest;
 import dev.christopherbell.account.model.AccountLoginRequest;
 import dev.christopherbell.account.model.Role;
 import dev.christopherbell.libs.api.exception.InvalidTokenException;
+import dev.christopherbell.libs.api.exception.InvalidRequestException;
 import dev.christopherbell.libs.api.exception.ResourceExistsException;
 import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
 import dev.christopherbell.libs.security.EmailSanitizer;
@@ -84,6 +86,54 @@ public class AccountService {
       throw new ResourceExistsException("Account with given email or username already exists.", e);
     }
     return accountMapper.toAccount(account);
+  }
+
+  /**
+   * Updates an existing account with the provided request values.
+   * Only non-null fields in the request are applied.
+   *
+   * @param request the update request containing fields to change; must include a non-blank id
+   * @return the updated account detail
+   * @throws InvalidRequestException if the request or id is null/blank
+   * @throws ResourceNotFoundException if the account with the given id does not exist
+   */
+  public AccountDetail updateAccount(AccountUpdateRequest request)
+      throws InvalidRequestException, ResourceNotFoundException {
+    if (request == null || request.id() == null || request.id().isBlank()) {
+      throw new InvalidRequestException("Account id cannot be null or blank.");
+    }
+
+    var existing =
+        accountRepository
+            .findById(request.id())
+            .orElseThrow(
+                () -> new ResourceNotFoundException(
+                    String.format("Account with id %s not found.", request.id())));
+
+    if (request.firstName() != null) {
+      existing.setFirstName(request.firstName());
+    }
+    if (request.lastName() != null) {
+      existing.setLastName(request.lastName());
+    }
+    if (request.email() != null) {
+      existing.setEmail(EmailSanitizer.sanitize(request.email()));
+    }
+    if (request.username() != null) {
+      existing.setUsername(UsernameSanitizer.sanitize(request.username()));
+    }
+    if (request.role() != null) {
+      existing.setRole(request.role());
+    }
+    if (request.status() != null) {
+      existing.setStatus(request.status());
+    }
+    if (request.isApproved() != null) {
+      existing.setIsApproved(request.isApproved());
+    }
+
+    var saved = accountRepository.save(existing);
+    return accountMapper.toAccount(saved);
   }
 
   /**

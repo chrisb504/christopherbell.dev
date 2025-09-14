@@ -2,10 +2,12 @@ package dev.christopherbell.account;
 
 import static dev.christopherbell.libs.api.APIVersion.V20241215;
 import static dev.christopherbell.libs.api.APIVersion.V20250903;
+import static dev.christopherbell.libs.api.APIVersion.V20250914;
 
 import dev.christopherbell.account.model.dto.AccountDetail;
 import dev.christopherbell.account.model.dto.AccountCreateRequest;
 import dev.christopherbell.account.model.AccountLoginRequest;
+import dev.christopherbell.libs.api.APIVersion;
 import dev.christopherbell.libs.api.model.Response;
 import dev.christopherbell.permission.PermissionService;
 import java.util.List;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PutMapping;
 
 /**
  * REST controller for account management endpoints under the base path
@@ -251,5 +254,30 @@ public class AccountController {
         .payload(accountService.loginAccount(accountLoginRequest))
         .success(true)
         .build(), HttpStatus.OK);
+  }
+
+  /**
+   * Updates an existing account.
+   *
+   * <p>Requires {@code ADMIN} authority.</p>
+   *
+   * @param request the account update request payload
+   * @return HTTP 202 with the updated {@link AccountDetail} in the response payload
+   * @throws Exception if validation fails or update cannot be completed
+   */
+  @PutMapping(
+      value = V20250914,
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE
+  )
+  @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
+  public ResponseEntity<Response<AccountDetail>> updateAccount(
+      @RequestBody AccountUpdateRequest request
+  ) throws Exception {
+    return new ResponseEntity<>(
+        Response.<AccountDetail>builder()
+            .payload(accountService.updateAccount(request))
+            .success(true)
+            .build(), HttpStatus.ACCEPTED);
   }
 }
