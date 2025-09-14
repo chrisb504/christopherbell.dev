@@ -1,0 +1,11 @@
+{
+  "id": "acc-123",
+  "firstName": "Chris",
+  "lastName": "Bell",
+  "email": "chris@example.com",
+  "username": "chrisbell",
+  "role": "ADMIN",
+  "status": "ACTIVE",
+  "isApproved": true
+}
+
