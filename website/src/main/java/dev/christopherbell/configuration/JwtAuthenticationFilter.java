@@ -22,6 +22,14 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.core.annotation.Order;
 
+/**
+ * Servlet filter that authenticates requests using a JWT found in the
+ * {@code Authorization: Bearer <token>} header.
+ *
+ * <p>Skips paths matched by the configured {@link RequestMatcher}s. When a
+ * valid token is present, sets the Spring Security {@link Authentication}
+ * into the {@link SecurityContextHolder}.</p>
+ */
 @Order(2)
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -32,9 +40,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   }
 
   /**
-   * Returns true if any skipMatcher matches the request
-   * @param request - request sent in by a client.
-   * @return boolean
+   * Determines whether this filter should be skipped for the given request.
+   *
+   * @param request incoming HTTP request
+   * @return {@code true} if any configured skip matcher matches
    */
   @Override
   protected boolean shouldNotFilter(HttpServletRequest request) {
@@ -57,6 +66,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
   }
 
+  /**
+   * Extracts the bearer token from the {@code Authorization} header.
+   *
+   * @param request current HTTP request
+   * @return the JWT value, or {@code null} if header is missing or not a bearer token
+   */
   private String resolveToken(HttpServletRequest request) {
     String bearerToken = request.getHeader("Authorization");
     if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
@@ -65,6 +80,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     return null;
   }
 
+  /**
+   * Builds an {@link Authentication} from a validated JWT.
+   *
+   * @param token the raw JWT token
+   * @return a {@link UsernamePasswordAuthenticationToken} populated with subject and authorities
+   */
   private Authentication getAuthentication(String token) {
     Claims claims = PermissionService.validateToken(token);
     String username = claims.getSubject();

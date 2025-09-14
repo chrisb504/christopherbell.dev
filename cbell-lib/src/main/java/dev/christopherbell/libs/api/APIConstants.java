@@ -1,7 +1,7 @@
 package dev.christopherbell.libs.api;
 
 /**
- * Represents a spot to keep commonly used constants.
+ * Common API constants used across services and libraries.
  */
 public final class APIConstants {
 

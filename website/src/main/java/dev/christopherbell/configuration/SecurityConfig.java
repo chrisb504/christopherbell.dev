@@ -17,6 +17,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
+/**
+ * Spring Security configuration.
+ *
+ * <p>Defines public routes, enables method security, and wires custom filters
+ * for JWT auth, rate limiting, and request size limits.</p>
+ */
 @Configuration
 @EnableMethodSecurity
 @EnableWebSecurity
@@ -39,6 +45,11 @@ public class SecurityConfig {
       "/wfl"
   };
 
+  /**
+   * Builds the application {@link SecurityFilterChain}.
+   *
+   * @return the configured security filter chain
+   */
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http,
       RateLimitFilter rateLimitFilter,
@@ -63,27 +74,41 @@ public class SecurityConfig {
         .build();
   }
 
+  /**
+   * Configures the rate limiting filter bean.
+   */
   @Bean
   public RateLimitFilter rateLimitFilter() {
     return new RateLimitFilter();
   }
 
+  /**
+   * Configures the JWT authentication filter bean.
+   */
   @Bean
   public JwtAuthenticationFilter jwtAuthenticationFilter() {
     return new JwtAuthenticationFilter(createSkipMatchers(PUBLIC_URLS));
   }
 
+  /**
+   * Configures the request size limiting filter bean.
+   */
   @Bean
   public RequestSizeLimitFilter requestSizeLimitFilter() {
     return new RequestSizeLimitFilter();
   }
 
+  /**
+   * Exposes the Spring {@link AuthenticationManager}.
+   */
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
     return configuration.getAuthenticationManager();
   }
 
-  // Helper method to create a list of AntPathRequestMatchers for JwtAuthenticationFilter
+  /**
+   * Helper to convert path patterns into {@link AntPathRequestMatcher}s.
+   */
   private List<RequestMatcher> createSkipMatchers(String[] urls) {
     return Arrays.stream(urls)
         .map(AntPathRequestMatcher::new)

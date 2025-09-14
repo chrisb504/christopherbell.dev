@@ -9,14 +9,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
- * Filter that rejects requests exceeding a configured maximum size.
+ * Servlet filter that rejects requests exceeding a configured maximum size.
+ *
+ * <p>Defaults to 1 MB when no explicit limit is provided.</p>
  */
 public class RequestSizeLimitFilter extends OncePerRequestFilter {
 
   private final long maxSizeBytes;
 
   /**
-   * Creates a filter with a default limit of 1MB.
+   * Creates a filter with a default limit of 1 MB.
    */
   public RequestSizeLimitFilter() {
     this(1_000_000L);

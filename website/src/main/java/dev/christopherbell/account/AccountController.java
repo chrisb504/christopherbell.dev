@@ -24,7 +24,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Represents the controller responsible for handling account related endpoints.
+ * REST controller for account management endpoints under the base path
+ * {@code /api/accounts}.
+ *
+ * <p>Endpoints generally return a {@link ResponseEntity} wrapping a
+ * {@link Response} payload. Some routes are versioned using constants from
+ * {@link dev.christopherbell.libs.api.APIVersion} such as {@link V20241215}
+ * and {@link V20250903}.</p>
+ *
+ * <p>Authorization is enforced via Spring Security annotations. Most
+ * administrative operations require the {@code ADMIN} authority as evaluated by
+ * {@link PermissionService}.</p>
+ *
+ * @see AccountService
+ * @see PermissionService
+ * @see Response
  */
 @Slf4j
 @AllArgsConstructor
@@ -34,6 +48,15 @@ public class AccountController {
   private AccountService accountService;
   private PermissionService permissionService;
 
+    /**
+   * Approves a pending or unapproved account.
+   *
+   * <p>Requires {@code ADMIN} authority.</p>
+   *
+   * @param accountId the ID of the account to approve
+   * @return HTTP 200 with the updated {@link AccountDetail} in the response payload
+   * @throws Exception if approval fails or the account cannot be found
+   */
   @PostMapping(
       value = V20250903 + "/approve/{accountId}",
       consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -53,9 +76,9 @@ public class AccountController {
   /**
    * Creates a new account.
    *
-   * @param accountCreateRequest - the account create request.
-   * @return the created account.
-   * @throws Exception if there is an error creating the account.
+   * @param accountCreateRequest the account creation request payload
+   * @return HTTP 200 with the created {@link AccountDetail} in the response payload
+   * @throws Exception if validation fails or creation cannot be completed
    */
   @PostMapping(
       value = V20241215 + "/create",
@@ -73,11 +96,13 @@ public class AccountController {
   }
 
   /**
-   * Deletes an account by its ID.
+   * Deletes an account by ID.
    *
-   * @param accountId - the ID of the account to delete.
-   * @return the deleted account.
-   * @throws Exception if there is an error deleting the account.
+   * <p>Requires {@code ADMIN} authority.</p>
+   *
+   * @param accountId the ID of the account to delete
+   * @return HTTP 200 with the deleted {@link AccountDetail} in the response payload
+   * @throws Exception if deletion fails or the account cannot be found
    */
   @DeleteMapping(
       value = V20250903 + "/{accountId}",
@@ -96,11 +121,13 @@ public class AccountController {
   }
 
   /**
-   * Gets an account by its email.
+   * Retrieves an account by email address.
    *
-   * @param email - the ID of the account to get.
-   * @return the account with the given ID.
-   * @throws Exception if there is an error getting the account.
+   * <p>Requires {@code ADMIN} authority.</p>
+   *
+   * @param email the email address of the account to retrieve
+   * @return HTTP 200 with the matching {@link AccountDetail} in the response payload
+   * @throws Exception if lookup fails or no account matches the email
    */
   @GetMapping(
       value = V20241215 + "/email/{email}",
@@ -118,11 +145,13 @@ public class AccountController {
   }
 
   /**
-   * Gets an account by its ID.
+   * Retrieves an account by ID.
    *
-   * @param id - the ID of the account to get.
-   * @return the account with the given ID.
-   * @throws Exception if there is an error getting the account.
+   * <p>Requires {@code ADMIN} authority.</p>
+   *
+   * @param id the ID of the account to retrieve
+   * @return HTTP 200 with the matching {@link AccountDetail} in the response payload
+   * @throws Exception if lookup fails or the account cannot be found
    */
   @GetMapping(
       value = V20250903 + "/{id}",
@@ -140,11 +169,13 @@ public class AccountController {
   }
 
   /**
-   * Gets an account by its username.
+   * Retrieves an account by username.
    *
-   * @param username - the username of the account to get.
-   * @return the account with the given username.
-   * @throws Exception if there is an error getting the account.
+   * <p>Requires {@code ADMIN} authority.</p>
+   *
+   * @param username the username of the account to retrieve
+   * @return HTTP 200 with the matching {@link AccountDetail} in the response payload
+   * @throws Exception if lookup fails or the account cannot be found
    */
   @GetMapping(
       value = V20250903 + "/username/{username}",
@@ -162,9 +193,11 @@ public class AccountController {
   }
 
   /**
-   * Gets all accounts.
+   * Lists all accounts.
    *
-   * @return a list of all accounts.
+   * <p>Requires {@code ADMIN} authority.</p>
+   *
+   * @return HTTP 200 with a list of {@link AccountDetail} in the response payload
    */
   @GetMapping(
       value = V20241215,
@@ -180,10 +213,10 @@ public class AccountController {
   }
 
   /**
-   * Gets the account of the currently authenticated user.
+   * Retrieves the account of the currently authenticated user.
    *
-   * @return the account of the currently authenticated user.
-   * @throws Exception if there is an error getting the account.
+   * @return HTTP 200 with the caller's {@link AccountDetail} in the response payload
+   * @throws Exception if the account cannot be resolved for the current user
    */
   @GetMapping(
       value = V20250903 + "/me",

@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
- * Represents the service layer for handling blog related requests.
+ * Service layer for blog queries.
  */
 @AllArgsConstructor
 @Service
@@ -21,11 +21,11 @@ public class BlogService {
   private final BlogProperties blogProperties;
 
   /**
-   * Gets a blog post with the requested id.
+   * Retrieves a blog post by ID.
    *
-   * @param id of the requested blog post,
-   * @return a BlogResponse with the requested post.
-   * @throws InvalidRequestException when id is not as expected or no blog post is found.
+   * @param id the requested blog post ID
+   * @return a {@link BlogResponse} containing the matching post
+   * @throws InvalidRequestException if the ID is blank or no post matches
    */
   public BlogResponse getPostById(String id) throws InvalidRequestException {
     if (Objects.isNull(id) || id.isBlank()) {
@@ -44,9 +44,9 @@ public class BlogService {
   }
 
   /**
-   * Get all existing blog posts.
+   * Retrieves all blog posts.
    *
-   * @return a BlogResponse containing a list of all blog posts.
+   * @return a {@link BlogResponse} with all posts
    */
   public BlogResponse getPosts() {
     return BlogResponse.builder()

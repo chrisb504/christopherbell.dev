@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Represents the controller for dealing with Restaurant related requests.
+ * REST controller for restaurant management under {@code /api/whatsforlunch/restaurant}.
  */
 @RequiredArgsConstructor
 @RequestMapping("/api/whatsforlunch/restaurant")
@@ -34,8 +34,8 @@ public class RestaurantController {
   /**
    * Creates a new restaurant.
    *
-   * @param request - the create restaurant request.
-   * @return the created restaurant.
+   * @param request create request payload
+   * @return HTTP 201 with the created restaurant
    */
   @PostMapping(
       value = APIVersion.V20250912,
@@ -57,8 +57,8 @@ public class RestaurantController {
   /**
    * Deletes an existing restaurant.
    *
-   * @param id of the restaurant to delete.
-   * @return the deleted restaurant.
+   * @param id the restaurant ID to delete
+   * @return HTTP 200 with the deleted restaurant
    */
   @DeleteMapping(
       value = APIVersion.V20250913 + "/{id}",
@@ -78,10 +78,10 @@ public class RestaurantController {
   }
 
   /**
-   * Takes in an id for a restaurant and returns that restaurant with the given id.
+   * Retrieves a restaurant by ID.
    *
-   * @param id of the restaurant
-   * @return WhatsForLunchResponse containing the requested restaurant.
+   * @param id the restaurant ID
+   * @return HTTP 200 with the matching restaurant
    */
   @GetMapping(value = APIVersion.V20250912 + "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
@@ -97,9 +97,9 @@ public class RestaurantController {
   }
 
   /**
-   * Returns all existing restaurants.
+   * Lists all restaurants.
    *
-   * @return a WhatsForLunchResponse containing all existing restaurants.
+   * @return HTTP 200 with all restaurants
    */
   @GetMapping(value = APIVersion.V20250912, produces = MediaType.APPLICATION_JSON_VALUE)
   @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
@@ -115,7 +115,7 @@ public class RestaurantController {
   /**
    * Updates an existing restaurant.
    *
-   * @return the updated restaurant.
+   * @return HTTP 202 with the updated restaurant
    */
   @PutMapping(
       value = APIVersion.V20250913,

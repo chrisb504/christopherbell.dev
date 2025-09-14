@@ -5,13 +5,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * MVC controller serving static application views.
+ */
 @Controller
 public class ViewController {
 
   /**
-   * Returns the home page.
+   * Serves the SPA index page for primary app routes.
    *
-   * @return index/home
+   * @return {@code index.html}
    */
   @RequestMapping(value = {"/", "/blog", "/photos", "/login", "/signup", "/wfl"})
   public String getHomePage() {
@@ -24,9 +27,9 @@ public class ViewController {
   }
 
   /**
-   * Returns the void's home page.
+   * Serves the Void home page.
    *
-   * @return index/html
+   * @return {@code void/index.html}
    */
   @GetMapping(value = "/void")
   public String getVoidHomePage(HttpServletRequest request) {
@@ -34,9 +37,9 @@ public class ViewController {
   }
 
   /**
-   * Returns the void's login page.
+   * Serves the Void login page.
    *
-   * @return login/html
+   * @return {@code void/login.html}
    */
   @GetMapping(value = "/void/login")
   public String getVoidLoginPage(HttpServletRequest request) {
@@ -44,9 +47,9 @@ public class ViewController {
   }
 
   /**
-   * Returns the void's create account page.
+   * Serves the Void signup page.
    *
-   * @return sign_up/html
+   * @return {@code void/sign_up.html}
    */
   @GetMapping(value = "/void/signup")
   public String getVoidCreateAccountPage(HttpServletRequest request) {
@@ -54,9 +57,9 @@ public class ViewController {
   }
 
   /**
-   * Returns The Bell's home page.
+   * Serves The Bell home page.
    *
-   * @return index/html
+   * @return {@code thebell/index.html}
    */
   @GetMapping(value = "/thebell")
   public String getTheBellHomePage(HttpServletRequest request) {
@@ -64,9 +67,9 @@ public class ViewController {
   }
 
   /**
-   * Returns The Bell's Tony page.
+   * Serves The Bell "Tony" page.
    *
-   * @return tony/html
+   * @return {@code thebell/tony.html}
    */
   @GetMapping(value = "/thebell/tony")
   public String getTheBellTonyPage(HttpServletRequest request) {

@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Represents a potential error or any information that will be return to the caller.
+ * Message entry included in API responses for errors or informational notes.
  */
 @AllArgsConstructor
 @Builder

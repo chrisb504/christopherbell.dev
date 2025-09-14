@@ -7,7 +7,9 @@ import lombok.experimental.SuperBuilder;
 import java.util.List;
 
 /**
- * This class represents a base level response class with common fields that every response should contain.
+ * Generic API response envelope containing a payload and metadata.
+ *
+ * @param <T> payload type
  */
 @Data
 @SuperBuilder(toBuilder = true)

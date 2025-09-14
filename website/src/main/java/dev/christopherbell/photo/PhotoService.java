@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
- * Represents the service layer for handling photo related requests.
+ * Service layer for photo gallery operations.
  */
 @AllArgsConstructor
 @Service
@@ -17,9 +17,9 @@ public class PhotoService {
   private PhotoProperties photoProperties;
 
   /**
-   * Get all existing photos.
+   * Retrieves all configured photos.
    *
-   * @return a PhotoResponse containing all existing photos.
+   * @return a {@link PhotoResponse} with all photos
    */
   public PhotoResponse getAllImages() {
     return PhotoResponse.builder()

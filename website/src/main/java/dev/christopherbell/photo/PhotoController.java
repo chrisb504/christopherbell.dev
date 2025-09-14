@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Represents the controller that handles all photo gallery related requests.
+ * REST controller for photo gallery content under {@code /api/photo}.
  */
 @AllArgsConstructor
 @RequestMapping("/api/photo")
@@ -22,9 +22,9 @@ public class PhotoController {
   private final PhotoService photoService;
 
   /**
-   * Returns all existing images for the photo gallery.
+   * Retrieves all images.
    *
-   * @return a PhotoResponse containing all existing images.
+   * @return HTTP 200 with a {@link PhotoResponse} containing all images
    */
   @GetMapping(value = "/v1", produces = MediaType.APPLICATION_JSON_VALUE)
   @PreAuthorize("@permissionService.hasAuthority('USER')")

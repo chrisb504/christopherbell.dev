@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * Global exception handler for controllers to handle specific exceptions and return appropriate
- * HTTP responses.
+ * Global controller advice translating exceptions into consistent API responses.
+ *
+ * <p>Builds {@link Response} envelopes with {@link Message} entries and
+ * appropriate HTTP statuses for common error types.</p>
  */
 @RestControllerAdvice
 @Slf4j
@@ -28,11 +30,10 @@ public class ControllerExceptionHandler {
   private final static String INVALID_TOKEN = "INVALID_TOKEN";
 
   /**
-   * Handles generic exceptions and returns a 500 Internal Server Error response with a generic
-   * error message.
+   * Fallback handler for unanticipated exceptions. Returns HTTP 500 with a generic error message.
    *
-   * @param e the Exception
-   * @return ResponseEntity with error details
+   * @param e the exception
+   * @return a {@link Response} with {@code success=false} and a single error {@link Message}
    */
   public Response<?> handelGenericException(Exception e) {
     log.error(INTERNAL_SERVER_ERROR, e);
@@ -46,10 +47,10 @@ public class ControllerExceptionHandler {
   }
 
   /**
-   * Handles ResourceExistsException and returns a 409 Conflict response with an error message.
+   * Handles {@link ResourceExistsException}. Returns HTTP 409 with error details.
    *
-   * @param e the ResourceExistsException
-   * @return ResponseEntity with error details
+   * @param e the exception
+   * @return a {@link Response} with {@code success=false} and an error {@link Message}
    */
   @ExceptionHandler(ResourceExistsException.class)
   @ResponseStatus(HttpStatus.CONFLICT)
@@ -65,10 +66,10 @@ public class ControllerExceptionHandler {
   }
 
   /**
-   * Handles ResourceNotFoundException and returns a 404 Not Found response with an error message.
+   * Handles {@link ResourceNotFoundException}. Returns HTTP 404 with error details.
    *
-   * @param e the ResourceNotFoundException
-   * @return ResponseEntity with error details
+   * @param e the exception
+   * @return a {@link Response} with {@code success=false} and an error {@link Message}
    */
   @ExceptionHandler(ResourceNotFoundException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -84,10 +85,10 @@ public class ControllerExceptionHandler {
   }
 
   /**
-   * Handles InvalidRequestException and returns a 400 Bad Request response with an error message.
+   * Handles {@link InvalidRequestException}. Returns HTTP 400 with error details.
    *
-   * @param e the InvalidRequestException
-   * @return ResponseEntity with error details
+   * @param e the exception
+   * @return a {@link Response} with {@code success=false} and an error {@link Message}
    */
   @ExceptionHandler(InvalidRequestException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -103,10 +104,10 @@ public class ControllerExceptionHandler {
   }
 
   /**
-   * Handles InvalidTokenException and returns a 401 Unauthorized response with an error message.
+   * Handles {@link InvalidTokenException}. Returns HTTP 401 with error details.
    *
-   * @param e the InvalidTokenException
-   * @return ResponseEntity with error details
+   * @param e the exception
+   * @return a {@link Response} with {@code success=false} and an error {@link Message}
    */
   @ExceptionHandler(InvalidTokenException.class)
   @ResponseStatus(HttpStatus.UNAUTHORIZED)

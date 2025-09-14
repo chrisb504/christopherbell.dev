@@ -4,6 +4,9 @@ import java.util.List;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * Response DTO containing a collection of blog posts.
+ */
 @Builder
 @Data
 public class BlogResponse {

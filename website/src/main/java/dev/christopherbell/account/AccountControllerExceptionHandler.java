@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * Exception handler for AccountController to handle specific account-related exceptions
- * and return appropriate HTTP responses.
+ * Controller advice for account-related errors.
+ *
+ * <p>Translates domain exceptions into consistent API error responses using the
+ * shared {@link Response} envelope and {@link Message} entries.</p>
  */
 @RestControllerAdvice
 @Slf4j
@@ -22,10 +24,10 @@ public class AccountControllerExceptionHandler {
   private final static String ACCOUNT_NOT_ACTIVE_CODE = "ACCOUNT_NOT_ACTIVE";
 
   /**
-   * Handles AccountNotActiveException and returns a 400 Bad Request response with an error message.
+   * Handles {@link AccountNotActiveException} and returns HTTP 400 with a descriptive error.
    *
-   * @param e the AccountNotActiveException
-   * @return ResponseEntity with error details
+   * @param e the thrown exception
+   * @return a {@link Response} with {@code success=false} and an error {@link Message}
    */
   @ExceptionHandler({AccountNotActiveException.class})
   @ResponseStatus(HttpStatus.BAD_REQUEST)

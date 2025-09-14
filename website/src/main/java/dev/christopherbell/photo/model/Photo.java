@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Photo metadata used by the gallery.
+ */
 @AllArgsConstructor
 @Builder
 @Data

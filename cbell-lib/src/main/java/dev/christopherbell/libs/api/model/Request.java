@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Represents the base level request object.
+ * Base class for API request models.
  */
 @Data
 @SuperBuilder(toBuilder = true)

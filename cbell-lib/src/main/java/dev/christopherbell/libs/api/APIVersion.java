@@ -1,7 +1,9 @@
 package dev.christopherbell.libs.api;
 
 /**
- * Constants for API versioning.
+ * Path fragments for API versioning.
+ *
+ * <p>Use these constants when defining versioned route mappings.</p>
  */
 public class APIVersion {
   public static final String V20241215 = "/2024-12-15";
