@@ -1,6 +1,5 @@
 package dev.christopherbell.libs.api.controller;
 
-import dev.christopherbell.account.AccountNotActiveException;
 import dev.christopherbell.libs.api.model.Message;
 import dev.christopherbell.libs.api.model.Response;
 import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
@@ -22,30 +21,10 @@ import java.util.List;
 @ControllerAdvice
 @Slf4j
 public class ControllerExceptionHandler {
-  private final static String ACCOUNT_NOT_ACTIVE_CODE = "005";
-  private final static String ACCOUNT_NOT_FOUND_CODE = "002";
-  private final static String ACCOUNT_USER_NAME_EXISTS_CODE = "003";
-  private final static String INVALID_REQUEST_CODE = "001";
-  private final static String INVALID_TOKEN_CODE = "004";
-
-  /**
-   * Handles AccountNotActiveException and returns a 400 Bad Request response with an error message.
-   *
-   * @param e the AccountNotActiveException
-   * @return ResponseEntity with error details
-   */
-  @ExceptionHandler({AccountNotActiveException.class})
-  public ResponseEntity<Response<?>> handleAccountNotActiveException(AccountNotActiveException e) {
-    log.error(e.getMessage(), e);
-    return new ResponseEntity<>(
-        Response.builder()
-            .messages(List.of(Message.builder()
-                .code(ACCOUNT_NOT_ACTIVE_CODE)
-                .description(e.getMessage())
-                .build()))
-            .success(false)
-            .build(), HttpStatus.BAD_REQUEST);
-  }
+  private final static String RESOURCE_NOT_FOUND = "RESOURCE_NOT_FOUND";
+  private final static String RESOURCE_EXISTS = "RESOURCE_EXISTS";
+  private final static String INVALID_REQUEST = "INVALID_REQUEST";
+  private final static String INVALID_TOKEN = "INVALID_TOKEN";
 
   /**
    * Handles InvalidRequestException and returns a 400 Bad Request response with an error message.
@@ -59,7 +38,7 @@ public class ControllerExceptionHandler {
     return new ResponseEntity<>(
         Response.builder()
             .messages(List.of(Message.builder()
-                .code(INVALID_REQUEST_CODE)
+                .code(INVALID_REQUEST)
                 .description(e.getMessage())
                 .build()))
             .success(false)
@@ -78,7 +57,7 @@ public class ControllerExceptionHandler {
     return new ResponseEntity<>(
         Response.builder()
             .messages(List.of(Message.builder()
-                .code(ACCOUNT_NOT_FOUND_CODE)
+                .code(RESOURCE_NOT_FOUND)
                 .description(e.getMessage())
                 .build()))
             .success(false)
@@ -97,7 +76,7 @@ public class ControllerExceptionHandler {
     return new ResponseEntity<>(
         Response.builder()
             .messages(List.of(Message.builder()
-                .code(ACCOUNT_USER_NAME_EXISTS_CODE)
+                .code(RESOURCE_EXISTS)
                 .description(e.getMessage())
                 .build()))
             .success(false)
@@ -116,7 +95,7 @@ public class ControllerExceptionHandler {
     return new ResponseEntity<>(
         Response.builder()
             .messages(List.of(Message.builder()
-                .code(INVALID_TOKEN_CODE)
+                .code(INVALID_TOKEN)
                 .description(e.getMessage())
                 .build()))
             .success(false)

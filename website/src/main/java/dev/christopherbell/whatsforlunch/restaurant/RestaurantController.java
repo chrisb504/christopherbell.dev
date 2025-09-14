@@ -2,7 +2,7 @@ package dev.christopherbell.whatsforlunch.restaurant;
 
 import dev.christopherbell.libs.api.APIVersion;
 import dev.christopherbell.libs.api.model.Response;
-import dev.christopherbell.libs.security.PermissionService;
+import dev.christopherbell.permission.PermissionService;
 import dev.christopherbell.whatsforlunch.restaurant.model.CreateRestaurantRequest;
 import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantDetail;
 import java.util.List;

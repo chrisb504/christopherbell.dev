@@ -1,6 +1,5 @@
 package dev.christopherbell.libs.security;
 
-import dev.christopherbell.account.model.Account;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import javax.crypto.SecretKeyFactory;
@@ -38,17 +37,6 @@ public class PasswordUtil {
     SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
     byte[] hash = factory.generateSecret(spec).getEncoded();
     return Base64.getEncoder().encodeToString(hash);
-  }
-
-  /**
-   * Salts and hashes a password, then sets the salt and hash on the given account.
-   */
-  public static void saltPassword(String password, Account account)
-      throws NoSuchAlgorithmException, InvalidKeySpecException {
-    var salt = PasswordUtil.generateSalt();
-    var hash = PasswordUtil.hashPassword(password, salt);
-    account.setPasswordSalt(salt);
-    account.setPasswordHash(hash);
   }
 
   /**

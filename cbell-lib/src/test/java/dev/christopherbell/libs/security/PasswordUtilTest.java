@@ -3,7 +3,6 @@ package dev.christopherbell.libs.security;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -77,30 +76,6 @@ public class PasswordUtilTest {
   public void testHashPassword_whenPasswordNull_throwsNullPointerException() {
     String salt = PasswordStub.getDeterministicSaltStub();
     assertThrows(NullPointerException.class, () -> PasswordUtil.hashPassword(null, salt));
-  }
-
-  @Test
-  @DisplayName("saltPassword: sets salt and hash on account; hash verifies")
-  public void testSaltPassword_whenCalled_setsSaltAndHashOnAccount()
-      throws NoSuchAlgorithmException, InvalidKeySpecException {
-    String pwd = PasswordStub.getPasswordStub();
-    AccountStub account = AccountStub.getEmptyAccountStub();
-
-    PasswordUtil.saltPassword(pwd, account);
-
-    String salt = account.getPasswordSalt();
-    String hash = account.getPasswordHash();
-
-    assertNotNull(salt, "Salt should be set");
-    assertNotNull(hash, "Hash should be set");
-
-    // Salt should be valid Base64 for 16 bytes.
-    byte[] decoded = Base64.getDecoder().decode(salt);
-    assertEquals(16, decoded.length, "Persisted salt must decode to 16 bytes");
-
-    // Recompute to assert consistency
-    String recomputed = PasswordUtil.hashPassword(pwd, salt);
-    assertEquals(recomputed, hash, "Stored hash should match recomputed hash for same inputs");
   }
 
   @Test

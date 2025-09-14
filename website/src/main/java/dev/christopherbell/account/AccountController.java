@@ -5,9 +5,9 @@ import static dev.christopherbell.libs.api.APIVersion.V20250903;
 
 import dev.christopherbell.account.model.dto.AccountDetail;
 import dev.christopherbell.account.model.dto.AccountCreateRequest;
-import dev.christopherbell.account.model.dto.AccountLoginRequest;
+import dev.christopherbell.account.model.AccountLoginRequest;
 import dev.christopherbell.libs.api.model.Response;
-import dev.christopherbell.libs.security.PermissionService;
+import dev.christopherbell.permission.PermissionService;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package dev.christopherbell.account.model.dto;
+package dev.christopherbell.account.model;
 
 import lombok.Builder;
 

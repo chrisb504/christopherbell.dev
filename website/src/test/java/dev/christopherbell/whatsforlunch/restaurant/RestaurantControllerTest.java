@@ -16,7 +16,7 @@ import dev.christopherbell.libs.api.APIVersion;
 import dev.christopherbell.libs.api.controller.ControllerExceptionHandler;
 import dev.christopherbell.libs.api.exception.InvalidRequestException;
 import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
-import dev.christopherbell.libs.security.PermissionService;
+import dev.christopherbell.permission.PermissionService;
 import dev.christopherbell.libs.test.TestUtil;
 import dev.christopherbell.whatsforlunch.restaurant.model.CreateRestaurantRequest;
 import java.util.List;

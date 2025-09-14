@@ -5,14 +5,14 @@ import dev.christopherbell.account.model.dto.AccountDetail;
 import dev.christopherbell.account.model.Account;
 import dev.christopherbell.account.model.AccountStatus;
 import dev.christopherbell.account.model.dto.AccountCreateRequest;
-import dev.christopherbell.account.model.dto.AccountLoginRequest;
+import dev.christopherbell.account.model.AccountLoginRequest;
 import dev.christopherbell.account.model.Role;
 import dev.christopherbell.libs.api.exception.InvalidTokenException;
 import dev.christopherbell.libs.api.exception.ResourceExistsException;
 import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
 import dev.christopherbell.libs.security.EmailSanitizer;
 import dev.christopherbell.libs.security.PasswordUtil;
-import dev.christopherbell.libs.security.PermissionService;
+import dev.christopherbell.permission.PermissionService;
 import dev.christopherbell.libs.security.UsernameSanitizer;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -72,7 +72,10 @@ public class AccountService {
     log.info("Creating account for username {}", accountCreateRequest.username());
     var account = createAccountEntity(accountCreateRequest);
     try {
-      PasswordUtil.saltPassword(accountCreateRequest.password(), account);
+      var salt = PasswordUtil.generateSalt();
+      var hash = PasswordUtil.hashPassword(accountCreateRequest.password(), salt);
+      account.setPasswordSalt(salt);
+      account.setPasswordHash(hash);
       accountRepository.save(account);
       log.info("Successfully created account for username {}", accountCreateRequest.username());
     } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {

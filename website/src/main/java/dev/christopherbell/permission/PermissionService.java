@@ -1,9 +1,10 @@
-package dev.christopherbell.libs.security;
+package dev.christopherbell.permission;
 
 import dev.christopherbell.account.model.Account;
+import dev.christopherbell.account.model.AccountLoginRequest;
 import dev.christopherbell.account.model.AccountStatus;
-import dev.christopherbell.account.model.dto.AccountLoginRequest;
 import dev.christopherbell.libs.api.exception.InvalidTokenException;
+import dev.christopherbell.libs.security.PasswordUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
