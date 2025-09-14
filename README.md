@@ -1,36 +1,34 @@
 # christopherbell.dev
 
-Personal website and application for Christopher Bell. The project combines a Spring Boot backend with a vanilla JavaScript frontend that uses Web Components and a simple pub/sub system.
+Personal website and application for Christopher Bell built as a multi-module Gradle project.
 
-## Tech Stack
-- **Backend:** Java 21, Spring Boot 3, Gradle
-- **Frontend:** Vanilla JavaScript, Web Components, Webpack 5, Babel
-- **Build Tools:** Gradle Wrapper, Node.js (>=18), npm (>=9)
-- **Database:** PostgreSQL
+## Modules
+- `website` – Spring Boot application and vanilla JavaScript frontend. Contains all Node tooling.
+- `cbell-lib` – Reusable Java library shared across applications.
 
-## Getting Started
-
-### Prerequisites
+## Requirements
 - Java 21
 - Node.js 18+
 - npm 9+
 - PostgreSQL (optional for local development)
 
-### Quickstart
+## Getting Started
+
+### Build frontend assets
 ```bash
+cd website
 npm install
 npm run build
-./gradlew bootRun
 ```
 
-The webpack build outputs static assets to `src/main/resources/static`. `./gradlew bootRun` starts the Spring Boot application on [http://localhost:8080](http://localhost:8080).
+### Run the application
+```bash
+./gradlew :website:bootRun
+```
 
-### Building a JAR
-To produce a runnable jar file:
+### Build all modules
 ```bash
 ./gradlew build
 ```
-The artifact will be located under `build/libs/`.
 
-### Environment
-Set `SPRING_ACTIVE_PROFILE=local` for a local development profile and configure any required PostgreSQL connection details in `application.yml`.
+Each module also has its own README with additional details.
