@@ -1,6 +1,5 @@
 package dev.christopherbell.whatsforlunch.restaurant;
 
-import com.mongodb.DuplicateKeyException;
 import dev.christopherbell.libs.api.exception.InvalidRequestException;
 import dev.christopherbell.libs.api.exception.ResourceExistsException;
 import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
@@ -13,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DuplicateKeyException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -38,7 +38,7 @@ public class RestaurantServiceTest {
   @Test
   @DisplayName("Maps request -> entity, saves, maps to detail, returns detail")
   public void testCreateRestaurant_whenValidRequest_ReturnsRestaurantDetail() throws Exception {
-    var request = RestaurantStub.getCreateRestaurantRequestStub();
+    var request = RestaurantStub.getRestaurantCreateRequestStub();
     var restaurant = RestaurantStub.getRestaurantStub(RestaurantStub.ID);
     var saved = RestaurantStub.getRestaurantStub(RestaurantStub.ID);
     var detail = RestaurantStub.getRestaurantDetailStub(RestaurantStub.ID);
@@ -59,7 +59,7 @@ public class RestaurantServiceTest {
   @Test
   @DisplayName("Translates DuplicateKeyException into ResourceExistsException")
   public void testCreateRestaurant_whenDuplicateKey_ThrowsResourceExistsException() {
-    var request = RestaurantStub.getCreateRestaurantRequestStub();
+    var request = RestaurantStub.getRestaurantCreateRequestStub();
     var restaurant = RestaurantStub.getRestaurantStub(RestaurantStub.ID);
 
     when(restaurantMapper.toRestaurant(eq(request))).thenReturn(restaurant);
@@ -76,7 +76,7 @@ public class RestaurantServiceTest {
   @Test
   @DisplayName("Wraps DataAccessException into RuntimeException with message")
   public void testCreateRestaurant_whenDataAccessFails_ThrowsRuntimeException() {
-    var request = RestaurantStub.getCreateRestaurantRequestStub();
+    var request = RestaurantStub.getRestaurantCreateRequestStub();
     var restaurant = RestaurantStub.getRestaurantStub(RestaurantStub.ID);
 
     when(restaurantMapper.toRestaurant(eq(request))).thenReturn(restaurant);

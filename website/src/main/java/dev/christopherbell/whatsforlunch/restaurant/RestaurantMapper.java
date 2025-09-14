@@ -3,6 +3,7 @@ package dev.christopherbell.whatsforlunch.restaurant;
 import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantCreateRequest;
 import dev.christopherbell.whatsforlunch.restaurant.model.Restaurant;
 import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantDetail;
+import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantUpdateRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -62,4 +63,23 @@ public interface RestaurantMapper {
   @Mapping(target = "lastModifiedBy", ignore = true)
   @Mapping(target = "lastUpdatedOn", ignore = true)
   Restaurant toRestaurant(RestaurantCreateRequest request);
+
+  /**
+   * Converts a {@link RestaurantUpdateRequest} DTO to an existing {@link Restaurant} entity.
+   * <p>
+   * Similar to the creation mapping, this method ignores system-managed fields
+   * to ensure that audit information remains accurate and is not inadvertently
+   * modified during update operations.
+   * </p>
+   *
+   * @param request the update request containing new restaurant details (must not be {@code null})
+   * @return a new {@link Restaurant} entity populated from the update request,
+   *         with audit fields left unset
+   */
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "createdBy", ignore = true)
+  @Mapping(target = "createdOn", ignore = true)
+  @Mapping(target = "lastModifiedBy", ignore = true)
+  @Mapping(target = "lastUpdatedOn", ignore = true)
+  Restaurant toRestaurant(RestaurantUpdateRequest request);
 }

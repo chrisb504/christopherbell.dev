@@ -4,6 +4,7 @@ import dev.christopherbell.whatsforlunch.restaurant.model.Address;
 import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantCreateRequest;
 import dev.christopherbell.whatsforlunch.restaurant.model.Restaurant;
 import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantDetail;
+import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantUpdateRequest;
 
 public class RestaurantStub {
   public static final String ID = "632d6450-1c80-4e2a-b329-b6b5de486414";
@@ -17,8 +18,17 @@ public class RestaurantStub {
   public static final String PHONE_NUMBER = "512-969-5012";
   public static final String WEBSITE = "https://www.pflugervilletacohouse.com";
 
-  public static RestaurantCreateRequest getCreateRestaurantRequestStub() {
+  public static RestaurantCreateRequest getRestaurantCreateRequestStub() {
     return RestaurantCreateRequest.builder()
+        .name(NAME)
+        .address(getAddressStub())
+        .phoneNumber(PHONE_NUMBER)
+        .website(WEBSITE)
+        .build();
+  }
+
+  public static RestaurantUpdateRequest getRestaurantUpdateRequestStub() {
+    return RestaurantUpdateRequest.builder()
         .name(NAME)
         .address(getAddressStub())
         .phoneNumber(PHONE_NUMBER)
