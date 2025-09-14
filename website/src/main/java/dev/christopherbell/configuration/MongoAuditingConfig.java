@@ -11,6 +11,23 @@ import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+/**
+ * Spring configuration that enables and wires Spring Data MongoDB auditing.
+ *
+ * <p>This configuration:</p>
+ * - Activates auditing via {@link EnableMongoAuditing}.
+ * - Provides an {@link AuditorAware} that resolves the current auditor from the
+ *   Spring Security {@link SecurityContextHolder} (using the authenticated principal's name).
+ * - Supplies a {@link DateTimeProvider} that sources timestamps from a UTC {@link Clock}.
+ *
+ * <p>With this in place, entities annotated with auditing annotations such as
+ * {@code @CreatedDate}, {@code @LastModifiedDate}, {@code @CreatedBy}, and
+ * {@code @LastModifiedBy} will be automatically populated.</p>
+ *
+ * @see EnableMongoAuditing
+ * @see AuditorAware
+ * @see DateTimeProvider
+ */
 @Configuration
 @EnableMongoAuditing(
     auditorAwareRef = "auditorAware",
@@ -19,10 +36,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class MongoAuditingConfig {
 
   /**
-   * Provides the current auditor (user) for auditing purposes.
-   * This implementation retrieves the username from the Spring Security context.
+   * Auditor provider backed by Spring Security.
    *
-   * @return an AuditorAware instance that returns the current user's username
+   * <p>Resolves the current auditor (username) from the
+   * {@link SecurityContextHolder}. If no authentication is present or the
+   * request is unauthenticated, the returned {@code Optional} will be empty.</p>
+   *
+   * @return an {@link AuditorAware} that returns the current user's username
    */
   @Bean
   public AuditorAware<String> auditorAware() {
@@ -31,9 +51,9 @@ public class MongoAuditingConfig {
   }
 
   /**
-   * Provides a Clock bean set to the system's UTC time zone.
+   * UTC clock for deterministic auditing timestamps.
    *
-   * @return a Clock instance set to UTC
+   * @return a {@link Clock} set to UTC
    */
   @Bean
   public Clock clock() {
@@ -41,11 +61,13 @@ public class MongoAuditingConfig {
   }
 
   /**
-   * Provides the current date and time for auditing purposes.
-   * This implementation uses the provided Clock bean to get the current Instant.
+   * Date/time provider used by Spring Data auditing.
    *
-   * @param clock the Clock bean to use for getting the current time
-   * @return a DateTimeProvider instance that returns the current Instant
+   * <p>Uses the injected {@link Clock} (UTC) to provide the current
+   * {@link Instant} for auditing annotations.</p>
+   *
+   * @param clock the clock to source the current time from (UTC)
+   * @return a {@link DateTimeProvider} that supplies the current {@link Instant}
    */
   @Bean
   public DateTimeProvider auditingDateTimeProvider(Clock clock) {

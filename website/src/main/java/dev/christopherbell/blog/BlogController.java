@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Represents the controller for dealing with Blog related requests.
+ * REST controller for blog content under {@code /api/blog}.
+ *
+ * <p>Endpoints return a {@link Response} envelope containing a {@link BlogResponse} payload.</p>
  */
 @AllArgsConstructor
 @RequestMapping("/api/blog")
@@ -25,10 +27,10 @@ public class BlogController {
   private final BlogService blogService;
 
   /**
-   * Takes in an id for a blog post and returns that blog post with the given id.
+   * Retrieves a single post by its ID.
    *
-   * @param id of the blog post
-   * @return BlogResponse containing the requested blog post.
+   * @param id the post identifier
+   * @return HTTP 200 with a {@link BlogResponse} containing the post
    */
   @GetMapping(value = "/v1/posts/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   @PreAuthorize("@permissionService.hasAuthority('USER')")
@@ -42,9 +44,9 @@ public class BlogController {
   }
 
   /**
-   * Returns all existing blog posts.
+   * Lists all posts.
    *
-   * @return a BlogResponse containing all existing blog posts.
+   * @return HTTP 200 with a {@link BlogResponse} containing all posts
    */
   @GetMapping(value = "/v1/posts", produces = MediaType.APPLICATION_JSON_VALUE)
   @PreAuthorize("@permissionService.hasAuthority('USER')")

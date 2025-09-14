@@ -18,6 +18,9 @@ import org.springframework.core.annotation.Order;
 
 /**
  * Simple per-client rate limiting filter using Bucket4j.
+ *
+ * <p>Applies a token bucket per client IP to restrict request throughput.
+ * Default limit is 50 requests per minute.</p>
  */
 @Order(1)
 public class RateLimitFilter extends OncePerRequestFilter {
@@ -36,6 +39,8 @@ public class RateLimitFilter extends OncePerRequestFilter {
 
   /**
    * Creates a filter with a custom bucket supplier. Intended for testing.
+   *
+   * @param bucketSupplier factory for new buckets per client key
    */
   public RateLimitFilter(Supplier<Bucket> bucketSupplier) {
     this.bucketSupplier = bucketSupplier;
@@ -53,6 +58,12 @@ public class RateLimitFilter extends OncePerRequestFilter {
     }
   }
 
+  /**
+   * Resolves the client IP address, preferring {@code X-Forwarded-For} if present.
+   *
+   * @param request current HTTP request
+   * @return the best-effort client IP address
+   */
   private String extractClientIp(HttpServletRequest request) {
     String forwarded = request.getHeader("X-Forwarded-For");
     if (forwarded != null && !forwarded.isBlank()) {

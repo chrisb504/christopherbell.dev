@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Response DTO containing a collection of photos.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
