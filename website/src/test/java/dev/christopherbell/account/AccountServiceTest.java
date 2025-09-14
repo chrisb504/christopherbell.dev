@@ -38,7 +38,7 @@ public class AccountServiceTest {
   @Test
   @DisplayName("Update: blank id -> 400 InvalidRequestException")
   public void testUpdateAccount_whenBlankId_throwsInvalidRequestException() {
-    var request = AccountServiceStub.invalid_blankId();
+    var request = AccountServiceStub.getAccountUpdateRequestWhenBlankIdStub();
     assertThrows(InvalidRequestException.class, () -> accountService.updateAccount(request));
   }
 
@@ -59,8 +59,8 @@ public class AccountServiceTest {
   @Test
   @DisplayName("Update: all fields set -> applies changes, sanitizes, returns detail")
   public void testUpdateAccount_whenValid_appliesChangesAndReturnsDetail() throws Exception {
-    var existing = AccountServiceStub.existingAccount();
-    var request = AccountServiceStub.validUpdateRequestAllFields();
+    var existing = AccountServiceStub.getAccountWhenExistsStub();
+    var request = AccountServiceStub.getAccountUpdateRequestWhenAllFieldsSetStub();
 
     when(accountRepository.findById(eq(AccountServiceStub.ID)))
         .thenReturn(Optional.of(existing));
@@ -98,8 +98,8 @@ public class AccountServiceTest {
   @Test
   @DisplayName("Update: role only -> updates role, keeps others unchanged")
   public void testUpdateAccount_whenRoleOnly_updatesRoleAndKeepsOthers() throws Exception {
-    var existing = AccountServiceStub.existingAccount();
-    var request = AccountServiceStub.partialUpdate_requestRoleOnly();
+    var existing = AccountServiceStub.getAccountWhenExistsStub();
+    var request = AccountServiceStub.getAccountUpdateRequestWhenRoleOnlyStub();
 
     when(accountRepository.findById(eq(AccountServiceStub.ID)))
         .thenReturn(Optional.of(existing));
@@ -136,8 +136,8 @@ public class AccountServiceTest {
   @Test
   @DisplayName("Update: flags only -> updates status and approval")
   public void testUpdateAccount_whenFlagsOnly_updatesStatusAndApproval() throws Exception {
-    var existing = AccountServiceStub.existingAccount();
-    var request = AccountServiceStub.partialUpdate_requestFlagsOnly();
+    var existing = AccountServiceStub.getAccountWhenExistsStub();
+    var request = AccountServiceStub.getAccountUpdateRequestWhenFlagsOnlyStub();
 
     when(accountRepository.findById(eq(AccountServiceStub.ID)))
         .thenReturn(Optional.of(existing));
@@ -169,8 +169,8 @@ public class AccountServiceTest {
   @Test
   @DisplayName("Update: only id -> keeps all values unchanged")
   public void testUpdateAccount_whenOnlyId_keepsExistingValues() throws Exception {
-    var existing = AccountServiceStub.existingAccount();
-    var request = AccountServiceStub.noOpUpdate_onlyId();
+    var existing = AccountServiceStub.getAccountWhenExistsStub();
+    var request = AccountServiceStub.getAccountUpdateRequestWhenOnlyIdStub();
 
     when(accountRepository.findById(eq(AccountServiceStub.ID)))
         .thenReturn(Optional.of(existing));
@@ -207,8 +207,8 @@ public class AccountServiceTest {
   @Test
   @DisplayName("Update: invalid email -> throws IllegalArgumentException")
   public void testUpdateAccount_whenInvalidEmail_throwsIllegalArgumentException() {
-    var existing = AccountServiceStub.existingAccount();
-    var request = AccountServiceStub.invalid_email();
+    var existing = AccountServiceStub.getAccountWhenExistsStub();
+    var request = AccountServiceStub.getAccountUpdateRequestWhenInvalidEmailStub();
 
     when(accountRepository.findById(eq(AccountServiceStub.ID)))
         .thenReturn(Optional.of(existing));
@@ -222,8 +222,8 @@ public class AccountServiceTest {
   @Test
   @DisplayName("Update: invalid username -> throws IllegalArgumentException")
   public void testUpdateAccount_whenInvalidUsername_throwsIllegalArgumentException() {
-    var existing = AccountServiceStub.existingAccount();
-    var request = AccountServiceStub.invalid_username();
+    var existing = AccountServiceStub.getAccountWhenExistsStub();
+    var request = AccountServiceStub.getAccountUpdateRequestWhenInvalidUsernameStub();
 
     when(accountRepository.findById(eq(AccountServiceStub.ID)))
         .thenReturn(Optional.of(existing));

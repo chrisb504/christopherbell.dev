@@ -14,7 +14,7 @@ public final class AccountServiceStub {
 
   private AccountServiceStub() {}
 
-  public static Account existingAccount() {
+  public static Account getAccountWhenExistsStub() {
     return Account.builder()
         .id(ID)
         .email("old@example.com")
@@ -29,7 +29,7 @@ public final class AccountServiceStub {
         .build();
   }
 
-  public static AccountUpdateRequest validUpdateRequestAllFields() {
+  public static AccountUpdateRequest getAccountUpdateRequestWhenAllFieldsSetStub() {
     return AccountUpdateRequest.builder()
         .id(ID)
         .firstName("Chris")
@@ -42,14 +42,14 @@ public final class AccountServiceStub {
         .build();
   }
 
-  public static AccountUpdateRequest partialUpdate_requestRoleOnly() {
+  public static AccountUpdateRequest getAccountUpdateRequestWhenRoleOnlyStub() {
     return AccountUpdateRequest.builder()
         .id(ID)
         .role(Role.ADMIN)
         .build();
   }
 
-  public static AccountUpdateRequest partialUpdate_requestFlagsOnly() {
+  public static AccountUpdateRequest getAccountUpdateRequestWhenFlagsOnlyStub() {
     return AccountUpdateRequest.builder()
         .id(ID)
         .status(AccountStatus.ACTIVE)
@@ -57,28 +57,27 @@ public final class AccountServiceStub {
         .build();
   }
 
-  public static AccountUpdateRequest noOpUpdate_onlyId() {
+  public static AccountUpdateRequest getAccountUpdateRequestWhenOnlyIdStub() {
     return AccountUpdateRequest.builder()
         .id(ID)
         .build();
   }
 
-  public static AccountUpdateRequest invalid_blankId() {
+  public static AccountUpdateRequest getAccountUpdateRequestWhenBlankIdStub() {
     return AccountUpdateRequest.builder().id("   ").build();
   }
 
-  public static AccountUpdateRequest invalid_email() {
+  public static AccountUpdateRequest getAccountUpdateRequestWhenInvalidEmailStub() {
     return AccountUpdateRequest.builder()
         .id(ID)
         .email("bad@@example..com")
         .build();
   }
 
-  public static AccountUpdateRequest invalid_username() {
+  public static AccountUpdateRequest getAccountUpdateRequestWhenInvalidUsernameStub() {
     return AccountUpdateRequest.builder()
         .id(ID)
         .username("a")
         .build();
   }
 }
-

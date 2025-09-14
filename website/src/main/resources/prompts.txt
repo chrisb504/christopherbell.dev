@@ -12,3 +12,4 @@ Write unit tests for this class.
 10. Do not use @Nested for tests.
 11. Use the public identifier for all test methods.
 12. Stubs should exist as separate classes in the same package as the class being tested.
+13. Stub method names should be in this format get[Object]when[someCondition]Stub()
