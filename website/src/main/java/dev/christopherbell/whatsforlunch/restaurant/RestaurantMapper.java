@@ -76,7 +76,6 @@ public interface RestaurantMapper {
    * @return a new {@link Restaurant} entity populated from the update request,
    *         with audit fields left unset
    */
-  @Mapping(target = "id", ignore = true)
   @Mapping(target = "createdBy", ignore = true)
   @Mapping(target = "createdOn", ignore = true)
   @Mapping(target = "lastModifiedBy", ignore = true)

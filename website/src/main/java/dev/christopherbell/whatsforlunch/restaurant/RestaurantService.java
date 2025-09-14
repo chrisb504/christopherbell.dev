@@ -122,6 +122,10 @@ public class RestaurantService {
 
     var restaurantToUpdate = restaurantMapper.toRestaurant(request);
     restaurantToUpdate.setId(existing.getId());
+    restaurantToUpdate.setCreatedBy(existing.getCreatedBy());
+    restaurantToUpdate.setCreatedOn(existing.getCreatedOn());
+    restaurantToUpdate.setLastModifiedBy(existing.getLastModifiedBy());
+    restaurantToUpdate.setLastUpdatedOn(existing.getLastUpdatedOn());
 
     try {
       var saved = restaurantRepository.save(restaurantToUpdate);
