@@ -1,7 +1,5 @@
 # christopherbell.dev
 
-Personal website and application for Christopher Bell built as a multi-module Gradle project.
-
 ## Modules
 - `website` – Spring Boot application and vanilla JavaScript frontend. Contains all Node tooling.
 - `cbell-lib` – Reusable Java library shared across applications.
