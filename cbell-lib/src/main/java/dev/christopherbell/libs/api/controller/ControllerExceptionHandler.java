@@ -23,11 +23,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @Slf4j
 public class ControllerExceptionHandler {
-  private final static String INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR";
-  private final static String RESOURCE_EXISTS = "RESOURCE_EXISTS";
-  private final static String RESOURCE_NOT_FOUND = "RESOURCE_NOT_FOUND";
-  private final static String INVALID_REQUEST = "INVALID_REQUEST";
-  private final static String INVALID_TOKEN = "INVALID_TOKEN";
+  private static final String INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR";
+  private static final String RESOURCE_EXISTS = "RESOURCE_EXISTS";
+  private static final String RESOURCE_NOT_FOUND = "RESOURCE_NOT_FOUND";
+  private static final String INVALID_REQUEST = "INVALID_REQUEST";
+  private static final String INVALID_TOKEN = "INVALID_TOKEN";
 
   /**
    * Fallback handler for unanticipated exceptions. Returns HTTP 500 with a generic error message.
