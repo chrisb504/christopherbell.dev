@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @NoArgsConstructor
-public class CreateRestaurantRequest {
+public class RestaurantCreateRequest {
   private Address address;
   private String name;
   private String phoneNumber;

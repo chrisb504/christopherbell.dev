@@ -34,6 +34,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document("accounts")
 public class Account {
   public static final String PROPERTY_ROLE = "role";
+  private final String type = "account";
 
   @Id
   private String id;

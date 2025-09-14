@@ -4,7 +4,7 @@ import com.mongodb.DuplicateKeyException;
 import dev.christopherbell.libs.api.exception.InvalidRequestException;
 import dev.christopherbell.libs.api.exception.ResourceExistsException;
 import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
-import dev.christopherbell.whatsforlunch.restaurant.model.CreateRestaurantRequest;
+import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantCreateRequest;
 import dev.christopherbell.whatsforlunch.restaurant.model.Restaurant;
 import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantDetail;
 import java.util.List;
@@ -28,7 +28,7 @@ public class RestaurantService {
    * @return a WhatsForLunchResponse containing the created restaurant details.
    * @throws Exception if there is an error during the creation process.
    */
-  public RestaurantDetail createRestaurant(CreateRestaurantRequest request) throws Exception {
+  public RestaurantDetail createRestaurant(RestaurantCreateRequest request) throws Exception {
     var restaurant = restaurantMapper.toRestaurant(request);
 
     try {

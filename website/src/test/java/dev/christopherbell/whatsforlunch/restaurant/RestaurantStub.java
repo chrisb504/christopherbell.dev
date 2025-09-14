@@ -1,7 +1,7 @@
 package dev.christopherbell.whatsforlunch.restaurant;
 
 import dev.christopherbell.whatsforlunch.restaurant.model.Address;
-import dev.christopherbell.whatsforlunch.restaurant.model.CreateRestaurantRequest;
+import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantCreateRequest;
 import dev.christopherbell.whatsforlunch.restaurant.model.Restaurant;
 import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantDetail;
 
@@ -17,8 +17,8 @@ public class RestaurantStub {
   public static final String PHONE_NUMBER = "512-969-5012";
   public static final String WEBSITE = "https://www.pflugervilletacohouse.com";
 
-  public static CreateRestaurantRequest getCreateRestaurantRequestStub() {
-    return CreateRestaurantRequest.builder()
+  public static RestaurantCreateRequest getCreateRestaurantRequestStub() {
+    return RestaurantCreateRequest.builder()
         .name(NAME)
         .address(getAddressStub())
         .phoneNumber(PHONE_NUMBER)

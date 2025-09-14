@@ -1,6 +1,6 @@
 package dev.christopherbell.whatsforlunch.restaurant;
 
-import dev.christopherbell.whatsforlunch.restaurant.model.CreateRestaurantRequest;
+import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantCreateRequest;
 import dev.christopherbell.whatsforlunch.restaurant.model.Restaurant;
 import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantDetail;
 import org.mapstruct.Mapper;
@@ -44,7 +44,7 @@ public interface RestaurantMapper {
   Restaurant toRestaurant(RestaurantDetail restaurantDetail);
 
   /**
-   * Converts a {@link CreateRestaurantRequest} DTO to a new {@link Restaurant} entity.
+   * Converts a {@link RestaurantCreateRequest} DTO to a new {@link Restaurant} entity.
    * <p>
    * This mapping intentionally ignores system-managed fields such as {@code id},
    * {@code createdBy}, {@code createdOn}, {@code lastModifiedBy}, and
@@ -61,5 +61,5 @@ public interface RestaurantMapper {
   @Mapping(target = "createdOn", ignore = true)
   @Mapping(target = "lastModifiedBy", ignore = true)
   @Mapping(target = "lastUpdatedOn", ignore = true)
-  Restaurant toRestaurant(CreateRestaurantRequest request);
+  Restaurant toRestaurant(RestaurantCreateRequest request);
 }

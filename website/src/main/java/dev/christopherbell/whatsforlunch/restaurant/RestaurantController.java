@@ -3,7 +3,7 @@ package dev.christopherbell.whatsforlunch.restaurant;
 import dev.christopherbell.libs.api.APIVersion;
 import dev.christopherbell.libs.api.model.Response;
 import dev.christopherbell.permission.PermissionService;
-import dev.christopherbell.whatsforlunch.restaurant.model.CreateRestaurantRequest;
+import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantCreateRequest;
 import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantDetail;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +41,7 @@ public class RestaurantController {
   )
   @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
   public ResponseEntity<Response<RestaurantDetail>> createRestaurant(
-      @RequestBody CreateRestaurantRequest request
+      @RequestBody RestaurantCreateRequest request
   ) throws Exception {
     var response = restaurantService.createRestaurant(request);
     return new ResponseEntity<>(

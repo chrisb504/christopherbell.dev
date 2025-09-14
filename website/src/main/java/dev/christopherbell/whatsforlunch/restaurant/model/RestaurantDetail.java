@@ -28,5 +28,6 @@ public class RestaurantDetail {
   private Instant lastUpdatedOn;
   private String name;
   private String phoneNumber;
+  private String type;
   private String website;
 }

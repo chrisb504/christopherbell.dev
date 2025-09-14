@@ -22,6 +22,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Document("whatsforlunch")
 public class Restaurant {
+  private final String type = "restaurant";
+
   @Id
   private String id;
 

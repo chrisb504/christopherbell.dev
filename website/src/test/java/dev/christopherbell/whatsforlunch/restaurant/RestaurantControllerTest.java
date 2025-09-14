@@ -18,7 +18,7 @@ import dev.christopherbell.libs.api.exception.InvalidRequestException;
 import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
 import dev.christopherbell.permission.PermissionService;
 import dev.christopherbell.libs.test.TestUtil;
-import dev.christopherbell.whatsforlunch.restaurant.model.CreateRestaurantRequest;
+import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantCreateRequest;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,7 +45,7 @@ public class RestaurantControllerTest {
     var request = TestUtil.readJsonAsString("/request/create-restaurant-request.json");
     var requestObject =
         TestUtil.readJsonAsObject(
-            "/request/create-restaurant-request.json", CreateRestaurantRequest.class);
+            "/request/create-restaurant-request.json", RestaurantCreateRequest.class);
     var response = RestaurantStub.getRestaurantDetailStub(RestaurantStub.ID);
 
     when(restaurantService.createRestaurant(eq(requestObject))).thenReturn(response);
@@ -80,7 +80,7 @@ public class RestaurantControllerTest {
     var request = TestUtil.readJsonAsString("/request/create-restaurant-request.json");
     var requestObject =
         TestUtil.readJsonAsObject(
-            "/request/create-restaurant-request.json", CreateRestaurantRequest.class);
+            "/request/create-restaurant-request.json", RestaurantCreateRequest.class);
     when(restaurantService.createRestaurant(eq(requestObject)))
         .thenThrow(new InvalidRequestException("Bad Request"));
 
