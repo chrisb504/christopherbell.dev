@@ -4,7 +4,6 @@ import com.mongodb.DuplicateKeyException;
 import dev.christopherbell.libs.api.exception.InvalidRequestException;
 import dev.christopherbell.libs.api.exception.ResourceExistsException;
 import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
-import dev.christopherbell.whatsforlunch.restaurant.model.Restaurant;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
@@ -40,19 +39,19 @@ public class RestaurantServiceTest {
   @DisplayName("Maps request -> entity, saves, maps to detail, returns detail")
   public void testCreateRestaurant_whenValidRequest_ReturnsRestaurantDetail() throws Exception {
     var request = RestaurantStub.getCreateRestaurantRequestStub();
-    Restaurant mapped = null;
+    var restaurant = RestaurantStub.getRestaurantStub(RestaurantStub.ID);
     var saved = RestaurantStub.getRestaurantStub(RestaurantStub.ID);
     var detail = RestaurantStub.getRestaurantDetailStub(RestaurantStub.ID);
 
-    when(restaurantMapper.toRestaurant(eq(request))).thenReturn(mapped);
-    when(restaurantRepository.save(eq(mapped))).thenReturn(saved);
+    when(restaurantMapper.toRestaurant(eq(request))).thenReturn(restaurant);
+    when(restaurantRepository.save(eq(restaurant))).thenReturn(saved);
     when(restaurantMapper.toRestaurantDetail(eq(saved))).thenReturn(detail);
 
     var result = restaurantService.createRestaurant(request);
 
     assertSame(detail, result, "Expected the mapped detail to be returned");
     verify(restaurantMapper).toRestaurant(eq(request));
-    verify(restaurantRepository).save(eq(mapped));
+    verify(restaurantRepository).save(eq(restaurant));
     verify(restaurantMapper).toRestaurantDetail(eq(saved));
     verifyNoMoreInteractions(restaurantMapper, restaurantRepository);
   }
@@ -61,16 +60,16 @@ public class RestaurantServiceTest {
   @DisplayName("Translates DuplicateKeyException into ResourceExistsException")
   public void testCreateRestaurant_whenDuplicateKey_ThrowsResourceExistsException() {
     var request = RestaurantStub.getCreateRestaurantRequestStub();
-    Restaurant mapped = null;
+    var restaurant = RestaurantStub.getRestaurantStub(RestaurantStub.ID);
 
-    when(restaurantMapper.toRestaurant(eq(request))).thenReturn(mapped);
-    when(restaurantRepository.save(eq(mapped))).thenThrow(DuplicateKeyException.class);
+    when(restaurantMapper.toRestaurant(eq(request))).thenReturn(restaurant);
+    when(restaurantRepository.save(eq(restaurant))).thenThrow(DuplicateKeyException.class);
 
     var ex = assertThrows(ResourceExistsException.class, () -> restaurantService.createRestaurant(request));
     assertTrue(ex.getMessage().contains("already exists"));
 
     verify(restaurantMapper).toRestaurant(eq(request));
-    verify(restaurantRepository).save(eq(mapped));
+    verify(restaurantRepository).save(eq(restaurant));
     verifyNoMoreInteractions(restaurantMapper, restaurantRepository);
   }
 
@@ -78,16 +77,16 @@ public class RestaurantServiceTest {
   @DisplayName("Wraps DataAccessException into RuntimeException with message")
   public void testCreateRestaurant_whenDataAccessFails_ThrowsRuntimeException() {
     var request = RestaurantStub.getCreateRestaurantRequestStub();
-    Restaurant mapped = null;
+    var restaurant = RestaurantStub.getRestaurantStub(RestaurantStub.ID);
 
-    when(restaurantMapper.toRestaurant(eq(request))).thenReturn(mapped);
-    when(restaurantRepository.save(eq(mapped))).thenThrow(new DataAccessException("boom") {});
+    when(restaurantMapper.toRestaurant(eq(request))).thenReturn(restaurant);
+    when(restaurantRepository.save(eq(restaurant))).thenThrow(new DataAccessException("boom") {});
 
     var ex = assertThrows(RuntimeException.class, () -> restaurantService.createRestaurant(request));
     assertTrue(ex.getMessage().contains("Failed to save restaurant"));
 
     verify(restaurantMapper).toRestaurant(eq(request));
-    verify(restaurantRepository).save(eq(mapped));
+    verify(restaurantRepository).save(eq(restaurant));
     verifyNoMoreInteractions(restaurantMapper, restaurantRepository);
   }
 
