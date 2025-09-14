@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import dev.christopherbell.libs.api.controller.ControllerExceptionHandler;
 import org.springframework.security.test.context.support.WithMockUser;
 import dev.christopherbell.configuration.SecurityConfig;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(BlogController.class)
-@Import({SecurityConfig.class})
+@Import({SecurityConfig.class, ControllerExceptionHandler.class})
 public class BlogControllerTest {
 
   @MockitoBean
@@ -33,5 +34,4 @@ public class BlogControllerTest {
     mockMvc.perform(get("/api/blog/v1/posts/1"))
         .andExpect(status().isOk());
   }
-
 }

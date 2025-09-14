@@ -1,8 +1,9 @@
 package dev.christopherbell.libs.api.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.UUID;
 import lombok.experimental.SuperBuilder;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class RequestTest {
@@ -17,7 +18,7 @@ public class RequestTest {
         .requestId(requestId)
         .build();
 
-    Assertions.assertEquals(requestId, request.getRequestId());
+    assertEquals(requestId, request.getRequestId());
   }
 
   @Test
@@ -26,6 +27,6 @@ public class RequestTest {
     var request = RequestChild.builder().build();
     request.setRequestId(requestId);
 
-    Assertions.assertEquals(requestId, request.getRequestId());
+    assertEquals(requestId, request.getRequestId());
   }
 }

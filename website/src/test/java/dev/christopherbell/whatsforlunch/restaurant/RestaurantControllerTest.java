@@ -30,7 +30,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WebMvcTest(controllers = RestaurantController.class)
+@WebMvcTest(RestaurantController.class)
 @Import(ControllerExceptionHandler.class)
 public class RestaurantControllerTest {
   @Autowired private MockMvc mockMvc;

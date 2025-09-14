@@ -1,8 +1,11 @@
 package dev.christopherbell.libs.api.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
 import java.util.UUID;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class ResponseTest {
@@ -20,14 +23,14 @@ public class ResponseTest {
         .success(true)
         .build();
 
-    Assertions.assertNotNull(response);
-    Assertions.assertEquals(1, response.getMessages().size());
-    Assertions.assertNotNull(response.getMessages().getFirst());
-    Assertions.assertEquals(ApiModelStub.TEST_CODE, response.getMessages().getFirst().getCode());
-    Assertions.assertEquals(ApiModelStub.TEST_DESCRIPTION, response.getMessages().getFirst().getDescription());
-    Assertions.assertEquals(ApiModelStub.TEST_PAYLOD, response.getPayload());
-    Assertions.assertEquals(requestId, response.getRequestId());
-    Assertions.assertTrue(response.isSuccess());
+    assertNotNull(response);
+    assertEquals(1, response.getMessages().size());
+    assertNotNull(response.getMessages().getFirst());
+    assertEquals(ApiModelStub.TEST_CODE, response.getMessages().getFirst().getCode());
+    assertEquals(ApiModelStub.TEST_DESCRIPTION, response.getMessages().getFirst().getDescription());
+    assertEquals(ApiModelStub.TEST_PAYLOD, response.getPayload());
+    assertEquals(requestId, response.getRequestId());
+    assertTrue(response.isSuccess());
   }
 
   @Test
@@ -42,13 +45,13 @@ public class ResponseTest {
     response.setRequestId(requestId);
     response.setSuccess(true);
 
-    Assertions.assertNotNull(response);
-    Assertions.assertEquals(1, response.getMessages().size());
-    Assertions.assertNotNull(response.getMessages().getFirst());
-    Assertions.assertEquals(ApiModelStub.TEST_CODE, response.getMessages().getFirst().getCode());
-    Assertions.assertEquals(ApiModelStub.TEST_DESCRIPTION, response.getMessages().getFirst().getDescription());
-    Assertions.assertEquals(ApiModelStub.TEST_PAYLOD, response.getPayload());
-    Assertions.assertEquals(requestId, response.getRequestId());
-    Assertions.assertTrue(response.isSuccess());
+    assertNotNull(response);
+    assertEquals(1, response.getMessages().size());
+    assertNotNull(response.getMessages().getFirst());
+    assertEquals(ApiModelStub.TEST_CODE, response.getMessages().getFirst().getCode());
+    assertEquals(ApiModelStub.TEST_DESCRIPTION, response.getMessages().getFirst().getDescription());
+    assertEquals(ApiModelStub.TEST_PAYLOD, response.getPayload());
+    assertEquals(requestId, response.getRequestId());
+    assertTrue(response.isSuccess());
   }
 }

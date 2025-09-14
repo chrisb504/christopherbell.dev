@@ -1,5 +1,8 @@
 package dev.christopherbell.libs.test;
 
+/**
+ * TestUtilStub provides constant values for testing purposes.
+ */
 public class TestUtilStub {
   public static final String RESTAURANT_NAME = "Pflugerville Taco House";
   public static final String RESTAURANT_STREET_1 = "104 N Railroad Ave";
