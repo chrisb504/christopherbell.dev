@@ -8,7 +8,6 @@ import dev.christopherbell.account.model.dto.AccountDetail;
 import dev.christopherbell.account.model.dto.AccountCreateRequest;
 import dev.christopherbell.account.model.AccountLoginRequest;
 import dev.christopherbell.account.model.dto.AccountUpdateRequest;
-import dev.christopherbell.libs.api.APIVersion;
 import dev.christopherbell.libs.api.model.Response;
 import dev.christopherbell.permission.PermissionService;
 import java.util.List;
