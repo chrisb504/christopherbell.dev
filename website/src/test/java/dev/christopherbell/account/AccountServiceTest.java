@@ -15,6 +15,7 @@ import dev.christopherbell.account.model.dto.AccountDetail;
 import dev.christopherbell.account.model.dto.AccountUpdateRequest;
 import dev.christopherbell.libs.api.exception.InvalidRequestException;
 import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
+import dev.christopherbell.libs.api.exception.ResourceExistsException;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -64,6 +65,11 @@ public class AccountServiceTest {
 
     when(accountRepository.findById(eq(AccountServiceStub.ID)))
         .thenReturn(Optional.of(existing));
+    // No conflicts for new email/username
+    when(accountRepository.findByEmail(eq("chris@example.com")))
+        .thenReturn(Optional.empty());
+    when(accountRepository.findByUsername(eq("Chris.Bell")))
+        .thenReturn(Optional.empty());
     when(accountRepository.save(eq(existing))).thenReturn(existing);
 
     var detail = AccountDetail.builder()
@@ -90,6 +96,8 @@ public class AccountServiceTest {
     assertEquals(AccountStatus.ACTIVE, result.getStatus());
 
     verify(accountRepository).findById(eq(AccountServiceStub.ID));
+    verify(accountRepository).findByEmail(eq("chris@example.com"));
+    verify(accountRepository).findByUsername(eq("Chris.Bell"));
     verify(accountRepository).save(eq(existing));
     verify(accountMapper).toAccount(eq(existing));
     verifyNoMoreInteractions(accountRepository);
@@ -231,6 +239,59 @@ public class AccountServiceTest {
     assertThrows(IllegalArgumentException.class, () -> accountService.updateAccount(request));
 
     verify(accountRepository).findById(eq(AccountServiceStub.ID));
+    verifyNoMoreInteractions(accountRepository);
+  }
+
+  @Test
+  @DisplayName("Update: email exists -> throws ResourceExistsException and does not save")
+  public void testUpdateAccount_whenEmailExists_throwsResourceExistsException() {
+    var existing = AccountServiceStub.getAccountWhenExistsStub();
+    var request = AccountServiceStub.getAccountUpdateRequestWhenAllFieldsSetStub();
+
+    // Another account already owns the sanitized target email
+    var other = Account.builder()
+        .id("acc-999")
+        .email("chris@example.com")
+        .username("someoneElse")
+        .build();
+
+    when(accountRepository.findById(eq(AccountServiceStub.ID)))
+        .thenReturn(Optional.of(existing));
+    when(accountRepository.findByEmail(eq("chris@example.com")))
+        .thenReturn(Optional.of(other));
+
+    assertThrows(ResourceExistsException.class, () -> accountService.updateAccount(request));
+
+    verify(accountRepository).findById(eq(AccountServiceStub.ID));
+    verify(accountRepository).findByEmail(eq("chris@example.com"));
+    verifyNoMoreInteractions(accountRepository);
+  }
+
+  @Test
+  @DisplayName("Update: username exists -> throws ResourceExistsException and does not save")
+  public void testUpdateAccount_whenUsernameExists_throwsResourceExistsException() {
+    var existing = AccountServiceStub.getAccountWhenExistsStub();
+    var request = AccountServiceStub.getAccountUpdateRequestWhenAllFieldsSetStub();
+
+    // Email is available, but username is taken by another account
+    var other = Account.builder()
+        .id("acc-888")
+        .email("someone@example.com")
+        .username("Chris.Bell")
+        .build();
+
+    when(accountRepository.findById(eq(AccountServiceStub.ID)))
+        .thenReturn(Optional.of(existing));
+    when(accountRepository.findByEmail(eq("chris@example.com")))
+        .thenReturn(Optional.empty());
+    when(accountRepository.findByUsername(eq("Chris.Bell")))
+        .thenReturn(Optional.of(other));
+
+    assertThrows(ResourceExistsException.class, () -> accountService.updateAccount(request));
+
+    verify(accountRepository).findById(eq(AccountServiceStub.ID));
+    verify(accountRepository).findByEmail(eq("chris@example.com"));
+    verify(accountRepository).findByUsername(eq("Chris.Bell"));
     verifyNoMoreInteractions(accountRepository);
   }
 }
