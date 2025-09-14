@@ -8,17 +8,17 @@ import dev.christopherbell.libs.api.exception.InvalidTokenException;
 import dev.christopherbell.libs.api.exception.ResourceExistsException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * Global exception handler for controllers to handle specific exceptions and return appropriate
  * HTTP responses.
  */
-@ControllerAdvice
+@RestControllerAdvice
 @Slf4j
 public class ControllerExceptionHandler {
   private final static String INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR";
