@@ -8,7 +8,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -29,23 +33,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Document("accounts")
 public class Account {
-  public static final String PARTITION_KEY = "ACCOUNT";
-  public static final String PROPERTY_APPROVED_BY = "approvedBy";
-  public static final String PROPERTY_CREATED_ON = "createdOn";
-  public static final String PROPERTY_EMAIL = "email";
-  public static final String PROPERTY_FIRST_NAME = "firstName";
-  public static final String PROPERTY_IS_APPROVED = "isApproved";
-  public static final String PROPERTY_LAST_LOGIN_ON = "lastLoginOn";
-  public static final String PROPERTY_LAST_NAME = "lastName";
-  public static final String PROPERTY_LOGIN_TOKEN = "loginToken";
-  public static final String PROPERTY_PASSWORD_HASH = "passwordHash";
-  public static final String PROPERTY_PASSWORD_SALT = "passwordSalt";
   public static final String PROPERTY_ROLE = "role";
-  public static final String PROPERTY_USERNAME = "username";
 
   @Id
   private String id;
   private String approvedBy;
+
+  @CreatedBy
+  private String createdBy;
+
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "uuuu-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
+  @CreatedDate
   private Instant createdOn;
 
   @Indexed(unique = true)
@@ -54,16 +52,24 @@ public class Account {
   private Boolean isApproved;
   private UUID inviteCode;
   private UUID inviteCodeOwner;
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssss'Z'", timezone = "UTC")
+
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "uuuu-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
   private Instant lastLoginOn;
   private String lastName;
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssss'Z'", timezone = "UTC")
+
+  @LastModifiedBy
+  private String lastModifiedBy;
+
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "uuuu-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
+  @LastModifiedDate
   private Instant lastUpdatedOn;
+
   private String loginToken;
   private String passwordSalt;
   private String passwordHash;
   private Role role;
   private AccountStatus status;
+
   @Indexed(unique = true)
   private String username;
 }

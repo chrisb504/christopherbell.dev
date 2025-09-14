@@ -1,6 +1,6 @@
 package dev.christopherbell.whatsforlunch.workflow;
 
-import dev.christopherbell.libs.common.workflow.model.WorkflowType;
+import dev.christopherbell.libs.workflow.model.WorkflowType;
 
 /**
  * Enum representing the different workflow types for the WhatsForLunch application.

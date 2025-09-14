@@ -1,7 +1,7 @@
 package dev.christopherbell.configuration;
 
 import dev.christopherbell.account.model.Account;
-import dev.christopherbell.libs.common.security.PermissionService;
+import dev.christopherbell.libs.security.PermissionService;
 import io.jsonwebtoken.Claims;
 import java.util.ArrayList;
 import java.util.Arrays;
