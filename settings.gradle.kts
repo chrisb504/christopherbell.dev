@@ -1,3 +1,3 @@
-rootProject.name = "website"
+rootProject.name = "christopherbell.dev"
 
-
+include("website", "cbell-lib")
