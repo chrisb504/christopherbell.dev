@@ -1,0 +1,14 @@
+Write unit tests for this class.
+
+1. Use JUnit 5 for testing.
+2. Cover all possible cases.
+3. Mock any dependencies if necessary.
+4. Ensure high code coverage.
+5. Test names should follow this pattern: test[MethodName]_when[Condition]_[ExpectedResult]
+6. Use stub classes for any data that needs to be created for testing.
+7. Include @DisplayNames() for better readability of test cases.
+8. Ensure tests and stubs are independent of each other.
+9. When using any when or verify methods, be sure eq() is used for all parameters.
+10. Do not use @Nested for tests.
+11. Use the public identifier for all test methods.
+12. Stubs should exist as separate classes in the same package as the class being tested.

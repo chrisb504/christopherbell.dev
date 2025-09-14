@@ -2,7 +2,6 @@ package dev.christopherbell.whatsforlunch.restaurant.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.Instant;
-import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

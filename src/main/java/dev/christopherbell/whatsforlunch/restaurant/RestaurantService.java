@@ -7,9 +7,8 @@ import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
 import dev.christopherbell.whatsforlunch.restaurant.model.CreateRestaurantRequest;
 import dev.christopherbell.whatsforlunch.restaurant.model.Restaurant;
 import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantDetail;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
@@ -48,14 +47,13 @@ public class RestaurantService {
    * @return a WhatsForLunchResponse containing a list of all existing restaurants
    */
   public List<RestaurantDetail> getRestaurants() {
-    var restaurants = restaurantRepository.findAll();
-    var restaurantDetails = new ArrayList<RestaurantDetail>();
-
-    for (var restaurant : restaurants) {
-      restaurantDetails.add(restaurantMapper.toRestaurantDetail(restaurant));
-    }
-    return restaurantDetails;
+    var restaurants = Optional.of(restaurantRepository.findAll())
+        .orElseGet(List::of);
+    return restaurants.stream()
+        .map(restaurantMapper::toRestaurantDetail)
+        .toList();
   }
+
 
   /**
    * Gets a restaurant by a requested id.
@@ -64,15 +62,16 @@ public class RestaurantService {
    * @return WhatsForLunchResponse containing the requested restaurant.
    * @throws InvalidRequestException is id is null or empty, or if restaurant is not found.
    */
-  public RestaurantDetail getRestaurantById(String id) throws InvalidRequestException, ResourceNotFoundException {
-    if (Objects.isNull(id) || id.isBlank()) {
-      throw new InvalidRequestException("Id cannot be null or blank.");
+  public RestaurantDetail getRestaurantById(
+      String id
+  ) throws InvalidRequestException, ResourceNotFoundException {
+    if (id == null || id.isBlank()) {
+      throw new InvalidRequestException("Restaurant id cannot be null or blank.");
     }
 
-    var restaurant = restaurantRepository.findById(id)
-        .orElseThrow(ResourceNotFoundException::new);
-
-    return restaurantMapper.toRestaurantDetail(restaurant);
+    return restaurantRepository.findById(id)
+        .map(restaurantMapper::toRestaurantDetail)
+        .orElseThrow(() -> new ResourceNotFoundException("Restaurant not found: " + id));
   }
 
   /**

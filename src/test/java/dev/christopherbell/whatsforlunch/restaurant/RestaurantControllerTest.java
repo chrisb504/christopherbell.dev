@@ -46,7 +46,7 @@ public class RestaurantControllerTest {
     var requestObject =
         TestUtil.readJsonAsObject(
             "/request/create-restaurant-request.json", CreateRestaurantRequest.class);
-    var response = RestaurantStub.getRestaurantDetailStub(RestaurantStub.getAddressStub());
+    var response = RestaurantStub.getRestaurantDetailStub(RestaurantStub.ID);
 
     when(restaurantService.createRestaurant(eq(requestObject))).thenReturn(response);
 
@@ -112,7 +112,7 @@ public class RestaurantControllerTest {
   @DisplayName("Should get restaurant by id when caller has ADMIN role.")
   @WithMockUser(authorities = {"ADMIN"})
   public void testGetAllRestaurantById() throws Exception {
-    var restaurantDetail = RestaurantStub.getRestaurantDetailStub(RestaurantStub.getAddressStub());
+    var restaurantDetail = RestaurantStub.getRestaurantDetailStub(RestaurantStub.ID);
     when(restaurantService.getRestaurantById(eq(RestaurantStub.ID)))
         .thenReturn(restaurantDetail);
 
@@ -167,8 +167,8 @@ public class RestaurantControllerTest {
   @DisplayName("Should get all restaurants when caller has ADMIN role.")
   @WithMockUser(authorities = {"ADMIN"})
   public void testGetAllRestaurants() throws Exception {
-    var restaurant1 = RestaurantStub.getRestaurantDetailStub(RestaurantStub.getAddressStub());
-    var restaurant2 = RestaurantStub.getRestaurantDetailStub(RestaurantStub.getAddressStub());
+    var restaurant1 = RestaurantStub.getRestaurantDetailStub(RestaurantStub.ID);
+    var restaurant2 = RestaurantStub.getRestaurantDetailStub(RestaurantStub.ID_2);
     var restaurantDetails = List.of(restaurant1, restaurant2);
     when(restaurantService.getRestaurants()).thenReturn(restaurantDetails);
 
@@ -188,7 +188,7 @@ public class RestaurantControllerTest {
         .andExpect(jsonPath("$.payload[0].address.postalCode").value(RestaurantStub.POSTAL_CODE))
         .andExpect(jsonPath("$.payload[0].phoneNumber").value(RestaurantStub.PHONE_NUMBER))
         .andExpect(jsonPath("$.payload[0].website").value(RestaurantStub.WEBSITE))
-        .andExpect(jsonPath("$.payload[1].id").value(RestaurantStub.ID))
+        .andExpect(jsonPath("$.payload[1].id").value(RestaurantStub.ID_2))
         .andExpect(jsonPath("$.payload[1].name").value(RestaurantStub.NAME))
         .andExpect(jsonPath("$.payload[1].address.street1").value(RestaurantStub.STREET_1))
         .andExpect(jsonPath("$.payload[1].address.city").value(RestaurantStub.CITY))
