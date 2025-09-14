@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Test;
 
 public class TestUtilTest {
 
-  /** Simple record representing the restaurant request used in tests. */
+  /**
+   * Simple record representing the restaurant request used in tests.
+   */
   record RestaurantRequest(
       String name,
       String phoneNumber,
@@ -16,7 +18,9 @@ public class TestUtilTest {
       String website
   ) {}
 
-  /** Simple record representing an address within the test request. */
+  /**
+   * Simple record representing an address within the test request.
+   */
   record Address(
       String street1,
       String city,
@@ -34,13 +38,13 @@ public class TestUtilTest {
     );
 
     assertNotNull(request);
-    assertEquals(request.name(), TestUtilStub.RESTAURANT_NAME);
-    assertEquals(request.phoneNumber(), TestUtilStub.RESTAURANT_PHONE_NUMBER);
-    assertEquals(request.address().city(), TestUtilStub.RESTAURANT_CITY);
-    assertEquals(request.address().country(), TestUtilStub.RESTAURANT_COUNTRY);
-    assertEquals(request.address().state(), TestUtilStub.RESTAURANT_STATE);
-    assertEquals(request.address().street1(), TestUtilStub.RESTAURANT_STREET_1);
-    assertEquals(request.address().postalCode(), TestUtilStub.RESTAURANT_POSTAL_CODE);
-    assertEquals(request.website(), TestUtilStub.RESTAURANT_WEBSITE);
+    assertEquals(TestUtilStub.RESTAURANT_NAME, request.name());
+    assertEquals(TestUtilStub.RESTAURANT_PHONE_NUMBER, request.phoneNumber());
+    assertEquals(TestUtilStub.RESTAURANT_CITY, request.address().city());
+    assertEquals(TestUtilStub.RESTAURANT_COUNTRY, request.address().country());
+    assertEquals(TestUtilStub.RESTAURANT_STATE, request.address().state());
+    assertEquals(TestUtilStub.RESTAURANT_STREET_1, request.address().street1());
+    assertEquals(TestUtilStub.RESTAURANT_POSTAL_CODE, request.address().postalCode());
+    assertEquals(TestUtilStub.RESTAURANT_WEBSITE, request.website());
   }
 }

@@ -5,8 +5,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -18,7 +20,7 @@ import dev.christopherbell.libs.api.exception.InvalidRequestException;
 import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
 import dev.christopherbell.permission.PermissionService;
 import dev.christopherbell.libs.test.TestUtil;
-import dev.christopherbell.whatsforlunch.restaurant.model.CreateRestaurantRequest;
+import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantCreateRequest;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +32,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WebMvcTest(controllers = RestaurantController.class)
+@WebMvcTest(RestaurantController.class)
 @Import(ControllerExceptionHandler.class)
 public class RestaurantControllerTest {
   @Autowired private MockMvc mockMvc;
@@ -42,10 +44,10 @@ public class RestaurantControllerTest {
   @DisplayName("Should create a restaurant when caller has ADMIN role.")
   @WithMockUser(authorities = {"ADMIN"})
   public void testCreateRestaurant() throws Exception {
-    var request = TestUtil.readJsonAsString("/request/create-restaurant-request.json");
+    var request = TestUtil.readJsonAsString("/request/restaurant-create-request.json");
     var requestObject =
         TestUtil.readJsonAsObject(
-            "/request/create-restaurant-request.json", CreateRestaurantRequest.class);
+            "/request/restaurant-create-request.json", RestaurantCreateRequest.class);
     var response = RestaurantStub.getRestaurantDetailStub(RestaurantStub.ID);
 
     when(restaurantService.createRestaurant(eq(requestObject))).thenReturn(response);
@@ -77,10 +79,10 @@ public class RestaurantControllerTest {
   @DisplayName("Should return 400 Bad Request when InvalidRequestException is thrown.")
   @WithMockUser(authorities = {"ADMIN"})
   public void testCreateRestaurant_whenInvalidRequestExceptionIsThrown() throws Exception {
-    var request = TestUtil.readJsonAsString("/request/create-restaurant-request.json");
+    var request = TestUtil.readJsonAsString("/request/restaurant-create-request.json");
     var requestObject =
         TestUtil.readJsonAsObject(
-            "/request/create-restaurant-request.json", CreateRestaurantRequest.class);
+            "/request/restaurant-create-request.json", RestaurantCreateRequest.class);
     when(restaurantService.createRestaurant(eq(requestObject)))
         .thenThrow(new InvalidRequestException("Bad Request"));
 
@@ -104,6 +106,110 @@ public class RestaurantControllerTest {
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(status().isUnauthorized());
+
+    verifyNoInteractions(restaurantService);
+  }
+
+  @Test
+  @DisplayName("testDeleteRestaurantById_whenAuthorizedAndValidId_Returns200WithPayload")
+  @WithMockUser(authorities = {"ADMIN"})
+  public void testDeleteRestaurantById_whenAuthorizedAndValidId_Returns200WithPayload() throws Exception {
+    var deleted = RestaurantStub.getRestaurantDetailStub(RestaurantStub.ID);
+    when(restaurantService.deleteRestaurantById(eq(RestaurantStub.ID))).thenReturn(deleted);
+
+    mockMvc
+        .perform(delete("/api/whatsforlunch/restaurant" + APIVersion.V20250913 + "/{id}", RestaurantStub.ID)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .with(csrf()))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.payload").isNotEmpty())
+        .andExpect(jsonPath("$.payload.id").value(RestaurantStub.ID))
+        .andExpect(jsonPath("$.payload.name").value(RestaurantStub.NAME))
+        .andExpect(jsonPath("$.payload.address.street1").value(RestaurantStub.STREET_1))
+        .andExpect(jsonPath("$.payload.address.city").value(RestaurantStub.CITY))
+        .andExpect(jsonPath("$.payload.address.state").value(RestaurantStub.STATE))
+        .andExpect(jsonPath("$.payload.address.country").value(RestaurantStub.COUNTRY))
+        .andExpect(jsonPath("$.payload.address.postalCode").value(RestaurantStub.POSTAL_CODE))
+        .andExpect(jsonPath("$.payload.phoneNumber").value(RestaurantStub.PHONE_NUMBER))
+        .andExpect(jsonPath("$.payload.website").value(RestaurantStub.WEBSITE));;
+
+    verify(restaurantService).deleteRestaurantById(eq(RestaurantStub.ID));
+  }
+
+  @Test
+  @DisplayName("testDeleteRestaurantById_whenNotAuthorized_Returns401")
+  public void testDeleteRestaurantById_whenNotAuthorized_Returns401() throws Exception {
+    mockMvc
+        .perform(delete("/api/whatsforlunch/restaurant" + APIVersion.V20250913 + "/{id}", RestaurantStub.ID)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .with(csrf()))
+        .andExpect(status().isUnauthorized());
+
+    verifyNoInteractions(restaurantService);
+  }
+
+  @Test
+  @DisplayName("testDeleteRestaurantById_whenInvalidId_Returns400")
+  @WithMockUser(authorities = {"ADMIN"})
+  public void testDeleteRestaurantById_whenInvalidId_Returns400() throws Exception {
+    when(restaurantService.deleteRestaurantById(eq(RestaurantStub.ID)))
+        .thenThrow(new InvalidRequestException("Restaurant id cannot be null or blank."));
+
+    mockMvc
+        .perform(delete("/api/whatsforlunch/restaurant" + APIVersion.V20250913 + "/{id}", RestaurantStub.ID)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .with(csrf()))
+        .andExpect(status().isBadRequest());
+
+    verify(restaurantService).deleteRestaurantById(eq(RestaurantStub.ID));
+  }
+
+  @Test
+  @DisplayName("testDeleteRestaurantById_whenNotFound_Returns404")
+  @WithMockUser(authorities = {"ADMIN"})
+  public void testDeleteRestaurantById_whenNotFound_Returns404() throws Exception {
+    when(restaurantService.deleteRestaurantById(eq(RestaurantStub.ID)))
+        .thenThrow(new ResourceNotFoundException("Restaurant not found: " + RestaurantStub.ID));
+
+    mockMvc
+        .perform(delete("/api/whatsforlunch/restaurant" + APIVersion.V20250913 + "/{id}", RestaurantStub.ID)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .with(csrf()))
+        .andExpect(status().isNotFound());
+
+    verify(restaurantService).deleteRestaurantById(eq(RestaurantStub.ID));
+  }
+
+  @Test
+  @DisplayName("testDeleteRestaurantById_whenWrongContentType_Returns415")
+  @WithMockUser(authorities = {"ADMIN"})
+  public void testDeleteRestaurantById_whenWrongContentType_Returns415() throws Exception {
+    mockMvc
+        .perform(delete("/api/whatsforlunch/restaurant" + APIVersion.V20250913 + "/{id}", RestaurantStub.ID)
+            .contentType(MediaType.TEXT_PLAIN)
+            .accept(MediaType.APPLICATION_JSON)
+            .with(csrf()))
+        .andExpect(status().isUnsupportedMediaType());
+
+    verifyNoInteractions(restaurantService);
+  }
+
+  @Test
+  @DisplayName("testDeleteRestaurantById_whenAcceptHeaderUnsupported_Returns406")
+  @WithMockUser(authorities = {"ADMIN"})
+  public void testDeleteRestaurantById_whenAcceptHeaderUnsupported_Returns406() throws Exception {
+    mockMvc
+        .perform(delete("/api/whatsforlunch/restaurant" + APIVersion.V20250913 + "/{id}", RestaurantStub.ID)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.TEXT_PLAIN)
+            .with(csrf()))
+        .andExpect(status().isNotAcceptable());
 
     verifyNoInteractions(restaurantService);
   }
@@ -225,6 +331,131 @@ public class RestaurantControllerTest {
             get("/api/whatsforlunch/restaurant" + APIVersion.V20250912)
                 .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isUnauthorized());
+
+    verifyNoInteractions(restaurantService);
+  }
+
+  @Test
+  @DisplayName("testUpdateRestaurantById_whenAuthorizedAndValidRequest_Returns202WithPayload")
+  @WithMockUser(authorities = {"ADMIN"})
+  public void testUpdateRestaurantById_whenAuthorizedAndValidRequest_Returns202WithPayload() throws Exception {
+    var request = TestUtil.readJsonAsString("/request/restaurant-update-request.json");
+    var requestObject = RestaurantStub.getRestaurantUpdateRequestStub();
+    var updated = RestaurantStub.getRestaurantDetailStub(RestaurantStub.ID);
+
+    when(restaurantService.updateRestaurant(eq(requestObject))).thenReturn(updated);
+
+    mockMvc
+        .perform(put("/api/whatsforlunch/restaurant" + APIVersion.V20250913)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .with(csrf())
+            .content(request))
+        .andExpect(status().isAccepted())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.payload").isNotEmpty())
+        .andExpect(jsonPath("$.payload.id").value(RestaurantStub.ID))
+        .andExpect(jsonPath("$.payload.name").value(RestaurantStub.NAME))
+        .andExpect(jsonPath("$.payload.address.street1").value(RestaurantStub.STREET_1))
+        .andExpect(jsonPath("$.payload.address.city").value(RestaurantStub.CITY))
+        .andExpect(jsonPath("$.payload.address.state").value(RestaurantStub.STATE))
+        .andExpect(jsonPath("$.payload.address.country").value(RestaurantStub.COUNTRY))
+        .andExpect(jsonPath("$.payload.address.postalCode").value(RestaurantStub.POSTAL_CODE))
+        .andExpect(jsonPath("$.payload.phoneNumber").value(RestaurantStub.PHONE_NUMBER))
+        .andExpect(jsonPath("$.payload.website").value(RestaurantStub.WEBSITE));
+
+    verify(restaurantService).updateRestaurant(eq(requestObject));
+  }
+
+  @Test
+  @DisplayName("testUpdateRestaurantById_whenNotAuthorized_Returns401")
+  public void testUpdateRestaurantById_whenNotAuthorized_Returns401() throws Exception {
+    var request = TestUtil.readJsonAsString("/request/restaurant-update-request.json");
+
+    mockMvc
+        .perform(put("/api/whatsforlunch/restaurant" + APIVersion.V20250913)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .with(csrf())
+            .content(request))
+        .andExpect(status().isUnauthorized());
+
+    verifyNoInteractions(restaurantService);
+  }
+
+  @Test
+  @DisplayName("testUpdateRestaurantById_whenInvalidRequest_Returns400")
+  @WithMockUser(authorities = {"ADMIN"})
+  public void testUpdateRestaurantById_whenInvalidRequest_Returns400() throws Exception {
+    var request = TestUtil.readJsonAsString("/request/restaurant-update-request.json");
+    var requestObject = RestaurantStub.getRestaurantUpdateRequestStub();
+
+    when(restaurantService.updateRestaurant(eq(requestObject)))
+        .thenThrow(new InvalidRequestException("Restaurant id cannot be null or blank."));
+
+    mockMvc
+        .perform(put("/api/whatsforlunch/restaurant" + APIVersion.V20250913)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .with(csrf())
+            .content(request))
+        .andExpect(status().isBadRequest());
+
+    verify(restaurantService).updateRestaurant(eq(requestObject));
+  }
+
+  @Test
+  @DisplayName("testUpdateRestaurantById_whenNotFound_Returns404")
+  @WithMockUser(authorities = {"ADMIN"})
+  public void testUpdateRestaurantById_whenNotFound_Returns404() throws Exception {
+    var request = TestUtil.readJsonAsString("/request/restaurant-update-request.json");
+    var requestObject = RestaurantStub.getRestaurantUpdateRequestStub();
+
+    when(restaurantService.updateRestaurant(eq(requestObject)))
+        .thenThrow(new ResourceNotFoundException("Restaurant not found: missing-id"));
+
+    mockMvc
+        .perform(put("/api/whatsforlunch/restaurant" + APIVersion.V20250913)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .with(csrf())
+            .content(request))
+        .andExpect(status().isNotFound());
+
+    verify(restaurantService).updateRestaurant(eq(requestObject));
+  }
+
+  @Test
+  @DisplayName("testUpdateRestaurantById_whenWrongContentType_Returns415")
+  @WithMockUser(authorities = {"ADMIN"})
+  public void testUpdateRestaurantById_whenWrongContentType_Returns415() throws Exception {
+    var request = TestUtil.readJsonAsString("/request/restaurant-update-request.json");
+
+    mockMvc
+        .perform(put("/api/whatsforlunch/restaurant" + APIVersion.V20250913)
+            .contentType(MediaType.TEXT_PLAIN)
+            .accept(MediaType.APPLICATION_JSON)
+            .with(csrf())
+            .content(request))
+        .andExpect(status().isUnsupportedMediaType());
+
+    verifyNoInteractions(restaurantService);
+  }
+
+  @Test
+  @DisplayName("testUpdateRestaurantById_whenAcceptHeaderUnsupported_Returns406")
+  @WithMockUser(authorities = {"ADMIN"})
+  public void testUpdateRestaurantById_whenAcceptHeaderUnsupported_Returns406() throws Exception {
+    var request = TestUtil.readJsonAsString("/request/restaurant-update-request.json");
+
+    mockMvc
+        .perform(put("/api/whatsforlunch/restaurant" + APIVersion.V20250913)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.TEXT_PLAIN)
+            .with(csrf())
+            .content(request))
+        .andExpect(status().isNotAcceptable());
 
     verifyNoInteractions(restaurantService);
   }

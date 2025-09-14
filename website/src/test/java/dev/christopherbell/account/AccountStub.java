@@ -6,6 +6,9 @@ import dev.christopherbell.account.model.Role;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * A stub class for testing Account related functionality.
+ */
 public class AccountStub {
   public static final String APPROVED_BY = "afbcf77d-d5d8-4d89-b89f-c24d82b61b0f";
   public static final String EMAIL = "test@example.com";
@@ -17,8 +20,12 @@ public class AccountStub {
   public static final String ROLE = Role.ADMIN.name();
   public static final String USERNAME = "jacobfreakingjones";
 
-
-  public static AccountDetail getAccountStub() {
+  /**
+   * Creates a stub AccountDetail object for testing purposes.
+   *
+   * @return a stub AccountDetail object
+   */
+  public static AccountDetail getAccountDetailStub() {
     return AccountDetail.builder()
         .createdOn(Instant.now())
         .email(EMAIL)
@@ -30,7 +37,12 @@ public class AccountStub {
         .build();
   }
 
-  public static Account getAccountEntityStub() {
+  /**
+   * Creates a stub Account object for testing purposes.
+   *
+   * @return a stub Account object
+   */
+  public static Account getAccountStub() {
     return Account.builder()
         .approvedBy(APPROVED_BY)
         .createdOn(Instant.now())
@@ -45,5 +57,4 @@ public class AccountStub {
         .username(USERNAME)
         .build();
   }
-
 }

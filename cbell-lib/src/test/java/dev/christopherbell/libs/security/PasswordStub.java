@@ -2,33 +2,49 @@ package dev.christopherbell.libs.security;
 
 import java.util.Base64;
 
+/**
+ * A collection of static stubs for password and salt values for use in unit tests.
+ */
 public class PasswordStub {
 
-  // ---- Passwords ----
+  /**
+   * A valid, deterministic password for repeatability in specific tests.
+   */
   public static String getPasswordStub() {
     return "CorrectHorseBatteryStaple!123";
   }
 
+  /**
+   * A distinct password for inequality tests.
+   */
   public static String getAnotherPasswordStub() {
     return "Tr0ub4dor&3";
   }
 
+  /**
+   * An empty password for edge case tests.
+   */
   public static String getEmptyPasswordStub() {
     return "";
   }
 
-  // ---- Salts ----
-  /** Generates a fresh, valid random salt via the production API. */
+  /**
+   * Generates a fresh, valid random salt via the production API.
+   */
   public static String getRandomSaltStub() {
     return PasswordUtil.generateSalt();
   }
 
-  /** A distinct fresh salt for inequality tests. */
+  /**
+   * A distinct fresh salt for inequality tests.
+   */
   public static String getAnotherRandomSaltStub() {
     return PasswordUtil.generateSalt();
   }
 
-  /** Not Base64 – used to assert IllegalArgumentException from Base64 decoder. */
+  /**
+   * Not Base64 – used to assert IllegalArgumentException from Base64 decoder.
+   */
   public static String getInvalidBase64SaltStub() {
     return "***not-base64***";
   }

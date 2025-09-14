@@ -19,6 +19,7 @@ public class RestaurantDetail {
   private String id;
   private Address address;
   private String createdBy;
+
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "uuuu-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
   private Instant createdOn;
 
@@ -26,7 +27,9 @@ public class RestaurantDetail {
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "uuuu-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
   private Instant lastUpdatedOn;
+
   private String name;
   private String phoneNumber;
+  private String type;
   private String website;
 }

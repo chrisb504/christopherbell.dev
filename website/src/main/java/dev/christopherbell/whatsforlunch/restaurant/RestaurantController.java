@@ -3,17 +3,20 @@ package dev.christopherbell.whatsforlunch.restaurant;
 import dev.christopherbell.libs.api.APIVersion;
 import dev.christopherbell.libs.api.model.Response;
 import dev.christopherbell.permission.PermissionService;
-import dev.christopherbell.whatsforlunch.restaurant.model.CreateRestaurantRequest;
+import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantCreateRequest;
 import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantDetail;
+import dev.christopherbell.whatsforlunch.restaurant.model.RestaurantUpdateRequest;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,7 +44,7 @@ public class RestaurantController {
   )
   @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
   public ResponseEntity<Response<RestaurantDetail>> createRestaurant(
-      @RequestBody CreateRestaurantRequest request
+      @RequestBody RestaurantCreateRequest request
   ) throws Exception {
     var response = restaurantService.createRestaurant(request);
     return new ResponseEntity<>(
@@ -49,6 +52,29 @@ public class RestaurantController {
             .payload(response)
             .success(true)
             .build(), HttpStatus.CREATED);
+  }
+
+  /**
+   * Deletes an existing restaurant.
+   *
+   * @param id of the restaurant to delete.
+   * @return the deleted restaurant.
+   */
+  @DeleteMapping(
+      value = APIVersion.V20250913 + "/{id}",
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE
+  )
+  @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
+  public ResponseEntity<Response<RestaurantDetail>> deleteRestaurantById(
+      @PathVariable String id
+  ) throws Exception {
+    var response = restaurantService.deleteRestaurantById(id);
+    return new ResponseEntity<>(
+        Response.<RestaurantDetail>builder()
+            .payload(response)
+            .success(true)
+            .build(), HttpStatus.OK);
   }
 
   /**
@@ -84,5 +110,27 @@ public class RestaurantController {
             .payload(response)
             .success(true)
             .build(), HttpStatus.OK);
+  }
+
+  /**
+   * Updates an existing restaurant.
+   *
+   * @return the updated restaurant.
+   */
+  @PutMapping(
+      value = APIVersion.V20250913,
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE
+  )
+  @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
+  public ResponseEntity<Response<RestaurantDetail>> updateRestaurantById(
+      @RequestBody RestaurantUpdateRequest request
+  ) throws Exception {
+    var response = restaurantService.updateRestaurant(request);
+    return new ResponseEntity<>(
+        Response.<RestaurantDetail>builder()
+            .payload(response)
+            .success(true)
+            .build(), HttpStatus.ACCEPTED);
   }
 }
