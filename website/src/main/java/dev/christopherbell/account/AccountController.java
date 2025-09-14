@@ -226,7 +226,7 @@ public class AccountController {
       value = V20250903 + "/me",
       produces = MediaType.APPLICATION_JSON_VALUE
   )
-  @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
+  @PreAuthorize("@permissionService.hasAuthority('USER')")
   public ResponseEntity<Response<AccountDetail>> getMyAccount(
   ) throws Exception {
     return new ResponseEntity<>(
