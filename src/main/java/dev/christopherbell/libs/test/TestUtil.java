@@ -19,7 +19,7 @@ public final class TestUtil {
   /**
    * Reads a JSON file from the classpath and converts it into the given type.
    *
-   * @param path the classpath location of the JSON (e.g., "/requests/create-restaurant.json")
+   * @param path the classpath location of the JSON (e.g., "/requests/create-restaurant-request.json")
    * @param clazz the class to deserialize into
    * @return the deserialized object
    */
