@@ -32,9 +32,8 @@ export function createFeedItem(post, ctx) {
       </div>
       <div class="ms-3 text-end flex-shrink-0 position-relative">
         <small class="text-muted d-block">${when}</small>
-        <button class="btn btn-sm ${liked ? 'btn-primary' : 'btn-outline-primary'} post-like-btn mt-1" data-post="${post.id}" data-liked="${liked}">❤ <span class="like-count">${likes}</span></button>
         ${ctx.canDelete(post) ? `
-        <button class="btn btn-sm btn-light post-menu-btn" data-post="${post.id}" aria-label="More">⋯</button>
+        <button class="btn btn-sm btn-light post-menu-btn mt-1" data-post="${post.id}" aria-label="More">⋯</button>
         <div class="post-menu d-none card p-2" style="position:absolute; right:0; top:100%; z-index:1000;">
           <button class="btn btn-link text-danger p-0 post-delete-btn" data-post="${post.id}">Delete</button>
         </div>` : ''}
@@ -47,6 +46,16 @@ export function createFeedItem(post, ctx) {
           <a href="/p/${encodeURIComponent(post.rootId)}" class="small">View thread</a>
         </div>
       </div>` : ''}
+    <div class="d-flex align-items-center gap-4 border-top pt-2 mt-2">
+      <button class="btn btn-link btn-sm text-decoration-none text-muted post-reply-btn" data-post="${post.id}" aria-label="Reply">
+        <i class="fa fa-comment-o" aria-hidden="true"></i>
+        <span class="visually-hidden">Reply</span>
+      </button>
+      <button class="btn btn-link btn-sm text-decoration-none post-like-btn ${liked ? 'text-danger' : 'text-muted'}" data-post="${post.id}" data-liked="${liked}" aria-label="Like">
+        <i class="fa ${liked ? 'fa-heart' : 'fa-heart-o'}" aria-hidden="true"></i>
+        <span class="like-count ms-1">${likes}</span>
+      </button>
+    </div>
   `;
 
   // Wire like toggle
@@ -60,11 +69,24 @@ export function createFeedItem(post, ctx) {
         if (countEl) countEl.textContent = updated.likesCount ?? 0;
         const isLiked = !!updated.liked;
         likeBtn.dataset.liked = isLiked;
-        likeBtn.classList.toggle('btn-primary', isLiked);
-        likeBtn.classList.toggle('btn-outline-primary', !isLiked);
+        likeBtn.classList.toggle('text-danger', isLiked);
+        likeBtn.classList.toggle('text-muted', !isLiked);
+        const icon = likeBtn.querySelector('i');
+        if (icon) {
+          icon.classList.toggle('fa-heart', isLiked);
+          icon.classList.toggle('fa-heart-o', !isLiked);
+        }
       } catch (err) {
         alert(err.message);
       }
+    });
+  }
+
+  // Wire reply click -> navigate to post page
+  const replyBtn = item.querySelector('.post-reply-btn');
+  if (replyBtn) {
+    replyBtn.addEventListener('click', () => {
+      window.location.href = `/p/${encodeURIComponent(post.id)}`;
     });
   }
 
@@ -113,4 +135,3 @@ export function createFeedItem(post, ctx) {
 
   return item;
 }
-
