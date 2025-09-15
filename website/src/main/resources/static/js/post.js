@@ -12,15 +12,150 @@ function renderRoot(post) {
   const root = document.querySelector('#rootPost .card-body');
   if (!root) return;
   const when = formatWhen(post.createdOn || post.lastUpdatedOn);
+  const liked = !!post.liked;
+  const likes = post.likesCount || 0;
+  const replies = post.replyCount || 0;
   root.innerHTML = `
+    ${post.parentId ? `
+    <div class="parent-context card mb-2" data-parent="${post.parentId}">
+      <div class="card-body py-2">
+        <div class="fw-semibold">
+          <a href="/u/" class="link-underline link-underline-opacity-0" data-parent-handle="${post.parentId}">@user</a>
+        </div>
+        <p class="mb-0 small fw-semibold" data-parent-text="${post.parentId}">Loading…</p>
+        <a href="/p/${encodeURIComponent(post.parentId)}" class="small">View parent</a>
+      </div>
+    </div>` : ''}
     <div class="d-flex justify-content-between align-items-start">
-      <div>
+      <div class="w-100">
         <div class="fw-semibold"><a href="/u/${encodeURIComponent(post.username)}" class="link-underline link-underline-opacity-0">@${sanitize(post.username)}</a></div>
-        <p class="mb-1 fs-4">${sanitize(post.text)}</p>
+        <p class="mb-1 fs-4"><a href="/p/${encodeURIComponent(post.id)}" class="link-underline link-underline-opacity-0 text-body">${sanitize(post.text)}</a></p>
       </div>
       <small class="text-muted ms-3 flex-shrink-0">${when}</small>
     </div>
+    <div class="d-flex align-items-center gap-4 border-top pt-2 mt-2">
+      <button class="btn btn-link btn-sm text-decoration-none text-muted root-reply-btn" aria-label="Reply">
+        <i class="fa fa-comment-o" aria-hidden="true"></i>
+        <span class="reply-count ms-1">${replies}</span>
+        <span class="visually-hidden">Reply</span>
+      </button>
+      <button class="btn btn-link btn-sm text-decoration-none root-like-btn ${liked ? 'text-danger' : 'text-muted'}" data-liked="${liked}" aria-label="Like">
+        <i class="fa ${liked ? 'fa-heart' : 'fa-heart-o'}" aria-hidden="true"></i>
+        <span class="like-count ms-1">${likes}</span>
+      </button>
+    </div>
+    <div class="root-reply-composer d-none mt-2">
+      <textarea class="form-control root-reply-text" rows="2" maxlength="280" placeholder="Write a reply..."></textarea>
+      <div class="d-flex justify-content-end gap-2 mt-2">
+        <button class="btn btn-sm btn-secondary root-reply-cancel" type="button">Cancel</button>
+        <button class="btn btn-sm btn-primary root-reply-submit" type="button">Reply</button>
+      </div>
+    </div>
   `;
+
+  // Wire like toggle for root
+  const likeBtn = root.querySelector('.root-like-btn');
+  if (likeBtn) {
+    likeBtn.addEventListener('click', async () => {
+      if (!isLoggedIn()) { window.location.href = '/login'; return; }
+      try {
+        const updated = await fetchJson(`/api/posts/2025-09-14/${post.id}/like`, { method: 'POST', headers: authHeaders() });
+        const countEl = likeBtn.querySelector('.like-count');
+        if (countEl) countEl.textContent = updated.likesCount ?? 0;
+        const isLiked = !!updated.liked;
+        likeBtn.dataset.liked = isLiked;
+        likeBtn.classList.toggle('text-danger', isLiked);
+        likeBtn.classList.toggle('text-muted', !isLiked);
+        const icon = likeBtn.querySelector('i');
+        if (icon) {
+          icon.classList.toggle('fa-heart', isLiked);
+          icon.classList.toggle('fa-heart-o', !isLiked);
+        }
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+  }
+
+  // Wire inline reply for root
+  const replyBtn = root.querySelector('.root-reply-btn');
+  const replyBox = root.querySelector('.root-reply-composer');
+  const replyText = root.querySelector('.root-reply-text');
+  const replySubmit = root.querySelector('.root-reply-submit');
+  const replyCancel = root.querySelector('.root-reply-cancel');
+  if (replyBtn && replyBox && replyText && replySubmit && replyCancel) {
+    replyBtn.addEventListener('click', () => {
+      if (!isLoggedIn()) { window.location.href = '/login'; return; }
+      replyBox.classList.toggle('d-none');
+      if (!replyBox.classList.contains('d-none')) setTimeout(() => replyText.focus(), 0);
+    });
+    replyCancel.addEventListener('click', () => {
+      replyText.value = '';
+      replyBox.classList.add('d-none');
+    });
+    replySubmit.addEventListener('click', async () => {
+      if (!isLoggedIn()) { window.location.href = '/login'; return; }
+      const text = (replyText.value || '').trim();
+      if (!text) return;
+      const alert = document.getElementById('postAlert');
+      try {
+        replySubmit.disabled = true;
+        await fetchJson('/api/posts/2025-09-14/create', {
+          method: 'POST',
+          headers: authHeaders(),
+          body: JSON.stringify({ text, parentId: post.id })
+        });
+        // Update UI: clear composer, increment count, refresh replies list
+        replyText.value = '';
+        replyBox.classList.add('d-none');
+        const rc = root.querySelector('.reply-count');
+        if (rc) {
+          const curr = parseInt(rc.textContent || '0', 10) || 0;
+          rc.textContent = String(curr + 1);
+        }
+        const thread = await fetchJson(`/api/posts/2025-09-14/${encodeURIComponent(post.id)}/thread`);
+        // Resolve current user for delete/like permissions
+        let me = null;
+        if (localStorage.getItem('cbellLoginToken')) {
+          try { me = await fetchJson('/api/accounts/2025-09-03/me', { headers: authHeaders() }); } catch (_) {}
+        }
+        renderThread(thread, me, post.id);
+        // Toast
+        const toast = document.createElement('div');
+        toast.className = 'small text-success mt-1';
+        toast.textContent = 'Reply posted';
+        root.appendChild(toast);
+        setTimeout(() => toast.remove(), 2000);
+      } catch (err) {
+        if (alert) { alert.textContent = err.message; alert.classList.remove('d-none'); }
+        else { alert(err.message); }
+      } finally {
+        replySubmit.disabled = false;
+      }
+    });
+  }
+
+  // Fill parent context details if this is a reply
+  if (post.parentId) {
+    (async () => {
+      try {
+        const parent = await fetchJson(API.posts.byId(post.parentId));
+        const h = parent.username ? `@${sanitize(parent.username)}` : '@user';
+        const handleEl = root.querySelector(`[data-parent-handle="${post.parentId}"]`);
+        const textEl = root.querySelector(`[data-parent-text="${post.parentId}"]`);
+        if (handleEl) {
+          handleEl.textContent = h;
+          handleEl.setAttribute('href', `/u/${encodeURIComponent(parent.username || '')}`);
+        }
+        if (textEl) {
+          textEl.textContent = parent.text || '';
+        }
+      } catch (e) {
+        const textEl = root.querySelector(`[data-parent-text="${post.parentId}"]`);
+        if (textEl) textEl.textContent = 'Context unavailable';
+      }
+    })();
+  }
 }
 
 /**
@@ -34,18 +169,21 @@ function renderThread(items, currentUser, currentId) {
   if (!list) return;
   list.innerHTML = '';
   const isAdmin = currentUser?.role === 'ADMIN';
-  for (const p of items) {
-    if (p.level === 0) continue; // skip root in replies
-    if (currentId && p.id === currentId) continue; // don't duplicate the current post in replies
+  // Only render direct replies to the current post id
+  const directReplies = (items || []).filter(p => p.parentId === currentId);
+  for (const p of directReplies) {
     const canDelete = currentUser && (isAdmin || currentUser.id === p.accountId);
     const when = new Date(p.createdOn || p.lastUpdatedOn || Date.now()).toLocaleString();
+    const likes = p.likesCount || 0;
+    const liked = !!p.liked;
+    const replies = p.replyCount || 0;
     const item = document.createElement('div');
     item.className = 'list-group-item py-3';
     item.innerHTML = `
       <div class="d-flex w-100 justify-content-between align-items-start">
-        <div>
+        <div class="w-100">
           <div class="fw-semibold"><a href="/u/${encodeURIComponent(p.username)}" class="link-underline link-underline-opacity-0">@${sanitize(p.username)}</a></div>
-          <p class="mb-1 fs-5">${sanitize(p.text)}</p>
+          <p class="mb-1 fs-5"><a href="/p/${encodeURIComponent(p.id)}" class="link-underline link-underline-opacity-0 text-body">${sanitize(p.text)}</a></p>
         </div>
         <div class="ms-3 text-end flex-shrink-0 position-relative">
           <small class="text-muted d-block">${when}</small>
@@ -56,6 +194,29 @@ function renderThread(items, currentUser, currentId) {
           </div>` : ''}
         </div>
       </div>
+      <div class="d-flex align-items-center gap-4 border-top pt-2 mt-2">
+        <button class="btn btn-link btn-sm text-decoration-none text-muted reply-btn" data-post="${p.id}" aria-label="Reply">
+          <i class="fa fa-comment-o" aria-hidden="true"></i>
+          <span class="reply-count ms-1">${replies}</span>
+          <span class="visually-hidden">Reply</span>
+        </button>
+        <button class="btn btn-link btn-sm text-decoration-none like-btn ${liked ? 'text-danger' : 'text-muted'}" data-post="${p.id}" data-liked="${liked}" aria-label="Like">
+          <i class="fa ${liked ? 'fa-heart' : 'fa-heart-o'}" aria-hidden="true"></i>
+          <span class="like-count ms-1">${likes}</span>
+        </button>
+        <button class="btn btn-link btn-sm text-decoration-none text-muted post-replies-toggle" data-post="${p.id}" aria-expanded="false">
+          <i class="fa fa-comments-o" aria-hidden="true"></i>
+          <span class="toggle-label">Show replies</span>
+        </button>
+      </div>
+      <div class="reply-composer d-none mt-2">
+        <textarea class="form-control reply-text" rows="2" maxlength="280" placeholder="Write a reply..."></textarea>
+        <div class="d-flex justify-content-end gap-2 mt-2">
+          <button class="btn btn-sm btn-secondary reply-cancel" type="button">Cancel</button>
+          <button class="btn btn-sm btn-primary reply-submit" type="button">Reply</button>
+        </div>
+      </div>
+      <div class="replies d-none"></div>
     `;
     list.appendChild(item);
     const btn = item.querySelector('.post-menu-btn');
@@ -75,6 +236,146 @@ function renderThread(items, currentUser, currentId) {
           item.remove();
         } catch (err) {
           alert(err.message);
+        }
+      });
+    }
+    // Like toggle
+    const likeBtn = item.querySelector('.like-btn');
+    if (likeBtn) {
+      likeBtn.addEventListener('click', async () => {
+        if (!isLoggedIn()) { window.location.href = '/login'; return; }
+        try {
+          const updated = await fetchJson(`/api/posts/2025-09-14/${p.id}/like`, { method: 'POST', headers: authHeaders() });
+          const countEl = likeBtn.querySelector('.like-count');
+          if (countEl) countEl.textContent = updated.likesCount ?? 0;
+          const isLiked = !!updated.liked;
+          likeBtn.dataset.liked = isLiked;
+          likeBtn.classList.toggle('text-danger', isLiked);
+          likeBtn.classList.toggle('text-muted', !isLiked);
+          const icon = likeBtn.querySelector('i');
+          if (icon) {
+            icon.classList.toggle('fa-heart', isLiked);
+            icon.classList.toggle('fa-heart-o', !isLiked);
+          }
+        } catch (err) {
+          alert(err.message);
+        }
+      });
+    }
+    // Inline reply composer
+    const replyBtn = item.querySelector('.reply-btn');
+    const replyBox = item.querySelector('.reply-composer');
+    const replyText = item.querySelector('.reply-text');
+    const replySubmit = item.querySelector('.reply-submit');
+    const replyCancel = item.querySelector('.reply-cancel');
+    if (replyBtn && replyBox && replyText && replySubmit && replyCancel) {
+      replyBtn.addEventListener('click', () => {
+        if (!isLoggedIn()) { window.location.href = '/login'; return; }
+        replyBox.classList.toggle('d-none');
+        if (!replyBox.classList.contains('d-none')) {
+          setTimeout(() => replyText.focus(), 0);
+        }
+      });
+      replyCancel.addEventListener('click', () => {
+        replyText.value = '';
+        replyBox.classList.add('d-none');
+      });
+      replySubmit.addEventListener('click', async () => {
+        if (!isLoggedIn()) { window.location.href = '/login'; return; }
+        const text = (replyText.value || '').trim();
+        if (!text) return;
+        try {
+          replySubmit.disabled = true;
+          await fetchJson('/api/posts/2025-09-14/create', {
+            method: 'POST',
+            headers: authHeaders(),
+            body: JSON.stringify({ text, parentId: p.id })
+          });
+          replyText.value = '';
+          replyBox.classList.add('d-none');
+          const rc = item.querySelector('.reply-count');
+          if (rc) {
+            const curr = parseInt(rc.textContent || '0', 10) || 0;
+            rc.textContent = String(curr + 1);
+          }
+          const repliesEl = item.querySelector('.replies');
+          if (repliesEl) {
+            repliesEl.classList.remove('d-none');
+            const who = currentUser?.username ? `@${sanitize(currentUser.username)}` : 'You';
+            const whenStr = formatWhen(new Date().toISOString());
+            const row = document.createElement('div');
+            row.className = 'mt-2';
+            row.innerHTML = `
+              <div class="d-flex">
+                <div class="flex-grow-1">
+                  <div class="small text-muted"><span class="fw-semibold">${who}</span> · ${whenStr}</div>
+                  <div>${sanitize(text)}</div>
+                </div>
+              </div>`;
+            repliesEl.appendChild(row);
+          }
+          const toast = document.createElement('div');
+          toast.className = 'small text-success mt-1';
+          toast.textContent = 'Reply posted';
+          replyBox.parentElement?.insertBefore(toast, replyBox.nextSibling);
+          setTimeout(() => toast.remove(), 2000);
+        } catch (err) {
+          alert(err.message);
+        } finally {
+          replySubmit.disabled = false;
+        }
+      });
+    }
+
+    // Show/hide replies (direct children of this reply)
+    const replToggle = item.querySelector('.post-replies-toggle');
+    const repliesEl = item.querySelector('.replies');
+    if (replToggle && repliesEl) {
+      replToggle.addEventListener('click', async () => {
+        const expanded = replToggle.getAttribute('aria-expanded') === 'true';
+        const label = replToggle.querySelector('.toggle-label');
+        if (!expanded) {
+          if (!repliesEl.dataset.loaded) {
+            try {
+              const thread = await fetchJson(API.posts.thread(p.id));
+              const direct = (thread || []).filter(r => r.parentId === p.id);
+              repliesEl.innerHTML = '';
+              if (direct.length === 0) {
+                const empty = document.createElement('div');
+                empty.className = 'text-muted small mt-1';
+                empty.textContent = 'No replies yet';
+                repliesEl.appendChild(empty);
+              } else {
+                for (const r of direct) {
+                  const row = document.createElement('div');
+                  row.className = 'mt-2';
+                  row.innerHTML = `
+                    <div class="d-flex">
+                      <div class="flex-grow-1">
+                        <div class="small text-muted"><a href="/u/${encodeURIComponent(r.username || '')}" class="link-underline link-underline-opacity-0 fw-semibold">@${sanitize(r.username || 'user')}</a> · ${formatWhen(r.createdOn || r.lastUpdatedOn)}</div>
+                        <div><a href="/p/${encodeURIComponent(r.id)}" class="link-underline link-underline-opacity-0 text-body">${sanitize(r.text || '')}</a></div>
+                      </div>
+                    </div>`;
+                  repliesEl.appendChild(row);
+                }
+                const more = document.createElement('div');
+                more.className = 'mt-2';
+                more.innerHTML = `<a href="/p/${encodeURIComponent(p.id)}" class="small">View full thread</a>`;
+                repliesEl.appendChild(more);
+              }
+              repliesEl.dataset.loaded = 'true';
+            } catch (err) {
+              repliesEl.innerHTML = `<div class="text-danger small mt-1">${sanitize(err.message)}</div>`;
+              repliesEl.dataset.loaded = 'true';
+            }
+          }
+          repliesEl.classList.remove('d-none');
+          replToggle.setAttribute('aria-expanded', 'true');
+          if (label) label.textContent = 'Hide replies';
+        } else {
+          repliesEl.classList.add('d-none');
+          replToggle.setAttribute('aria-expanded', 'false');
+          if (label) label.textContent = 'Show replies';
         }
       });
     }
@@ -98,29 +399,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       try { me = await fetchJson(API.accounts.me, { headers: authHeaders() }); } catch (_) {}
     }
     renderThread(thread, me, id);
-    // Show reply composer if logged in
-    const composer = document.getElementById('replyComposer');
-    const replyBtn = document.getElementById('replyBtn');
-    if (me && composer && replyBtn) {
-      composer.classList.remove('d-none');
-      replyBtn.addEventListener('click', async () => {
-        const txtEl = document.getElementById('replyText');
-        const text = (txtEl?.value || '').trim();
-        if (!text) return;
-        try {
-          await fetchJson(API.posts.create, {
-            method: 'POST',
-            headers: authHeaders(),
-            body: JSON.stringify({ text, parentId: id })
-          });
-          txtEl.value = '';
-          const thread = await fetchJson(API.posts.thread(id));
-          renderThread(thread, me, id);
-        } catch (err) {
-          if (alert) { alert.textContent = err.message; alert.classList.remove('d-none'); }
-        }
-      });
-    }
+    // The inline reply composer is available under the root; no need to show the top card.
+    // If desired, we could still expose #replyComposer; keeping it hidden for a cleaner UI.
   } catch (err) {
     if (alert) { alert.textContent = err.message; alert.classList.remove('d-none'); }
   }

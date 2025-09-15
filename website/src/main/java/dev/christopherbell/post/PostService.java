@@ -296,6 +296,8 @@ public class PostService {
         .orElseThrow(() -> new ResourceNotFoundException(String.format("Post with id %s not found.", id)));
     var author = accountRepository.findById(post.getAccountId())
         .orElseThrow(() -> new ResourceNotFoundException(String.format("Account with id %s not found.", post.getAccountId())));
+    String selfId = null;
+    try { selfId = getSelfId(); } catch (Exception ignored) {}
     return PostFeedItem.builder()
         .id(post.getId())
         .accountId(post.getAccountId())
@@ -305,7 +307,7 @@ public class PostService {
         .parentId(post.getParentId())
         .level(post.getLevel())
         .likesCount(post.getLikesCount())
-        .liked(false)
+        .liked(selfId != null && post.getLikedBy() != null && post.getLikedBy().contains(selfId))
         .replyCount((int) postRepository.countByParentId(post.getId()))
         .createdOn(post.getCreatedOn())
         .lastUpdatedOn(post.getLastUpdatedOn())
