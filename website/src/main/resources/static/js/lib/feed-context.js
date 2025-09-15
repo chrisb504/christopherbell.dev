@@ -49,3 +49,16 @@ export function onDeleteAction(fetchJson, authHeaders) {
   return (postId) => fetchJson(API.posts.byId(postId), { method: 'DELETE', headers: authHeaders() });
 }
 
+/**
+ * Build an onReply action that creates a reply under a given post id.
+ * @param {(url:string, options?:object)=>Promise<object>} fetchJson
+ * @param {()=>object} authHeaders
+ * @returns {(postId:string, text:string)=>Promise<object>}
+ */
+export function onReplyAction(fetchJson, authHeaders) {
+  return (postId, text) => fetchJson(API.posts.create, {
+    method: 'POST',
+    headers: authHeaders(),
+    body: JSON.stringify({ text, parentId: postId })
+  });
+}

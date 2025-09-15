@@ -56,6 +56,13 @@ export function createFeedItem(post, ctx) {
         <span class="like-count ms-1">${likes}</span>
       </button>
     </div>
+    <div class="reply-composer d-none mt-2">
+      <textarea class="form-control reply-text" rows="2" maxlength="280" placeholder="Write a reply..."></textarea>
+      <div class="d-flex justify-content-end gap-2 mt-2">
+        <button class="btn btn-sm btn-secondary reply-cancel" type="button">Cancel</button>
+        <button class="btn btn-sm btn-primary reply-submit" type="button">Reply</button>
+      </div>
+    </div>
   `;
 
   // Wire like toggle
@@ -82,11 +89,44 @@ export function createFeedItem(post, ctx) {
     });
   }
 
-  // Wire reply click -> navigate to post page
+  // Wire reply inline composer
   const replyBtn = item.querySelector('.post-reply-btn');
-  if (replyBtn) {
+  const replyBox = item.querySelector('.reply-composer');
+  const replyText = item.querySelector('.reply-text');
+  const replySubmit = item.querySelector('.reply-submit');
+  const replyCancel = item.querySelector('.reply-cancel');
+  if (replyBtn && replyBox && replyText && replySubmit && replyCancel) {
     replyBtn.addEventListener('click', () => {
-      window.location.href = `/p/${encodeURIComponent(post.id)}`;
+      if (!ctx.isLoggedIn()) { window.location.href = '/login'; return; }
+      replyBox.classList.toggle('d-none');
+      if (!replyBox.classList.contains('d-none')) {
+        setTimeout(() => replyText.focus(), 0);
+      }
+    });
+    replyCancel.addEventListener('click', () => {
+      replyText.value = '';
+      replyBox.classList.add('d-none');
+    });
+    replySubmit.addEventListener('click', async () => {
+      if (!ctx.isLoggedIn()) { window.location.href = '/login'; return; }
+      const text = (replyText.value || '').trim();
+      if (!text) return;
+      try {
+        replySubmit.disabled = true;
+        if (typeof ctx.onReply === 'function') {
+          await ctx.onReply(post.id, text);
+        } else {
+          // Fallback: navigate to full post view
+          window.location.href = `/p/${encodeURIComponent(post.id)}`;
+          return;
+        }
+        replyText.value = '';
+        replyBox.classList.add('d-none');
+      } catch (err) {
+        alert(err.message);
+      } finally {
+        replySubmit.disabled = false;
+      }
     });
   }
 

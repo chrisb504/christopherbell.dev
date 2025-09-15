@@ -1,7 +1,7 @@
 import { authHeaders, fetchJson, sanitize, isLoggedIn, formatWhen, closeOnOutside } from './lib/util.js';
 import { API } from './lib/api.js';
 import { createFeedItem } from './lib/feed-render.js';
-import { createRootFetcher, canDeleteFor, onLikeAction, onDeleteAction } from './lib/feed-context.js';
+import { createRootFetcher, canDeleteFor, onLikeAction, onDeleteAction, onReplyAction } from './lib/feed-context.js';
 import { initComposer } from './lib/composer.js';
 
 /** Update compose character counter. */
@@ -59,6 +59,7 @@ async function loadFeed(initial = false) {
           fetchRoot,
           onLike: onLikeAction(fetchJson, authHeaders),
           onDelete: onDeleteAction(fetchJson, authHeaders),
+          onReply: onReplyAction(fetchJson, authHeaders),
         }
       );
       feedList.appendChild(el);
