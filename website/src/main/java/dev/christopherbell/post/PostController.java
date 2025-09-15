@@ -144,5 +144,31 @@ public class PostController {
             .build(),
         HttpStatus.OK);
   }
+
+  /**
+   * Gets a single post by id (public).
+   */
+  @GetMapping(value = V20250914 + "/{postId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Response<PostFeedItem>> getPost(@PathVariable String postId) throws Exception {
+    return new ResponseEntity<>(
+        Response.<PostFeedItem>builder()
+            .payload(postService.getPostById(postId))
+            .success(true)
+            .build(),
+        HttpStatus.OK);
+  }
+
+  /**
+   * Gets a flat thread for a post (root + replies), public.
+   */
+  @GetMapping(value = V20250914 + "/{postId}/thread", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Response<List<PostFeedItem>>> getThread(@PathVariable String postId) throws Exception {
+    return new ResponseEntity<>(
+        Response.<List<PostFeedItem>>builder()
+            .payload(postService.getThread(postId))
+            .success(true)
+            .build(),
+        HttpStatus.OK);
+  }
 }
 

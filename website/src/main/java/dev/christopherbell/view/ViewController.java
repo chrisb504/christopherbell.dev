@@ -114,4 +114,9 @@ public class ViewController {
     return "thebell/tony.html";
   }
 
+  /** Serves an individual post page by id. */
+  @GetMapping(value = "/p/{postId}")
+  public String getPostPage(HttpServletRequest request) {
+    return "post.html";
+  }
 }

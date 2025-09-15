@@ -36,6 +36,13 @@ public class Post {
   // Tweet-like short message body (trimmed, <= 280 chars)
   private String text;
 
+  /** Identifier of the root post in the thread (self for top-level posts). */
+  private String rootId;
+  /** Identifier of the direct parent post (null for top-level posts). */
+  private String parentId;
+  /** Depth within the thread: 0 for root, 1 for a reply, etc. */
+  private Integer level;
+
   @JsonFormat(
       shape = JsonFormat.Shape.STRING,
       pattern = "uuuu-MM-dd'T'HH:mm:ss.SSS'Z'",

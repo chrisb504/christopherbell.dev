@@ -35,6 +35,7 @@ public class SecurityConfig {
       "/profile",
       "/api/posts" + APIVersion.V20250914 + "/feed",
       "/api/posts" + APIVersion.V20250914 + "/user/**",
+      "/api/posts" + APIVersion.V20250914 + "/**",
       "/u/**",
       "/blog",
       "/css/**",

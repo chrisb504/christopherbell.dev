@@ -32,5 +32,8 @@ public interface PostRepository extends MongoRepository<Post, String> {
    * Retrieves posts created before the given instant, newest first.
    */
   List<Post> findByCreatedOnLessThanOrderByCreatedOnDesc(Instant before, Pageable pageable);
+
+  /** All posts in a thread (includes root) ordered oldest-first (by createdOn). */
+  List<Post> findByRootIdOrderByCreatedOnAsc(String rootId);
 }
 

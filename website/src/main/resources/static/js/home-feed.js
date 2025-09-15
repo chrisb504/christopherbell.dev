@@ -67,7 +67,7 @@ async function loadFeed(initial = false) {
         <div class="d-flex w-100 justify-content-between align-items-start">
           <div>
             <div class="fw-semibold"><a href="/u/${encodeURIComponent(p.username)}" class="link-underline link-underline-opacity-0">${handle}</a></div>
-            <p class="mb-1 fs-5">${sanitize(p.text)}</p>
+            <p class="mb-1 fs-5"><a href="/p/${encodeURIComponent(p.id)}" class="link-underline link-underline-opacity-0 text-body">${sanitize(p.text)}</a></p>
           </div>
           <div class="ms-3 text-end flex-shrink-0 position-relative">
             <small class="text-muted d-block">${when}</small>

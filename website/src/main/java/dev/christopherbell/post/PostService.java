@@ -58,10 +58,31 @@ public class PostService {
         .findById(selfId)
         .orElseThrow(() -> new ResourceNotFoundException(String.format("Account with id %s not found.", selfId)));
     var now = Instant.now();
+    // Thread metadata
+    String parentId = request.parentId();
+    String rootId;
+    Integer level;
+    if (parentId != null && !parentId.isBlank()) {
+      var parent = postRepository.findById(parentId)
+          .orElseThrow(() -> new ResourceNotFoundException(
+              String.format("Parent post with id %s not found.", parentId)));
+      rootId = parent.getRootId() != null ? parent.getRootId() : parent.getId();
+      level = (parent.getLevel() != null ? parent.getLevel() : 0) + 1;
+    } else {
+      rootId = null; // set to self after ID gen
+      level = 0;
+    }
+
+    var newId = UUID.randomUUID().toString();
+    if (rootId == null) rootId = newId; // top-level post references itself as root
+
     var post = Post.builder()
-        .id(UUID.randomUUID().toString())
+        .id(newId)
         .accountId(account.getId())
         .text(text)
+        .rootId(rootId)
+        .parentId(parentId)
+        .level(level)
         .createdOn(now)
         .lastUpdatedOn(now)
         .build();
@@ -144,6 +165,8 @@ public class PostService {
             .accountId(p.getAccountId())
             .username(idToUser.get(p.getAccountId()))
             .text(p.getText())
+            .parentId(p.getParentId())
+            .level(p.getLevel())
             .createdOn(p.getCreatedOn())
             .lastUpdatedOn(p.getLastUpdatedOn())
             .build())
@@ -175,6 +198,51 @@ public class PostService {
             .accountId(p.getAccountId())
             .username(account.getUsername())
             .text(p.getText())
+            .parentId(p.getParentId())
+            .level(p.getLevel())
+            .createdOn(p.getCreatedOn())
+            .lastUpdatedOn(p.getLastUpdatedOn())
+            .build())
+        .toList();
+  }
+
+  /** Returns a single post by id (with author's username). */
+  public PostFeedItem getPostById(String id) throws ResourceNotFoundException {
+    var post = postRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException(String.format("Post with id %s not found.", id)));
+    var author = accountRepository.findById(post.getAccountId())
+        .orElseThrow(() -> new ResourceNotFoundException(String.format("Account with id %s not found.", post.getAccountId())));
+    return PostFeedItem.builder()
+        .id(post.getId())
+        .accountId(post.getAccountId())
+        .username(author.getUsername())
+        .text(post.getText())
+        .parentId(post.getParentId())
+        .level(post.getLevel())
+        .createdOn(post.getCreatedOn())
+        .lastUpdatedOn(post.getLastUpdatedOn())
+        .build();
+  }
+
+  /** Returns a flat list of posts in the thread (root first, then replies). */
+  public List<PostFeedItem> getThread(String id) throws ResourceNotFoundException {
+    var post = postRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException(String.format("Post with id %s not found.", id)));
+    var rootId = post.getRootId() != null ? post.getRootId() : post.getId();
+    var posts = postRepository.findByRootIdOrderByCreatedOnAsc(rootId);
+    // Map usernames
+    var authorIds = posts.stream().map(Post::getAccountId).distinct().toList();
+    var authors = accountRepository.findAllById(authorIds);
+    var idToUser = authors.stream()
+        .collect(java.util.stream.Collectors.toMap(Account::getId, Account::getUsername));
+    return posts.stream()
+        .map(p -> PostFeedItem.builder()
+            .id(p.getId())
+            .accountId(p.getAccountId())
+            .username(idToUser.get(p.getAccountId()))
+            .text(p.getText())
+            .parentId(p.getParentId())
+            .level(p.getLevel())
             .createdOn(p.getCreatedOn())
             .lastUpdatedOn(p.getLastUpdatedOn())
             .build())

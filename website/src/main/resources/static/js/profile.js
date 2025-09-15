@@ -33,6 +33,8 @@ function renderAccount(detail) {
   set('status', detail.status);
 }
 
+function sanitize(text) { return (text || '').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
 function renderPosts(posts, username) {
   const container = document.getElementById('postsList');
   if (!container) return;
@@ -43,19 +45,46 @@ function renderPosts(posts, username) {
   }
   for (const p of posts) {
     const item = document.createElement('div');
-    item.className = 'list-group-item';
+    item.className = 'list-group-item py-3';
     const when = new Date(p.createdOn || p.lastUpdatedOn || Date.now()).toLocaleString();
-    const handle = username ? `@${username.replace(/</g, '&lt;')}` : '@me';
+    const handle = username ? `@${sanitize(username)}` : '@me';
+    // On /profile, posts are always authored by the current user, so allow delete
     item.innerHTML = `
       <div class="d-flex w-100 justify-content-between align-items-start">
         <div>
           <div class="fw-semibold">${handle}</div>
-          <p class="mb-1">${(p.text || '').replace(/</g, '&lt;')}</p>
+          <p class="mb-1 fs-5">${sanitize(p.text)}</p>
         </div>
-        <small class="text-muted ms-3 flex-shrink-0">${when}</small>
+        <div class="ms-3 text-end flex-shrink-0 position-relative">
+          <small class="text-muted d-block">${when}</small>
+          <button class="btn btn-sm btn-light post-menu-btn" data-post="${p.id}" aria-label="More">⋯</button>
+          <div class="post-menu d-none card p-2" style="position:absolute; right:0; top:100%; z-index:1000;">
+            <button class="btn btn-link text-danger p-0 post-delete-btn" data-post="${p.id}">Delete</button>
+          </div>
+        </div>
       </div>
     `;
     container.appendChild(item);
+    const btn = item.querySelector('.post-menu-btn');
+    const menu = item.querySelector('.post-menu');
+    if (btn && menu) {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('d-none');
+      });
+      const del = item.querySelector('.post-delete-btn');
+      del?.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        menu.classList.add('d-none');
+        if (!confirm('Delete this post?')) return;
+        try {
+          await fetchJson(`/api/posts/2025-09-14/${btn.dataset.post}`, { method: 'DELETE', headers: authHeaders() });
+          item.remove();
+        } catch (err) {
+          alert(err.message);
+        }
+      });
+    }
   }
 }
 
@@ -79,4 +108,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       alert.classList.remove('d-none');
     }
   }
+  // Close menus on outside click
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.post-menu').forEach(m => m.classList.add('d-none'));
+  });
 });
