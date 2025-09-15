@@ -14,8 +14,6 @@ val dateVersion = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd
 version = "$dateVersion.$buildNumber"
 
 subprojects {
-    // Apply Spotless to all Java subprojects
-    apply(plugin = "com.diffplug.spotless")
 
     repositories {
         mavenCentral()
@@ -39,32 +37,4 @@ subprojects {
             events("passed", "skipped", "failed")
         }
     }
-
-    // Spotless code style configuration (Google Java Format)
-    extensions.configure<com.diffplug.gradle.spotless.SpotlessExtension> {
-        format("misc") {
-            target("**/*.md", "**/.gitignore", "**/*.gradle.kts")
-            trimTrailingWhitespace()
-            endWithNewline()
-        }
-        java {
-            target("**/*.java")
-            targetExclude("**/build/**", "**/.gradle/**", "**/node_modules/**")
-            googleJavaFormat("1.22.0")
-            // Optional: organize imports consistently
-            importOrder("java", "javax", "org", "com", "dev", "^")
-            removeUnusedImports()
-        }
-    }
-}
-
-// Convenience aggregate tasks to run Spotless across all subprojects
-tasks.register("spotlessApplyAll") {
-    dependsOn(subprojects.map { it.path + ":spotlessApply" })
-    description = "Runs spotlessApply for all subprojects"
-}
-
-tasks.register("spotlessCheckAll") {
-    dependsOn(subprojects.map { it.path + ":spotlessCheck" })
-    description = "Runs spotlessCheck for all subprojects"
 }
