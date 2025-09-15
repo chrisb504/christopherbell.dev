@@ -58,3 +58,35 @@ export function closeOnOutside(selector) {
     document.querySelectorAll(selector).forEach(el => el.classList.add('d-none'));
   }, { capture: true });
 }
+
+// --- Local like persistence (for UI consistency when logged out) ---
+const LIKE_KEY = 'cbellLikedPosts';
+
+function readLikeSet() {
+  try {
+    const raw = localStorage.getItem(LIKE_KEY);
+    if (!raw) return new Set();
+    const arr = JSON.parse(raw);
+    if (Array.isArray(arr)) return new Set(arr);
+    return new Set();
+  } catch { return new Set(); }
+}
+
+function writeLikeSet(set) {
+  try {
+    localStorage.setItem(LIKE_KEY, JSON.stringify(Array.from(set)));
+  } catch {}
+}
+
+export function isLocallyLiked(postId) {
+  if (!postId) return false;
+  const set = readLikeSet();
+  return set.has(postId);
+}
+
+export function setLocallyLiked(postId, liked) {
+  if (!postId) return;
+  const set = readLikeSet();
+  if (liked) set.add(postId); else set.delete(postId);
+  writeLikeSet(set);
+}

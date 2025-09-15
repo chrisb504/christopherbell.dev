@@ -79,8 +79,16 @@ body {
 .root-context.card {
     background-color: #f8f9fa; /* subtle gray */
     border-color: #e9ecef;     /* light border */
-    border-left: 3px solid #dee2e6; /* emphasis for hierarchy */
     border-radius: .5rem;
+}
+
+/* Emphasize hierarchy by varying the left border color */
+.root-context.card {
+    border-left: 3px solid #cfd4da; /* lighter for root */
+}
+
+.parent-context.card {
+    border-left: 3px solid #6c757d; /* darker for immediate parent */
 }
 
 .parent-context .card-body,
@@ -97,3 +105,19 @@ body {
 .root-context a.small {
     color: #6c757d; /* muted link for context actions */
 }
+
+/* Vertical connector between root-context and parent-context */
+.parent-context.card { position: relative; }
+.root-context.card + .parent-context.card::before {
+    content: "";
+    position: absolute;
+    left: 0;            /* align with border-left */
+    top: -12px;         /* match adjusted gap */
+    width: 3px;         /* same as border-left width */
+    height: 12px;       /* fit entirely within the gap */
+    background-color: #6c757d; /* same as parent-context border */
+    pointer-events: none;      /* avoid blocking clicks */
+}
+
+/* Increase gap between root and parent to accommodate connector */
+.root-context.card { margin-bottom: 0.75rem !important; }

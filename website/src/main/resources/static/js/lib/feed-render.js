@@ -20,6 +20,7 @@ export function createFeedItem(post, ctx) {
   const when = ctx.formatWhen(post.createdOn || post.lastUpdatedOn);
   const handle = post.username ? `@${s(post.username)}` : '@user';
   const liked = !!post.liked;
+  const renderLiked = liked || (!ctx.isLoggedIn() && ctx.isLocallyLiked && ctx.isLocallyLiked(post.id));
   const likes = post.likesCount || 0;
   const repliesCount = post.replyCount || 0;
 
@@ -53,8 +54,8 @@ export function createFeedItem(post, ctx) {
         <span class="reply-count ms-1">${repliesCount}</span>
         <span class="visually-hidden">Reply</span>
       </button>
-      <button class="btn btn-link btn-sm text-decoration-none post-like-btn ${liked ? 'text-danger' : 'text-muted'}" data-post="${post.id}" data-liked="${liked}" aria-label="Like">
-        <i class="fa ${liked ? 'fa-heart' : 'fa-heart-o'}" aria-hidden="true"></i>
+      <button class="btn btn-link btn-sm text-decoration-none post-like-btn ${renderLiked ? 'text-danger' : 'text-muted'}" data-post="${post.id}" data-liked="${renderLiked}" aria-label="Like">
+        <i class="fa ${renderLiked ? 'fa-heart' : 'fa-heart-o'}" aria-hidden="true"></i>
         <span class="like-count ms-1">${likes}</span>
       </button>
       <button class="btn btn-link btn-sm text-decoration-none text-muted post-replies-toggle" data-post="${post.id}" aria-expanded="false">
@@ -89,6 +90,10 @@ export function createFeedItem(post, ctx) {
         if (icon) {
           icon.classList.toggle('fa-heart', isLiked);
           icon.classList.toggle('fa-heart-o', !isLiked);
+        }
+        // Persist locally so UI remembers when logged out
+        if (typeof ctx.setLocallyLiked === 'function') {
+          ctx.setLocallyLiked(post.id, isLiked);
         }
       } catch (err) {
         alert(err.message);

@@ -69,6 +69,6 @@ export function onReplyAction(fetchJson, authHeaders) {
  * @param {(url:string)=>Promise<object>} fetchJson
  * @returns {(postId:string)=>Promise<Array<object>>}
  */
-export function createThreadFetcher(fetchJson) {
-  return async (postId) => fetchJson(API.posts.thread(postId));
+export function createThreadFetcher(fetchJson, authHeaders) {
+  return async (postId) => fetchJson(API.posts.thread(postId), { headers: authHeaders() });
 }

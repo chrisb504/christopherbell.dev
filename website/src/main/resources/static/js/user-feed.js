@@ -1,4 +1,4 @@
-import { fetchJson, sanitize, authHeaders, isLoggedIn, formatWhen, closeOnOutside } from './lib/util.js';
+import { fetchJson, sanitize, authHeaders, isLoggedIn, formatWhen, closeOnOutside, isLocallyLiked, setLocallyLiked } from './lib/util.js';
 import { API } from './lib/api.js';
 import { createFeedItem } from './lib/feed-render.js';
 import { createRootFetcher, createThreadFetcher, canDeleteFor, onLikeAction, onDeleteAction, onReplyAction } from './lib/feed-context.js';
@@ -13,7 +13,7 @@ function getUsernameFromPath() {
 let STATE = { before: null, limit: 20, loading: false, done: false };
 let ME = { id: null, role: null, username: null };
 const fetchRoot = createRootFetcher(fetchJson);
-const fetchThread = createThreadFetcher(fetchJson);
+const fetchThread = createThreadFetcher(fetchJson, authHeaders);
 
 /**
  * Load the user's feed page slice.
@@ -35,7 +35,7 @@ async function loadUserFeed(initial = false) {
     const params = new URLSearchParams();
     params.set('limit', STATE.limit.toString());
     if (STATE.before) params.set('before', STATE.before);
-    const items = await fetchJson(`${API.posts.userFeed(username)}?${params}`);
+    const items = await fetchJson(`${API.posts.userFeed(username)}?${params}`, { headers: authHeaders() });
     if (!items || items.length === 0) {
       if (list.children.length === 0) {
         list.innerHTML = '<div class="list-group-item">No posts yet.</div>';
@@ -51,6 +51,8 @@ async function loadUserFeed(initial = false) {
           sanitize,
           formatWhen,
           isLoggedIn,
+          isLocallyLiked,
+          setLocallyLiked,
           canDelete: canDeleteFor(ME),
           fetchRoot,
           fetchThread,

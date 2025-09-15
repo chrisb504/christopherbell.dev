@@ -1,4 +1,4 @@
-import { authHeaders, fetchJson, sanitize, isLoggedIn, formatWhen, closeOnOutside } from './lib/util.js';
+import { authHeaders, fetchJson, sanitize, isLoggedIn, formatWhen, closeOnOutside, isLocallyLiked, setLocallyLiked } from './lib/util.js';
 import { API } from './lib/api.js';
 import { createFeedItem } from './lib/feed-render.js';
 import { createRootFetcher, createThreadFetcher, canDeleteFor, onLikeAction, onDeleteAction, onReplyAction } from './lib/feed-context.js';
@@ -21,7 +21,7 @@ function setComposerEnabled(enabled) {
 let FEED_STATE = { before: null, limit: 20, loading: false, done: false, latest: null };
 let USER_STATE = { id: null, role: null, username: null };
 const fetchRoot = createRootFetcher(fetchJson);
-const fetchThread = createThreadFetcher(fetchJson);
+const fetchThread = createThreadFetcher(fetchJson, authHeaders);
 
 /**
  * Load the global feed page slice.
@@ -40,7 +40,7 @@ async function loadFeed(initial = false) {
     const params = new URLSearchParams();
     params.set('limit', FEED_STATE.limit.toString());
     if (FEED_STATE.before) params.set('before', FEED_STATE.before);
-    const posts = await fetchJson(`${API.posts.feed}?${params.toString()}`);
+    const posts = await fetchJson(`${API.posts.feed}?${params.toString()}`, { headers: authHeaders() });
     if (!posts || posts.length === 0) {
       if (feedList.children.length === 0) {
         feedList.innerHTML = '<div class="list-group-item">No posts yet.</div>';
@@ -56,6 +56,8 @@ async function loadFeed(initial = false) {
           sanitize,
           formatWhen,
           isLoggedIn,
+          isLocallyLiked,
+          setLocallyLiked,
           canDelete: canDeleteFor(USER_STATE),
           fetchRoot,
           fetchThread,
@@ -168,7 +170,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Poll for new posts every 15 seconds
   setInterval(async () => {
     try {
-      const latest = await fetchJson('/api/posts/2025-09-14/feed?limit=1');
+      const latest = await fetchJson('/api/posts/2025-09-14/feed?limit=1', { headers: authHeaders() });
       const top = latest && latest[0];
 /**
  * Global home feed behavior.
