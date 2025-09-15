@@ -11,7 +11,7 @@
  *   });
  *   scroller.loadInitial();
  */
-export function createInfiniteScroller({ fetchPage, onPage, getCursor, thresholdPx = 200, limit = 20 }) {
+export function createInfiniteScroller({ fetchPage, onPage, getCursor, thresholdPx = 200, limit = 20, onEmpty }) {
   let before = null;
   let loading = false;
   let done = false;
@@ -24,6 +24,9 @@ export function createInfiniteScroller({ fetchPage, onPage, getCursor, threshold
     try {
       const page = await fetchPage({ before: renew ? null : before, limit });
       if (!page || page.length === 0) {
+        if (renew && typeof onEmpty === 'function') {
+          onEmpty();
+        }
         done = true;
         return;
       }
@@ -58,4 +61,3 @@ export function createInfiniteScroller({ fetchPage, onPage, getCursor, threshold
 
   return { loadInitial, attach, detach };
 }
-

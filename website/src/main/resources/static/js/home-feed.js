@@ -1,7 +1,8 @@
 import { authHeaders, fetchJson, sanitize, isLoggedIn, formatWhen, closeOnOutside } from './lib/util.js';
 import { API } from './lib/api.js';
 import { createFeedItem } from './lib/feed-render.js';
-import { createRootFetcher, createThreadFetcher, canDeleteFor, onLikeAction, onDeleteAction, onReplyAction, makeRendererContext } from './lib/feed-context.js';
+import { canDeleteFor, makeRendererContext } from './lib/feed-context.js';
+import { createInfiniteScroller } from './lib/infinite.js';
 import { initComposer } from './lib/composer.js';
 /**
  * Home feed page script.
@@ -24,57 +25,10 @@ function setComposerEnabled(enabled) {
   if (postText) postText.disabled = !enabled;
 }
 
-let FEED_STATE = { before: null, limit: 20, loading: false, done: false, latest: null };
 let USER_STATE = { id: null, role: null, username: null };
-const fetchRoot = createRootFetcher(fetchJson);
-const fetchThread = createThreadFetcher(fetchJson, authHeaders);
-
-/**
- * Load the global feed page slice.
- * @param {boolean} initial whether to reset pagination
- */
-async function loadFeed(initial = false) {
-  const feedList = document.getElementById('feedList');
-  if (!feedList) return;
-  if (initial) {
-    FEED_STATE = { before: null, limit: 20, loading: false, done: false, latest: null };
-    feedList.innerHTML = '';
-  }
-  if (FEED_STATE.loading || FEED_STATE.done) return;
-  FEED_STATE.loading = true;
-  try {
-    const params = new URLSearchParams();
-    params.set('limit', FEED_STATE.limit.toString());
-    if (FEED_STATE.before) params.set('before', FEED_STATE.before);
-    const posts = await fetchJson(`${API.posts.feed}?${params.toString()}`, { headers: authHeaders() });
-    if (!posts || posts.length === 0) {
-      if (feedList.children.length === 0) {
-        feedList.innerHTML = '<div class="list-group-item">No posts yet.</div>';
-      }
-      FEED_STATE.done = true;
-      FEED_STATE.loading = false;
-      return;
-    }
-    const ctx = makeRendererContext({ fetchJson, authHeaders, sanitize, formatWhen, isLoggedIn, canDelete: canDeleteFor(USER_STATE), currentUserName: USER_STATE?.username || null });
-    for (const p of posts) feedList.appendChild(createFeedItem(p, ctx));
-    // Update paging cursor to last item's createdOn
-    const last = posts[posts.length - 1];
-    FEED_STATE.before = last.createdOn || last.lastUpdatedOn;
-    // Track newest timestamp from the first item of the initial (or any newer) load
-    const first = posts[0];
-    const newestTs = first.createdOn || first.lastUpdatedOn;
-    if (!FEED_STATE.latest || (new Date(newestTs) > new Date(FEED_STATE.latest))) {
-      FEED_STATE.latest = newestTs;
-    }
-    if (posts.length < FEED_STATE.limit) FEED_STATE.done = true;
-  } catch (err) {
-    const feedList = document.getElementById('feedList');
-    if (feedList) {
-      feedList.innerHTML = `<div class="list-group-item text-danger">${sanitize(err.message)}</div>`;
-    }
-  }
-  FEED_STATE.loading = false;
-}
+let LATEST_TS = null;
+let SCROLLER = null;
+let RENDER_CTX = null;
 
 /** Submit a new top-level post from the composer. */
 async function submitPost() {
@@ -133,7 +87,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     isLoggedIn,
     onSubmit: async (text) => {
       await fetchJson(API.posts.create, { method: 'POST', headers: authHeaders(), body: JSON.stringify({ text }) });
-      await loadFeed(true);
+      const feedList = document.getElementById('feedList');
+      if (feedList) feedList.innerHTML = '';
+      LATEST_TS = null;
+      SCROLLER?.loadInitial();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     },
   });
@@ -143,18 +100,38 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (showBtn) {
     showBtn.addEventListener('click', async () => {
       if (banner) banner.classList.add('d-none');
-      await loadFeed(true);
+      const feedList = document.getElementById('feedList');
+      if (feedList) feedList.innerHTML = '';
+      LATEST_TS = null;
+      SCROLLER?.loadInitial();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
-  await loadFeed(true);
-  // Infinite scroll - load next page when near bottom
-  window.addEventListener('scroll', () => {
-    const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
-    if (nearBottom) {
-      loadFeed(false);
-    }
+  const feedList = document.getElementById('feedList');
+  if (feedList) feedList.innerHTML = '';
+  RENDER_CTX = makeRendererContext({ fetchJson, authHeaders, sanitize, formatWhen, isLoggedIn, canDelete: canDeleteFor(USER_STATE), currentUserName: USER_STATE?.username || null });
+  SCROLLER = createInfiniteScroller({
+    thresholdPx: 200,
+    limit: 20,
+    fetchPage: async ({ before, limit }) => {
+      const params = new URLSearchParams();
+      params.set('limit', String(limit));
+      if (before) params.set('before', before);
+      return await fetchJson(`${API.posts.feed}?${params.toString()}`, { headers: authHeaders() });
+    },
+    onPage: (items) => {
+      if (!items || items.length === 0) return;
+      if (!LATEST_TS) {
+        const first = items[0];
+        LATEST_TS = first.createdOn || first.lastUpdatedOn;
+      }
+      for (const p of items) feedList.appendChild(createFeedItem(p, RENDER_CTX));
+    },
+    getCursor: (it) => it.createdOn || it.lastUpdatedOn,
+    onEmpty: () => { if (feedList) feedList.innerHTML = '<div class="list-group-item">No posts yet.</div>'; }
   });
+  SCROLLER.attach();
+  SCROLLER.loadInitial();
   // Poll for new posts every 15 seconds
   setInterval(async () => {
     try {
@@ -170,7 +147,7 @@ document.addEventListener('DOMContentLoaded', async () => {
  */
       if (!top) return;
       const topTs = top.createdOn || top.lastUpdatedOn;
-      if (FEED_STATE.latest && new Date(topTs) > new Date(FEED_STATE.latest)) {
+      if (LATEST_TS && new Date(topTs) > new Date(LATEST_TS)) {
         if (banner) banner.classList.remove('d-none');
       }
     } catch (_) { /* ignore polling failures */ }

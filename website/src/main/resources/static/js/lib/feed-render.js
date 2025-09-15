@@ -40,7 +40,7 @@ export function createFeedItem(post, ctx) {
         </div>` : ''}
       </div>
     </div>
-    ${post.level && post.level > 0 && post.rootId ? `<div class="parent-context card mt-2 w-100">
+    ${post.level && post.level > 0 && post.rootId && !ctx.suppressParentContext ? `<div class="parent-context card mt-2 w-100">
         <div class="card-body py-2">
           <div class="fw-semibold"><a href="/u/" class="link-underline link-underline-opacity-0" data-root-handle="${post.rootId}">@user</a></div>
           <p class="mb-0 fs-4 fw-semibold" data-root="${post.rootId}">Loading…</p>
@@ -256,7 +256,7 @@ export function createFeedItem(post, ctx) {
   }
 
   // Fill parent context
-  if (post.level && post.level > 0 && post.rootId) {
+  if (post.level && post.level > 0 && post.rootId && !ctx.suppressParentContext) {
     const ctxEl = item.querySelector(`[data-root="${post.rootId}"]`);
     const handleEl = item.querySelector(`[data-root-handle="${post.rootId}"]`);
     if (ctxEl) {

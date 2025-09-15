@@ -83,7 +83,7 @@ export function createThreadFetcher(fetchJson, authHeaders) {
  *  - currentUserName: string|null
  * @returns {object} ctx for createFeedItem
  */
-export function makeRendererContext({ fetchJson, authHeaders, sanitize, formatWhen, isLoggedIn, canDelete, currentUserName }) {
+export function makeRendererContext({ fetchJson, authHeaders, sanitize, formatWhen, isLoggedIn, canDelete, currentUserName, suppressParentContext = false }) {
   return {
     sanitize,
     formatWhen,
@@ -95,5 +95,6 @@ export function makeRendererContext({ fetchJson, authHeaders, sanitize, formatWh
     onDelete: onDeleteAction(fetchJson, authHeaders),
     onReply: onReplyAction(fetchJson, authHeaders),
     currentUserName: currentUserName || null,
+    suppressParentContext,
   };
 }

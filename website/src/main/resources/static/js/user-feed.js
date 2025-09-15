@@ -7,7 +7,8 @@ import { createFeedItem } from './lib/feed-render.js';
  * - Renders items with actions and context
  * - Uses shared renderer context to reduce duplication
  */
-import { createRootFetcher, createThreadFetcher, canDeleteFor, onLikeAction, onDeleteAction, onReplyAction, makeRendererContext } from './lib/feed-context.js';
+import { canDeleteFor, makeRendererContext } from './lib/feed-context.js';
+import { createInfiniteScroller } from './lib/infinite.js';
 
 /** Extract the username from the /u/{username} path. */
 function getUsernameFromPath() {
@@ -18,8 +19,8 @@ function getUsernameFromPath() {
 
 let STATE = { before: null, limit: 20, loading: false, done: false };
 let ME = { id: null, role: null, username: null };
-const fetchRoot = createRootFetcher(fetchJson);
-const fetchThread = createThreadFetcher(fetchJson, authHeaders);
+let SCROLLER = null;
+let RENDER_CTX = null;
 
 /**
  * Load the user's feed page slice.
@@ -73,18 +74,31 @@ document.addEventListener('DOMContentLoaded', async () => {
       ME = { id: me.id, role: me.role, username: me.username };
     } catch (_) {}
   }
-  loadUserFeed(true);
-  window.addEventListener('scroll', () => {
-    const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
-/**
- * Public user feed behavior.
- *
- * Responsibilities:
- * - Resolve username from path and render their posts (newest first)
- * - Show parent-context cards for replies
- * - Support liking and (owner/admin) deleting items
- */
-    if (nearBottom) loadUserFeed(false);
-  });
+  const list = document.getElementById('userFeed');
+  const username = getUsernameFromPath();
+  if (list && username) {
+    const handle = document.getElementById('userHandle');
+    if (handle) handle.textContent = `@${username}`;
+    list.innerHTML = '';
+    RENDER_CTX = makeRendererContext({ fetchJson, authHeaders, sanitize, formatWhen, isLoggedIn, canDelete: canDeleteFor(ME), currentUserName: ME?.username || null });
+    SCROLLER = createInfiniteScroller({
+      thresholdPx: 200,
+      limit: 20,
+      fetchPage: async ({ before, limit }) => {
+        const params = new URLSearchParams();
+        params.set('limit', String(limit));
+        if (before) params.set('before', before);
+        return await fetchJson(`${API.posts.userFeed(username)}?${params.toString()}`, { headers: authHeaders() });
+      },
+      onPage: (items) => {
+        if (!items || items.length === 0) return;
+        for (const p of items) list.appendChild(createFeedItem({ ...p, username }, RENDER_CTX));
+      },
+      getCursor: (it) => it.createdOn || it.lastUpdatedOn,
+      onEmpty: () => { list.innerHTML = '<div class="list-group-item">No posts yet.</div>'; }
+    });
+    SCROLLER.attach();
+    SCROLLER.loadInitial();
+  }
   closeOnOutside('.post-menu');
 });
