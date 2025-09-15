@@ -27,7 +27,8 @@ class AppNav extends HTMLElement {
                 <a href="/login" class="btn btn-outline-light me-2">Login</a>
                 <a href="/signup" class="btn btn-warning">Sign-up</a>
             </div>` : `
-            <div class="col-auto d-flex justify-content-end align-items-center">
+            <div class="col-auto d-flex justify-content-end align-items-center gap-2">
+                <a href="/profile" class="btn btn-outline-info btn-md">Profile</a>
                 <button id="logout" type="button" class="btn btn-danger btn-md">Logout</button>
             </div>`}
         </div>

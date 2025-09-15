@@ -3,15 +3,21 @@ package dev.christopherbell.post;
 import dev.christopherbell.account.AccountRepository;
 import dev.christopherbell.libs.api.exception.InvalidRequestException;
 import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
+import dev.christopherbell.account.model.Account;
 import dev.christopherbell.permission.PermissionService;
 import dev.christopherbell.post.model.Post;
 import dev.christopherbell.post.model.PostCreateRequest;
 import dev.christopherbell.post.model.PostDetail;
+import dev.christopherbell.post.model.PostFeedItem;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import dev.christopherbell.libs.security.UsernameSanitizer;
 
 /**
  * Application service for creating and retrieving tweet‑like posts.
@@ -25,6 +31,7 @@ public class PostService {
   private final PostRepository postRepository;
   private final AccountRepository accountRepository;
   private final PostMapper postMapper;
+  private final PermissionService permissionService;
 
   private static final int MAX_TEXT_LENGTH = 280;
 
@@ -107,5 +114,96 @@ public class PostService {
    */
   String getSelfId() {
     return PermissionService.getSelf();
+  }
+
+  /**
+   * Returns a global feed of posts (all users), newest first.
+   * If {@code before} is provided, returns posts strictly older than that timestamp.
+   * The {@code limit} is capped between 1 and 100; default callers should use 20.
+   */
+  public List<PostFeedItem> getGlobalFeed(Instant before, int limit) {
+    int pageSize = Math.max(1, Math.min(limit, 100));
+    Pageable page = PageRequest.of(0, pageSize, Sort.by(Sort.Direction.DESC, "createdOn"));
+
+    List<Post> posts;
+    if (before != null) {
+      posts = postRepository.findByCreatedOnLessThanOrderByCreatedOnDesc(before, page);
+    } else {
+      posts = postRepository.findAll(page).getContent();
+    }
+
+    // Resolve usernames for authors in batch
+    var authorIds = posts.stream().map(Post::getAccountId).distinct().toList();
+    var authors = accountRepository.findAllById(authorIds);
+    var idToUser = authors.stream()
+        .collect(java.util.stream.Collectors.toMap(Account::getId, Account::getUsername));
+
+    return posts.stream()
+        .map(p -> PostFeedItem.builder()
+            .id(p.getId())
+            .accountId(p.getAccountId())
+            .username(idToUser.get(p.getAccountId()))
+            .text(p.getText())
+            .createdOn(p.getCreatedOn())
+            .lastUpdatedOn(p.getLastUpdatedOn())
+            .build())
+        .toList();
+  }
+
+  /**
+   * Returns a user-specific feed (by username), newest first, with optional time cursor.
+   */
+  public List<PostFeedItem> getUserFeed(String username, Instant before, int limit)
+      throws ResourceNotFoundException {
+    var sanitized = UsernameSanitizer.sanitize(username);
+    var account = accountRepository.findByUsername(sanitized)
+        .orElseThrow(() -> new ResourceNotFoundException(
+            String.format("Account with username %s not found.", sanitized)));
+
+    int pageSize = Math.max(1, Math.min(limit, 100));
+    Pageable page = PageRequest.of(0, pageSize, Sort.by(Sort.Direction.DESC, "createdOn"));
+    List<Post> posts;
+    if (before != null) {
+      posts = postRepository.findByAccountIdAndCreatedOnLessThanOrderByCreatedOnDesc(account.getId(), before, page);
+    } else {
+      posts = postRepository.findByAccountIdOrderByCreatedOnDesc(account.getId(), page);
+    }
+
+    return posts.stream()
+        .map(p -> PostFeedItem.builder()
+            .id(p.getId())
+            .accountId(p.getAccountId())
+            .username(account.getUsername())
+            .text(p.getText())
+            .createdOn(p.getCreatedOn())
+            .lastUpdatedOn(p.getLastUpdatedOn())
+            .build())
+        .toList();
+  }
+
+  /**
+   * Deletes a post if the caller is the author or has ADMIN role.
+   *
+   * @param postId the post identifier
+   * @return deleted post details
+   * @throws ResourceNotFoundException if the post does not exist
+   * @throws InvalidRequestException if the caller is not authorized
+   */
+  public PostDetail deletePost(String postId)
+      throws ResourceNotFoundException, InvalidRequestException {
+    var post = postRepository
+        .findById(postId)
+        .orElseThrow(() -> new ResourceNotFoundException(
+            String.format("Post with id %s not found.", postId)));
+
+    String selfId = getSelfId();
+    boolean isOwner = post.getAccountId() != null && post.getAccountId().equals(selfId);
+    boolean isAdmin = permissionService.hasAuthority("ADMIN");
+    if (!isOwner && !isAdmin) {
+      throw new InvalidRequestException("Not authorized to delete this post.");
+    }
+
+    postRepository.delete(post);
+    return postMapper.toDetail(post);
   }
 }

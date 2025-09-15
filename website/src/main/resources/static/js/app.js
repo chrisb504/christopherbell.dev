@@ -27,5 +27,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     pubsub.subscribe('auth:logout', () => {
         localStorage.removeItem('cbellLoginToken');
+        // Redirect to login for clear feedback
+        window.location.href = '/login';
     });
+
+    // Hide login/sign-up actions on home when already authenticated
+    const token = localStorage.getItem('cbellLoginToken');
+    if (token) {
+        const authActions = document.getElementById('authActions');
+        if (authActions) {
+            authActions.classList.add('d-none');
+        }
+    }
 });

@@ -12,6 +12,7 @@ import static org.mockito.Mockito.when;
 
 import dev.christopherbell.account.AccountRepository;
 import dev.christopherbell.account.AccountServiceStub;
+import dev.christopherbell.account.model.Account;
 import dev.christopherbell.libs.api.exception.InvalidRequestException;
 import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
 import dev.christopherbell.post.model.Post;
@@ -20,6 +21,9 @@ import dev.christopherbell.post.model.PostDetail;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,6 +36,7 @@ public class PostServiceTest {
   @Mock private PostRepository postRepository;
   @Mock private AccountRepository accountRepository;
   @Mock private PostMapper postMapper;
+  @Mock private dev.christopherbell.permission.PermissionService permissionService;
   @InjectMocks private PostService postService;
 
   @Test
@@ -154,6 +159,46 @@ public class PostServiceTest {
     verify(postRepository).findByAccountIdOrderByCreatedOnDesc(eq(existing.getId()));
     verify(postMapper).toDetail(eq(p1));
     verifyNoMoreInteractions(accountRepository, postRepository, postMapper);
+  }
+
+  @Test
+  @DisplayName("GlobalFeed: returns newest posts with usernames")
+  public void testGetGlobalFeed_returnsMappedItems() {
+    var p1 = Post.builder().id("p1").accountId("a1").text("t1").createdOn(Instant.now()).build();
+    var p2 = Post.builder().id("p2").accountId("a2").text("t2").createdOn(Instant.now()).build();
+    Page<Post> page = new PageImpl<>(List.of(p1, p2), PageRequest.of(0, 20), 2);
+
+    when(postRepository.findAll(org.mockito.ArgumentMatchers.any(org.springframework.data.domain.Pageable.class)))
+        .thenReturn(page);
+    when(accountRepository.findAllById(eq(List.of("a1", "a2"))))
+        .thenReturn(List.of(
+            Account.builder().id("a1").username("user1").build(),
+            Account.builder().id("a2").username("user2").build()
+        ));
+
+    var result = postService.getGlobalFeed(null, 20);
+    assertEquals(2, result.size());
+    assertEquals("p1", result.get(0).id());
+    assertEquals("user1", result.get(0).username());
+    assertEquals("p2", result.get(1).id());
+    assertEquals("user2", result.get(1).username());
+  }
+
+  @Test
+  @DisplayName("GlobalFeed: supports before cursor and limit")
+  public void testGetGlobalFeed_withBeforeAndLimit() {
+    var before = Instant.parse("2025-01-01T00:00:00Z");
+    var older = Post.builder().id("p0").accountId("a1").text("old").createdOn(Instant.parse("2024-12-31T23:59:00Z")).build();
+
+    when(postRepository.findByCreatedOnLessThanOrderByCreatedOnDesc(eq(before), org.mockito.ArgumentMatchers.any(org.springframework.data.domain.Pageable.class)))
+        .thenReturn(List.of(older));
+    when(accountRepository.findAllById(eq(List.of("a1"))))
+        .thenReturn(List.of(Account.builder().id("a1").username("user1").build()));
+
+    var result = postService.getGlobalFeed(before, 10);
+    assertEquals(1, result.size());
+    assertEquals("p0", result.get(0).id());
+    assertEquals("user1", result.get(0).username());
   }
 }
 

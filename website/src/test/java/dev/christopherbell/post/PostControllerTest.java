@@ -19,6 +19,7 @@ import dev.christopherbell.libs.test.TestUtil;
 import dev.christopherbell.permission.PermissionService;
 import dev.christopherbell.post.model.PostCreateRequest;
 import dev.christopherbell.post.model.PostDetail;
+import dev.christopherbell.post.model.PostFeedItem;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -60,6 +61,43 @@ public class PostControllerTest {
         .andExpect(jsonPath("$.payload.text").value("hello world"));
 
     verify(postService).createPost(eq(requestObj));
+  }
+
+  @Test
+  @DisplayName("Global feed: returns 200 with list")
+  public void testGetGlobalFeed_returnsList() throws Exception {
+    var items = List.of(
+        PostFeedItem.builder().id("p1").username("user1").text("hello").build(),
+        PostFeedItem.builder().id("p2").username("user2").text("world").build()
+    );
+    when(postService.getGlobalFeed(eq(null), eq(20))).thenReturn(items);
+
+    mockMvc
+        .perform(get("/api/posts" + APIVersion.V20250914 + "/feed"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.payload[0].id").value("p1"))
+        .andExpect(jsonPath("$.payload[0].username").value("user1"))
+        .andExpect(jsonPath("$.payload[1].id").value("p2"));
+
+    verify(postService).getGlobalFeed(eq(null), eq(20));
+  }
+
+  @Test
+  @DisplayName("Global feed: supports before and limit query params")
+  public void testGetGlobalFeed_withBeforeAndLimit() throws Exception {
+    var ts = java.time.Instant.parse("2025-01-01T00:00:00Z");
+    when(postService.getGlobalFeed(eq(ts), eq(10))).thenReturn(List.of());
+
+    mockMvc
+        .perform(get("/api/posts" + APIVersion.V20250914 + "/feed")
+            .param("before", ts.toString())
+            .param("limit", "10"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true))
+        .andExpect(jsonPath("$.payload").isArray());
+
+    verify(postService).getGlobalFeed(eq(ts), eq(10));
   }
 
   @Test
