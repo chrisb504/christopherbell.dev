@@ -47,7 +47,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
    */
   @Override
   protected boolean shouldNotFilter(HttpServletRequest request) {
-    return skipMatchers.stream().anyMatch(matcher -> matcher.matches(request));
+    boolean isPublic = skipMatchers.stream().anyMatch(matcher -> matcher.matches(request));
+    // If request carries a Bearer token, do not skip — authenticate even on public routes
+    String auth = request.getHeader("Authorization");
+    boolean hasBearer = auth != null && auth.startsWith("Bearer ");
+    return isPublic && !hasBearer;
   }
 
   @Override

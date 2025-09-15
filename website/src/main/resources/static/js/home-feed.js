@@ -1,4 +1,4 @@
-import { authHeaders, fetchJson, sanitize, isLoggedIn, formatWhen, closeOnOutside, isLocallyLiked, setLocallyLiked } from './lib/util.js';
+import { authHeaders, fetchJson, sanitize, isLoggedIn, formatWhen, closeOnOutside } from './lib/util.js';
 import { API } from './lib/api.js';
 import { createFeedItem } from './lib/feed-render.js';
 import { createRootFetcher, createThreadFetcher, canDeleteFor, onLikeAction, onDeleteAction, onReplyAction } from './lib/feed-context.js';
@@ -56,8 +56,6 @@ async function loadFeed(initial = false) {
           sanitize,
           formatWhen,
           isLoggedIn,
-          isLocallyLiked,
-          setLocallyLiked,
           canDelete: canDeleteFor(USER_STATE),
           fetchRoot,
           fetchThread,

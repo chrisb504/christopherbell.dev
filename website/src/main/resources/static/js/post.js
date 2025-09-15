@@ -1,4 +1,4 @@
-import { sanitize, authHeaders, fetchJson, isLoggedIn, formatWhen, closeOnOutside, isLocallyLiked, setLocallyLiked } from './lib/util.js';
+import { sanitize, authHeaders, fetchJson, isLoggedIn, formatWhen, closeOnOutside } from './lib/util.js';
 import { API } from './lib/api.js';
 /** Extract the post id from the /p/{id} path. */
 function getPostId() { const m = location.pathname.match(/\/p\/(.+)$/); return m ? decodeURIComponent(m[1]) : null; }
@@ -13,7 +13,6 @@ function renderRoot(post) {
   if (!root) return;
   const when = formatWhen(post.createdOn || post.lastUpdatedOn);
   const liked = !!post.liked;
-  const renderLiked = liked || (!isLoggedIn() && isLocallyLiked(post.id));
   const likes = post.likesCount || 0;
   const replies = post.replyCount || 0;
   root.innerHTML = `
@@ -52,8 +51,8 @@ function renderRoot(post) {
         <span class="reply-count ms-1">${replies}</span>
         <span class="visually-hidden">Reply</span>
       </button>
-      <button class="btn btn-link btn-sm text-decoration-none root-like-btn ${renderLiked ? 'text-danger' : 'text-muted'}" data-liked="${renderLiked}" aria-label="Like">
-        <i class="fa ${renderLiked ? 'fa-heart' : 'fa-heart-o'}" aria-hidden="true"></i>
+      <button class="btn btn-link btn-sm text-decoration-none root-like-btn ${liked ? 'text-danger' : 'text-muted'}" data-liked="${liked}" aria-label="Like">
+        <i class="fa ${liked ? 'fa-heart' : 'fa-heart-o'}" aria-hidden="true"></i>
         <span class="like-count ms-1">${likes}</span>
       </button>
     </div>
@@ -84,7 +83,7 @@ function renderRoot(post) {
           icon.classList.toggle('fa-heart', isLiked);
           icon.classList.toggle('fa-heart-o', !isLiked);
         }
-        setLocallyLiked(post.id, isLiked);
+        // Server is source of truth for liked state
       } catch (err) {
         alert(err.message);
       }
@@ -212,7 +211,6 @@ function renderThread(items, currentUser, currentId) {
     const when = new Date(p.createdOn || p.lastUpdatedOn || Date.now()).toLocaleString();
     const likes = p.likesCount || 0;
     const liked = !!p.liked;
-    const renderLiked = liked || (!isLoggedIn() && isLocallyLiked(p.id));
     const replies = p.replyCount || 0;
     const item = document.createElement('div');
     item.className = 'list-group-item py-3';
@@ -237,8 +235,8 @@ function renderThread(items, currentUser, currentId) {
           <span class="reply-count ms-1">${replies}</span>
           <span class="visually-hidden">Reply</span>
         </button>
-        <button class="btn btn-link btn-sm text-decoration-none like-btn ${renderLiked ? 'text-danger' : 'text-muted'}" data-post="${p.id}" data-liked="${renderLiked}" aria-label="Like">
-          <i class="fa ${renderLiked ? 'fa-heart' : 'fa-heart-o'}" aria-hidden="true"></i>
+        <button class="btn btn-link btn-sm text-decoration-none like-btn ${liked ? 'text-danger' : 'text-muted'}" data-post="${p.id}" data-liked="${liked}" aria-label="Like">
+          <i class="fa ${liked ? 'fa-heart' : 'fa-heart-o'}" aria-hidden="true"></i>
           <span class="like-count ms-1">${likes}</span>
         </button>
         <button class="btn btn-link btn-sm text-decoration-none text-muted post-replies-toggle" data-post="${p.id}" aria-expanded="false">
@@ -294,7 +292,7 @@ function renderThread(items, currentUser, currentId) {
             icon.classList.toggle('fa-heart', isLiked);
             icon.classList.toggle('fa-heart-o', !isLiked);
           }
-          setLocallyLiked(p.id, isLiked);
+          // Server is source of truth for liked state
         } catch (err) {
           alert(err.message);
         }
