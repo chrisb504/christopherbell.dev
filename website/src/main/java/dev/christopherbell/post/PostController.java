@@ -1,0 +1,67 @@
+package dev.christopherbell.post;
+
+import static dev.christopherbell.libs.api.APIVersion.V20250914;
+
+import dev.christopherbell.libs.api.model.Response;
+import dev.christopherbell.permission.PermissionService;
+import dev.christopherbell.post.model.PostCreateRequest;
+import dev.christopherbell.post.model.PostDetail;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RequiredArgsConstructor
+@RequestMapping("/api/posts")
+@RestController
+public class PostController {
+  private final PostService postService;
+  private final PermissionService permissionService;
+
+  @PostMapping(
+      value = V20250914 + "/create",
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  @PreAuthorize("@permissionService.hasAuthority('USER')")
+  public ResponseEntity<Response<PostDetail>> createPost(@RequestBody PostCreateRequest request)
+      throws Exception {
+    return new ResponseEntity<>(
+        Response.<PostDetail>builder()
+            .payload(postService.createPost(request))
+            .success(true)
+            .build(),
+        HttpStatus.CREATED);
+  }
+
+  @GetMapping(value = V20250914 + "/me", produces = MediaType.APPLICATION_JSON_VALUE)
+  @PreAuthorize("@permissionService.hasAuthority('USER')")
+  public ResponseEntity<Response<List<PostDetail>>> getMyPosts() throws Exception {
+    return new ResponseEntity<>(
+        Response.<List<PostDetail>>builder()
+            .payload(postService.getMyPosts())
+            .success(true)
+            .build(),
+        HttpStatus.OK);
+  }
+
+  @GetMapping(value = V20250914 + "/account/{accountId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
+  public ResponseEntity<Response<List<PostDetail>>> getPostsByAccountId(@PathVariable String accountId)
+      throws Exception {
+    return new ResponseEntity<>(
+        Response.<List<PostDetail>>builder()
+            .payload(postService.getPostsByAccountId(accountId))
+            .success(true)
+            .build(),
+        HttpStatus.OK);
+  }
+}
+
