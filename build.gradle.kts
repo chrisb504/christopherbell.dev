@@ -4,7 +4,6 @@ import java.time.format.DateTimeFormatter
 plugins {
     id("org.springframework.boot") version "3.4.4" apply false
     id("io.spring.dependency-management") version "1.1.4" apply false
-    id("com.diffplug.spotless") version "6.25.0" apply false
     java
 }
 
@@ -14,7 +13,6 @@ val dateVersion = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd
 version = "$dateVersion.$buildNumber"
 
 subprojects {
-
     repositories {
         mavenCentral()
     }
