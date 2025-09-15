@@ -1,8 +1,14 @@
 import { authHeaders, fetchJson, sanitize, isLoggedIn, formatWhen, closeOnOutside } from './lib/util.js';
 import { API } from './lib/api.js';
 import { createFeedItem } from './lib/feed-render.js';
-import { createRootFetcher, createThreadFetcher, canDeleteFor, onLikeAction, onDeleteAction, onReplyAction } from './lib/feed-context.js';
+import { createRootFetcher, createThreadFetcher, canDeleteFor, onLikeAction, onDeleteAction, onReplyAction, makeRendererContext } from './lib/feed-context.js';
 import { initComposer } from './lib/composer.js';
+/**
+ * Home feed page script.
+ * - Renders global feed with infinite scroll and 15s polling
+ * - Provides a top composer for authenticated users
+ * - Wires item actions (reply/like/delete) via feed-render + feed-context
+ */
 
 /** Update compose character counter. */
 function updateCounter(el, counter) {
@@ -49,24 +55,8 @@ async function loadFeed(initial = false) {
       FEED_STATE.loading = false;
       return;
     }
-    for (const p of posts) {
-      const el = createFeedItem(
-        p,
-        {
-          sanitize,
-          formatWhen,
-          isLoggedIn,
-          canDelete: canDeleteFor(USER_STATE),
-          fetchRoot,
-          fetchThread,
-          onLike: onLikeAction(fetchJson, authHeaders),
-          onDelete: onDeleteAction(fetchJson, authHeaders),
-          onReply: onReplyAction(fetchJson, authHeaders),
-          currentUserName: USER_STATE?.username || null,
-        }
-      );
-      feedList.appendChild(el);
-    }
+    const ctx = makeRendererContext({ fetchJson, authHeaders, sanitize, formatWhen, isLoggedIn, canDelete: canDeleteFor(USER_STATE), currentUserName: USER_STATE?.username || null });
+    for (const p of posts) feedList.appendChild(createFeedItem(p, ctx));
     // Update paging cursor to last item's createdOn
     const last = posts[posts.length - 1];
     FEED_STATE.before = last.createdOn || last.lastUpdatedOn;

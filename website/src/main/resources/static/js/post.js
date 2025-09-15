@@ -45,7 +45,7 @@ function renderRoot(post) {
       </div>
       <small class="text-muted ms-3 flex-shrink-0">${when}</small>
     </div>
-    <div class="d-flex align-items-center gap-4 border-top pt-2 mt-2">
+    <div class="d-flex align-items-center gap-4 border-top pt-2 mt-2 post-actions">
       <button class="btn btn-link btn-sm text-decoration-none text-muted root-reply-btn" aria-label="Reply">
         <i class="fa fa-comment-o" aria-hidden="true"></i>
         <span class="reply-count ms-1">${replies}</span>
@@ -213,7 +213,7 @@ function renderThread(items, currentUser, currentId) {
     const liked = !!p.liked;
     const replies = p.replyCount || 0;
     const item = document.createElement('div');
-    item.className = 'list-group-item py-3';
+    item.className = 'list-group-item py-3 post-item';
     item.innerHTML = `
       <div class="d-flex w-100 justify-content-between align-items-start">
         <div class="w-100">
@@ -229,7 +229,7 @@ function renderThread(items, currentUser, currentId) {
           </div>` : ''}
         </div>
       </div>
-      <div class="d-flex align-items-center gap-4 border-top pt-2 mt-2">
+      <div class="d-flex align-items-center gap-4 border-top pt-2 mt-2 post-actions">
         <button class="btn btn-link btn-sm text-decoration-none text-muted reply-btn" data-post="${p.id}" aria-label="Reply">
           <i class="fa fa-comment-o" aria-hidden="true"></i>
           <span class="reply-count ms-1">${replies}</span>
@@ -274,6 +274,15 @@ function renderThread(items, currentUser, currentId) {
         }
       });
     }
+    // Whole-item click -> navigate (ignore action areas/links/buttons)
+    item.addEventListener('click', (e) => {
+      const target = e.target;
+      if (target.closest('.post-actions') || target.closest('.post-menu') ||
+          target.closest('.reply-composer') || target.closest('a') || target.closest('button')) {
+        return;
+      }
+      window.location.href = `/p/${encodeURIComponent(p.id)}`;
+    });
     // Like toggle
     const likeBtn = item.querySelector('.like-btn');
     if (likeBtn) {

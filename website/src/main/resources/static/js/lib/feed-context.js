@@ -72,3 +72,28 @@ export function onReplyAction(fetchJson, authHeaders) {
 export function createThreadFetcher(fetchJson, authHeaders) {
   return async (postId) => fetchJson(API.posts.thread(postId), { headers: authHeaders() });
 }
+
+/**
+ * Build a standard renderer context for feed items.
+ * Centralizes wiring for like/delete/reply and context fetchers.
+ *
+ * @param {object} deps
+ *  - fetchJson, authHeaders, sanitize, formatWhen, isLoggedIn
+ *  - canDelete: (post)=>boolean
+ *  - currentUserName: string|null
+ * @returns {object} ctx for createFeedItem
+ */
+export function makeRendererContext({ fetchJson, authHeaders, sanitize, formatWhen, isLoggedIn, canDelete, currentUserName }) {
+  return {
+    sanitize,
+    formatWhen,
+    isLoggedIn,
+    canDelete,
+    fetchRoot: createRootFetcher(fetchJson),
+    fetchThread: createThreadFetcher(fetchJson, authHeaders),
+    onLike: onLikeAction(fetchJson, authHeaders),
+    onDelete: onDeleteAction(fetchJson, authHeaders),
+    onReply: onReplyAction(fetchJson, authHeaders),
+    currentUserName: currentUserName || null,
+  };
+}

@@ -24,12 +24,12 @@ export function createFeedItem(post, ctx) {
   const repliesCount = post.replyCount || 0;
 
   const item = document.createElement('div');
-  item.className = 'list-group-item py-3';
+  item.className = 'list-group-item py-3 post-item';
   item.innerHTML = `
     <div class="d-flex w-100 justify-content-between align-items-start">
       <div class="w-100">
         <div class="fw-semibold"><a href="/u/${encodeURIComponent(post.username || '')}" class="link-underline link-underline-opacity-0">${handle}</a></div>
-        <p class="mb-1 fs-5"><a href="/p/${encodeURIComponent(post.id)}" class="link-underline link-underline-opacity-0 text-body">${s(post.text)}</a></p>
+        <p class="mb-1 fs-5"><a href="/p/${encodeURIComponent(post.id)}" class="post-link text-body">${s(post.text)}</a></p>
       </div>
       <div class="ms-3 text-end flex-shrink-0 position-relative">
         <small class="text-muted d-block">${when}</small>
@@ -47,7 +47,7 @@ export function createFeedItem(post, ctx) {
           <a href="/p/${encodeURIComponent(post.rootId)}" class="small">View thread</a>
         </div>
       </div>` : ''}
-    <div class="d-flex align-items-center gap-4 border-top pt-2 mt-2">
+    <div class="d-flex align-items-center gap-4 border-top pt-2 mt-2 post-actions">
       <button class="btn btn-link btn-sm text-decoration-none text-muted post-reply-btn" data-post="${post.id}" aria-label="Reply">
         <i class="fa fa-comment-o" aria-hidden="true"></i>
         <span class="reply-count ms-1">${repliesCount}</span>
@@ -71,6 +71,17 @@ export function createFeedItem(post, ctx) {
     </div>
     <div class="replies d-none"></div>
   `;
+
+  // Make the whole item (except action bar and existing links/buttons) navigate to the post
+  item.addEventListener('click', (e) => {
+    const target = e.target;
+    // Ignore clicks on bottom actions, menus, composers or any anchor/button
+    if (target.closest('.post-actions') || target.closest('.post-menu') ||
+        target.closest('.reply-composer') || target.closest('a') || target.closest('button')) {
+      return;
+    }
+    window.location.href = `/p/${encodeURIComponent(post.id)}`;
+  });
 
   // Wire like toggle
   const likeBtn = item.querySelector('.post-like-btn');

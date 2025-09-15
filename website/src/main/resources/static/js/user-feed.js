@@ -1,7 +1,13 @@
 import { fetchJson, sanitize, authHeaders, isLoggedIn, formatWhen, closeOnOutside } from './lib/util.js';
 import { API } from './lib/api.js';
 import { createFeedItem } from './lib/feed-render.js';
-import { createRootFetcher, createThreadFetcher, canDeleteFor, onLikeAction, onDeleteAction, onReplyAction } from './lib/feed-context.js';
+/**
+ * User feed page script.
+ * - Resolves username from URL and loads their posts
+ * - Renders items with actions and context
+ * - Uses shared renderer context to reduce duplication
+ */
+import { createRootFetcher, createThreadFetcher, canDeleteFor, onLikeAction, onDeleteAction, onReplyAction, makeRendererContext } from './lib/feed-context.js';
 
 /** Extract the username from the /u/{username} path. */
 function getUsernameFromPath() {
@@ -44,24 +50,8 @@ async function loadUserFeed(initial = false) {
       STATE.loading = false;
       return;
     }
-    for (const p of items) {
-      const el = createFeedItem(
-        { ...p, username },
-        {
-          sanitize,
-          formatWhen,
-          isLoggedIn,
-          canDelete: canDeleteFor(ME),
-          fetchRoot,
-          fetchThread,
-          onLike: onLikeAction(fetchJson, authHeaders),
-          onDelete: onDeleteAction(fetchJson, authHeaders),
-          onReply: onReplyAction(fetchJson, authHeaders),
-          currentUserName: ME?.username || null,
-        }
-      );
-      list.appendChild(el);
-    }
+    const ctx = makeRendererContext({ fetchJson, authHeaders, sanitize, formatWhen, isLoggedIn, canDelete: canDeleteFor(ME), currentUserName: ME?.username || null });
+    for (const p of items) list.appendChild(createFeedItem({ ...p, username }, ctx));
     const last = items[items.length - 1];
     STATE.before = last.createdOn || last.lastUpdatedOn;
     if (items.length < STATE.limit) STATE.done = true;

@@ -121,3 +121,29 @@ body {
 
 /* Increase gap between root and parent to accommodate connector */
 .root-context.card { margin-bottom: 0.75rem !important; }
+
+/* Feed usernames: blue link without underline by default; underline on hover */
+.list-group-item .fw-semibold > a {
+    text-decoration: none !important;
+}
+.list-group-item .fw-semibold > a:hover {
+    text-decoration: underline !important;
+}
+
+/* Post text: no underline; darken entire text on hover of item */
+.post-item .post-link {
+    text-decoration: none !important;
+}
+.post-item:hover .post-link {
+    color: #212529 !important; /* dark body color */
+    text-decoration: none !important;
+}
+
+/* Make entire post area feel clickable and provide hover affordance */
+.post-item {
+    cursor: pointer;
+    transition: background-color .15s ease-in-out;
+}
+.post-item:hover {
+    background-color: #f8f9fa; /* subtle hover */
+}
