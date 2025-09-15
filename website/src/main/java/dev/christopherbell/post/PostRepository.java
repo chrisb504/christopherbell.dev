@@ -51,5 +51,7 @@ public interface PostRepository extends MongoRepository<Post, String> {
 
   /** All posts in a thread (includes root) ordered oldest-first (by createdOn). */
   List<Post> findByRootIdOrderByCreatedOnAsc(String rootId);
-}
 
+  /** Count of direct replies to a given post (parentId equals the post id). */
+  long countByParentId(String parentId);
+}

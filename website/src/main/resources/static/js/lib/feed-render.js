@@ -21,6 +21,7 @@ export function createFeedItem(post, ctx) {
   const handle = post.username ? `@${s(post.username)}` : '@user';
   const liked = !!post.liked;
   const likes = post.likesCount || 0;
+  const repliesCount = post.replyCount || 0;
 
   const item = document.createElement('div');
   item.className = 'list-group-item py-3';
@@ -49,11 +50,16 @@ export function createFeedItem(post, ctx) {
     <div class="d-flex align-items-center gap-4 border-top pt-2 mt-2">
       <button class="btn btn-link btn-sm text-decoration-none text-muted post-reply-btn" data-post="${post.id}" aria-label="Reply">
         <i class="fa fa-comment-o" aria-hidden="true"></i>
+        <span class="reply-count ms-1">${repliesCount}</span>
         <span class="visually-hidden">Reply</span>
       </button>
       <button class="btn btn-link btn-sm text-decoration-none post-like-btn ${liked ? 'text-danger' : 'text-muted'}" data-post="${post.id}" data-liked="${liked}" aria-label="Like">
         <i class="fa ${liked ? 'fa-heart' : 'fa-heart-o'}" aria-hidden="true"></i>
         <span class="like-count ms-1">${likes}</span>
+      </button>
+      <button class="btn btn-link btn-sm text-decoration-none text-muted post-replies-toggle" data-post="${post.id}" aria-expanded="false">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="toggle-label">Show replies</span>
       </button>
     </div>
     <div class="reply-composer d-none mt-2">
@@ -63,6 +69,7 @@ export function createFeedItem(post, ctx) {
         <button class="btn btn-sm btn-primary reply-submit" type="button">Reply</button>
       </div>
     </div>
+    <div class="replies d-none"></div>
   `;
 
   // Wire like toggle
@@ -122,10 +129,94 @@ export function createFeedItem(post, ctx) {
         }
         replyText.value = '';
         replyBox.classList.add('d-none');
+        // Increment reply count in action bar
+        const rc = item.querySelector('.reply-count');
+        if (rc) {
+          const curr = parseInt(rc.textContent || '0', 10) || 0;
+          rc.textContent = String(curr + 1);
+        }
+        // Append a minimal inline reply row
+        const replies = item.querySelector('.replies');
+        if (replies) {
+          const who = ctx.currentUserName ? `@${s(ctx.currentUserName)}` : 'You';
+          const whenStr = ctx.formatWhen(new Date().toISOString());
+          const row = document.createElement('div');
+          row.className = 'mt-2';
+          row.innerHTML = `
+            <div class="d-flex">
+              <div class="flex-grow-1">
+                <div class="small text-muted"><span class="fw-semibold">${who}</span> · ${whenStr}</div>
+                <div>${s(text)}</div>
+              </div>
+            </div>`;
+          replies.appendChild(row);
+        }
+        // Quick inline toast
+        const toast = document.createElement('div');
+        toast.className = 'small text-success mt-1';
+        toast.textContent = 'Reply posted';
+        replyBox.parentElement?.insertBefore(toast, replyBox.nextSibling);
+        setTimeout(() => toast.remove(), 2000);
       } catch (err) {
         alert(err.message);
       } finally {
         replySubmit.disabled = false;
+      }
+    });
+  }
+
+  // Wire show/hide replies toggle with lazy fetch
+  const replToggle = item.querySelector('.post-replies-toggle');
+  const replies = item.querySelector('.replies');
+  if (replToggle && replies) {
+    replToggle.addEventListener('click', async () => {
+      const expanded = replToggle.getAttribute('aria-expanded') === 'true';
+      const label = replToggle.querySelector('.toggle-label');
+      if (!expanded) {
+        // First expansion: fetch if not already loaded
+        if (!replies.dataset.loaded) {
+          try {
+            const thread = await (typeof ctx.fetchThread === 'function' ? ctx.fetchThread(post.id) : Promise.resolve([]));
+            // Render only direct replies to this post for a compact view
+            const direct = (thread || []).filter(r => r.parentId === post.id);
+            replies.innerHTML = '';
+            if (direct.length === 0) {
+              const empty = document.createElement('div');
+              empty.className = 'text-muted small mt-1';
+              empty.textContent = 'No replies yet';
+              replies.appendChild(empty);
+            } else {
+              for (const r of direct) {
+                const row = document.createElement('div');
+                row.className = 'mt-2';
+                row.innerHTML = `
+                  <div class="d-flex">
+                    <div class="flex-grow-1">
+                      <div class="small text-muted"><a href="/u/${encodeURIComponent(r.username || '')}" class="link-underline link-underline-opacity-0 fw-semibold">@${s(r.username || 'user')}</a> · ${ctx.formatWhen(r.createdOn || r.lastUpdatedOn)}</div>
+                      <div><a href="/p/${encodeURIComponent(r.id)}" class="link-underline link-underline-opacity-0 text-body">${s(r.text || '')}</a></div>
+                    </div>
+                  </div>`;
+                replies.appendChild(row);
+              }
+              // View full thread link
+              const more = document.createElement('div');
+              more.className = 'mt-2';
+              more.innerHTML = `<a href="/p/${encodeURIComponent(post.id)}" class="small">View full thread</a>`;
+              replies.appendChild(more);
+            }
+            replies.dataset.loaded = 'true';
+          } catch (err) {
+            replies.innerHTML = `<div class="text-danger small mt-1">${s(err.message)}</div>`;
+            replies.dataset.loaded = 'true';
+          }
+        }
+        replies.classList.remove('d-none');
+        replToggle.setAttribute('aria-expanded', 'true');
+        if (label) label.textContent = 'Hide replies';
+      } else {
+        replies.classList.add('d-none');
+        replToggle.setAttribute('aria-expanded', 'false');
+        if (label) label.textContent = 'Show replies';
       }
     });
   }

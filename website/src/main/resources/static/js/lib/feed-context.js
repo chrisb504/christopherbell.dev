@@ -62,3 +62,13 @@ export function onReplyAction(fetchJson, authHeaders) {
     body: JSON.stringify({ text, parentId: postId })
   });
 }
+
+/**
+ * Build a thread fetcher for a given post id.
+ * Returns the flat thread list (root first, then replies).
+ * @param {(url:string)=>Promise<object>} fetchJson
+ * @returns {(postId:string)=>Promise<Array<object>>}
+ */
+export function createThreadFetcher(fetchJson) {
+  return async (postId) => fetchJson(API.posts.thread(postId));
+}

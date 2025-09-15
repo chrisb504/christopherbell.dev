@@ -1,7 +1,7 @@
 import { fetchJson, sanitize, authHeaders, isLoggedIn, formatWhen, closeOnOutside } from './lib/util.js';
 import { API } from './lib/api.js';
 import { createFeedItem } from './lib/feed-render.js';
-import { createRootFetcher, canDeleteFor, onLikeAction, onDeleteAction, onReplyAction } from './lib/feed-context.js';
+import { createRootFetcher, createThreadFetcher, canDeleteFor, onLikeAction, onDeleteAction, onReplyAction } from './lib/feed-context.js';
 
 /** Extract the username from the /u/{username} path. */
 function getUsernameFromPath() {
@@ -11,8 +11,9 @@ function getUsernameFromPath() {
 
 
 let STATE = { before: null, limit: 20, loading: false, done: false };
-let ME = { id: null, role: null };
+let ME = { id: null, role: null, username: null };
 const fetchRoot = createRootFetcher(fetchJson);
+const fetchThread = createThreadFetcher(fetchJson);
 
 /**
  * Load the user's feed page slice.
@@ -52,9 +53,11 @@ async function loadUserFeed(initial = false) {
           isLoggedIn,
           canDelete: canDeleteFor(ME),
           fetchRoot,
+          fetchThread,
           onLike: onLikeAction(fetchJson, authHeaders),
           onDelete: onDeleteAction(fetchJson, authHeaders),
           onReply: onReplyAction(fetchJson, authHeaders),
+          currentUserName: ME?.username || null,
         }
       );
       list.appendChild(el);
@@ -77,7 +80,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (localStorage.getItem('cbellLoginToken')) {
     try {
       const me = await fetchJson('/api/accounts/2025-09-03/me', { headers: authHeaders() });
-      ME = { id: me.id, role: me.role };
+      ME = { id: me.id, role: me.role, username: me.username };
     } catch (_) {}
   }
   loadUserFeed(true);

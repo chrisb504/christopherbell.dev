@@ -24,6 +24,7 @@ public record PostFeedItem(
     Integer level,
     Integer likesCount,
     Boolean liked,
+    Integer replyCount,
     Instant createdOn,
     Instant lastUpdatedOn
 ) {}

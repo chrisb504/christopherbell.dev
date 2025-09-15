@@ -1,7 +1,7 @@
 import { authHeaders, fetchJson, sanitize, isLoggedIn, formatWhen, closeOnOutside } from './lib/util.js';
 import { API } from './lib/api.js';
 import { createFeedItem } from './lib/feed-render.js';
-import { createRootFetcher, canDeleteFor, onLikeAction, onDeleteAction, onReplyAction } from './lib/feed-context.js';
+import { createRootFetcher, createThreadFetcher, canDeleteFor, onLikeAction, onDeleteAction, onReplyAction } from './lib/feed-context.js';
 import { initComposer } from './lib/composer.js';
 
 /** Update compose character counter. */
@@ -21,6 +21,7 @@ function setComposerEnabled(enabled) {
 let FEED_STATE = { before: null, limit: 20, loading: false, done: false, latest: null };
 let USER_STATE = { id: null, role: null, username: null };
 const fetchRoot = createRootFetcher(fetchJson);
+const fetchThread = createThreadFetcher(fetchJson);
 
 /**
  * Load the global feed page slice.
@@ -57,9 +58,11 @@ async function loadFeed(initial = false) {
           isLoggedIn,
           canDelete: canDeleteFor(USER_STATE),
           fetchRoot,
+          fetchThread,
           onLike: onLikeAction(fetchJson, authHeaders),
           onDelete: onDeleteAction(fetchJson, authHeaders),
           onReply: onReplyAction(fetchJson, authHeaders),
+          currentUserName: USER_STATE?.username || null,
         }
       );
       feedList.appendChild(el);
