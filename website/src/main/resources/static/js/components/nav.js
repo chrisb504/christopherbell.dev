@@ -18,8 +18,6 @@ class AppNav extends HTMLElement {
         </button>
         <div class="navbar-collapse collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
-                <li class="nav-item"><a href="/photos" class="nav-link">Photography</a></li>
                 <li class="nav-item"><a href="/wfl" class="nav-link">What's For Lunch</a></li>
             </ul>
             ${!isAuthenticated ? `
@@ -38,6 +36,25 @@ class AppNav extends HTMLElement {
         if (logoutBtn) {
             logoutBtn.addEventListener('click', () => {
                 pubsub.publish('auth:logout');
+            });
+        }
+
+        // Mobile toggler: if Bootstrap JS is present, let it handle.
+        // Otherwise, add a minimal vanilla fallback toggle.
+        const toggler = this.querySelector('.navbar-toggler');
+        const target = this.querySelector('#navbarSupportedContent');
+        const hasBootstrap = typeof window !== 'undefined' && window.bootstrap && window.bootstrap.Collapse;
+        if (toggler && target && !hasBootstrap) {
+            toggler.addEventListener('click', (e) => {
+                e.preventDefault();
+                const isShown = target.classList.contains('show');
+                if (isShown) {
+                    target.classList.remove('show');
+                    toggler.setAttribute('aria-expanded', 'false');
+                } else {
+                    target.classList.add('show');
+                    toggler.setAttribute('aria-expanded', 'true');
+                }
             });
         }
     }

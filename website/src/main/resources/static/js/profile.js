@@ -35,6 +35,8 @@ function renderAccount(detail) {
 
 function sanitize(text) { return (text || '').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
+const ROOT_CACHE = {};
+
 function renderPosts(posts, username) {
   const container = document.getElementById('postsList');
   if (!container) return;
@@ -53,6 +55,11 @@ function renderPosts(posts, username) {
       <div class="d-flex w-100 justify-content-between align-items-start">
         <div>
           <div class="fw-semibold">${handle}</div>
+          ${p.level && p.level > 0 && p.rootId ? `<div class="border rounded p-2 mb-2 bg-light-subtle small">
+              <span class="text-muted">In reply to</span>
+              <a href="/p/${encodeURIComponent(p.rootId)}" class="ms-1">view thread</a>
+              <div class="mt-1" data-root="${p.rootId}">Loading context…</div>
+            </div>` : ''}
           <p class="mb-1 fs-5">${sanitize(p.text)}</p>
         </div>
         <div class="ms-3 text-end flex-shrink-0 position-relative">
@@ -65,6 +72,22 @@ function renderPosts(posts, username) {
       </div>
     `;
     container.appendChild(item);
+    if (p.level && p.level > 0 && p.rootId) {
+      const ctx = item.querySelector(`[data-root="${p.rootId}"]`);
+      if (ctx) {
+        (async () => {
+          try {
+            let root = ROOT_CACHE[p.rootId];
+            if (!root) {
+              root = await fetchJson(`/api/posts/2025-09-14/${encodeURIComponent(p.rootId)}`);
+              ROOT_CACHE[p.rootId] = root;
+            }
+            const h = root.username ? `@${sanitize(root.username)}` : '@user';
+            ctx.innerHTML = `<a href="/u/${encodeURIComponent(root.username)}">${h}</a>: ${sanitize(root.text)}`;
+          } catch (_) { ctx.textContent = 'Context unavailable'; }
+        })();
+      }
+    }
     const btn = item.querySelector('.post-menu-btn');
     const menu = item.querySelector('.post-menu');
     if (btn && menu) {

@@ -27,13 +27,14 @@ function renderRoot(post) {
   `;
 }
 
-function renderThread(items, currentUser) {
+function renderThread(items, currentUser, currentId) {
   const list = document.getElementById('threadList');
   if (!list) return;
   list.innerHTML = '';
   const isAdmin = currentUser?.role === 'ADMIN';
   for (const p of items) {
     if (p.level === 0) continue; // skip root in replies
+    if (currentId && p.id === currentId) continue; // don't duplicate the current post in replies
     const canDelete = currentUser && (isAdmin || currentUser.id === p.accountId);
     const when = new Date(p.createdOn || p.lastUpdatedOn || Date.now()).toLocaleString();
     const item = document.createElement('div');
@@ -95,7 +96,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (localStorage.getItem('cbellLoginToken')) {
       try { me = await fetchJson('/api/accounts/2025-09-03/me', { headers: authHeaders() }); } catch (_) {}
     }
-    renderThread(thread, me);
+    renderThread(thread, me, id);
     // Show reply composer if logged in
     const composer = document.getElementById('replyComposer');
     const replyBtn = document.getElementById('replyBtn');
@@ -113,7 +114,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           });
           txtEl.value = '';
           const thread = await fetchJson(`/api/posts/2025-09-14/${encodeURIComponent(id)}/thread`);
-          renderThread(thread, me);
+          renderThread(thread, me, id);
         } catch (err) {
           if (alert) { alert.textContent = err.message; alert.classList.remove('d-none'); }
         }
@@ -123,4 +124,3 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (alert) { alert.textContent = err.message; alert.classList.remove('d-none'); }
   }
 });
-

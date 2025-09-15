@@ -12,6 +12,7 @@ public record PostFeedItem(
     String accountId,
     String username,
     String text,
+    String rootId,
     String parentId,
     Integer level,
     Instant createdOn,

@@ -34,6 +34,7 @@ function setComposerEnabled(enabled) {
 
 let FEED_STATE = { before: null, limit: 20, loading: false, done: false, latest: null };
 let USER_STATE = { id: null, role: null, username: null };
+const ROOT_CACHE = {};
 
 async function loadFeed(initial = false) {
   const feedList = document.getElementById('feedList');
@@ -67,6 +68,11 @@ async function loadFeed(initial = false) {
         <div class="d-flex w-100 justify-content-between align-items-start">
           <div>
             <div class="fw-semibold"><a href="/u/${encodeURIComponent(p.username)}" class="link-underline link-underline-opacity-0">${handle}</a></div>
+            ${p.level && p.level > 0 && p.rootId ? `<div class="border rounded p-2 mb-2 bg-light-subtle small">
+                <span class="text-muted">In reply to</span>
+                <a href="/p/${encodeURIComponent(p.rootId)}" class="ms-1">view thread</a>
+                <div class="mt-1" data-root="${p.rootId}">Loading context…</div>
+              </div>` : ''}
             <p class="mb-1 fs-5"><a href="/p/${encodeURIComponent(p.id)}" class="link-underline link-underline-opacity-0 text-body">${sanitize(p.text)}</a></p>
           </div>
           <div class="ms-3 text-end flex-shrink-0 position-relative">
@@ -80,6 +86,23 @@ async function loadFeed(initial = false) {
         </div>
       `;
       feedList.appendChild(item);
+      // Load root context if needed
+      if (p.level && p.level > 0 && p.rootId) {
+        const ctx = item.querySelector(`[data-root="${p.rootId}"]`);
+        if (ctx) {
+          (async () => {
+            try {
+              let root = ROOT_CACHE[p.rootId];
+              if (!root) {
+                root = await fetchJson(`/api/posts/2025-09-14/${encodeURIComponent(p.rootId)}`);
+                ROOT_CACHE[p.rootId] = root;
+              }
+              const h = root.username ? `@${sanitize(root.username)}` : '@user';
+              ctx.innerHTML = `<a href="/u/${encodeURIComponent(root.username)}">${h}</a>: ${sanitize(root.text)}`;
+            } catch (_) { ctx.textContent = 'Context unavailable'; }
+          })();
+        }
+      }
       // Wire menu toggle and delete
       const btn = item.querySelector('.post-menu-btn');
       const menu = item.querySelector('.post-menu');
@@ -155,6 +178,16 @@ async function submitPost() {
 document.addEventListener('DOMContentLoaded', async () => {
   // Load current user to determine delete permissions before first render
   const token = localStorage.getItem('cbellLoginToken');
+  // Toggle composer vs prompt depending on auth state
+  const composerEl = document.getElementById('composer');
+  const promptEl = document.getElementById('composerPrompt');
+  if (token) {
+    composerEl?.classList.remove('d-none');
+    promptEl?.classList.add('d-none');
+  } else {
+    composerEl?.classList.add('d-none');
+    promptEl?.classList.remove('d-none');
+  }
   if (token) {
     try {
       const me = await fetchJson('/api/accounts/2025-09-03/me', { headers: authHeaders() });
