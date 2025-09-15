@@ -2,9 +2,9 @@ class AppFooter extends HTMLElement {
     connectedCallback() {
         const year = new Date().getFullYear();
         this.innerHTML = `
-<footer class="bg-dark text-light py-3 mt-4">
+<footer class="py-3 mt-4">
     <div class="container text-center">
-        <span>&copy; ${year} Christopher Bell</span>
+        <span class="text-muted">&copy; ${year} Christopher Bell</span>
     </div>
 </footer>`;
     }
