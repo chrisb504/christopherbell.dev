@@ -16,9 +16,21 @@ function renderRoot(post) {
   const likes = post.likesCount || 0;
   const replies = post.replyCount || 0;
   root.innerHTML = `
+    ${(post.rootId && post.rootId !== post.id && post.rootId !== post.parentId) ? `
+    <div class="root-context card mb-2" data-root="${post.rootId}">
+      <div class="card-body py-2">
+        <div class="small text-muted">Thread root</div>
+        <div class="fw-semibold">
+          <a href="/u/" class="link-underline link-underline-opacity-0" data-root-handle="${post.rootId}">@user</a>
+        </div>
+        <p class="mb-0 small fw-semibold" data-root-text="${post.rootId}">Loading…</p>
+        <a href="/p/${encodeURIComponent(post.rootId)}" class="small">View root</a>
+      </div>
+    </div>` : ''}
     ${post.parentId ? `
     <div class="parent-context card mb-2" data-parent="${post.parentId}">
       <div class="card-body py-2">
+        <div class="small text-muted">In reply to</div>
         <div class="fw-semibold">
           <a href="/u/" class="link-underline link-underline-opacity-0" data-parent-handle="${post.parentId}">@user</a>
         </div>
@@ -152,6 +164,28 @@ function renderRoot(post) {
         }
       } catch (e) {
         const textEl = root.querySelector(`[data-parent-text="${post.parentId}"]`);
+        if (textEl) textEl.textContent = 'Context unavailable';
+      }
+    })();
+  }
+
+  // Fill root context if different from parent
+  if (post.rootId && post.rootId !== post.id && post.rootId !== post.parentId) {
+    (async () => {
+      try {
+        const r = await fetchJson(API.posts.byId(post.rootId));
+        const h = r.username ? `@${sanitize(r.username)}` : '@user';
+        const handleEl = root.querySelector(`[data-root-handle="${post.rootId}"]`);
+        const textEl = root.querySelector(`[data-root-text="${post.rootId}"]`);
+        if (handleEl) {
+          handleEl.textContent = h;
+          handleEl.setAttribute('href', `/u/${encodeURIComponent(r.username || '')}`);
+        }
+        if (textEl) {
+          textEl.textContent = r.text || '';
+        }
+      } catch (e) {
+        const textEl = root.querySelector(`[data-root-text="${post.rootId}"]`);
         if (textEl) textEl.textContent = 'Context unavailable';
       }
     })();
