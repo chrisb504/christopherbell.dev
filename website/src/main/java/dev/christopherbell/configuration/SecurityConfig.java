@@ -33,10 +33,13 @@ public class SecurityConfig {
       "/api/accounts" + APIVersion.V20241215 + "/login",
       "/api/accounts" + APIVersion.V20241215 + "/create",
       "/profile",
-      "/api/posts" + APIVersion.V20250914 + "/feed",
-      "/api/posts" + APIVersion.V20250914 + "/user/**",
-      "/api/posts" + APIVersion.V20250914 + "/**",
+      // Public read-only post APIs (method-scoped)
+      "GET:/api/posts" + APIVersion.V20250914 + "/feed",
+      "GET:/api/posts" + APIVersion.V20250914 + "/user/**",
+      "GET:/api/posts" + APIVersion.V20250914 + "/*",
+      "GET:/api/posts" + APIVersion.V20250914 + "/*/thread",
       "/u/**",
+      "/p/**",
       "/blog",
       "/css/**",
       "/images/**",
@@ -67,7 +70,7 @@ public class SecurityConfig {
 
         // Configure authorization rules
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers(PUBLIC_URLS).permitAll() // Allow public access to defined URLs
+            .requestMatchers(publicMatchers()).permitAll() // Allow public access to defined URLs
             .anyRequest().authenticated() // Secure all other endpoints
         )
 
@@ -93,7 +96,7 @@ public class SecurityConfig {
    */
   @Bean
   public JwtAuthenticationFilter jwtAuthenticationFilter() {
-    return new JwtAuthenticationFilter(createSkipMatchers(PUBLIC_URLS));
+    return new JwtAuthenticationFilter(publicMatchersList());
   }
 
   /**
@@ -115,9 +118,26 @@ public class SecurityConfig {
   /**
    * Helper to convert path patterns into {@link AntPathRequestMatcher}s.
    */
-  private List<RequestMatcher> createSkipMatchers(String[] urls) {
-    return Arrays.stream(urls)
-        .map(AntPathRequestMatcher::new)
+  private List<RequestMatcher> publicMatchersList() {
+    return Arrays.stream(PUBLIC_URLS)
+        .map(Sec::toMatcher)
         .collect(Collectors.toList());
+  }
+
+  private RequestMatcher[] publicMatchers() {
+    return publicMatchersList().toArray(new RequestMatcher[0]);
+  }
+
+  private static class Sec {
+    static RequestMatcher toMatcher(String spec) {
+      // Allow "METHOD:/path" or just "/path"
+      if (spec.contains(":")) {
+        String[] parts = spec.split(":", 2);
+        String method = parts[0];
+        String pattern = parts[1];
+        return new AntPathRequestMatcher(pattern, method);
+      }
+      return new AntPathRequestMatcher(spec);
+    }
   }
 }
