@@ -12,6 +12,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * MongoDB document representing a tweet‑like post authored by an account.
+ *
+ * <p>Posts are stored in the separate {@code posts} collection and linked back
+ * to the owning account via {@link #accountId}. Content is modeled as short
+ * text suitable for micro‑blogging.</p>
+ */
 @AllArgsConstructor
 @Builder
 @Data
@@ -21,8 +28,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Post {
   private final String type = "post";
 
+  /** Unique post identifier (UUID string). */
   @Id private String id;
 
+  /** Owning account's identifier. */
   private String accountId;
   // Tweet-like short message body (trimmed, <= 280 chars)
   private String text;

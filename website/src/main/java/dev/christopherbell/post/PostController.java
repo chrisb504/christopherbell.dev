@@ -19,6 +19,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * REST controller exposing endpoints to create and retrieve posts.
+ *
+ * <p>All routes are versioned under {@code /api/posts} with API version suffixes
+ * from {@link dev.christopherbell.libs.api.APIVersion}. Access is controlled via
+ * Spring Security authorities.</p>
+ */
 @RequiredArgsConstructor
 @RequestMapping("/api/posts")
 @RestController
@@ -26,6 +33,13 @@ public class PostController {
   private final PostService postService;
   private final PermissionService permissionService;
 
+  /**
+   * Creates a post for the authenticated user.
+   *
+   * @param request the post creation payload
+   * @return HTTP 201 with the created {@link PostDetail}
+   * @throws Exception if validation fails or the account cannot be resolved
+   */
   @PostMapping(
       value = V20250914 + "/create",
       consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -41,6 +55,12 @@ public class PostController {
         HttpStatus.CREATED);
   }
 
+  /**
+   * Retrieves posts authored by the authenticated user.
+   *
+   * @return HTTP 200 with a list of {@link PostDetail}
+   * @throws Exception if the account cannot be resolved
+   */
   @GetMapping(value = V20250914 + "/me", produces = MediaType.APPLICATION_JSON_VALUE)
   @PreAuthorize("@permissionService.hasAuthority('USER')")
   public ResponseEntity<Response<List<PostDetail>>> getMyPosts() throws Exception {
@@ -52,6 +72,13 @@ public class PostController {
         HttpStatus.OK);
   }
 
+  /**
+   * Retrieves posts for a specific account id (admin only).
+   *
+   * @param accountId the account id to filter posts by
+   * @return HTTP 200 with a list of {@link PostDetail}
+   * @throws Exception if the request is invalid or the account does not exist
+   */
   @GetMapping(value = V20250914 + "/account/{accountId}", produces = MediaType.APPLICATION_JSON_VALUE)
   @PreAuthorize("@permissionService.hasAuthority('ADMIN')")
   public ResponseEntity<Response<List<PostDetail>>> getPostsByAccountId(@PathVariable String accountId)

@@ -13,6 +13,12 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * Application service for creating and retrieving tweet‑like posts.
+ *
+ * <p>Enforces input validation, ensures ownership via the authenticated
+ * account, and delegates persistence to {@link PostRepository}.</p>
+ */
 @RequiredArgsConstructor
 @Service
 public class PostService {
@@ -22,6 +28,14 @@ public class PostService {
 
   private static final int MAX_TEXT_LENGTH = 280;
 
+  /**
+   * Creates a new post for the currently authenticated account.
+   *
+   * @param request input containing the post text (required, ≤ 280 chars)
+   * @return created post as a {@link PostDetail}
+   * @throws InvalidRequestException if text is null/blank or exceeds limits
+   * @throws ResourceNotFoundException if the current account cannot be found
+   */
   public PostDetail createPost(PostCreateRequest request)
       throws InvalidRequestException, ResourceNotFoundException {
     if (request == null || request.text() == null || request.text().isBlank()) {
@@ -49,6 +63,12 @@ public class PostService {
     return postMapper.toDetail(saved);
   }
 
+  /**
+   * Lists posts authored by the current account (newest first).
+   *
+   * @return list of post details for the caller
+   * @throws ResourceNotFoundException if the current account cannot be found
+   */
   public List<PostDetail> getMyPosts() throws ResourceNotFoundException {
     String selfId = getSelfId();
     // Ensure account exists (defensive, consistent with create)
@@ -60,6 +80,14 @@ public class PostService {
         .stream().map(postMapper::toDetail).toList();
   }
 
+  /**
+   * Lists posts for a given account id (newest first).
+   *
+   * @param accountId the account id to filter by (required)
+   * @return list of post details for the account
+   * @throws InvalidRequestException if the id is null or blank
+   * @throws ResourceNotFoundException if the account does not exist
+   */
   public List<PostDetail> getPostsByAccountId(String accountId)
       throws InvalidRequestException, ResourceNotFoundException {
     if (accountId == null || accountId.isBlank()) {
@@ -73,7 +101,10 @@ public class PostService {
         .stream().map(postMapper::toDetail).toList();
   }
 
-  // Visible for testing
+  /**
+   * Resolves the id of the authenticated account.
+   * Separated for testability.
+   */
   String getSelfId() {
     return PermissionService.getSelf();
   }

@@ -4,6 +4,7 @@ import dev.christopherbell.account.model.Account;
 import dev.christopherbell.account.model.AccountLoginRequest;
 import dev.christopherbell.account.model.AccountStatus;
 import dev.christopherbell.libs.api.exception.InvalidTokenException;
+import dev.christopherbell.account.model.Role;
 import dev.christopherbell.libs.security.PasswordUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -123,13 +124,35 @@ public class PermissionService {
 
       String token = (String) authentication.getCredentials();
       Claims claims = validateToken(token);
-      String roles  = claims.get(Account.PROPERTY_ROLE, String.class);
-      return roles != null && roles.contains(requiredRole);
+      String roleValue  = claims.get(Account.PROPERTY_ROLE, String.class);
+      if (roleValue == null || requiredRole == null) {
+        return false;
+      }
+
+      Role actual;
+      Role required;
+      try {
+        actual = Role.valueOf(roleValue);
+        required = Role.valueOf(requiredRole);
+      } catch (IllegalArgumentException e) {
+        // Unknown role value; deny access
+        return false;
+      }
+
+      return level(actual) >= level(required);
     } catch (Exception e) {
 
       log.error("Error validating token or extracting claims: {}", e.getMessage(), e);
       return false; // Deny access on any error
     }
+  }
+
+  private static int level(Role role) {
+    return switch (role) {
+      case USER -> 1;
+      case MOD -> 2;
+      case ADMIN -> 3;
+    };
   }
 
   public static boolean isAccountApproved(Account account) throws InvalidTokenException {
