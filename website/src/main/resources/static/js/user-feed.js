@@ -1,6 +1,7 @@
-import { fetchJson, sanitize, authHeaders, isLoggedIn, formatWhen } from './lib/util.js';
+import { fetchJson, sanitize, authHeaders, isLoggedIn, formatWhen, closeOnOutside } from './lib/util.js';
 import { API } from './lib/api.js';
 import { createFeedItem } from './lib/feed-render.js';
+import { createRootFetcher, canDeleteFor, onLikeAction, onDeleteAction } from './lib/feed-context.js';
 
 /** Extract the username from the /u/{username} path. */
 function getUsernameFromPath() {
@@ -11,7 +12,7 @@ function getUsernameFromPath() {
 
 let STATE = { before: null, limit: 20, loading: false, done: false };
 let ME = { id: null, role: null };
-const ROOT_CACHE = {};
+const fetchRoot = createRootFetcher(fetchJson);
 
 /**
  * Load the user's feed page slice.
@@ -43,14 +44,18 @@ async function loadUserFeed(initial = false) {
       return;
     }
     for (const p of items) {
-      const canDelete = (post) => ME.id && (ME.role === 'ADMIN' || ME.id === post.accountId);
-      const fetchRootCached = async (rootId) => {
-        if (!ROOT_CACHE[rootId]) ROOT_CACHE[rootId] = await fetchJson(API.posts.byId(rootId));
-        return ROOT_CACHE[rootId];
-      };
-      const onLike = (postId) => fetchJson(API.posts.like(postId), { method: 'POST', headers: authHeaders() });
-      const onDelete = (postId) => fetchJson(API.posts.byId(postId), { method: 'DELETE', headers: authHeaders() });
-      const el = createFeedItem({ ...p, username }, { sanitize, formatWhen, isLoggedIn, canDelete, fetchRoot: fetchRootCached, onLike, onDelete });
+      const el = createFeedItem(
+        { ...p, username },
+        {
+          sanitize,
+          formatWhen,
+          isLoggedIn,
+          canDelete: canDeleteFor(ME),
+          fetchRoot,
+          onLike: onLikeAction(fetchJson, authHeaders),
+          onDelete: onDeleteAction(fetchJson, authHeaders),
+        }
+      );
       list.appendChild(el);
     }
     const last = items[items.length - 1];
@@ -87,7 +92,5 @@ document.addEventListener('DOMContentLoaded', async () => {
  */
     if (nearBottom) loadUserFeed(false);
   });
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.post-menu').forEach(m => m.classList.add('d-none'));
-  });
+  closeOnOutside('.post-menu');
 });

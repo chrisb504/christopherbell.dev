@@ -1,4 +1,5 @@
-import { sanitize, authHeaders, fetchJson, isLoggedIn, formatWhen } from './lib/util.js';
+import { sanitize, authHeaders, fetchJson, isLoggedIn, formatWhen, closeOnOutside } from './lib/util.js';
+import { API } from './lib/api.js';
 /** Extract the post id from the /p/{id} path. */
 function getPostId() { const m = location.pathname.match(/\/p\/(.+)$/); return m ? decodeURIComponent(m[1]) : null; }
 
@@ -82,21 +83,19 @@ function renderThread(items, currentUser, currentId) {
 
 /** Wire page once DOM is ready. */
 document.addEventListener('DOMContentLoaded', async () => {
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.post-menu').forEach(m => m.classList.add('d-none'));
-  });
+  closeOnOutside('.post-menu');
   const id = getPostId();
   if (!id) return;
   const alert = document.getElementById('postAlert');
   try {
     const [post, thread] = await Promise.all([
-      fetchJson(`/api/posts/2025-09-14/${encodeURIComponent(id)}`),
-      fetchJson(`/api/posts/2025-09-14/${encodeURIComponent(id)}/thread`)
+      fetchJson(API.posts.byId(id)),
+      fetchJson(API.posts.thread(id))
     ]);
     renderRoot(post);
     let me = null;
     if (localStorage.getItem('cbellLoginToken')) {
-      try { me = await fetchJson('/api/accounts/2025-09-03/me', { headers: authHeaders() }); } catch (_) {}
+      try { me = await fetchJson(API.accounts.me, { headers: authHeaders() }); } catch (_) {}
     }
     renderThread(thread, me, id);
     // Show reply composer if logged in
@@ -109,22 +108,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         const text = (txtEl?.value || '').trim();
         if (!text) return;
         try {
-          await fetchJson('/api/posts/2025-09-14/create', {
+          await fetchJson(API.posts.create, {
             method: 'POST',
             headers: authHeaders(),
             body: JSON.stringify({ text, parentId: id })
           });
-/**
- * Per-post page behavior.
- *
- * Responsibilities:
- * - Load and render the root post
- * - Load and render flat thread (replies)
- * - Provide reply composer for authenticated users
- * - Support deleting replies (owner/admin)
- */
           txtEl.value = '';
-          const thread = await fetchJson(`/api/posts/2025-09-14/${encodeURIComponent(id)}/thread`);
+          const thread = await fetchJson(API.posts.thread(id));
           renderThread(thread, me, id);
         } catch (err) {
           if (alert) { alert.textContent = err.message; alert.classList.remove('d-none'); }

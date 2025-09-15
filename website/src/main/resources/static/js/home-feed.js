@@ -1,6 +1,8 @@
-import { authHeaders, fetchJson, sanitize, isLoggedIn, formatWhen } from './lib/util.js';
+import { authHeaders, fetchJson, sanitize, isLoggedIn, formatWhen, closeOnOutside } from './lib/util.js';
 import { API } from './lib/api.js';
 import { createFeedItem } from './lib/feed-render.js';
+import { createRootFetcher, canDeleteFor, onLikeAction, onDeleteAction } from './lib/feed-context.js';
+import { initComposer } from './lib/composer.js';
 
 /** Update compose character counter. */
 function updateCounter(el, counter) {
@@ -18,7 +20,7 @@ function setComposerEnabled(enabled) {
 
 let FEED_STATE = { before: null, limit: 20, loading: false, done: false, latest: null };
 let USER_STATE = { id: null, role: null, username: null };
-const ROOT_CACHE = {};
+const fetchRoot = createRootFetcher(fetchJson);
 
 /**
  * Load the global feed page slice.
@@ -47,14 +49,18 @@ async function loadFeed(initial = false) {
       return;
     }
     for (const p of posts) {
-      const canDelete = (post) => USER_STATE && USER_STATE.id && (USER_STATE.role === 'ADMIN' || USER_STATE.id === post.accountId);
-      const fetchRootCached = async (rootId) => {
-        if (!ROOT_CACHE[rootId]) ROOT_CACHE[rootId] = await fetchJson(API.posts.byId(rootId));
-        return ROOT_CACHE[rootId];
-      };
-      const onLike = (postId) => fetchJson(API.posts.like(postId), { method: 'POST', headers: authHeaders() });
-      const onDelete = (postId) => fetchJson(API.posts.byId(postId), { method: 'DELETE', headers: authHeaders() });
-      const el = createFeedItem(p, { sanitize, formatWhen, isLoggedIn, canDelete, fetchRoot: fetchRootCached, onLike, onDelete });
+      const el = createFeedItem(
+        p,
+        {
+          sanitize,
+          formatWhen,
+          isLoggedIn,
+          canDelete: canDeleteFor(USER_STATE),
+          fetchRoot,
+          onLike: onLikeAction(fetchJson, authHeaders),
+          onDelete: onDeleteAction(fetchJson, authHeaders),
+        }
+      );
       feedList.appendChild(el);
     }
     // Update paging cursor to last item's createdOn
@@ -112,16 +118,6 @@ async function submitPost() {
 document.addEventListener('DOMContentLoaded', async () => {
   // Load current user to determine delete permissions before first render
   const token = localStorage.getItem('cbellLoginToken');
-  // Toggle composer vs prompt depending on auth state
-  const composerEl = document.getElementById('composer');
-  const promptEl = document.getElementById('composerPrompt');
-  if (token) {
-    composerEl?.classList.remove('d-none');
-    promptEl?.classList.add('d-none');
-  } else {
-    composerEl?.classList.add('d-none');
-    promptEl?.classList.remove('d-none');
-  }
   if (token) {
     try {
       const me = await fetchJson(API.accounts.me, { headers: authHeaders() });
@@ -129,21 +125,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (_) { /* ignore */ }
   }
   // Close any open menus on outside click
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.post-menu').forEach(m => m.classList.add('d-none'));
-  });
-  const postText = document.getElementById('postText');
-  const counter = document.getElementById('charCount');
-  if (postText && counter) {
-    updateCounter(postText, counter);
-    postText.addEventListener('input', () => updateCounter(postText, counter));
-  }
-  const postBtn = document.getElementById('postBtn');
-  if (postBtn) postBtn.addEventListener('click', async () => {
-    await submitPost();
-    // After posting, refresh to top of feed
-    await loadFeed(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  closeOnOutside('.post-menu');
+  // Composer
+  initComposer({
+    selectors: {
+      composer: '#composer',
+      prompt: '#composerPrompt',
+      textarea: '#postText',
+      counter: '#charCount',
+      button: '#postBtn',
+      alert: '#homeAlert',
+    },
+    isLoggedIn,
+    onSubmit: async (text) => {
+      await fetchJson(API.posts.create, { method: 'POST', headers: authHeaders(), body: JSON.stringify({ text }) });
+      await loadFeed(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    },
   });
   // Show new posts banner when available
   const banner = document.getElementById('newPostsBanner');

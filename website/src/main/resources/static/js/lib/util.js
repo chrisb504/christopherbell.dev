@@ -46,3 +46,15 @@ export function sanitize(text) {
 export function formatWhen(isoString) {
   return new Date(isoString || Date.now()).toLocaleString();
 }
+
+/**
+ * Close menus when clicking anywhere outside them.
+ * Adds a capture-phase document click listener that hides all elements
+ * matching the given selector by adding the 'd-none' class.
+ * @param {string} selector CSS selector for menu containers
+ */
+export function closeOnOutside(selector) {
+  document.addEventListener('click', () => {
+    document.querySelectorAll(selector).forEach(el => el.classList.add('d-none'));
+  }, { capture: true });
+}
