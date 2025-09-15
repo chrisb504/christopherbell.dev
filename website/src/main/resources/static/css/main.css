@@ -73,3 +73,27 @@ body {
     padding-right: 15px;
     text-align: center;
 }
+
+/* Compact thread context blocks on post/feed pages */
+.parent-context.card,
+.root-context.card {
+    background-color: #f8f9fa; /* subtle gray */
+    border-color: #e9ecef;     /* light border */
+    border-left: 3px solid #dee2e6; /* emphasis for hierarchy */
+    border-radius: .5rem;
+}
+
+.parent-context .card-body,
+.root-context .card-body {
+    padding: .5rem .75rem; /* tighter spacing */
+}
+
+.parent-context .small,
+.root-context .small {
+    line-height: 1.2;
+}
+
+.parent-context a.small,
+.root-context a.small {
+    color: #6c757d; /* muted link for context actions */
+}
