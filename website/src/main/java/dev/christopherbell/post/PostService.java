@@ -109,6 +109,39 @@ public class PostService {
   }
 
   /**
+   * Feed-style posts for the current user including thread metadata.
+   */
+  public List<PostFeedItem> getMyFeed(Instant before, int limit) throws ResourceNotFoundException {
+    String selfId = getSelfId();
+    var account = accountRepository
+        .findById(selfId)
+        .orElseThrow(() -> new ResourceNotFoundException(String.format("Account with id %s not found.", selfId)));
+
+    int pageSize = Math.max(1, Math.min(limit, 100));
+    Pageable page = PageRequest.of(0, pageSize, Sort.by(Sort.Direction.DESC, "createdOn"));
+    List<Post> posts;
+    if (before != null) {
+      posts = postRepository.findByAccountIdAndCreatedOnLessThanOrderByCreatedOnDesc(selfId, before, page);
+    } else {
+      posts = postRepository.findByAccountIdOrderByCreatedOnDesc(selfId, page);
+    }
+
+    return posts.stream()
+        .map(p -> PostFeedItem.builder()
+            .id(p.getId())
+            .accountId(p.getAccountId())
+            .username(account.getUsername())
+            .text(p.getText())
+            .rootId(p.getRootId())
+            .parentId(p.getParentId())
+            .level(p.getLevel())
+            .createdOn(p.getCreatedOn())
+            .lastUpdatedOn(p.getLastUpdatedOn())
+            .build())
+        .toList();
+  }
+
+  /**
    * Lists posts for a given account id (newest first).
    *
    * @param accountId the account id to filter by (required)

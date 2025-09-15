@@ -69,13 +69,6 @@ async function loadFeed(initial = false) {
           <div class="w-100">
             <div class="fw-semibold"><a href="/u/${encodeURIComponent(p.username)}" class="link-underline link-underline-opacity-0">${handle}</a></div>
             <p class="mb-1 fs-5"><a href="/p/${encodeURIComponent(p.id)}" class="link-underline link-underline-opacity-0 text-body">${sanitize(p.text)}</a></p>
-            ${p.level && p.level > 0 && p.rootId ? `<div class="parent-context card mt-2">
-                <div class="card-body py-2">
-                  <div class="fw-semibold"><a href="/u/" class="link-underline link-underline-opacity-0" data-root-handle="${p.rootId}">@user</a></div>
-                  <p class="mb-0 fs-4 fw-semibold" data-root="${p.rootId}">Loading…</p>
-                  <a href="/p/${encodeURIComponent(p.rootId)}" class="small">View thread</a>
-                </div>
-              </div>` : ''}
           </div>
           <div class="ms-3 text-end flex-shrink-0 position-relative">
             <small class="text-muted d-block">${when}</small>
@@ -86,6 +79,13 @@ async function loadFeed(initial = false) {
             </div>` : ''}
           </div>
         </div>
+        ${p.level && p.level > 0 && p.rootId ? `<div class="parent-context card mt-2 w-100">
+            <div class="card-body py-2">
+              <div class="fw-semibold"><a href="/u/" class="link-underline link-underline-opacity-0" data-root-handle="${p.rootId}">@user</a></div>
+              <p class="mb-0 fs-4 fw-semibold" data-root="${p.rootId}">Loading…</p>
+              <a href="/p/${encodeURIComponent(p.rootId)}" class="small">View thread</a>
+            </div>
+          </div>` : ''}
       `;
       feedList.appendChild(item);
       // Load root context if needed

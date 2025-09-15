@@ -77,6 +77,23 @@ public class PostController {
   }
 
   /**
+   * Feed-style posts for the current user with thread metadata.
+   */
+  @GetMapping(value = V20250914 + "/me/feed", produces = MediaType.APPLICATION_JSON_VALUE)
+  @PreAuthorize("@permissionService.hasAuthority('USER')")
+  public ResponseEntity<Response<List<PostFeedItem>>> getMyFeed(
+      @RequestParam(value = "before", required = false) java.time.Instant before,
+      @RequestParam(value = "limit", required = false, defaultValue = "20") int limit
+  ) throws Exception {
+    return new ResponseEntity<>(
+        Response.<List<PostFeedItem>>builder()
+            .payload(postService.getMyFeed(before, limit))
+            .success(true)
+            .build(),
+        HttpStatus.OK);
+  }
+
+  /**
    * Retrieves posts for a specific account id (admin only).
    *
    * @param accountId the account id to filter posts by

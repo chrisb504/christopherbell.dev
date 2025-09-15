@@ -56,13 +56,6 @@ function renderPosts(posts, username) {
         <div class="w-100">
           <div class="fw-semibold">${handle}</div>
           <p class="mb-1 fs-5">${sanitize(p.text)}</p>
-          ${p.level && p.level > 0 && p.rootId ? `<div class="parent-context card mt-2">
-              <div class="card-body py-2">
-                <div class="fw-semibold"><a href="/u/" class="link-underline link-underline-opacity-0" data-root-handle="${p.rootId}">@user</a></div>
-                <p class="mb-0 fs-4 fw-semibold" data-root="${p.rootId}">Loading…</p>
-                <a href="/p/${encodeURIComponent(p.rootId)}" class="small">View thread</a>
-              </div>
-            </div>` : ''}
         </div>
         <div class="ms-3 text-end flex-shrink-0 position-relative">
           <small class="text-muted d-block">${when}</small>
@@ -72,6 +65,13 @@ function renderPosts(posts, username) {
           </div>
         </div>
       </div>
+      ${p.level && p.level > 0 && p.rootId ? `<div class="parent-context card mt-2 w-100">
+          <div class="card-body py-2">
+            <div class="fw-semibold"><a href="/u/" class="link-underline link-underline-opacity-0" data-root-handle="${p.rootId}">@user</a></div>
+            <p class="mb-0 fs-4 fw-semibold" data-root="${p.rootId}">Loading…</p>
+            <a href="/p/${encodeURIComponent(p.rootId)}" class="small">View thread</a>
+          </div>
+        </div>` : ''}
     `;
     container.appendChild(item);
     if (p.level && p.level > 0 && p.rootId) {
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   try {
     const me = await fetchJson('/api/accounts/2025-09-03/me', { headers: authHeaders() });
     renderAccount(me);
-    const posts = await fetchJson('/api/posts/2025-09-14/me', { headers: authHeaders() });
+    const posts = await fetchJson('/api/posts/2025-09-14/me/feed?limit=20', { headers: authHeaders() });
     renderPosts(posts, me?.username);
   } catch (err) {
     if (alert) {
