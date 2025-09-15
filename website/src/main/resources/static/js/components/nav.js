@@ -18,6 +18,7 @@ class AppNav extends HTMLElement {
         </button>
         <div class="navbar-collapse collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                ${isAuthenticated ? `<li class=\"nav-item\"><a href=\"/profile\" class=\"nav-link\">Profile</a></li>` : ''}
                 <li class="nav-item"><a href="/wfl" class="nav-link">What's For Lunch</a></li>
             </ul>
             ${!isAuthenticated ? `
@@ -26,7 +27,6 @@ class AppNav extends HTMLElement {
                 <a href="/signup" class="btn btn-warning">Sign-up</a>
             </div>` : `
             <div class="col-auto d-flex justify-content-end align-items-center gap-2">
-                <a href="/profile" class="btn btn-outline-info btn-md">Profile</a>
                 <button id="logout" type="button" class="btn btn-danger btn-md">Logout</button>
             </div>`}
         </div>

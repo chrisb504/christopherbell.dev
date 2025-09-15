@@ -36,7 +36,6 @@ public class SecurityConfig {
       // Public read-only post APIs (method-scoped)
       "GET:/api/posts" + APIVersion.V20250914 + "/feed",
       "GET:/api/posts" + APIVersion.V20250914 + "/user/**",
-      "GET:/api/posts" + APIVersion.V20250914 + "/*",
       "GET:/api/posts" + APIVersion.V20250914 + "/*/thread",
       "/u/**",
       "/p/**",
@@ -119,9 +118,24 @@ public class SecurityConfig {
    * Helper to convert path patterns into {@link AntPathRequestMatcher}s.
    */
   private List<RequestMatcher> publicMatchersList() {
-    return Arrays.stream(PUBLIC_URLS)
+    List<RequestMatcher> matchers = Arrays.stream(PUBLIC_URLS)
         .map(Sec::toMatcher)
         .collect(Collectors.toList());
+    // Add a precise matcher for single post GET: /api/posts/{version}/{postId}
+    // Excludes reserved paths like "/me" and "/account/**".
+    matchers.add(request -> {
+      if (!"GET".equalsIgnoreCase(request.getMethod())) return false;
+      String prefix = "/api/posts" + APIVersion.V20250914 + "/";
+      String path = request.getRequestURI();
+      if (!path.startsWith(prefix)) return false;
+      String tail = path.substring(prefix.length());
+      if (tail.isEmpty()) return false;
+      if (tail.contains("/")) return false; // only single segment
+      if ("me".equals(tail)) return false;
+      if (tail.startsWith("account")) return false;
+      return true; // treat as public single-post GET
+    });
+    return matchers;
   }
 
   private RequestMatcher[] publicMatchers() {

@@ -66,14 +66,16 @@ async function loadFeed(initial = false) {
       const canDelete = USER_STATE && USER_STATE.id && (USER_STATE.role === 'ADMIN' || USER_STATE.id === p.accountId);
       item.innerHTML = `
         <div class="d-flex w-100 justify-content-between align-items-start">
-          <div>
+          <div class="w-100">
             <div class="fw-semibold"><a href="/u/${encodeURIComponent(p.username)}" class="link-underline link-underline-opacity-0">${handle}</a></div>
-            ${p.level && p.level > 0 && p.rootId ? `<div class="border rounded p-2 mb-2 bg-light-subtle small">
-                <span class="text-muted">In reply to</span>
-                <a href="/p/${encodeURIComponent(p.rootId)}" class="ms-1">view thread</a>
-                <div class="mt-1" data-root="${p.rootId}">Loading context…</div>
-              </div>` : ''}
             <p class="mb-1 fs-5"><a href="/p/${encodeURIComponent(p.id)}" class="link-underline link-underline-opacity-0 text-body">${sanitize(p.text)}</a></p>
+            ${p.level && p.level > 0 && p.rootId ? `<div class="parent-context card mt-2">
+                <div class="card-body py-2">
+                  <div class="fw-semibold"><a href="/u/" class="link-underline link-underline-opacity-0" data-root-handle="${p.rootId}">@user</a></div>
+                  <p class="mb-0 fs-4 fw-semibold" data-root="${p.rootId}">Loading…</p>
+                  <a href="/p/${encodeURIComponent(p.rootId)}" class="small">View thread</a>
+                </div>
+              </div>` : ''}
           </div>
           <div class="ms-3 text-end flex-shrink-0 position-relative">
             <small class="text-muted d-block">${when}</small>
@@ -89,6 +91,7 @@ async function loadFeed(initial = false) {
       // Load root context if needed
       if (p.level && p.level > 0 && p.rootId) {
         const ctx = item.querySelector(`[data-root="${p.rootId}"]`);
+        const handleEl = item.querySelector(`[data-root-handle="${p.rootId}"]`);
         if (ctx) {
           (async () => {
             try {
@@ -98,7 +101,11 @@ async function loadFeed(initial = false) {
                 ROOT_CACHE[p.rootId] = root;
               }
               const h = root.username ? `@${sanitize(root.username)}` : '@user';
-              ctx.innerHTML = `<a href="/u/${encodeURIComponent(root.username)}">${h}</a>: ${sanitize(root.text)}`;
+              if (handleEl) {
+                handleEl.textContent = h;
+                handleEl.setAttribute('href', `/u/${encodeURIComponent(root.username)}`);
+              }
+              ctx.textContent = root.text ? `${root.text}` : '';
             } catch (_) { ctx.textContent = 'Context unavailable'; }
           })();
         }

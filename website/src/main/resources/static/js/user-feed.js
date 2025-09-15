@@ -58,14 +58,16 @@ async function loadUserFeed(initial = false) {
       const canDelete = (ME.id && (ME.role === 'ADMIN' || ME.id === p.accountId));
       item.innerHTML = `
         <div class="d-flex w-100 justify-content-between align-items-start">
-          <div>
+          <div class="w-100">
             <div class="fw-semibold">@${sanitize(username)}</div>
-            ${p.level && p.level > 0 && p.rootId ? `<div class="border rounded p-2 mb-2 bg-light-subtle small">
-                <span class="text-muted">In reply to</span>
-                <a href="/p/${encodeURIComponent(p.rootId)}" class="ms-1">view thread</a>
-                <div class="mt-1" data-root="${p.rootId}">Loading context…</div>
-              </div>` : ''}
             <p class="mb-1 fs-5">${sanitize(p.text)}</p>
+            ${p.level && p.level > 0 && p.rootId ? `<div class="parent-context card mt-2">
+                <div class="card-body py-2">
+                  <div class="fw-semibold"><a href="/u/" class="link-underline link-underline-opacity-0" data-root-handle="${p.rootId}">@user</a></div>
+                  <p class="mb-0 fs-4 fw-semibold" data-root="${p.rootId}">Loading…</p>
+                  <a href="/p/${encodeURIComponent(p.rootId)}" class="small">View thread</a>
+                </div>
+              </div>` : ''}
           </div>
           <div class="ms-3 text-end flex-shrink-0 position-relative">
             <small class="text-muted d-block">${when}</small>
@@ -80,6 +82,7 @@ async function loadUserFeed(initial = false) {
       list.appendChild(item);
       if (p.level && p.level > 0 && p.rootId) {
         const ctx = item.querySelector(`[data-root="${p.rootId}"]`);
+        const handleEl = item.querySelector(`[data-root-handle="${p.rootId}"]`);
         if (ctx) {
           (async () => {
             try {
@@ -89,7 +92,11 @@ async function loadUserFeed(initial = false) {
                 ROOT_CACHE[p.rootId] = root;
               }
               const h = root.username ? `@${sanitize(root.username)}` : '@user';
-              ctx.innerHTML = `<a href="/u/${encodeURIComponent(root.username)}">${h}</a>: ${sanitize(root.text)}`;
+              if (handleEl) {
+                handleEl.textContent = h;
+                handleEl.setAttribute('href', `/u/${encodeURIComponent(root.username)}`);
+              }
+              ctx.textContent = root.text ? `${root.text}` : '';
             } catch (_) { ctx.textContent = 'Context unavailable'; }
           })();
         }
