@@ -1,23 +1,14 @@
+import { authHeaders, fetchJson, sanitize, isLoggedIn, formatWhen } from './lib/util.js';
+import { API } from './lib/api.js';
+import { createFeedItem } from './lib/feed-render.js';
+
+/** Get the alert element for error display. */
 const alertBox = () => document.getElementById('profileAlert');
 
-function authHeaders() {
-  const token = localStorage.getItem('cbellLoginToken');
-  return token ? { Authorization: `Bearer ${token}` } : {};
-}
-
-async function fetchJson(url, options = {}) {
-  const resp = await fetch(url, {
-    ...options,
-    headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
-  });
-  const data = await resp.json().catch(() => ({}));
-  if (!resp.ok || data.success === false) {
-    const msg = data?.messages?.[0]?.description || `Request failed: ${resp.status}`;
-    throw new Error(msg);
-  }
-  return data.payload ?? data;
-}
-
+/**
+ * Render the account summary panel.
+ * @param {{username:string,email:string,firstName?:string,lastName?:string,role?:string,status?:string}} detail
+ */
 function renderAccount(detail) {
   const root = document.getElementById('accountDetails');
   if (!root) return;
@@ -33,10 +24,13 @@ function renderAccount(detail) {
   set('status', detail.status);
 }
 
-function sanitize(text) { return (text || '').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-
 const ROOT_CACHE = {};
 
+/**
+ * Render the profile feed list.
+ * @param {Array} posts feed items
+ * @param {string} username current user's handle
+ */
 function renderPosts(posts, username) {
   const container = document.getElementById('postsList');
   if (!container) return;
@@ -46,81 +40,21 @@ function renderPosts(posts, username) {
     return;
   }
   for (const p of posts) {
-    const item = document.createElement('div');
-    item.className = 'list-group-item py-3';
-    const when = new Date(p.createdOn || p.lastUpdatedOn || Date.now()).toLocaleString();
-    const handle = username ? `@${sanitize(username)}` : '@me';
-    // On /profile, posts are always authored by the current user, so allow delete
-    item.innerHTML = `
-      <div class="d-flex w-100 justify-content-between align-items-start">
-        <div class="w-100">
-          <div class="fw-semibold">${handle}</div>
-          <p class="mb-1 fs-5">${sanitize(p.text)}</p>
-        </div>
-        <div class="ms-3 text-end flex-shrink-0 position-relative">
-          <small class="text-muted d-block">${when}</small>
-          <button class="btn btn-sm btn-light post-menu-btn" data-post="${p.id}" aria-label="More">⋯</button>
-          <div class="post-menu d-none card p-2" style="position:absolute; right:0; top:100%; z-index:1000;">
-            <button class="btn btn-link text-danger p-0 post-delete-btn" data-post="${p.id}">Delete</button>
-          </div>
-        </div>
-      </div>
-      ${p.level && p.level > 0 && p.rootId ? `<div class="parent-context card mt-2 w-100">
-          <div class="card-body py-2">
-            <div class="fw-semibold"><a href="/u/" class="link-underline link-underline-opacity-0" data-root-handle="${p.rootId}">@user</a></div>
-            <p class="mb-0 fs-4 fw-semibold" data-root="${p.rootId}">Loading…</p>
-            <a href="/p/${encodeURIComponent(p.rootId)}" class="small">View thread</a>
-          </div>
-        </div>` : ''}
-    `;
-    container.appendChild(item);
-    if (p.level && p.level > 0 && p.rootId) {
-      const ctx = item.querySelector(`[data-root="${p.rootId}"]`);
-      const handleEl = item.querySelector(`[data-root-handle="${p.rootId}"]`);
-      if (ctx) {
-        (async () => {
-          try {
-            let root = ROOT_CACHE[p.rootId];
-            if (!root) {
-              root = await fetchJson(`/api/posts/2025-09-14/${encodeURIComponent(p.rootId)}`);
-              ROOT_CACHE[p.rootId] = root;
-            }
-            const h = root.username ? `@${sanitize(root.username)}` : '@user';
-            if (handleEl) {
-              handleEl.textContent = h;
-              handleEl.setAttribute('href', `/u/${encodeURIComponent(root.username)}`);
-            }
-            ctx.textContent = root.text ? `${root.text}` : '';
-          } catch (_) { ctx.textContent = 'Context unavailable'; }
-        })();
-      }
-    }
-    const btn = item.querySelector('.post-menu-btn');
-    const menu = item.querySelector('.post-menu');
-    if (btn && menu) {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        menu.classList.toggle('d-none');
-      });
-      const del = item.querySelector('.post-delete-btn');
-      del?.addEventListener('click', async (e) => {
-        e.stopPropagation();
-        menu.classList.add('d-none');
-        if (!confirm('Delete this post?')) return;
-        try {
-          await fetchJson(`/api/posts/2025-09-14/${btn.dataset.post}`, { method: 'DELETE', headers: authHeaders() });
-          item.remove();
-        } catch (err) {
-          alert(err.message);
-        }
-      });
-    }
+    const canDelete = () => true; // current user owns their posts on /profile
+    const fetchRootCached = async (rootId) => {
+      if (!ROOT_CACHE[rootId]) ROOT_CACHE[rootId] = await fetchJson(API.posts.byId(rootId));
+      return ROOT_CACHE[rootId];
+    };
+    const onLike = (postId) => fetchJson(API.posts.like(postId), { method: 'POST', headers: authHeaders() });
+    const onDelete = (postId) => fetchJson(API.posts.byId(postId), { method: 'DELETE', headers: authHeaders() });
+    const el = createFeedItem({ ...p, username }, { sanitize, formatWhen, isLoggedIn, canDelete, fetchRoot: fetchRootCached, onLike, onDelete });
+    container.appendChild(el);
   }
 }
 
+/** Wire page once DOM is ready. */
 document.addEventListener('DOMContentLoaded', async () => {
-  const token = localStorage.getItem('cbellLoginToken');
-  if (!token) {
+  if (!isLoggedIn()) {
     // Must be logged in
     window.location.href = '/login';
     return;
@@ -128,10 +62,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   const alert = alertBox();
   alert?.classList.add('d-none');
   try {
-    const me = await fetchJson('/api/accounts/2025-09-03/me', { headers: authHeaders() });
+    const me = await fetchJson(API.accounts.me, { headers: authHeaders() });
     renderAccount(me);
-    const posts = await fetchJson('/api/posts/2025-09-14/me/feed?limit=20', { headers: authHeaders() });
+    const posts = await fetchJson(`${API.posts.meFeed}?limit=20`, { headers: authHeaders() });
     renderPosts(posts, me?.username);
+/**
+ * Profile page behavior.
+ *
+ * Responsibilities:
+ * - Require authentication and load current account details
+ * - Render user's feed with parent-context for replies
+ * - Support liking and deleting (owner/admin) items
+ */
   } catch (err) {
     if (alert) {
       alert.textContent = err.message;

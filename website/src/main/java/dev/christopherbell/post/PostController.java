@@ -13,14 +13,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -157,6 +156,18 @@ public class PostController {
     return new ResponseEntity<>(
         Response.<PostDetail>builder()
             .payload(postService.deletePost(postId))
+            .success(true)
+            .build(),
+        HttpStatus.OK);
+  }
+
+  /** Likes/unlikes a post for the current user and returns the updated post feed item. */
+  @PostMapping(value = V20250914 + "/{postId}/like", produces = MediaType.APPLICATION_JSON_VALUE)
+  @PreAuthorize("@permissionService.hasAuthority('USER')")
+  public ResponseEntity<Response<PostFeedItem>> toggleLike(@PathVariable String postId) throws Exception {
+    return new ResponseEntity<>(
+        Response.<PostFeedItem>builder()
+            .payload(postService.toggleLike(postId))
             .success(true)
             .build(),
         HttpStatus.OK);

@@ -1,4 +1,10 @@
+/**
+ * Footer web component.
+ *
+ * Renders a simple, neutral footer with the current year.
+ */
 class AppFooter extends HTMLElement {
+    /** Lifecycle hook: mount component and inject markup. */
     connectedCallback() {
         const year = new Date().getFullYear();
         this.innerHTML = `

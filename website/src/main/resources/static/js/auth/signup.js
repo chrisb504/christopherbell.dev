@@ -1,7 +1,19 @@
+/**
+ * Signup page behavior.
+ *
+ * Submits new account details to the API and redirects to login on success.
+ * Redirects authenticated users away.
+ */
+import { API } from '../lib/api.js';
 const alertBox = () => document.getElementById('signupAlert');
 
+/**
+ * Create a new account via API.
+ * @param {{email:string,username:string,firstName?:string,lastName?:string,password:string}} payload
+ * @returns {Promise<object>} created account detail
+ */
 async function signup(payload) {
-  const resp = await fetch('/api/accounts/2024-12-15/create', {
+  const resp = await fetch(API.accounts.create, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
@@ -14,6 +26,7 @@ async function signup(payload) {
   return data.payload; // account detail
 }
 
+/** Wire form submit and redirect rules once DOM is ready. */
 document.addEventListener('DOMContentLoaded', () => {
   // If already logged in, redirect to home
   if (localStorage.getItem('cbellLoginToken')) {

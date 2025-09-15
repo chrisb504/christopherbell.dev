@@ -3,6 +3,7 @@ package dev.christopherbell.post.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.Instant;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -56,4 +57,10 @@ public class Post {
       timezone = "UTC")
   @LastModifiedDate
   private Instant lastUpdatedOn;
+
+  // Likes
+  /** Set of account IDs that liked this post. */
+  private Set<String> likedBy;
+  /** Precomputed number of likes for display (kept in sync with {@link #likedBy}). */
+  private Integer likesCount;
 }

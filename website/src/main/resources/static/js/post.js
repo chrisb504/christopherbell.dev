@@ -1,21 +1,16 @@
-function sanitize(text) { return (text || '').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-function authHeaders() { const t = localStorage.getItem('cbellLoginToken'); return t ? { Authorization: `Bearer ${t}` } : {}; }
+import { sanitize, authHeaders, fetchJson, isLoggedIn, formatWhen } from './lib/util.js';
+/** Extract the post id from the /p/{id} path. */
 function getPostId() { const m = location.pathname.match(/\/p\/(.+)$/); return m ? decodeURIComponent(m[1]) : null; }
 
-async function fetchJson(url, options = {}) {
-  const resp = await fetch(url, { ...options, headers: { 'Content-Type': 'application/json', ...(options.headers || {}) } });
-  const data = await resp.json().catch(() => ({}));
-  if (!resp.ok || data.success === false) {
-    const msg = data?.messages?.[0]?.description || `Request failed: ${resp.status}`;
-    throw new Error(msg);
-  }
-  return data.payload ?? data;
-}
 
+/**
+ * Render the root post header.
+ * @param {{username:string,text:string,createdOn?:string,lastUpdatedOn?:string}} post
+ */
 function renderRoot(post) {
   const root = document.querySelector('#rootPost .card-body');
   if (!root) return;
-  const when = new Date(post.createdOn || post.lastUpdatedOn || Date.now()).toLocaleString();
+  const when = formatWhen(post.createdOn || post.lastUpdatedOn);
   root.innerHTML = `
     <div class="d-flex justify-content-between align-items-start">
       <div>
@@ -27,6 +22,12 @@ function renderRoot(post) {
   `;
 }
 
+/**
+ * Render the replies list, excluding the currentId item if present.
+ * @param {Array} items thread feed items
+ * @param {{id?:string,role?:string}} currentUser current viewer (optional)
+ * @param {string} currentId post id to omit from replies
+ */
 function renderThread(items, currentUser, currentId) {
   const list = document.getElementById('threadList');
   if (!list) return;
@@ -79,6 +80,7 @@ function renderThread(items, currentUser, currentId) {
   }
 }
 
+/** Wire page once DOM is ready. */
 document.addEventListener('DOMContentLoaded', async () => {
   document.addEventListener('click', () => {
     document.querySelectorAll('.post-menu').forEach(m => m.classList.add('d-none'));
@@ -112,6 +114,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             headers: authHeaders(),
             body: JSON.stringify({ text, parentId: id })
           });
+/**
+ * Per-post page behavior.
+ *
+ * Responsibilities:
+ * - Load and render the root post
+ * - Load and render flat thread (replies)
+ * - Provide reply composer for authenticated users
+ * - Support deleting replies (owner/admin)
+ */
           txtEl.value = '';
           const thread = await fetchJson(`/api/posts/2025-09-14/${encodeURIComponent(id)}/thread`);
           renderThread(thread, me, id);

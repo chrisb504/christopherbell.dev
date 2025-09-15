@@ -10,8 +10,10 @@ import dev.christopherbell.post.model.PostCreateRequest;
 import dev.christopherbell.post.model.PostDetail;
 import dev.christopherbell.post.model.PostFeedItem;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -83,6 +85,8 @@ public class PostService {
         .rootId(rootId)
         .parentId(parentId)
         .level(level)
+        .likedBy(new HashSet<>())
+        .likesCount(0)
         .createdOn(now)
         .lastUpdatedOn(now)
         .build();
@@ -110,6 +114,14 @@ public class PostService {
 
   /**
    * Feed-style posts for the current user including thread metadata.
+   */
+  /**
+   * Returns the current user's feed (newest first) enriched with thread metadata.
+   *
+   * @param before optional exclusive upper bound timestamp for pagination
+   * @param limit  maximum number of items to return (1..100)
+   * @return list of feed items for the current user
+   * @throws ResourceNotFoundException if the current account cannot be resolved
    */
   public List<PostFeedItem> getMyFeed(Instant before, int limit) throws ResourceNotFoundException {
     String selfId = getSelfId();
@@ -175,6 +187,13 @@ public class PostService {
    * If {@code before} is provided, returns posts strictly older than that timestamp.
    * The {@code limit} is capped between 1 and 100; default callers should use 20.
    */
+  /**
+   * Returns a global feed across all users (newest first) with optional cursor.
+   *
+   * @param before optional exclusive upper bound timestamp for pagination
+   * @param limit  maximum number of items to return (1..100)
+   * @return list of global feed items
+   */
   public List<PostFeedItem> getGlobalFeed(Instant before, int limit) {
     int pageSize = Math.max(1, Math.min(limit, 100));
     Pageable page = PageRequest.of(0, pageSize, Sort.by(Sort.Direction.DESC, "createdOn"));
@@ -190,7 +209,12 @@ public class PostService {
     var authorIds = posts.stream().map(Post::getAccountId).distinct().toList();
     var authors = accountRepository.findAllById(authorIds);
     var idToUser = authors.stream()
-        .collect(java.util.stream.Collectors.toMap(Account::getId, Account::getUsername));
+        .collect(Collectors.toMap(Account::getId, Account::getUsername));
+
+    // Determine current user if any
+    String selfId = null;
+    try { selfId = getSelfId(); } catch (Exception ignored) {}
+    final String currentUserId = selfId;
 
     return posts.stream()
         .map(p -> PostFeedItem.builder()
@@ -201,6 +225,8 @@ public class PostService {
             .rootId(p.getRootId())
             .parentId(p.getParentId())
             .level(p.getLevel())
+            .likesCount(p.getLikesCount())
+            .liked(currentUserId != null && p.getLikedBy() != null && p.getLikedBy().contains(currentUserId))
             .createdOn(p.getCreatedOn())
             .lastUpdatedOn(p.getLastUpdatedOn())
             .build())
@@ -209,6 +235,15 @@ public class PostService {
 
   /**
    * Returns a user-specific feed (by username), newest first, with optional time cursor.
+   */
+  /**
+   * Returns a user-specific feed for the given username.
+   *
+   * @param username the author's username (sanitized)
+   * @param before   optional exclusive upper bound timestamp for pagination
+   * @param limit    maximum number of items to return (1..100)
+   * @return list of feed items for the user
+   * @throws ResourceNotFoundException if the user cannot be found
    */
   public List<PostFeedItem> getUserFeed(String username, Instant before, int limit)
       throws ResourceNotFoundException {
@@ -226,6 +261,9 @@ public class PostService {
       posts = postRepository.findByAccountIdOrderByCreatedOnDesc(account.getId(), page);
     }
 
+    String selfId = null;
+    try { selfId = getSelfId(); } catch (Exception ignored) {}
+    final String currentUserId = selfId;
     return posts.stream()
         .map(p -> PostFeedItem.builder()
             .id(p.getId())
@@ -235,13 +273,21 @@ public class PostService {
             .rootId(p.getRootId())
             .parentId(p.getParentId())
             .level(p.getLevel())
+            .likesCount(p.getLikesCount())
+            .liked(currentUserId != null && p.getLikedBy() != null && p.getLikedBy().contains(currentUserId))
             .createdOn(p.getCreatedOn())
             .lastUpdatedOn(p.getLastUpdatedOn())
             .build())
         .toList();
   }
 
-  /** Returns a single post by id (with author's username). */
+  /**
+   * Returns a single post by id enriched with author's username.
+   *
+   * @param id the post id
+   * @return a feed-style item for the post
+   * @throws ResourceNotFoundException if the post or author cannot be found
+   */
   public PostFeedItem getPostById(String id) throws ResourceNotFoundException {
     var post = postRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException(String.format("Post with id %s not found.", id)));
@@ -255,12 +301,20 @@ public class PostService {
         .rootId(post.getRootId())
         .parentId(post.getParentId())
         .level(post.getLevel())
+        .likesCount(post.getLikesCount())
+        .liked(false)
         .createdOn(post.getCreatedOn())
         .lastUpdatedOn(post.getLastUpdatedOn())
         .build();
   }
 
-  /** Returns a flat list of posts in the thread (root first, then replies). */
+  /**
+   * Returns a flat list of posts in a thread (root first, then replies).
+   *
+   * @param id any post id within the thread
+   * @return ordered list of thread items
+   * @throws ResourceNotFoundException if the reference post cannot be found
+   */
   public List<PostFeedItem> getThread(String id) throws ResourceNotFoundException {
     var post = postRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException(String.format("Post with id %s not found.", id)));
@@ -271,6 +325,9 @@ public class PostService {
     var authors = accountRepository.findAllById(authorIds);
     var idToUser = authors.stream()
         .collect(java.util.stream.Collectors.toMap(Account::getId, Account::getUsername));
+    String selfId = null;
+    try { selfId = getSelfId(); } catch (Exception ignored) {}
+    final String currentUserId = selfId;
     return posts.stream()
         .map(p -> PostFeedItem.builder()
             .id(p.getId())
@@ -280,10 +337,55 @@ public class PostService {
             .rootId(p.getRootId())
             .parentId(p.getParentId())
             .level(p.getLevel())
+            .likesCount(p.getLikesCount())
+            .liked(currentUserId != null && p.getLikedBy() != null && p.getLikedBy().contains(currentUserId))
             .createdOn(p.getCreatedOn())
             .lastUpdatedOn(p.getLastUpdatedOn())
             .build())
         .toList();
+  }
+
+  /**
+   * Toggles like for the current user on a post.
+   *
+   * @param postId target post id
+   * @return updated feed item reflecting new like state and count
+   * @throws ResourceNotFoundException if the post or author cannot be found
+   * @throws InvalidRequestException   if the caller is not authenticated
+   */
+  public PostFeedItem toggleLike(String postId)
+      throws ResourceNotFoundException, InvalidRequestException {
+    String selfId = getSelfId();
+    var post = postRepository.findById(postId)
+        .orElseThrow(() -> new ResourceNotFoundException(String.format("Post with id %s not found.", postId)));
+    if (post.getLikedBy() == null) post.setLikedBy(new HashSet<>());
+    boolean liked;
+    if (post.getLikedBy().contains(selfId)) {
+      post.getLikedBy().remove(selfId);
+      post.setLikesCount(Math.max(0, (post.getLikesCount() == null ? 0 : post.getLikesCount()) - 1));
+      liked = false;
+    } else {
+      post.getLikedBy().add(selfId);
+      post.setLikesCount((post.getLikesCount() == null ? 0 : post.getLikesCount()) + 1);
+      liked = true;
+    }
+    post.setLastUpdatedOn(Instant.now());
+    postRepository.save(post);
+    var author = accountRepository.findById(post.getAccountId())
+        .orElseThrow(() -> new ResourceNotFoundException(String.format("Account with id %s not found.", post.getAccountId())));
+    return PostFeedItem.builder()
+        .id(post.getId())
+        .accountId(post.getAccountId())
+        .username(author.getUsername())
+        .text(post.getText())
+        .rootId(post.getRootId())
+        .parentId(post.getParentId())
+        .level(post.getLevel())
+        .likesCount(post.getLikesCount())
+        .liked(liked)
+        .createdOn(post.getCreatedOn())
+        .lastUpdatedOn(post.getLastUpdatedOn())
+        .build();
   }
 
   /**
@@ -292,7 +394,7 @@ public class PostService {
    * @param postId the post identifier
    * @return deleted post details
    * @throws ResourceNotFoundException if the post does not exist
-   * @throws InvalidRequestException if the caller is not authorized
+   * @throws InvalidRequestException   if the caller is not authorized
    */
   public PostDetail deletePost(String postId)
       throws ResourceNotFoundException, InvalidRequestException {

@@ -1,12 +1,21 @@
+/**
+ * Navigation web component.
+ *
+ * Renders the responsive navbar, adapts to auth state, and provides
+ * a minimal JS fallback for the mobile hamburger when Bootstrap JS
+ * is not present on the page.
+ */
 import pubsub from './pubsub.js';
 
 class AppNav extends HTMLElement {
+    /** Lifecycle hook: mount component and subscribe to auth changes. */
     connectedCallback() {
         this.render();
         pubsub.subscribe('auth:login', () => this.render());
         pubsub.subscribe('auth:logout', () => this.render());
     }
 
+    /** Render the navbar markup based on authentication state. */
     render() {
         const isAuthenticated = !!localStorage.getItem('cbellLoginToken');
         this.innerHTML = `
