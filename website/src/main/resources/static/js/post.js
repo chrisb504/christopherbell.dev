@@ -40,7 +40,7 @@ function renderRoot(post, currentUser) {
     </div>` : ''}
   `;
   // Append the main post via shared feed renderer
-  const ctx = makeRendererContext({ fetchJson, authHeaders, sanitize, formatWhen, isLoggedIn, canDelete: canDeleteFor(currentUser), currentUserName: currentUser?.username || null });
+  const ctx = makeRendererContext({ fetchJson, authHeaders, sanitize, formatWhen, isLoggedIn, canDelete: canDeleteFor(currentUser), currentUserName: currentUser?.username || null, suppressParentContext: true });
   root.appendChild(createFeedItem(post, ctx));
 
   // Fill parent context details if this is a reply

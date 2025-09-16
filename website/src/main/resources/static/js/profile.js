@@ -47,7 +47,7 @@ function renderPosts(posts, username) {
     };
     const onLike = (postId) => fetchJson(API.posts.like(postId), { method: 'POST', headers: authHeaders() });
     const onDelete = (postId) => fetchJson(API.posts.byId(postId), { method: 'DELETE', headers: authHeaders() });
-    const el = createFeedItem({ ...p, username }, { sanitize, formatWhen, isLoggedIn, canDelete, fetchRoot: fetchRootCached, onLike, onDelete });
+    const el = createFeedItem({ ...p, username }, { sanitize, formatWhen, isLoggedIn, canDelete, fetchRoot: fetchRootCached, fetchParent: fetchRootCached, onLike, onDelete });
     container.appendChild(el);
   }
 }

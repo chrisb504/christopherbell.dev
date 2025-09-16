@@ -4,15 +4,15 @@
 import { API } from './api.js';
 
 /**
- * Create a root post fetcher with simple in-memory caching.
+ * Create a post fetcher with simple in-memory caching.
  * @param {(url:string)=>Promise<object>} fetchJson
- * @returns {(rootId:string)=>Promise<object>}
+ * @returns {(postId:string)=>Promise<object>}
  */
 export function createRootFetcher(fetchJson) {
   const cache = {};
-  return async function fetchRoot(rootId) {
-    if (!cache[rootId]) cache[rootId] = await fetchJson(API.posts.byId(rootId));
-    return cache[rootId];
+  return async function fetchRoot(postId) {
+    if (!cache[postId]) cache[postId] = await fetchJson(API.posts.byId(postId));
+    return cache[postId];
   };
 }
 
@@ -84,12 +84,14 @@ export function createThreadFetcher(fetchJson, authHeaders) {
  * @returns {object} ctx for createFeedItem
  */
 export function makeRendererContext({ fetchJson, authHeaders, sanitize, formatWhen, isLoggedIn, canDelete, currentUserName, suppressParentContext = false }) {
+  const fetchPost = createRootFetcher(fetchJson);
   return {
     sanitize,
     formatWhen,
     isLoggedIn,
     canDelete,
-    fetchRoot: createRootFetcher(fetchJson),
+    fetchRoot: fetchPost,
+    fetchParent: fetchPost,
     fetchThread: createThreadFetcher(fetchJson, authHeaders),
     onLike: onLikeAction(fetchJson, authHeaders),
     onDelete: onDeleteAction(fetchJson, authHeaders),
