@@ -9,6 +9,7 @@ import dev.christopherbell.post.model.Post;
 import dev.christopherbell.post.model.PostCreateRequest;
 import dev.christopherbell.post.model.PostDetail;
 import dev.christopherbell.post.model.PostFeedItem;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import dev.christopherbell.libs.security.UsernameSanitizer;
 
@@ -36,6 +38,8 @@ public class PostService {
   private final PermissionService permissionService;
 
   private static final int MAX_TEXT_LENGTH = 280;
+  private static final Duration BASE_LIFESPAN = Duration.ofHours(24);
+  private static final Duration EXTENSION_PER_LIKE = Duration.ofHours(24);
 
   /**
    * Creates a new post for the currently authenticated account.
@@ -68,6 +72,7 @@ public class PostService {
       var parent = postRepository.findById(parentId)
           .orElseThrow(() -> new ResourceNotFoundException(
               String.format("Parent post with id %s not found.", parentId)));
+      ensureActive(parent);
       rootId = parent.getRootId() != null ? parent.getRootId() : parent.getId();
       level = (parent.getLevel() != null ? parent.getLevel() : 0) + 1;
     } else {
@@ -89,6 +94,7 @@ public class PostService {
         .likesCount(0)
         .createdOn(now)
         .lastUpdatedOn(now)
+        .expiresOn(calculateExpiration(now, 0))
         .build();
 
     var saved = postRepository.save(post);
@@ -108,8 +114,12 @@ public class PostService {
         .findById(selfId)
         .orElseThrow(() -> new ResourceNotFoundException(String.format("Account with id %s not found.", selfId)));
 
-    return postRepository.findByAccountIdOrderByCreatedOnDesc(selfId)
-        .stream().map(postMapper::toDetail).toList();
+    var posts = postRepository.findByAccountIdOrderByCreatedOnDesc(selfId);
+    posts.forEach(this::ensureExpirationSet);
+    return posts.stream()
+        .filter(p -> !isExpired(p))
+        .map(postMapper::toDetail)
+        .toList();
   }
 
   /**
@@ -138,7 +148,9 @@ public class PostService {
       posts = postRepository.findByAccountIdOrderByCreatedOnDesc(selfId, page);
     }
 
+    posts.forEach(this::ensureExpirationSet);
     return posts.stream()
+        .filter(p -> !isExpired(p))
         .map(p -> PostFeedItem.builder()
             .id(p.getId())
             .accountId(p.getAccountId())
@@ -171,8 +183,12 @@ public class PostService {
         .findById(accountId)
         .orElseThrow(() -> new ResourceNotFoundException(String.format("Account with id %s not found.", accountId)));
 
-    return postRepository.findByAccountIdOrderByCreatedOnDesc(accountId)
-        .stream().map(postMapper::toDetail).toList();
+    var posts = postRepository.findByAccountIdOrderByCreatedOnDesc(accountId);
+    posts.forEach(this::ensureExpirationSet);
+    return posts.stream()
+        .filter(p -> !isExpired(p))
+        .map(postMapper::toDetail)
+        .toList();
   }
 
   /**
@@ -217,7 +233,9 @@ public class PostService {
     try { selfId = getSelfId(); } catch (Exception ignored) {}
     final String currentUserId = selfId;
 
+    posts.forEach(this::ensureExpirationSet);
     return posts.stream()
+        .filter(p -> !isExpired(p))
         .map(p -> PostFeedItem.builder()
             .id(p.getId())
             .accountId(p.getAccountId())
@@ -266,7 +284,9 @@ public class PostService {
     String selfId = null;
     try { selfId = getSelfId(); } catch (Exception ignored) {}
     final String currentUserId = selfId;
+    posts.forEach(this::ensureExpirationSet);
     return posts.stream()
+        .filter(p -> !isExpired(p))
         .map(p -> PostFeedItem.builder()
             .id(p.getId())
             .accountId(p.getAccountId())
@@ -294,10 +314,12 @@ public class PostService {
   public PostFeedItem getPostById(String id) throws ResourceNotFoundException {
     var post = postRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException(String.format("Post with id %s not found.", id)));
+    ensureActive(post);
     var author = accountRepository.findById(post.getAccountId())
         .orElseThrow(() -> new ResourceNotFoundException(String.format("Account with id %s not found.", post.getAccountId())));
     String selfId = null;
     try { selfId = getSelfId(); } catch (Exception ignored) {}
+    ensureExpirationSet(post);
     return PostFeedItem.builder()
         .id(post.getId())
         .accountId(post.getAccountId())
@@ -324,6 +346,7 @@ public class PostService {
   public List<PostFeedItem> getThread(String id) throws ResourceNotFoundException {
     var post = postRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException(String.format("Post with id %s not found.", id)));
+    ensureActive(post);
     var rootId = post.getRootId() != null ? post.getRootId() : post.getId();
     var posts = postRepository.findByRootIdOrderByCreatedOnAsc(rootId);
     // Map usernames
@@ -334,7 +357,9 @@ public class PostService {
     String selfId = null;
     try { selfId = getSelfId(); } catch (Exception ignored) {}
     final String currentUserId = selfId;
+    posts.forEach(this::ensureExpirationSet);
     return posts.stream()
+        .filter(p -> !isExpired(p))
         .map(p -> PostFeedItem.builder()
             .id(p.getId())
             .accountId(p.getAccountId())
@@ -365,6 +390,7 @@ public class PostService {
     String selfId = getSelfId();
     var post = postRepository.findById(postId)
         .orElseThrow(() -> new ResourceNotFoundException(String.format("Post with id %s not found.", postId)));
+    ensureActive(post);
     if (post.getLikedBy() == null) post.setLikedBy(new HashSet<>());
     boolean liked;
     if (post.getLikedBy().contains(selfId)) {
@@ -377,6 +403,7 @@ public class PostService {
       liked = true;
     }
     post.setLastUpdatedOn(Instant.now());
+    refreshExpiration(post);
     postRepository.save(post);
     var author = accountRepository.findById(post.getAccountId())
         .orElseThrow(() -> new ResourceNotFoundException(String.format("Account with id %s not found.", post.getAccountId())));
@@ -420,5 +447,55 @@ public class PostService {
 
     postRepository.delete(post);
     return postMapper.toDetail(post);
+  }
+
+  @Scheduled(fixedDelayString = "${posts.expiration.cleanup-interval:600000}")
+  public void purgeExpiredPosts() {
+    var missing = postRepository.findByExpiresOnIsNull();
+    if (!missing.isEmpty()) {
+      missing.forEach(p -> {
+        refreshExpiration(p);
+        postRepository.save(p);
+      });
+    }
+    postRepository.deleteByExpiresOnLessThanEqual(Instant.now());
+  }
+
+  private static Instant calculateExpiration(Instant createdOn, int likesCount) {
+    Instant base = createdOn != null ? createdOn : Instant.now();
+    long likeCount = Math.max(0, likesCount);
+    return base.plus(BASE_LIFESPAN).plus(EXTENSION_PER_LIKE.multipliedBy(likeCount));
+  }
+
+  private void refreshExpiration(Post post) {
+    if (post == null) {
+      return;
+    }
+    int likes = post.getLikesCount() != null ? post.getLikesCount() : 0;
+    post.setExpiresOn(calculateExpiration(post.getCreatedOn(), likes));
+  }
+
+  private void ensureExpirationSet(Post post) {
+    if (post == null || post.getExpiresOn() != null) {
+      return;
+    }
+    refreshExpiration(post);
+    postRepository.save(post);
+  }
+
+  private boolean isExpired(Post post) {
+    if (post == null) {
+      return false;
+    }
+    Instant expiresOn = post.getExpiresOn();
+    return expiresOn != null && !expiresOn.isAfter(Instant.now());
+  }
+
+  private void ensureActive(Post post) throws ResourceNotFoundException {
+    ensureExpirationSet(post);
+    if (isExpired(post)) {
+      postRepository.delete(post);
+      throw new ResourceNotFoundException(String.format("Post with id %s not found.", post.getId()));
+    }
   }
 }

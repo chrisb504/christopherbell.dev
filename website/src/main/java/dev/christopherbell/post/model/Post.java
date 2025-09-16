@@ -58,6 +58,12 @@ public class Post {
   @LastModifiedDate
   private Instant lastUpdatedOn;
 
+  @JsonFormat(
+      shape = JsonFormat.Shape.STRING,
+      pattern = "uuuu-MM-dd'T'HH:mm:ss.SSS'Z'",
+      timezone = "UTC")
+  private Instant expiresOn;
+
   // Likes
   /** Set of account IDs that liked this post. */
   private Set<String> likedBy;

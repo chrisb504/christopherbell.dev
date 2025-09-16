@@ -54,4 +54,10 @@ public interface PostRepository extends MongoRepository<Post, String> {
 
   /** Count of direct replies to a given post (parentId equals the post id). */
   long countByParentId(String parentId);
+
+  /** Deletes posts whose expiration timestamp is at or before the provided instant. */
+  long deleteByExpiresOnLessThanEqual(Instant cutoff);
+
+  /** Finds posts that have not been assigned an expiration timestamp yet. */
+  List<Post> findByExpiresOnIsNull();
 }

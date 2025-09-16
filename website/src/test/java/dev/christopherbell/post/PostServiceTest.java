@@ -18,7 +18,9 @@ import dev.christopherbell.libs.api.exception.ResourceNotFoundException;
 import dev.christopherbell.post.model.Post;
 import dev.christopherbell.post.model.PostCreateRequest;
 import dev.christopherbell.post.model.PostDetail;
+import java.time.Duration;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -97,6 +99,30 @@ public class PostServiceTest {
   }
 
   @Test
+  @DisplayName("Create reply: parent expired -> 404 and cleanup")
+  public void testCreatePost_whenParentExpired_Throws404() throws Exception {
+    var existing = AccountServiceStub.getAccountWhenExistsStub();
+    var service = spy(postService);
+    doReturn(existing.getId()).when(service).getSelfId();
+    when(accountRepository.findById(eq(existing.getId()))).thenReturn(Optional.of(existing));
+
+    var expiredParent = Post.builder()
+        .id("parent")
+        .accountId("other")
+        .text("old")
+        .createdOn(Instant.now().minus(Duration.ofHours(48)))
+        .lastUpdatedOn(Instant.now().minus(Duration.ofHours(48)))
+        .expiresOn(Instant.now().minus(Duration.ofHours(1)))
+        .build();
+    when(postRepository.findById(eq("parent"))).thenReturn(Optional.of(expiredParent));
+
+    var request = PostCreateRequest.builder().text("child").parentId("parent").build();
+
+    assertThrows(ResourceNotFoundException.class, () -> service.createPost(request));
+    verify(postRepository).delete(eq(expiredParent));
+  }
+
+  @Test
   @DisplayName("GetMy: returns mapped list")
   public void testGetMyPosts_whenSome_ReturnsList() throws Exception {
     var existing = AccountServiceStub.getAccountWhenExistsStub();
@@ -157,8 +183,66 @@ public class PostServiceTest {
 
     verify(accountRepository).findById(eq(existing.getId()));
     verify(postRepository).findByAccountIdOrderByCreatedOnDesc(eq(existing.getId()));
+    verify(postRepository).save(eq(p1));
     verify(postMapper).toDetail(eq(p1));
     verifyNoMoreInteractions(accountRepository, postRepository, postMapper);
+  }
+
+  @Test
+  @DisplayName("Toggle like adjusts expiration window")
+  public void testToggleLike_updatesExpirationWithLikes() throws Exception {
+    var author = Account.builder().id("author").username("author").build();
+    var likerId = "liker";
+    var service = spy(postService);
+    doReturn(likerId).when(service).getSelfId();
+
+    var created = Instant.now().minus(Duration.ofHours(1));
+    var post = Post.builder()
+        .id("p1")
+        .accountId(author.getId())
+        .text("hello")
+        .createdOn(created)
+        .lastUpdatedOn(created)
+        .likesCount(0)
+        .likedBy(new HashSet<>())
+        .expiresOn(created.plus(Duration.ofHours(24)))
+        .build();
+
+    when(postRepository.findById(eq("p1"))).thenReturn(Optional.of(post));
+    when(accountRepository.findById(eq(author.getId()))).thenReturn(Optional.of(author));
+    when(postRepository.save(org.mockito.ArgumentMatchers.any(Post.class))).thenReturn(post);
+    when(postRepository.countByParentId(eq("p1"))).thenReturn(0L);
+
+    var likedItem = service.toggleLike("p1");
+    assertEquals(1, post.getLikesCount());
+    assertEquals(created.plus(Duration.ofHours(48)), post.getExpiresOn());
+    assertNotNull(likedItem);
+    assertEquals(true, likedItem.liked());
+
+    var unlikedItem = service.toggleLike("p1");
+    assertEquals(0, post.getLikesCount());
+    assertEquals(created.plus(Duration.ofHours(24)), post.getExpiresOn());
+    assertNotNull(unlikedItem);
+    assertEquals(false, unlikedItem.liked());
+  }
+
+  @Test
+  @DisplayName("Cleanup job assigns expirations before purging")
+  public void testPurgeExpiredPosts_backfillsMissingExpiration() {
+    var stale = Post.builder()
+        .id("p1")
+        .createdOn(Instant.now().minus(Duration.ofHours(2)))
+        .likesCount(1)
+        .build();
+
+    when(postRepository.findByExpiresOnIsNull()).thenReturn(List.of(stale));
+
+    postService.purgeExpiredPosts();
+
+    verify(postRepository).findByExpiresOnIsNull();
+    verify(postRepository).save(eq(stale));
+    verify(postRepository).deleteByExpiresOnLessThanEqual(org.mockito.ArgumentMatchers.any(Instant.class));
+    assertNotNull(stale.getExpiresOn());
   }
 
   @Test

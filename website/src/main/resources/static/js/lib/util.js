@@ -29,6 +29,13 @@ export async function fetchJson(url, options = {}) {
       ...(options.headers || {}),
     },
   });
+  if (resp.status === 401) {
+    localStorage.removeItem('cbellLoginToken');
+    if (!window.location.pathname.startsWith('/login')) {
+      window.location.href = '/login';
+    }
+    throw new Error('Authentication required.');
+  }
   const data = await resp.json().catch(() => ({}));
   if (!resp.ok || data.success === false) {
     const msg = data?.messages?.[0]?.description || `Request failed: ${resp.status}`;
