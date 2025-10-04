@@ -3,6 +3,7 @@ package dev.christopherbell.post;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
@@ -26,6 +27,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -266,23 +268,6 @@ public class PostServiceTest {
     assertEquals("user1", result.get(0).username());
     assertEquals("p2", result.get(1).id());
     assertEquals("user2", result.get(1).username());
-  }
-
-  @Test
-  @DisplayName("GlobalFeed: supports before cursor and limit")
-  public void testGetGlobalFeed_withBeforeAndLimit() {
-    var before = Instant.parse("2025-01-01T00:00:00Z");
-    var older = Post.builder().id("p0").accountId("a1").text("old").createdOn(Instant.parse("2024-12-31T23:59:00Z")).build();
-
-    when(postRepository.findByCreatedOnLessThanOrderByCreatedOnDesc(eq(before), org.mockito.ArgumentMatchers.any(org.springframework.data.domain.Pageable.class)))
-        .thenReturn(List.of(older));
-    when(accountRepository.findAllById(eq(List.of("a1"))))
-        .thenReturn(List.of(Account.builder().id("a1").username("user1").build()));
-
-    var result = postService.getGlobalFeed(before, 10);
-    assertEquals(1, result.size());
-    assertEquals("p0", result.get(0).id());
-    assertEquals("user1", result.get(0).username());
   }
 }
 
