@@ -1,29 +1,11 @@
-server:
-  port: 8080
+spring:
+  profiles:
+    default: local
 logging:
   level:
     root: INFO
     org.springframework: INFO
     dev.christopherbell: INFO
----
-spring:
-  profiles:
-    active: local
-  data:
-    mongodb:
-      database: christopherbell
-      uri: mongodb://localhost:27019
-      auto-index-creation: true
----
-spring:
-  profiles:
-    active: prod
-  data:
-    mongodb:
-      database: christopherbell
-      uri: mongodb://localhost:27017
-      auto-index-creation: true
----
 blog-properties:
   posts:
     - author: "Test"
